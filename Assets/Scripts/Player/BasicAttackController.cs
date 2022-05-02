@@ -1,3 +1,4 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 
 
-public class BasicAttackController : MonoBehaviour
+public class BasicAttackController : NetworkBehaviour
 {
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private NavMeshAgent navMeshAgent;
@@ -22,12 +23,16 @@ public class BasicAttackController : MonoBehaviour
 
     private void Start()
     {
+        if (!hasAuthority) return;
+
         UpdateCooldown();
         OnAttackEnd.AddListener(EndBasicAttackAnim);
     }
 
     private void FixedUpdate()
     {
+        if (!hasAuthority) return;
+
         if (_isCounting)
         {
             _timer+= Time.deltaTime;
@@ -36,6 +41,7 @@ public class BasicAttackController : MonoBehaviour
     }
     public virtual void BasicAttack(HealthController hc, Animator animator, string lastState)
     {
+
         if (!_basicAttackReady) return;
         if (navMeshAgent.hasPath)
         {

@@ -1,9 +1,10 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     [SerializeField] private NavMeshAgent navMeshAgent;
     [SerializeField] private Camera cam;
@@ -30,12 +31,15 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        if (!hasAuthority) return;
         cam.gameObject.SetActive(true);
         _hc = GetComponent<HealthController>();
     }
 
     void Update()
     {
+        if (!hasAuthority) return;
+
         if (!navMeshAgent.hasPath)
         {
             if (_currentAnimState != "Idle") _currentAnimState = AnimationManager.Instance.ChangeAnimationState("Idle", animator, _currentAnimState);
