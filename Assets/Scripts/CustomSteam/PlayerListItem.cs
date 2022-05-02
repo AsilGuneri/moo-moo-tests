@@ -13,7 +13,10 @@ public class PlayerListItem : MonoBehaviour
     private bool avaterRecieved;
 
     public TextMeshProUGUI playerNameText;
+    public TextMeshProUGUI playerReadyText;
     public RawImage playerIcon;
+
+    public bool ready;
 
     protected Callback<AvatarImageLoaded_t> ImageLoaded;
 
@@ -21,14 +24,29 @@ public class PlayerListItem : MonoBehaviour
         ImageLoaded = Callback<AvatarImageLoaded_t>.Create(OnImageLoaded);
     } 
 
+    public void ChangeReadyStatus(){
+        if(ready){
+            playerReadyText.text = "Ready";
+            playerReadyText.color = Color.green;
+        }
+        else{
+            playerReadyText.text = "Not Ready";
+            playerReadyText.color = Color.red;
+        }
+    }
+
     private void GetPlayerIcon(){
         int imageID = SteamFriends.GetLargeFriendAvatar((CSteamID)playerSteamID);
+
         if(imageID == -1)//If error
             return;
+
+        playerIcon.texture = GetSteamImageAsTexture(imageID);
     }
 
     public void SetPlayerValues(){
         playerNameText.text = playerName;
+        ChangeReadyStatus();
         if(!avaterRecieved)
             GetPlayerIcon();
     }
