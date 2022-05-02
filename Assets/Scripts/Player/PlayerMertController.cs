@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerMertController : NetworkBehaviour
 {
-    [SerializeField] private NetworkIdentity netId;
     [SerializeField] private NavMeshAgent navMeshAgent;
-    [SerializeField] private Camera cam;
+    [SerializeField] private Camera camPrefab;
     [SerializeField] private Animator animator;
     [SerializeField] private SelectIndicator indicators;
     [SerializeField] private BasicAttackController bac;
@@ -33,14 +32,14 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        if (!netId.hasAuthority) return;
-        cam.gameObject.SetActive(true);
+        if (!hasAuthority) return;
+        camPrefab.gameObject.SetActive(true);
         _hc = GetComponent<HealthController>();
     }
 
     void Update()
     {
-        if (!netId.hasAuthority) return;
+        if (!hasAuthority) return;
 
         if (!navMeshAgent.hasPath)
         {
@@ -58,7 +57,7 @@ public class PlayerController : MonoBehaviour
     {
         if (input is InputType.MouseLeft || input is InputType.MouseRight)
         {
-            Ray myRay = cam.ScreenPointToRay(Input.mousePosition);
+            Ray myRay = camPrefab.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(myRay, out _hitInfo, 100))
             {
                 if (_hitInfo.collider.TryGetComponent(out HealthController hc))

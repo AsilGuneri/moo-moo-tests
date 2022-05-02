@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-public class SelectIndicator : MonoBehaviour
+public class SelectIndicator : NetworkBehaviour
 {
-    [SerializeField] private NetworkIdentity netId;
     [SerializeField] private Transform staticIndicator;
     [SerializeField] private Transform dynamicIndicator;
 
@@ -24,7 +23,7 @@ public class SelectIndicator : MonoBehaviour
    
     private void LateUpdate()
     {
-        if (!netId.hasAuthority) return;
+        if (!hasAuthority) return;
         if (_isFollowing)
         {
             DynamicIndicator.position = _target.position;
