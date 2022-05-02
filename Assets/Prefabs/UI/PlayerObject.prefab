@@ -3677,8 +3677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b42a71ba4614c4cabfd7cc450dde81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
+  netId: {fileID: 8488606331175796428}
   navMeshAgent: {fileID: 3375363769861778483}
   cam: {fileID: 1304852364572942297}
   animator: {fileID: 5236230098544276943}
@@ -3745,6 +3744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f91d10f3431bd5d46a67bfb3d5cbccdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  netId: {fileID: 8488606331175796428}
   staticIndicator: {fileID: 1928126125415427547}
   dynamicIndicator: {fileID: 234112314748740058}
 --- !u!114 &679609119670935004
@@ -3759,6 +3759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a9c11651351a244ab11f8438cdc7d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  netId: {fileID: 8488606331175796428}
   projectilePrefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
   navMeshAgent: {fileID: 3375363769861778483}
   OnAttackStart:

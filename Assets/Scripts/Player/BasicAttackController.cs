@@ -6,8 +6,9 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 
 
-public class BasicAttackController : NetworkBehaviour
+public class BasicAttackController : MonoBehaviour
 {
+    [SerializeField] private NetworkIdentity netId;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private NavMeshAgent navMeshAgent;
 
@@ -23,7 +24,7 @@ public class BasicAttackController : NetworkBehaviour
 
     private void Start()
     {
-        if (!hasAuthority) return;
+        if (!netId.hasAuthority) return;
 
         UpdateCooldown();
         OnAttackEnd.AddListener(EndBasicAttackAnim);
@@ -31,7 +32,7 @@ public class BasicAttackController : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (!hasAuthority) return;
+        if (!netId.hasAuthority) return;
 
         if (_isCounting)
         {

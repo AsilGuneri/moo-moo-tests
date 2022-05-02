@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerController : NetworkBehaviour
+public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private NetworkIdentity netId;
     [SerializeField] private NavMeshAgent navMeshAgent;
     [SerializeField] private Camera cam;
     [SerializeField] private Animator animator;
     [SerializeField] private SelectIndicator indicators;
     [SerializeField] private BasicAttackController bac;
+
 
     private string _currentAnimState;
     private HealthController _hc;
@@ -31,14 +33,14 @@ public class PlayerController : NetworkBehaviour
 
     void Start()
     {
-        if (!hasAuthority) return;
+        if (!netId.hasAuthority) return;
         cam.gameObject.SetActive(true);
         _hc = GetComponent<HealthController>();
     }
 
     void Update()
     {
-        if (!hasAuthority) return;
+        if (!netId.hasAuthority) return;
 
         if (!navMeshAgent.hasPath)
         {
