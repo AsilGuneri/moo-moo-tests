@@ -19,8 +19,8 @@ public class CustomNetworkManager : NetworkManager
             return;
 
         PlayerObjectController gamePlayerInstance = Instantiate(gamePlayerPrefab);
-        gamePlayerInstance.connectionID = conn.connectionId;
         gamePlayerInstance.conn = conn;
+        gamePlayerInstance.connectionID = conn.connectionId;
         gamePlayerInstance.playerIDNumber = gamePlayers.Count + 1;
         gamePlayerInstance.playerSteamID = (ulong)SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)SteamLobby.instance.currentLobbyID, gamePlayers.Count);
 
@@ -38,6 +38,7 @@ public class CustomNetworkManager : NetworkManager
             {
                 GameObject p = Instantiate(prefab, null);
                 NetworkServer.Spawn(p, gamePlayers[i].conn);
+                NetworkServer.ReplacePlayerForConnection(gamePlayers[i].conn, p);
             }
         }
         base.OnServerSceneChanged(sceneName);
