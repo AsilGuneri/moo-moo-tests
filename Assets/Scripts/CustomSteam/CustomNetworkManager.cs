@@ -9,8 +9,10 @@ using UnityEngine.SceneManagement;
 
 public class CustomNetworkManager : NetworkManager
 {
+    [SerializeField]private GameObject prefab;
     [SerializeField]private PlayerObjectController gamePlayerPrefab;
     public List<PlayerObjectController> gamePlayers { get; } = new List<PlayerObjectController>();
+    NetworkConnectionToClient _conn;
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
@@ -23,10 +25,20 @@ public class CustomNetworkManager : NetworkManager
         gamePlayerInstance.playerSteamID = (ulong)SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)SteamLobby.instance.currentLobbyID, gamePlayers.Count);
 
         NetworkServer.AddPlayerForConnection(conn, gamePlayerInstance.gameObject);
+        _conn = conn;
     }
 
     public void StartGame(string sceneName){
         ServerChangeScene(sceneName);
+    }
+
+    public override void OnServerSceneChanged(string sceneName)
+    {
+        if(SceneManager.GetActiveScene().name == "GameScene"){
+            GameObject p = Instantiate(prefab, null);
+            NetworkServer.Spawn(p, _conn);
+        }
+        base.OnServerSceneChanged(sceneName);
     }
 
 }

@@ -92,4 +92,5 @@ public class PlayerObjectController : NetworkBehaviour
     public void CmdCanStartGame(string sceneName){
         _manager.StartGame(sceneName);
     }
+
 }

@@ -6,19 +6,11 @@ public class FollowingCamera : MonoBehaviour
 {
     [SerializeField] private Vector3 offset;
     public Transform target;
-    // Start is called before the first frame update
-    private void Awake()
-    {
-    }
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void LateUpdate()
     {
-      //  if (!target) return;
-       // transform.position = target.position + offset;
+       if (!target) return;
+       transform.position = target.position + offset;
     }
 }
