@@ -6,6 +6,7 @@ using Steamworks;
 
 public class PlayerObjectController : NetworkBehaviour
 {
+    public NetworkConnection conn;
     [SyncVar] public int connectionID;
     [SyncVar] public int playerIDNumber;
     [SyncVar] public ulong playerSteamID;
