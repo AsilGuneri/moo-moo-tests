@@ -43,14 +43,23 @@ public class PlayerMertController : NetworkBehaviour
 
         if (!navMeshAgent.hasPath)
         {
-            if (_currentAnimState != "Idle") _currentAnimState = AnimationManager.Instance.ChangeAnimationState("Idle", animator, _currentAnimState);
+            //if (_currentAnimState != "Idle") _currentAnimState = AnimationManager.Instance.ChangeAnimationState("Idle", animator, _currentAnimState);
+            if (_currentAnimState != "Idle") ChangeAnimation("Idle", false);
+            Debug.Log("stop");
         }
-        else
+        else if (navMeshAgent.hasPath)
         {
-            if (_currentAnimState != "Run") _currentAnimState = AnimationManager.Instance.ChangeAnimationState("Run", animator, _currentAnimState);
+            Debug.Log("run");
+
+            if (_currentAnimState != "Run") ChangeAnimation("Run", false);
         }
         if (Input.GetMouseButtonDown(0)) HandleInputs(InputType.MouseLeft);
         if (Input.GetMouseButtonDown(1)) HandleInputs(InputType.MouseRight);
+    }
+    public void ChangeAnimation(string nextState,bool canCancel)
+    {
+        AnimationManager.Instance.ChangeAnimationState(nextState, _currentAnimState, animator, canCancel);
+        _currentAnimState = nextState;
     }
 
     private void HandleInputs(InputType input)
@@ -109,9 +118,10 @@ public class PlayerMertController : NetworkBehaviour
     private void Move(Vector3 pos)
     {
         navMeshAgent.SetDestination(pos);
-        if (_currentAnimState != "Run") _currentAnimState = AnimationManager.Instance.ChangeAnimationState("Run", animator, _currentAnimState);
+        if (_currentAnimState != "Run") ChangeAnimation("Run", false);
+
     }
-   private void SelectUnit(HealthController hc)
+    private void SelectUnit(HealthController hc)
     {
         //if(I say no)
         //        you say PLEAASE

@@ -27,7 +27,11 @@ public class AnimationManager : ScriptableSingleton<AnimationManager>
         Debug.Log(currentState + " " + newState);
         return newState;
     }
-
+    public void ChangeAnimationState(string newState, string currentState, Animator animator, bool canCancel)
+    {
+        if (!canCancel && newState == currentState) return;
+        animator.CrossFade(newState, 0.2f);
+    }
 }
 public enum AnimType
 {

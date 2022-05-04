@@ -20,6 +20,7 @@ public class BasicAttackController : NetworkBehaviour
     private bool _isCounting = false;
     private float _timer = 0;
     private HealthController _hc;
+    private PlayerMertController _pc;
 
     private void Start()
     {
@@ -27,6 +28,7 @@ public class BasicAttackController : NetworkBehaviour
 
         UpdateCooldown();
         OnAttackEnd.AddListener(EndBasicAttackAnim);
+        _pc = GetComponent<PlayerMertController>();
     }
 
     private void FixedUpdate()
@@ -46,12 +48,14 @@ public class BasicAttackController : NetworkBehaviour
         if (navMeshAgent.hasPath)
         {
             navMeshAgent.SetDestination(transform.position);
-            AnimationManager.Instance.ChangeAnimationState("BasicAttack", animator, lastState);
+            //AnimationManager.Instance.ChangeAnimationState("BasicAttack", animator, lastState);
+            _pc.ChangeAnimation("BasicAttack", false);
 
         }
         _hc = hc;
 
-        AnimationManager.Instance.ChangeAnimationState("BasicAttack", animator, lastState);
+        //AnimationManager.Instance.ChangeAnimationState("BasicAttack", animator, lastState);
+        _pc.ChangeAnimation("BasicAttack", false);
         transform.LookAt(hc.transform);
         hc.TakeDamage(_basicDamage);
         DealDamage();
