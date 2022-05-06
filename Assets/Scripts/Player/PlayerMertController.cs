@@ -7,12 +7,12 @@ using UnityEngine.AI;
 public class PlayerMertController : NetworkBehaviour
 {
     [SerializeField] private NavMeshAgent navMeshAgent;
-    [SerializeField] private Camera camPrefab;
+    [SerializeField] private GameObject camPrefab;
     [SerializeField] private Animator animator;
     [SerializeField] private SelectIndicator indicators;
     [SerializeField] private BasicAttackController bac;
 
-
+    private Camera myCam;
     private string _currentAnimState;
     private HealthController _hc;
     private HealthController _target;
@@ -33,26 +33,21 @@ public class PlayerMertController : NetworkBehaviour
     void Start()
     {
         if (!hasAuthority) return;
-        camPrefab.gameObject.SetActive(true);
+        myCam = Instantiate(camPrefab, transform.position, Quaternion.identity).GetComponent<Camera>();
+        myCam.GetComponent<FollowingCamera>().target = transform;
+   //     camPrefab.gameObject.SetActive(true);
         _hc = GetComponent<HealthController>();
     }
 
     void Update()
     {
         if (!hasAuthority) return;
-
-        if (!navMeshAgent.hasPath)
+        if (Input.GetKeyDown(KeyCode.Space)) WaveManager.Instance.SpawnWave(WaveManager.Instance.waves[0]);
+        if (!navMeshAgent.hasPath && (!bac.IsAttacking || _currentAnimState != "Shoot"))
         {
-            //if (_currentAnimState != "Idle") _currentAnimState = AnimationManager.Instance.ChangeAnimationState("Idle", animator, _currentAnimState);
             if (_currentAnimState != "Idle") ChangeAnimation("Idle", false);
-            Debug.Log("stop");
         }
-        else if (navMeshAgent.hasPath)
-        {
-            Debug.Log("run");
-
-            if (_currentAnimState != "Run") ChangeAnimation("Run", false);
-        }
+     
         if (Input.GetMouseButtonDown(0)) HandleInputs(InputType.MouseLeft);
         if (Input.GetMouseButtonDown(1)) HandleInputs(InputType.MouseRight);
     }
@@ -66,7 +61,7 @@ public class PlayerMertController : NetworkBehaviour
     {
         if (input is InputType.MouseLeft || input is InputType.MouseRight)
         {
-            Ray myRay = camPrefab.ScreenPointToRay(Input.mousePosition);
+            Ray myRay = myCam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(myRay, out _hitInfo, 100))
             {
                 if (_hitInfo.collider.TryGetComponent(out HealthController hc))
@@ -93,10 +88,8 @@ public class PlayerMertController : NetworkBehaviour
     private void HandleRightClick(HealthController hc, Vector3 point)
     {   
         if(hc == null){
-            Debug.Log("Hc Null");
         }
         if(hc == _hc){
-            Debug.Log("Hc Esit");
         }
         if (hc && hc != _hc) BasicAttack(hc);
         else Move(point);
@@ -112,13 +105,14 @@ public class PlayerMertController : NetworkBehaviour
     private void BasicAttack(HealthController hc)
     {
         SelectUnit(hc);
-        bac.BasicAttack(hc, animator, _currentAnimState);
+        bac.BasicAttack(hc, _currentAnimState);
 
     }
     private void Move(Vector3 pos)
     {
         navMeshAgent.SetDestination(pos);
         if (_currentAnimState != "Run") ChangeAnimation("Run", false);
+        bac.IsAutoAttacking = false;
 
     }
     private void SelectUnit(HealthController hc)

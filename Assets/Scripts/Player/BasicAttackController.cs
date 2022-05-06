@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 
 public class BasicAttackController : NetworkBehaviour
@@ -18,16 +19,25 @@ public class BasicAttackController : NetworkBehaviour
     private float _basicCoolDown = 1f;
     private bool _basicAttackReady = true;
     private bool _isCounting = false;
+    private bool _isAttacking = false;
+    private bool _isAutoAttacking = false;
     private float _timer = 0;
     private HealthController _hc;
     private PlayerMertController _pc;
+
+    public bool IsAttacking { get => _isAttacking; }
+    public bool IsAutoAttacking 
+    {
+        get => _isAutoAttacking;
+        set => _isAutoAttacking = value;
+    }
 
     private void Start()
     {
         if (!hasAuthority) return;
 
         UpdateCooldown();
-        OnAttackEnd.AddListener(EndBasicAttackAnim);
+        OnAttackEnd.AddListener(EndBasicAttack);
         _pc = GetComponent<PlayerMertController>();
     }
 
@@ -41,21 +51,23 @@ public class BasicAttackController : NetworkBehaviour
             if (_timer >= _basicCoolDown) EndBasicCoolDown();
         }
     }
-    public virtual void BasicAttack(HealthController hc, Animator animator, string lastState)
+    public virtual void BasicAttack(HealthController hc, string lastState)
     {
 
         if (!_basicAttackReady) return;
+        _isAutoAttacking = true;
+        _isAttacking = true;
         if (navMeshAgent.hasPath)
         {
             navMeshAgent.SetDestination(transform.position);
             //AnimationManager.Instance.ChangeAnimationState("BasicAttack", animator, lastState);
-            _pc.ChangeAnimation("BasicAttack", false);
+            _pc.ChangeAnimation("Shoot", true);
 
         }
         _hc = hc;
 
         //AnimationManager.Instance.ChangeAnimationState("BasicAttack", animator, lastState);
-        _pc.ChangeAnimation("BasicAttack", false);
+        _pc.ChangeAnimation("Shoot", true);
         transform.LookAt(hc.transform);
         hc.TakeDamage(_basicDamage);
         DealDamage();
@@ -89,11 +101,17 @@ public class BasicAttackController : NetworkBehaviour
     private void EndBasicCoolDown()
     {
         _basicAttackReady = true;
-
+        if (_isAutoAttacking) BasicAttack(_hc, "Shoot");
     }
-    private void EndBasicAttackAnim()
+    private void EndBasicAttack()
     {
-        GetComponent<Animator>().SetBool("BasicAttack", false);
+        _isAttacking = false;
+     //   StartCoroutine(nameof(RepeatBasicAttack));
+    }
+    private IEnumerator RepeatBasicAttack()
+    {
+        yield return new WaitUntil(() => _basicAttackReady);
+        BasicAttack(_hc, "Shoot");
     }
 
 }

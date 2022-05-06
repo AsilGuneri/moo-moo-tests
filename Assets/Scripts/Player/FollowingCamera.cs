@@ -10,7 +10,8 @@ public class FollowingCamera : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-       if (!target) return;
-       transform.position = target.position + offset;
+        if (!target) return;
+        transform.position = target.position + offset;
+        transform.LookAt(target);
     }
 }

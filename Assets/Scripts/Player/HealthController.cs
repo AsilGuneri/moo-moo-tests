@@ -1,26 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthController : MonoBehaviour
 {
+    [SerializeField] private Slider healthBar;
     [SerializeField] private int _maxHp;
     [SerializeField] protected Vector3 _respawnPos;
     protected int _currentHp;
-    
 
+    protected int CurrentHp 
+    {
+        get
+        {
+            float percentage = ((float) _currentHp / (float)_maxHp);
+            healthBar.value = percentage;
+            return _currentHp; 
+        }
+        set
+        {
+            _currentHp = value;
+            float percentage = ((float)_currentHp / (float)_maxHp);
+            healthBar.value = percentage;
+        }
+    }
+
+    private void Start()
+    {
+        CurrentHp = _maxHp;
+    }
     protected virtual void RegenerateHp()
     {
 
     }
     public virtual void TakeDamage(int damage)
     {
-        _currentHp -= damage;
+        CurrentHp -= damage;
       //  if (_currentHp <= 0) Die();
     }
     protected virtual void Heal(int amount)
     {
-        _currentHp += amount;
+        CurrentHp += amount;
     }
     public virtual void Die()
     {
@@ -31,7 +52,7 @@ public class HealthController : MonoBehaviour
     {
         transform.position = _respawnPos;
         gameObject.SetActive(true);
-        _currentHp = _maxHp;
+        CurrentHp = _maxHp;
     }
 
  //   private void 
