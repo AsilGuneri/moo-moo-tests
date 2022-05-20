@@ -119,7 +119,7 @@ public class LobbyController : MonoBehaviour
     public void CreateClientPlayerItem(){
         foreach(PlayerObjectController player in _manager.gamePlayers){
             if(!playerListItems.Any(b => b.connectionID == player.connectionID)){
-                
+                MenuManager.instance.OpenMenu("Room");
                 GameObject newPlayerItem = Instantiate(playerListItemPrefab) as GameObject;
                 PlayerListItem newPlayerItemScript = newPlayerItem.GetComponent<PlayerListItem>();
 
