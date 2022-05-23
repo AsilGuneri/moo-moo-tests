@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 1254923147573196431}
   - component: {fileID: 4802373597241472713}
   - component: {fileID: 5033425705167825775}
-  - component: {fileID: 980044999959108562}
-  - component: {fileID: 8438093040683149169}
+  - component: {fileID: 1467780836226885302}
+  - component: {fileID: 196633588607013169}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -149,7 +149,7 @@ CapsuleCollider:
   m_Height: 1.2125921
   m_Direction: 1
   m_Center: {x: 0, y: -0.10629606, z: 0}
---- !u!114 &980044999959108562
+--- !u!114 &1467780836226885302
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -162,11 +162,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
-  serverOnly: 0
+  serverOnly: 1
   visible: 0
   m_AssetId: 71cebeb32a3c54e49b7bdb96b85d73b7
   hasSpawned: 0
---- !u!114 &8438093040683149169
+--- !u!114 &196633588607013169
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
