@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 using Utilities;
 using UnityEngine.AI;
-using Mirror;
 
 public class ObjectPooler : Singleton<ObjectPooler>
 {
@@ -53,7 +52,6 @@ public class ObjectPooler : Singleton<ObjectPooler>
                 GameObject obj = Instantiate(allPools[i].Prefab, poolParent.transform);
                 pooledObjects.Add(obj);
                 obj.SetActive(false);
-                NetworkServer.Spawn(obj);
 
             }
 

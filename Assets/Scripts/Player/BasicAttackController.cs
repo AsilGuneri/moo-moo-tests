@@ -1,4 +1,3 @@
-using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 
-public class BasicAttackController : NetworkBehaviour
+public class BasicAttackController : MonoBehaviour
 {
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private NavMeshAgent navMeshAgent;
@@ -34,7 +33,7 @@ public class BasicAttackController : NetworkBehaviour
 
     private void Start()
     {
-        if (!hasAuthority) return;
+       // if (!hasAuthority) return;
 
         UpdateCooldown();
         OnAttackEnd.AddListener(EndBasicAttack);
@@ -43,7 +42,7 @@ public class BasicAttackController : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (!hasAuthority) return;
+        //if (!hasAuthority) return;
 
         if (_isCounting)
         {

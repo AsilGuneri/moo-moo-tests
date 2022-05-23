@@ -1,10 +1,9 @@
-using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerMertController : NetworkBehaviour
+public class PlayerMertController : MonoBehaviour
 {
     [SerializeField] private NavMeshAgent navMeshAgent;
     [SerializeField] private GameObject camPrefab;
@@ -32,7 +31,7 @@ public class PlayerMertController : NetworkBehaviour
 
     void Start()
     {
-        if (!hasAuthority) return;
+      //  if (!hasAuthority) return;
         myCam = Instantiate(camPrefab, transform.position, Quaternion.identity).GetComponent<Camera>();
         myCam.GetComponent<FollowingCamera>().target = transform;
    //     camPrefab.gameObject.SetActive(true);
@@ -41,7 +40,7 @@ public class PlayerMertController : NetworkBehaviour
 
     void Update()
     {
-        if (!hasAuthority) return;
+     //   if (!hasAuthority) return;
         if (Input.GetKeyDown(KeyCode.Space)) WaveManager.Instance.SpawnWave(WaveManager.Instance.waves[0]);
         if (!navMeshAgent.hasPath && (!bac.IsAttacking || _currentAnimState != "Shoot"))
         {
