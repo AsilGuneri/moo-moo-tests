@@ -68213,6 +68213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4756adf68d9a84e4daa6d98c18068e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitType: 0
+  TeamId: 1
   healthBar: {fileID: 5689978973427455355}
   _maxHp: 50
   _respawnPos: {x: 0, y: 0, z: 0}

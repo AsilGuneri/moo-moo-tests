@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class HealthController : MonoBehaviour
 {
+    public UnitType unitType;
+    public int TeamId;
+
     [SerializeField] private Slider healthBar;
     [SerializeField] private int _maxHp;
     [SerializeField] protected Vector3 _respawnPos;
@@ -28,6 +31,7 @@ public class HealthController : MonoBehaviour
 
     private void Start()
     {
+        if (TeamId == 1) UnitManager.Instance.RegisterAllyUnits(this);
         CurrentHp = _maxHp;
     }
     protected virtual void RegenerateHp()
@@ -56,4 +60,9 @@ public class HealthController : MonoBehaviour
     }
 
  //   private void 
+}
+public enum UnitType
+{
+    Unit,
+    Building
 }

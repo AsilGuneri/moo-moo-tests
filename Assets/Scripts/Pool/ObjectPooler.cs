@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Utilities;
+using UnityEngine.AI;
 
 public class ObjectPooler : Singleton<ObjectPooler>
 {
@@ -32,12 +33,13 @@ public class ObjectPooler : Singleton<ObjectPooler>
             poolObj.SetActive(true);
             poolObj.transform.localPosition = position;
             poolObj.transform.localRotation = rotation;
-          
+            if (poolObj.TryGetComponent(out NavMeshAgent agent)) agent.enabled = true;
+
             return poolObj;
         }
-       // GameObject obj = Instantiate(allPools[pool].Prefab, position, rotation);
-     //   allPooledObjects[pool].PooledObjects.Add(obj);
-        return null;
+        GameObject obj = Instantiate(allPools[pool].Prefab, position, rotation);
+        allPooledObjects[pool].PooledObjects.Add(obj);
+        return obj;
     }
     private void InstantiatePoolObjects()
     {
