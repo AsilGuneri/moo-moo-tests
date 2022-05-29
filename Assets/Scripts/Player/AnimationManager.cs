@@ -29,6 +29,7 @@ public class AnimationManager : ScriptableSingleton<AnimationManager>
     }
     public void ChangeAnimationState(string newState, string currentState, Animator animator, bool canCancel)
     {
+        Debug.Log("asil " + newState);
         if (!canCancel && newState == currentState) return;
         else animator.CrossFade(newState, 0.1f);
 

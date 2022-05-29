@@ -60,13 +60,13 @@ public class BasicAttackController : MonoBehaviour
         {
             navMeshAgent.SetDestination(transform.position);
             //AnimationManager.Instance.ChangeAnimationState("BasicAttack", animator, lastState);
-            _pc.ChangeAnimation("Shoot", true);
+            _pc.Animate("Shoot", true);
 
         }
         _hc = hc;
 
         //AnimationManager.Instance.ChangeAnimationState("BasicAttack", animator, lastState);
-        _pc.ChangeAnimation("Shoot", true);
+        _pc.Animate("Shoot", true);
         transform.LookAt(hc.transform);
         hc.TakeDamage(_basicDamage);
         DealDamage();

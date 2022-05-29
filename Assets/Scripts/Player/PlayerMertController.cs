@@ -2,65 +2,73 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Mirror;
 
-public class PlayerMertController : MonoBehaviour
+public class PlayerMertController : NetworkBehaviour
 {
     [SerializeField] private NavMeshAgent navMeshAgent;
-    [SerializeField] private GameObject camPrefab;
     [SerializeField] private Animator animator;
     [SerializeField] private SelectIndicator indicators;
     [SerializeField] private BasicAttackController bac;
 
-    private Camera myCam;
+    private Camera mainCamera;
     private string _currentAnimState;
     private HealthController _hc;
     private HealthController _target;
     private RaycastHit _hitInfo;
+    private bool _hasPath;
 
     private float _attackSpeed = 1; //Available attack per seconds
 
-    public float AttackSpeed 
-    { 
+    public float AttackSpeed
+    {
         get => _attackSpeed;
-        set 
+        set
         {
             _attackSpeed = value;
             bac.UpdateCooldown();
         }
     }
-
-    void Start()
+    #region Server
+  /*  [Command]
+    private void CmdMove(Vector3 pos)
     {
-      //  if (!hasAuthority) return;
-        myCam = Instantiate(camPrefab, transform.position, Quaternion.identity).GetComponent<Camera>();
-        myCam.GetComponent<FollowingCamera>().target = transform;
-   //     camPrefab.gameObject.SetActive(true);
+        ClientMove(pos);
+    }*/
+
+
+    #endregion
+    #region Client
+
+    public override void OnStartAuthority()
+    {
+        mainCamera = Camera.main;
+        mainCamera.GetComponent<FollowingCamera>().target = transform;
         _hc = GetComponent<HealthController>();
     }
-
+    [ClientCallback]
     void Update()
     {
-     //   if (!hasAuthority) return;
-        if (Input.GetKeyDown(KeyCode.Space)) WaveManager.Instance.SpawnWave(WaveManager.Instance.waves[0]);
+        if (!hasAuthority) return;
         if (!navMeshAgent.hasPath && (!bac.IsAttacking || _currentAnimState != "Shoot"))
         {
-            if (_currentAnimState != "Idle") ChangeAnimation("Idle", false);
+            if (_currentAnimState != "Idle") Animate("Idle", false);
         }
-     
+
         if (Input.GetMouseButtonDown(0)) HandleInputs(InputType.MouseLeft);
         if (Input.GetMouseButtonDown(1)) HandleInputs(InputType.MouseRight);
     }
-    public void ChangeAnimation(string nextState,bool canCancel)
+    private void ClientMove(Vector3 pos)
     {
-        AnimationManager.Instance.ChangeAnimationState(nextState, _currentAnimState, animator, canCancel);
-        _currentAnimState = nextState;
+        navMeshAgent.SetDestination(pos);
+        if (_currentAnimState != "Run") Animate("Run", false);
+        bac.IsAutoAttacking = false;
     }
-
     private void HandleInputs(InputType input)
     {
         if (input is InputType.MouseLeft || input is InputType.MouseRight)
         {
-            Ray myRay = myCam.ScreenPointToRay(Input.mousePosition);
+            Ray myRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(myRay, out _hitInfo, 100))
             {
                 if (_hitInfo.collider.TryGetComponent(out HealthController hc))
@@ -72,7 +80,7 @@ public class PlayerMertController : MonoBehaviour
                     _target = null;
                 }
             }
-        }       
+        }
         switch (input)
         {
             case InputType.MouseLeft:
@@ -83,36 +91,21 @@ public class PlayerMertController : MonoBehaviour
                 break;
         }
     }
-
     private void HandleRightClick(HealthController hc, Vector3 point)
-    {   
-        if(hc == null){
-        }
-        if(hc == _hc){
-        }
+    {
         if (hc && hc != _hc) BasicAttack(hc);
-        else Move(point);
-        
+        else
+        {
+            ClientMove(point);
+
+        }
+
     }
     private void HandleLeftClick(HealthController hc)
     {
 
         if (hc && hc != _hc) SelectUnit(hc);
         else DeselectUnit();
-    }
-
-    private void BasicAttack(HealthController hc)
-    {
-        SelectUnit(hc);
-        bac.BasicAttack(hc, _currentAnimState);
-
-    }
-    private void Move(Vector3 pos)
-    {
-        navMeshAgent.SetDestination(pos);
-        if (_currentAnimState != "Run") ChangeAnimation("Run", false);
-        bac.IsAutoAttacking = false;
-
     }
     private void SelectUnit(HealthController hc)
     {
@@ -124,6 +117,20 @@ public class PlayerMertController : MonoBehaviour
     private void DeselectUnit()
     {
         indicators.SetupIndicator(null, false);
+    }
+    public void Animate(string nextState, bool canCancel)
+    {
+        AnimationManager.Instance.ChangeAnimationState(nextState, _currentAnimState, animator, canCancel);
+        _currentAnimState = nextState;
+    }
+    #endregion
+
+
+    private void BasicAttack(HealthController hc)
+    {
+        SelectUnit(hc);
+        bac.BasicAttack(hc, _currentAnimState);
+
     }
 }
 
