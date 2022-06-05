@@ -3,14 +3,74 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
-using UnityEngine.UI;
+using Mirror;
+using UnityEngine.UIElements;
 
-
-public class BasicAttackController : MonoBehaviour
+public class BasicAttackController : NetworkBehaviour
 {
     [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private NavMeshAgent navMeshAgent;
+    [SerializeField] private Transform projectileSpawnPoint;
+    [SerializeField] private float attackRange;
+    [SerializeField] private float fireRate;
+    [SerializeField] private PlayerAnimationController pac;
+    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private float range;
 
+    [SerializeField] private int damage;
+
+    private Health _target;
+    private float counter;
+    private GameObject _lastProjectile;
+
+    public Health Target
+    {
+        get => _target;
+        set => _target = value;
+    }
+    public bool IsAttacking
+    {
+        get;set;
+    }
+
+    #region Server
+    [Server]
+    private bool CanFireAtTarget()
+    {
+        return (_target.transform.position - transform.position).sqrMagnitude > attackRange * attackRange;
+    }
+    [Command]
+    private void CmdSpawnProjectile()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+        projectile.GetComponent<Projectile>().SetupProjectile(_target.gameObject, damage);
+
+        NetworkServer.Spawn(projectile, connectionToClient);
+    }
+    #endregion
+    #region Client
+    [ClientCallback]
+    private void Update()
+    {
+        if (counter <= fireRate) counter += Time.deltaTime;
+        if (!_target) { agent.stoppingDistance = 0; return; }
+        if (Vector2.Distance(Extensions.Vector3ToVector2(_target.transform.position), Extensions.Vector3ToVector2(transform.position)) > range)
+        {
+            agent.stoppingDistance = range;
+            agent.SetDestination(_target.transform.position);
+        }
+        else if (counter >= fireRate)
+        {
+            transform.LookAt(new Vector3(_target.transform.position.x, transform.position.y, _target.transform.position.z));
+            pac.Animate("Shoot", true);
+          //  CmdSpawnProjectile(_target.gameObject);
+            counter = 0;
+        }
+       
+    }
+    #endregion
+
+    /*[SerializeField] private NavMeshAgent navMeshAgent;
+    
     public UnityEvent OnAttackStart;
     public UnityEvent OnAttackEnd;
 
@@ -21,9 +81,9 @@ public class BasicAttackController : MonoBehaviour
     private bool _isAttacking = false;
     private bool _isAutoAttacking = false;
     private float _timer = 0;
-    private HealthController _hc;
+    private Health _hc;
     private PlayerMertController _pc;
-
+    
     public bool IsAttacking { get => _isAttacking; }
     public bool IsAutoAttacking 
     {
@@ -50,7 +110,7 @@ public class BasicAttackController : MonoBehaviour
             if (_timer >= _basicCoolDown) EndBasicCoolDown();
         }
     }
-    public virtual void BasicAttack(HealthController hc, string lastState)
+    public virtual void BasicAttack(Health hc, string lastState)
     {
 
         if (!_basicAttackReady) return;
@@ -112,5 +172,5 @@ public class BasicAttackController : MonoBehaviour
         yield return new WaitUntil(() => _basicAttackReady);
         BasicAttack(_hc, "Shoot");
     }
-
+    */
 }

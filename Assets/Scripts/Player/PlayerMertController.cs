@@ -10,25 +10,14 @@ public class PlayerMertController : NetworkBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SelectIndicator indicators;
     [SerializeField] private BasicAttackController bac;
+    [SerializeField] private PlayerAnimationController pac;
 
     private Camera mainCamera;
-    private string _currentAnimState;
-    private HealthController _hc;
-    private HealthController _target;
+    private Health _hc;
+    private Health _target;
     private RaycastHit _hitInfo;
     private bool _hasPath;
 
-    private float _attackSpeed = 1; //Available attack per seconds
-
-    public float AttackSpeed
-    {
-        get => _attackSpeed;
-        set
-        {
-            _attackSpeed = value;
-            bac.UpdateCooldown();
-        }
-    }
     #region Server
   /*  [Command]
     private void CmdMove(Vector3 pos)
@@ -44,15 +33,15 @@ public class PlayerMertController : NetworkBehaviour
     {
         mainCamera = Camera.main;
         mainCamera.GetComponent<FollowingCamera>().target = transform;
-        _hc = GetComponent<HealthController>();
+        _hc = GetComponent<Health>();
     }
     [ClientCallback]
     void Update()
     {
         if (!hasAuthority) return;
-        if (!navMeshAgent.hasPath && (!bac.IsAttacking || _currentAnimState != "Shoot"))
+        if (!navMeshAgent.hasPath && !bac.Target)
         {
-            if (_currentAnimState != "Idle") Animate("Idle", false);
+            if (pac.CurrentAnimState != "Idle") pac.Animate("Idle", false);
         }
 
         if (Input.GetMouseButtonDown(0)) HandleInputs(InputType.MouseLeft);
@@ -61,8 +50,9 @@ public class PlayerMertController : NetworkBehaviour
     private void ClientMove(Vector3 pos)
     {
         navMeshAgent.SetDestination(pos);
-        if (_currentAnimState != "Run") Animate("Run", false);
-        bac.IsAutoAttacking = false;
+        if (pac.CurrentAnimState != "Run") pac.Animate("Run", false);
+        bac.Target = null;
+        bac.IsAttacking = false;
     }
     private void HandleInputs(InputType input)
     {
@@ -71,7 +61,7 @@ public class PlayerMertController : NetworkBehaviour
             Ray myRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(myRay, out _hitInfo, 100))
             {
-                if (_hitInfo.collider.TryGetComponent(out HealthController hc))
+                if (_hitInfo.collider.TryGetComponent(out Health hc))
                 {
                     _target = hc;
                 }
@@ -91,7 +81,7 @@ public class PlayerMertController : NetworkBehaviour
                 break;
         }
     }
-    private void HandleRightClick(HealthController hc, Vector3 point)
+    private void HandleRightClick(Health hc, Vector3 point)
     {
         if (hc && hc != _hc) BasicAttack(hc);
         else
@@ -101,36 +91,30 @@ public class PlayerMertController : NetworkBehaviour
         }
 
     }
-    private void HandleLeftClick(HealthController hc)
+    private void HandleLeftClick(Health hc)
     {
 
         if (hc && hc != _hc) SelectUnit(hc);
         else DeselectUnit();
     }
-    private void SelectUnit(HealthController hc)
+    private void SelectUnit(Health hc)
     {
         //if(I say no)
         //        you say PLEAASE
-        indicators.SetupIndicator(hc.GetComponent<SelectIndicator>().StaticIndicator, true);
+       // indicators.SetupIndicator(hc.GetComponent<SelectIndicator>().StaticIndicator, true);
 
     }
     private void DeselectUnit()
     {
         indicators.SetupIndicator(null, false);
     }
-    public void Animate(string nextState, bool canCancel)
-    {
-        AnimationManager.Instance.ChangeAnimationState(nextState, _currentAnimState, animator, canCancel);
-        _currentAnimState = nextState;
-    }
     #endregion
 
 
-    private void BasicAttack(HealthController hc)
+    private void BasicAttack(Health hc)
     {
         SelectUnit(hc);
-        bac.BasicAttack(hc, _currentAnimState);
-
+        bac.Target = hc;
     }
 }
 

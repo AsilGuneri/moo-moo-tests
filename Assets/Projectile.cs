@@ -1,39 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-
-public class Projectile : MonoBehaviour
+public class Projectile : NetworkBehaviour
 {
-    [SerializeField] private float speed = 1;
-    private HealthController _target;
+    [SerializeField] public float speed = 1;
+    //private Health _target;
     private Vector3 _direction;
+    [SyncVar] private bool _isMoving;
+    private Vector3 _targetPos;
+    [SyncVar] private GameObject _target;
+    [SyncVar] private int _damage;
 
-    public HealthController Target
+
+    #region Server
+    [Server]
+    private void DestroySelf()
     {
-        get => _target;
-        set => _target = value;
+        NetworkServer.Destroy(gameObject);
     }
-
-    public void GoToPool()
+    [Command]
+    private void CmdTargetHit()
     {
-        Target = null;
-        Destroy(gameObject);
+        DestroySelf();
+        _target.GetComponent<Health>().TakeDamage(_damage);
     }
-
-    
+    #endregion
+    public override void OnStartAuthority()
+    {
+        base.OnStartAuthority();
+    }
+    public void SetupProjectile(GameObject target, int damage)
+    {
+        _target = target;
+        _damage = damage;
+        _isMoving = true;
+    }
+    [ClientCallback]
     private void Update()
     {
-        if (Target == null) return;
-        if (Vector3.Distance(transform.position, Target.transform.position) > 0.5f)
+        if (!hasAuthority) return; 
+
+        if (_target == null || !_isMoving) return;
+
+        if (Vector2.Distance(Extensions.Vector3ToVector2(transform.position),Extensions.Vector3ToVector2(_target.transform.position)) > 2)
         {
-            transform.position += Vector3WithoutY(Direction(Target.transform.position) * Time.deltaTime * speed);
-            transform.LookAt(Target.transform.position);
+            transform.position += Vector3WithoutY(Direction(_target.transform.position) * Time.deltaTime * speed);
+            transform.LookAt(_target.transform.position);
             return;
         }
         else
         {
-            GoToPool();
+            CmdTargetHit();
             return;
         }
 

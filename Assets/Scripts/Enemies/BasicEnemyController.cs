@@ -6,8 +6,8 @@ using UnityEngine.AI;
 public class BasicEnemyController : MonoBehaviour
 {
     [SerializeField] protected NavMeshAgent agent;
-    protected HealthController _hc;
-    protected HealthController _target;
+    protected Health _hc;
+    protected Health _target;
 
     private bool isChasing;
     private bool isInAttackRange;

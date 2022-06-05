@@ -3,37 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Singletons/Animation Manager")]
-public class AnimationManager : ScriptableSingleton<AnimationManager>
+public class AnimationManager : Singleton<AnimationManager>
 {
-    public string ChangeAnimationState(string newState, Animator animator, string currentState, AnimType type = AnimType.Bool)
+    public void ChangeAnimationState(string newState, string currentState, Animator animator, bool canCancel, bool canRestart)
     {
-        if (currentState == newState) return currentState;
-        foreach(var parameter in animator.parameters)
-        {
-            animator.SetBool(parameter.name, false);
-            // if(!isLooped) 
-        }
-        switch (type)
-        {
-            case AnimType.Bool:
-                animator.SetBool(newState, false);
-                break;
-            case AnimType.Trigger:
-                animator.SetTrigger(newState);
-                break;
-        }
-        animator.SetBool(newState, true);
-        Debug.Log(currentState + " " + newState);
-        return newState;
-    }
-    public void ChangeAnimationState(string newState, string currentState, Animator animator, bool canCancel)
-    {
-        Debug.Log("asil " + newState);
         if (!canCancel && newState == currentState) return;
-        else animator.CrossFade(newState, 0.1f);
-
+        if(canRestart) animator.CrossFade(newState, 0.01f, 0, 0);
+        else
+        {
+            animator.CrossFade(newState, 0.1f);
+        }
     }
+
 }
 public enum AnimType
 {
