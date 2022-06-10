@@ -15,12 +15,13 @@ public class BasicAttackController : NetworkBehaviour
     [SerializeField] private PlayerAnimationController pac;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float range;
-
-    [SerializeField] private int damage;
+    //
+   // [SyncVar][SerializeField] private int damage;
 
     private Health _target;
     private float counter;
-    private GameObject _lastProjectile;
+    public GameObject targetObj;
+    
 
     public Health Target
     {
@@ -42,7 +43,7 @@ public class BasicAttackController : NetworkBehaviour
     private void CmdSpawnProjectile()
     {
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-        projectile.GetComponent<Projectile>().SetupProjectile(_target.gameObject, damage);
+        projectile.GetComponent<Projectile>().SetupProjectile(targetObj);
 
         NetworkServer.Spawn(projectile, connectionToClient);
     }
@@ -61,8 +62,9 @@ public class BasicAttackController : NetworkBehaviour
         else if (counter >= fireRate)
         {
             transform.LookAt(new Vector3(_target.transform.position.x, transform.position.y, _target.transform.position.z));
-            pac.Animate("Shoot", true);
-          //  CmdSpawnProjectile(_target.gameObject);
+            pac.Animate("Shoot", true, true);
+            targetObj = Target.gameObject;
+            CmdSpawnProjectile();
             counter = 0;
         }
        

@@ -31,18 +31,19 @@ public class Projectile : NetworkBehaviour
     {
         base.OnStartAuthority();
     }
-    public void SetupProjectile(GameObject target, int damage)
+    public void SetupProjectile(GameObject target)
     {
         _target = target;
-        _damage = damage;
+        Debug.Log("asil");
+       // _damage = damage;
         _isMoving = true;
     }
     [ClientCallback]
     private void Update()
     {
         if (!hasAuthority) return; 
-
         if (_target == null || !_isMoving) return;
+        Debug.Log("2");
 
         if (Vector2.Distance(Extensions.Vector3ToVector2(transform.position),Extensions.Vector3ToVector2(_target.transform.position)) > 2)
         {
