@@ -24,11 +24,6 @@ public class PlayerMertController : NetworkBehaviour
         tc = GetComponent<TargetController>();
     }
     #region Server
-    /*  [Command]
-      private void CmdMove(Vector3 pos)
-      {
-          ClientMove(pos);
-      }*/
 
 
     #endregion
@@ -44,7 +39,7 @@ public class PlayerMertController : NetworkBehaviour
     void Update()
     {
         if (!hasAuthority) return;
-        if (!navMeshAgent.hasPath && !tc.Target)
+        if (!navMeshAgent.hasPath && !tc.HasTarget)
         {
             if (pac.CurrentAnimState != "Idle") pac.Animate("Idle", false);
         }
@@ -68,12 +63,13 @@ public class PlayerMertController : NetworkBehaviour
             {
                 if (_hitInfo.collider.TryGetComponent(out Health hc))
                 {
-                    Debug.Log("xx " + hc.name);
                     tc.SyncTarget(hc.gameObject);
+                    tc.HasTarget = true;
                 }
                 else
                 {
                     tc.SyncTarget(null);
+                    tc.HasTarget = false;
                 }
             }
         }
@@ -89,7 +85,7 @@ public class PlayerMertController : NetworkBehaviour
     }
     private void HandleRightClick(Vector3 point)
     {
-        if (tc.Target && tc.Target != gameObject) BasicAttack(tc.Target);
+        if (tc.HasTarget) BasicAttack(tc.Target);
         else
         {
             ClientMove(point);

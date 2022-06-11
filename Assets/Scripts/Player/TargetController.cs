@@ -6,14 +6,17 @@ using Mirror;
 public class TargetController : NetworkBehaviour
 {
     [SyncVar] public GameObject Target;
+    private bool _hasTarget;
+    public bool HasTarget
+    {
+        get => _hasTarget;
+        set => _hasTarget = value;
+    }
 
     [Command]
     public void SyncTarget(GameObject target)
     {
-        Debug.Log("xxx1" + target);
         Target = target;
-        Debug.Log("xxx2" + Target);
-
     }
     //USE HOOK HERE
 

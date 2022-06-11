@@ -37,17 +37,8 @@ public class BasicAttackController : NetworkBehaviour
     private void CmdSpawnProjectile()
     {
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-        Debug.Log("CMD spawn 1 ");
         projectile.GetComponent<Projectile>().SetupProjectile(tc.Target);
-        Debug.Log("CMD spawn 2" + projectile.GetComponent<Projectile>()._target + " " + tc.Target);
-
-        projectile.GetComponent<Projectile>()._target = tc.Target;
-        Debug.Log("CMD spawn 3" + projectile.GetComponent<Projectile>()._target + " " + tc.Target);
-
-
         NetworkServer.Spawn(projectile, gameObject);
-        Debug.Log("CMD spawn 4 ");
-
     }
     #endregion
     #region Client
