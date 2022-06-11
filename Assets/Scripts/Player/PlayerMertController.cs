@@ -14,16 +14,16 @@ public class PlayerMertController : NetworkBehaviour
 
     private Camera mainCamera;
     private Health _hc;
-    private Health _target;
     private RaycastHit _hitInfo;
     private bool _hasPath;
+    [SerializeField] private TargetController tc;
 
-    #region Server
-  /*  [Command]
-    private void CmdMove(Vector3 pos)
+
+    private void Awake()
     {
-        ClientMove(pos);
-    }*/
+        tc = GetComponent<TargetController>();
+    }
+    #region Server
 
 
     #endregion
@@ -39,7 +39,7 @@ public class PlayerMertController : NetworkBehaviour
     void Update()
     {
         if (!hasAuthority) return;
-        if (!navMeshAgent.hasPath && !bac.Target)
+        if (!navMeshAgent.hasPath && !tc.HasTarget)
         {
             if (pac.CurrentAnimState != "Idle") pac.Animate("Idle", false);
         }
@@ -51,7 +51,7 @@ public class PlayerMertController : NetworkBehaviour
     {
         navMeshAgent.SetDestination(pos);
         if (pac.CurrentAnimState != "Run") pac.Animate("Run", false);
-        bac.Target = null;
+        tc.SyncTarget(null);
         bac.IsAttacking = false;
     }
     private void HandleInputs(InputType input)
@@ -63,27 +63,29 @@ public class PlayerMertController : NetworkBehaviour
             {
                 if (_hitInfo.collider.TryGetComponent(out Health hc))
                 {
-                    _target = hc;
+                    tc.SyncTarget(hc.gameObject);
+                    tc.HasTarget = true;
                 }
                 else
                 {
-                    _target = null;
+                    tc.SyncTarget(null);
+                    tc.HasTarget = false;
                 }
             }
         }
         switch (input)
         {
             case InputType.MouseLeft:
-                HandleLeftClick(_target);
+                HandleLeftClick(tc.Target);
                 break;
             case InputType.MouseRight:
-                HandleRightClick(_target, _hitInfo.point);
+                HandleRightClick(_hitInfo.point);
                 break;
         }
     }
-    private void HandleRightClick(Health hc, Vector3 point)
+    private void HandleRightClick(Vector3 point)
     {
-        if (hc && hc != _hc) BasicAttack(hc);
+        if (tc.HasTarget) BasicAttack(tc.Target);
         else
         {
             ClientMove(point);
@@ -91,13 +93,13 @@ public class PlayerMertController : NetworkBehaviour
         }
 
     }
-    private void HandleLeftClick(Health hc)
+    private void HandleLeftClick(GameObject target)
     {
 
-        if (hc && hc != _hc) SelectUnit(hc);
+        if (target && target != gameObject) SelectUnit(target);
         else DeselectUnit();
     }
-    private void SelectUnit(Health hc)
+    private void SelectUnit(GameObject target)
     {
         //if(I say no)
         //        you say PLEAASE
@@ -111,10 +113,10 @@ public class PlayerMertController : NetworkBehaviour
     #endregion
 
 
-    private void BasicAttack(Health hc)
+    private void BasicAttack(GameObject target)
     {
-        SelectUnit(hc);
-        bac.Target = hc;
+        //SelectUnit(hc);
+        //tc.SyncTarget(target);
     }
 }
 

@@ -10,8 +10,8 @@ public class Projectile : NetworkBehaviour
     private Vector3 _direction;
     [SyncVar] private bool _isMoving;
     private Vector3 _targetPos;
-    [SyncVar] private GameObject _target;
     [SyncVar] private int _damage;
+    [SyncVar] public GameObject _target;
 
 
     #region Server
@@ -24,7 +24,7 @@ public class Projectile : NetworkBehaviour
     private void CmdTargetHit()
     {
         DestroySelf();
-        _target.GetComponent<Health>().TakeDamage(_damage);
+        //tc.Target.GetComponent<Health>().TakeDamage(_damage);
     }
     #endregion
     public override void OnStartAuthority()
@@ -33,17 +33,14 @@ public class Projectile : NetworkBehaviour
     }
     public void SetupProjectile(GameObject target)
     {
-        _target = target;
-        Debug.Log("asil");
-       // _damage = damage;
         _isMoving = true;
+        _target = target;
     }
     [ClientCallback]
     private void Update()
     {
         if (!hasAuthority) return; 
         if (_target == null || !_isMoving) return;
-        Debug.Log("2");
 
         if (Vector2.Distance(Extensions.Vector3ToVector2(transform.position),Extensions.Vector3ToVector2(_target.transform.position)) > 2)
         {
