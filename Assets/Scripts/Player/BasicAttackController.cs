@@ -16,18 +16,12 @@ public class BasicAttackController : NetworkBehaviour
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float range;
     //
-   // [SyncVar][SerializeField] private int damage;
+    // [SyncVar][SerializeField] private int damage;
 
-    private Health _target;
+    [SerializeField] private TargetController tc;
     private float counter;
     public GameObject targetObj;
     
-
-    public Health Target
-    {
-        get => _target;
-        set => _target = value;
-    }
     public bool IsAttacking
     {
         get;set;
@@ -37,33 +31,41 @@ public class BasicAttackController : NetworkBehaviour
     [Server]
     private bool CanFireAtTarget()
     {
-        return (_target.transform.position - transform.position).sqrMagnitude > attackRange * attackRange;
+        return (tc.Target.transform.position - transform.position).sqrMagnitude > attackRange * attackRange;
     }
     [Command]
     private void CmdSpawnProjectile()
     {
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-        projectile.GetComponent<Projectile>().SetupProjectile(targetObj);
+        Debug.Log("CMD spawn 1 ");
+        projectile.GetComponent<Projectile>().SetupProjectile(tc.Target);
+        Debug.Log("CMD spawn 2" + projectile.GetComponent<Projectile>()._target + " " + tc.Target);
 
-        NetworkServer.Spawn(projectile, connectionToClient);
+        projectile.GetComponent<Projectile>()._target = tc.Target;
+        Debug.Log("CMD spawn 3" + projectile.GetComponent<Projectile>()._target + " " + tc.Target);
+
+
+        NetworkServer.Spawn(projectile, gameObject);
+        Debug.Log("CMD spawn 4 ");
+
     }
     #endregion
     #region Client
     [ClientCallback]
     private void Update()
     {
+        if (!hasAuthority) return;
         if (counter <= fireRate) counter += Time.deltaTime;
-        if (!_target) { agent.stoppingDistance = 0; return; }
-        if (Vector2.Distance(Extensions.Vector3ToVector2(_target.transform.position), Extensions.Vector3ToVector2(transform.position)) > range)
+        if (!tc.Target) { agent.stoppingDistance = 0; return; }
+        if (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > range)
         {
             agent.stoppingDistance = range;
-            agent.SetDestination(_target.transform.position);
+            agent.SetDestination(tc.Target.transform.position);
         }
         else if (counter >= fireRate)
         {
-            transform.LookAt(new Vector3(_target.transform.position.x, transform.position.y, _target.transform.position.z));
+            transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
             pac.Animate("Shoot", true, true);
-            targetObj = Target.gameObject;
             CmdSpawnProjectile();
             counter = 0;
         }
