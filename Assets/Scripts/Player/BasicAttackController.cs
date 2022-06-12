@@ -15,8 +15,7 @@ public class BasicAttackController : NetworkBehaviour
     [SerializeField] private PlayerAnimationController pac;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float range;
-    //
-    // [SyncVar][SerializeField] private int damage;
+    [SerializeField] private int damage;
 
     [SerializeField] private TargetController tc;
     private float counter;
@@ -37,8 +36,8 @@ public class BasicAttackController : NetworkBehaviour
     private void CmdSpawnProjectile()
     {
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-        projectile.GetComponent<Projectile>().SetupProjectile(tc.Target);
-        NetworkServer.Spawn(projectile, gameObject);
+        projectile.GetComponent<Projectile>().SetupProjectile(tc.Target, damage);
+        NetworkServer.Spawn(projectile, connectionToClient);
     }
     #endregion
     #region Client

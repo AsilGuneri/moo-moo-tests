@@ -112,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
-  speed: 80
+  speed: 5
   _target: {fileID: 0}
 --- !u!114 &817598904071200291
 MonoBehaviour:

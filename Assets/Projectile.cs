@@ -23,23 +23,24 @@ public class Projectile : NetworkBehaviour
     [Command]
     private void CmdTargetHit()
     {
+        Debug.Log("asilxx2");
+        _target.GetComponent<Health>().TakeDamage(_damage);
         DestroySelf();
-        //tc.Target.GetComponent<Health>().TakeDamage(_damage);
     }
     #endregion
     public override void OnStartAuthority()
     {
         base.OnStartAuthority();
     }
-    public void SetupProjectile(GameObject target)
+    public void SetupProjectile(GameObject target, int damage)
     {
         _isMoving = true;
         _target = target;
+        _damage = damage;
     }
     [ClientCallback]
     private void Update()
     {
-        if (!hasAuthority) return; 
         if (_target == null || !_isMoving) return;
 
         if (Vector2.Distance(Extensions.Vector3ToVector2(transform.position),Extensions.Vector3ToVector2(_target.transform.position)) > 2)
@@ -50,7 +51,8 @@ public class Projectile : NetworkBehaviour
         }
         else
         {
-            CmdTargetHit();
+            Debug.Log("asilxx1");
+            if(hasAuthority) CmdTargetHit();
             return;
         }
 
