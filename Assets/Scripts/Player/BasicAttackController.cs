@@ -58,8 +58,7 @@ public class BasicAttackController : NetworkBehaviour
             pac.Animate("Shoot", true, true);
             CmdSpawnProjectile();
             counter = 0;
-        }
-       
+        }       
     }
     #endregion
 
