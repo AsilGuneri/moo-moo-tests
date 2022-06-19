@@ -68319,6 +68319,7 @@ GameObject:
   - component: {fileID: 45772237907561860}
   - component: {fileID: 5397592318971391883}
   - component: {fileID: 6411675676070392958}
+  - component: {fileID: 2171894335096632730}
   m_Layer: 0
   m_Name: Player Parent
   m_TagString: Untagged
@@ -68481,6 +68482,7 @@ MonoBehaviour:
   indicators: {fileID: 3832391598011980797}
   bac: {fileID: 6601903507643346811}
   pac: {fileID: 5397592318971391883}
+  umc: {fileID: 2171894335096632730}
   tc: {fileID: 6411675676070392958}
 --- !u!114 &6601903507643346811
 MonoBehaviour:
@@ -68505,7 +68507,7 @@ MonoBehaviour:
   range: 10
   damage: 5
   tc: {fileID: 6411675676070392958}
-  targetObj: {fileID: 0}
+  umc: {fileID: 2171894335096632730}
 --- !u!114 &4334566937998049036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68566,6 +68568,22 @@ MonoBehaviour:
   syncMode: 1
   syncInterval: 0
   Target: {fileID: 0}
+--- !u!114 &2171894335096632730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8938534602783702256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8297e1c507320bc41a3afce77679b5ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 7319744102357029728}
+  pac: {fileID: 5397592318971391883}
+  tc: {fileID: 6411675676070392958}
+  bac: {fileID: 6601903507643346811}
 --- !u!1001 &2695950009450361516
 PrefabInstance:
   m_ObjectHideFlags: 0

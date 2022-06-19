@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Mirror;
+using MyBox;
 
 public class PlayerMertController : NetworkBehaviour
 {
     [SerializeField] private NavMeshAgent navMeshAgent;
     [SerializeField] private Animator animator;
     [SerializeField] private SelectIndicator indicators;
-    [SerializeField] private BasicAttackController bac;
-    [SerializeField] private PlayerAnimationController pac;
+
 
     private Camera mainCamera;
     private Health _hc;
     private RaycastHit _hitInfo;
     private bool _hasPath;
+
+    [Separator("Script References")]
     [SerializeField] private TargetController tc;
+    [SerializeField] private BasicAttackController bac;
+    [SerializeField] private PlayerAnimationController pac;
+    [SerializeField] private UnitMovementController umc;
 
 
     private void Awake()
@@ -47,13 +52,7 @@ public class PlayerMertController : NetworkBehaviour
         if (Input.GetMouseButtonDown(0)) HandleInputs(InputType.MouseLeft);
         if (Input.GetMouseButtonDown(1)) HandleInputs(InputType.MouseRight);
     }
-    private void ClientMove(Vector3 pos)
-    {
-        navMeshAgent.SetDestination(pos);
-        if (pac.CurrentAnimState != "Run") pac.Animate("Run", false);
-        tc.SyncTarget(null);
-        bac.IsAttacking = false;
-    }
+    
     private void HandleInputs(InputType input)
     {
         if (input is InputType.MouseLeft || input is InputType.MouseRight)
@@ -85,13 +84,7 @@ public class PlayerMertController : NetworkBehaviour
     }
     private void HandleRightClick(Vector3 point)
     {
-        if (tc.HasTarget) BasicAttack(tc.Target);
-        else
-        {
-            ClientMove(point);
-
-        }
-
+        if (!tc.HasTarget) umc.ClientMove(point);
     }
     private void HandleLeftClick(GameObject target)
     {
@@ -111,13 +104,6 @@ public class PlayerMertController : NetworkBehaviour
         indicators.SetupIndicator(null, false);
     }
     #endregion
-
-
-    private void BasicAttack(GameObject target)
-    {
-        //SelectUnit(hc);
-        //tc.SyncTarget(target);
-    }
 }
 
 public enum InputType

@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 using Mirror;
 using UnityEngine.UIElements;
+using MyBox;
 
 public class BasicAttackController : NetworkBehaviour
 {
@@ -12,14 +13,17 @@ public class BasicAttackController : NetworkBehaviour
     [SerializeField] private Transform projectileSpawnPoint;
     [SerializeField] private float attackRange;
     [SerializeField] private float fireRate;
-    [SerializeField] private PlayerAnimationController pac;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float range;
     [SerializeField] private int damage;
 
+    [Separator("Script References")]
     [SerializeField] private TargetController tc;
+    [SerializeField] private UnitMovementController umc;
+    [SerializeField] private PlayerAnimationController pac;
+
+
     private float counter;
-    public GameObject targetObj;
     
     public bool IsAttacking
     {
@@ -55,6 +59,7 @@ public class BasicAttackController : NetworkBehaviour
         else if (counter >= fireRate)
         {
             transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
+            umc.ClientStop();
             pac.Animate("Shoot", true, true);
             CmdSpawnProjectile();
             counter = 0;
