@@ -98,13 +98,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1567865823971284883}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6, y: -3.7, z: 0}
+  m_LocalRotation: {x: 0.000000052154054, y: -0.000000022351736, z: 0.062543005, w: 0.99804235}
+  m_LocalPosition: {x: -77.4, y: -16.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4968493055219234102}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 7.172}
 --- !u!1 &2447183568288794731
 GameObject:
   m_ObjectHideFlags: 0
@@ -68480,10 +68480,10 @@ MonoBehaviour:
   navMeshAgent: {fileID: 7319744102357029728}
   animator: {fileID: 2814538736174975143}
   indicators: {fileID: 3832391598011980797}
+  tc: {fileID: 6411675676070392958}
   bac: {fileID: 6601903507643346811}
   pac: {fileID: 5397592318971391883}
   umc: {fileID: 2171894335096632730}
-  tc: {fileID: 6411675676070392958}
 --- !u!114 &6601903507643346811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68502,12 +68502,12 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 3792548669549166751}
   attackRange: 10
   fireRate: 2
-  pac: {fileID: 5397592318971391883}
   agent: {fileID: 7319744102357029728}
   range: 10
   damage: 5
   tc: {fileID: 6411675676070392958}
   umc: {fileID: 2171894335096632730}
+  pac: {fileID: 5397592318971391883}
 --- !u!114 &4334566937998049036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68567,7 +68567,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 1
   syncInterval: 0
-  Target: {fileID: 0}
 --- !u!114 &2171894335096632730
 MonoBehaviour:
   m_ObjectHideFlags: 0

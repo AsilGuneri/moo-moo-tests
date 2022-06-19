@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using System;
 
 public class TargetController : NetworkBehaviour
 {
-    [SyncVar] public GameObject Target;
+    [NonSerialized] [SyncVar] public GameObject Target;
     private bool _hasTarget;
     public bool HasTarget
     {
