@@ -23,7 +23,6 @@ public class Projectile : NetworkBehaviour
     [Command]
     private void CmdTargetHit()
     {
-        Debug.Log("asilxx2");
         _target.GetComponent<Health>().TakeDamage(_damage);
         DestroySelf();
     }
@@ -51,7 +50,6 @@ public class Projectile : NetworkBehaviour
         }
         else
         {
-            Debug.Log("asilxx1");
             if(hasAuthority) CmdTargetHit();
             return;
         }

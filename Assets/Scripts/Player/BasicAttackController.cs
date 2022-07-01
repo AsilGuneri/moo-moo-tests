@@ -12,7 +12,7 @@ public class BasicAttackController : NetworkBehaviour
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform projectileSpawnPoint;
     [SerializeField] private float attackRange;
-    [SerializeField] private float fireRate;
+    [SerializeField] private float attackSpeed;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float range;
     [SerializeField] private int damage;
@@ -24,10 +24,20 @@ public class BasicAttackController : NetworkBehaviour
 
 
     private float counter;
+    private float additionalAttackSpeed;
     
     public bool IsAttacking
     {
         get;set;
+    }
+    public float AttackSpeed
+    {
+        get => attackSpeed;
+    }
+    public float AdditionalAttackSpeed
+    {
+        get => additionalAttackSpeed;
+        set => additionalAttackSpeed = value;
     }
 
     #region Server
@@ -49,14 +59,14 @@ public class BasicAttackController : NetworkBehaviour
     private void Update()
     {
         if (!hasAuthority) return;
-        if (counter <= fireRate) counter += Time.deltaTime;
+        if (counter <= AttackSpeed) counter += Time.deltaTime;
         if (!tc.Target) { agent.stoppingDistance = 0; return; }
         if (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > range)
         {
             agent.stoppingDistance = range;
             agent.SetDestination(tc.Target.transform.position);
         }
-        else if (counter >= fireRate)
+        else if (counter >= AttackSpeed - ( additionalAttackSpeed != 0 ? (AttackSpeed / AdditionalAttackSpeed) : 0))
         {
             transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
             umc.ClientStop();

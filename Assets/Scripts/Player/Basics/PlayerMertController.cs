@@ -22,6 +22,7 @@ public class PlayerMertController : NetworkBehaviour
     [SerializeField] private BasicAttackController bac;
     [SerializeField] private PlayerAnimationController pac;
     [SerializeField] private UnitMovementController umc;
+    [SerializeField] private PlayerSkillController psc;
 
 
     private void Awake()
@@ -51,6 +52,7 @@ public class PlayerMertController : NetworkBehaviour
 
         if (Input.GetMouseButtonDown(0)) HandleInputs(InputType.MouseLeft);
         if (Input.GetMouseButtonDown(1)) HandleInputs(InputType.MouseRight);
+        if (Input.GetKeyDown(KeyCode.Q)) UseSkill("RapidShoot");
     }
     
     private void HandleInputs(InputType input)
@@ -103,6 +105,12 @@ public class PlayerMertController : NetworkBehaviour
     {
         indicators.SetupIndicator(null, false);
     }
+
+    private void UseSkill(string skillName)
+    {
+        psc.UseSkill(skillName);
+    }
+
     #endregion
 }
 
