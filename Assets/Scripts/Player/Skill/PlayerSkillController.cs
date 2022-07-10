@@ -4,26 +4,15 @@ using UnityEngine;
 
 public class PlayerSkillController : MonoBehaviour
 {
-    [SerializeField] private ClassType classType;
-    [SerializeField] private List<SkillBase> skills = new List<SkillBase>();
+    public List<Skill> possibleSkills;
+    public Skill _skill;
 
-    
-    // Update is called once per frame
-    void Update()
+    public void UnlockSkill(Skill skill)
     {
-        
+        _skill.SetController(transform);
     }
-    public void UseSkill(string skillName)
-    { 
-        var skillToUse = GetSkill(skillName);
-        skillToUse.UseSkill();
-    }
-    private SkillBase GetSkill(string skillName)
+    public void UseSkill(Skill skill)
     {
-        foreach (var skill in skills)
-        {
-            if (skillName == skill.Name) return skill;
-        }
-        return null;
+        _skill.SkillStart();
     }
 }

@@ -84,7 +84,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 256489812991506397}
-  - component: {fileID: 4484454495815802545}
   m_Layer: 0
   m_Name: RapidShoot
   m_TagString: Untagged
@@ -106,26 +105,6 @@ Transform:
   m_Father: {fileID: 677748912475831609}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4484454495815802545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1045376967506334776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbc7dcfd3f94cce4b831bdba0bb8a8c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: RapidShoot
-  Class: 2
-  IsActive: 1
-  ManaCost: 0
-  AnimationName: 
-  increaseAmountPercentage: 95
-  bac: {fileID: 6601903507643346811}
-  continuesTime: 10
 --- !u!1 &1567865823971284883
 GameObject:
   m_ObjectHideFlags: 0
@@ -68680,9 +68659,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4be1e832006631428f5610fbfa5b404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  classType: 2
-  skills:
-  - {fileID: 4484454495815802545}
+  possibleSkills:
+  - SkillData: {fileID: 11400000, guid: a976256400301dd4bb41e36f9b434ee3, type: 2}
+  _skill:
+    SkillData: {fileID: 11400000, guid: a976256400301dd4bb41e36f9b434ee3, type: 2}
 --- !u!1001 &2695950009450361516
 PrefabInstance:
   m_ObjectHideFlags: 0

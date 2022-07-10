@@ -52,9 +52,13 @@ public class PlayerMertController : NetworkBehaviour
 
         if (Input.GetMouseButtonDown(0)) HandleInputs(InputType.MouseLeft);
         if (Input.GetMouseButtonDown(1)) HandleInputs(InputType.MouseRight);
-        if (Input.GetKeyDown(KeyCode.Q)) UseSkill("RapidShoot");
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            psc.UnlockSkill(psc._skill);
+            psc.UseSkill(psc._skill);
+        }
     }
-    
+
     private void HandleInputs(InputType input)
     {
         if (input is InputType.MouseLeft || input is InputType.MouseRight)
@@ -106,10 +110,7 @@ public class PlayerMertController : NetworkBehaviour
         indicators.SetupIndicator(null, false);
     }
 
-    private void UseSkill(string skillName)
-    {
-        psc.UseSkill(skillName);
-    }
+ 
 
     #endregion
 }
