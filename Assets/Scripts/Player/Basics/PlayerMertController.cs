@@ -17,20 +17,26 @@ public class PlayerMertController : NetworkBehaviour
     private RaycastHit _hitInfo;
     private bool _hasPath;
 
-    [Separator("Script References")]
-    [SerializeField] private TargetController tc;
-    [SerializeField] private BasicAttackController bac;
-    [SerializeField] private PlayerAnimationController pac;
-    [SerializeField] private UnitMovementController umc;
-    [SerializeField] private PlayerSkillController psc;
+    private TargetController _tc;
+    private BasicAttackController _bac;
+    private PlayerAnimationController _pac;
+    private UnitMovementController _umc;
+    private PlayerSkillController _psc;
 
 
     private void Awake()
     {
-        tc = GetComponent<TargetController>();
+        _tc = GetComponent<TargetController>();
+        _bac = GetComponent<BasicAttackController>();
+        _pac = GetComponent<PlayerAnimationController>();
+        _umc = GetComponent<UnitMovementController>();
+        _psc = GetComponent<PlayerSkillController>();
+    }
+    private void Start()
+    {
+        UnitManager.Instance.RegisterAllyUnits(gameObject);
     }
     #region Server
-
 
     #endregion
     #region Client
@@ -45,17 +51,16 @@ public class PlayerMertController : NetworkBehaviour
     void Update()
     {
         if (!hasAuthority) return;
-        if (!navMeshAgent.hasPath && !tc.HasTarget)
+        if (!navMeshAgent.hasPath && !_tc.HasTarget)
         {
-            if (pac.CurrentAnimState != "Idle") pac.Animate("Idle", false);
+            if (_pac.CurrentAnimState != "Idle") _pac.Animate("Idle", false);
         }
 
         if (Input.GetMouseButtonDown(0)) HandleInputs(InputType.MouseLeft);
         if (Input.GetMouseButtonDown(1)) HandleInputs(InputType.MouseRight);
         if (Input.GetKeyDown(KeyCode.S))
         {
-            psc.UnlockSkill(psc._skill);
-            psc.UseSkill(psc._skill);
+            WaveManager.Instance.SpawnWave(WaveManager.Instance.waves[0]);
         }
     }
 
@@ -68,20 +73,20 @@ public class PlayerMertController : NetworkBehaviour
             {
                 if (_hitInfo.collider.TryGetComponent(out Health hc))
                 {
-                    tc.SyncTarget(hc.gameObject);
-                    tc.HasTarget = true;
+                    _tc.SyncTarget(hc.gameObject);
+                    _tc.HasTarget = true;
                 }
                 else
                 {
-                    tc.SyncTarget(null);
-                    tc.HasTarget = false;
+                    _tc.SyncTarget(null);
+                    _tc.HasTarget = false;
                 }
             }
         }
         switch (input)
         {
             case InputType.MouseLeft:
-                HandleLeftClick(tc.Target);
+                HandleLeftClick(_tc.Target);
                 break;
             case InputType.MouseRight:
                 HandleRightClick(_hitInfo.point);
@@ -90,7 +95,7 @@ public class PlayerMertController : NetworkBehaviour
     }
     private void HandleRightClick(Vector3 point)
     {
-        if (!tc.HasTarget) umc.ClientMove(point);
+        if (!_tc.HasTarget) _umc.ClientMove(point);
     }
     private void HandleLeftClick(GameObject target)
     {

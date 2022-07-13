@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
 using System;
+using Mirror;
 
 public class WaveManager : Singleton<WaveManager>//
 {
@@ -26,7 +27,10 @@ public class WaveManager : Singleton<WaveManager>//
                     {
                         float spawnXPos = (point.transform.position.x - ((minionPerLine - 1) * spawnSpaceX / 2)) + (k * nextWave.spawnSpace.x);
                         Vector3 spawnPoint = new Vector3(spawnXPos, nextWave.spawnSpace.y, spawnZPos);
-                        ObjectPooler.Instance.Spawn(nextWave.prefab.name, spawnPoint, Quaternion.identity); ///TODO: Use pool
+                    //ObjectPooler.Instance.Spawn(nextWave.prefab.name, spawnPoint, Quaternion.identity); ///TODO: Use pool
+                    var obj = Instantiate(nextWave.prefab, spawnPoint, Quaternion.identity);
+                    obj.GetComponent<BasicEnemyController>().Activate();
+                    NetworkServer.Spawn(obj);
                     }
 
                 }

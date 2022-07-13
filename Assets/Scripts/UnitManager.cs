@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Utilities;
+using Mirror;
 
-public class UnitManager : Singleton<UnitManager>
+public class UnitManager : NetworkSingleton<UnitManager> 
 {
-    public List<Health> AllAllyUnits { get; private set; } = new List<Health>();
+    public SyncList<GameObject> AllAllyUnits { get; private set; } = new SyncList<GameObject>();
 
-    public void RegisterAllyUnits(Health unit)
+    [ServerCallback]
+    public void RegisterAllyUnits(GameObject unit)
     {
         if (AllAllyUnits.Contains(unit)) return;
         AllAllyUnits.Add(unit);
     }
-    public Health GetClosestUnit(Vector3 myPosition)
+    public GameObject GetClosestUnit(Vector3 myPosition)
     {
         float closestDistance = Mathf.Infinity;
-        Health closestUnit = null;
-        foreach (Health unit in AllAllyUnits)
+        GameObject closestUnit = null;
+        foreach (GameObject unit in AllAllyUnits)
         {
                 float distance = Vector3.Distance(myPosition, unit.transform.position);
                 if (closestDistance < distance) continue;

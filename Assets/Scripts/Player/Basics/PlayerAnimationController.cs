@@ -14,8 +14,6 @@ public class PlayerAnimationController : MonoBehaviour
         get => _currentAnimState;
         set => _currentAnimState = value;
     }
-
-
     public void Animate(string nextState, bool canCancel, bool canRestart = false)
     {
 
