@@ -2461,7 +2461,12 @@ MonoBehaviour:
   waves:
   - waveIndex: 0
     prefab: {fileID: 7498676492825279152, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
-    minionPerPoint: 9
+    minionPerPoint: 1
+    spawnSpace: {x: 2, y: 0.5, z: 2}
+    isHorizontal: 0
+  - waveIndex: 0
+    prefab: {fileID: 7498676492825279152, guid: 9ba60f9fe21285c47866c6ef1058c1d6, type: 3}
+    minionPerPoint: 1
     spawnSpace: {x: 2, y: 0.5, z: 2}
     isHorizontal: 0
   spawnPoints:

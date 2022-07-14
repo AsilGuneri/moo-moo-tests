@@ -34,7 +34,7 @@ public class PlayerMertController : NetworkBehaviour
     }
     private void Start()
     {
-        UnitManager.Instance.RegisterAllyUnits(gameObject);
+        UnitManager.Instance.RegisterUnit(gameObject, UnitType.Player);
     }
     #region Server
 

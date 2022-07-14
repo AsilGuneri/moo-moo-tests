@@ -68543,11 +68543,6 @@ MonoBehaviour:
   navMeshAgent: {fileID: 7319744102357029728}
   animator: {fileID: 2814538736174975143}
   indicators: {fileID: 3832391598011980797}
-  tc: {fileID: 6411675676070392958}
-  bac: {fileID: 6601903507643346811}
-  pac: {fileID: 5397592318971391883}
-  umc: {fileID: 2171894335096632730}
-  psc: {fileID: 6701862087618162149}
 --- !u!114 &6601903507643346811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68568,7 +68563,7 @@ MonoBehaviour:
   attackSpeed: 2
   agent: {fileID: 7319744102357029728}
   range: 10
-  damage: 5
+  damage: 50
   tc: {fileID: 6411675676070392958}
   umc: {fileID: 2171894335096632730}
   pac: {fileID: 5397592318971391883}
@@ -68604,6 +68599,7 @@ MonoBehaviour:
   syncInterval: 0.1
   _maxHealth: 100
   healthBar: {fileID: 5689978973427455355}
+  isPlayer: 1
 --- !u!114 &5397592318971391883
 MonoBehaviour:
   m_ObjectHideFlags: 0

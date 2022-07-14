@@ -8,7 +8,9 @@ using Mirror;
 public class WaveManager : Singleton<WaveManager>//
 {
     public Wave[] waves;
-    public SpawnPoint[] spawnPoints;
+    [SerializeField] private SpawnPoint[] spawnPoints;
+
+    private int _currentWave = 0;
 
     public void SpawnWave(Wave nextWave)
     {
@@ -31,11 +33,17 @@ public class WaveManager : Singleton<WaveManager>//
                     var obj = Instantiate(nextWave.prefab, spawnPoint, Quaternion.identity);
                     obj.GetComponent<BasicEnemyController>().Activate();
                     NetworkServer.Spawn(obj);
+                    UnitManager.Instance.RegisterUnit(obj, UnitType.WaveEnemy);
                     }
 
                 }
             
         }
+    }
+    public void SpawnNextWave()
+    {
+        _currentWave++;
+        SpawnWave(waves[_currentWave]);
     }
 }
 [Serializable]

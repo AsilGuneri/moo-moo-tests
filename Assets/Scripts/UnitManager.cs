@@ -7,19 +7,51 @@ using Mirror;
 
 public class UnitManager : NetworkSingleton<UnitManager> 
 {
-    public SyncList<GameObject> AllAllyUnits { get; private set; } = new SyncList<GameObject>();
+    public SyncList<GameObject> Players { get; private set; } = new SyncList<GameObject>();
+    public SyncList<GameObject> WaveEnemies { get; private set; } = new SyncList<GameObject>();
+
 
     [ServerCallback]
-    public void RegisterAllyUnits(GameObject unit)
+    public void RegisterUnit(GameObject unit, UnitType unitType)
     {
-        if (AllAllyUnits.Contains(unit)) return;
-        AllAllyUnits.Add(unit);
+        switch (unitType)
+        {
+            case UnitType.Player:
+                if (Players.Contains(unit)) return;
+                Players.Add(unit);
+                break;
+            case UnitType.WaveEnemy:
+                if (WaveEnemies.Contains(unit)) return;
+                WaveEnemies.Add(unit);
+                break;
+
+        }
     }
+    [ServerCallback]
+    public void UnregisterUnits(GameObject unit, UnitType unitType)
+    {
+        switch (unitType)
+        {
+            case UnitType.Player:
+                if (Players.Contains(unit)) Players.Remove(unit);
+                break;
+            case UnitType.WaveEnemy:
+                if (WaveEnemies.Contains(unit))
+                {
+                    WaveEnemies.Remove(unit); 
+                    if(WaveEnemies.Count <= 0) WaveManager.Instance.SpawnNextWave();
+
+                }
+                break;
+        }
+    }
+
+
     public GameObject GetClosestUnit(Vector3 myPosition)
     {
         float closestDistance = Mathf.Infinity;
         GameObject closestUnit = null;
-        foreach (GameObject unit in AllAllyUnits)
+        foreach (GameObject unit in Players)
         {
                 float distance = Vector3.Distance(myPosition, unit.transform.position);
                 if (closestDistance < distance) continue;
@@ -29,4 +61,9 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
         return closestUnit;
     }
+}
+public enum UnitType
+{
+    Player,
+    WaveEnemy
 }

@@ -13,6 +13,7 @@ public class Health : NetworkBehaviour
 
     [SerializeField] private int _maxHealth;
     [SerializeField] private Slider healthBar;
+    [SerializeField] private UnitType unitType;
 
     [SyncVar(hook = nameof(UpdateHealthBar))] protected int _currentHealth;
 
@@ -22,6 +23,7 @@ public class Health : NetworkBehaviour
     public override void OnStartServer()
     {
         _currentHealth = _maxHealth;
+
     }
     [Server]
     public void TakeDamage(int dmg)
@@ -31,8 +33,15 @@ public class Health : NetworkBehaviour
         if (_currentHealth <= 0)
         {
             ServerOnDeath?.Invoke();
+            Die();
         }
 
+    }
+    [Server]
+    private void Die()
+    {
+        UnitManager.Instance.UnregisterUnits(gameObject, unitType);
+        Destroy(gameObject);
     }
     #endregion
     #region Client
@@ -42,57 +51,6 @@ public class Health : NetworkBehaviour
     }
     #endregion
 
+
 }
-/* protected int CurrentHp 
- {
-     get
-     {
-         float percentage = ((float) _currentHealth / (float)_maxHealth);
-         healthBar.value = percentage;
-         return _currentHealth; 
-     }
-     set
-     {
-         _currentHealth = value;
-         float percentage = ((float)_currentHealth / (float)_maxHealth);
-         healthBar.value = percentage;
-     }
- }*/
 
-//private void Start()
-//{
-//    if (TeamId == 1) UnitManager.Instance.RegisterAllyUnits(this);
-//    CurrentHp = _maxHealth;
-//}
-//protected virtual void RegenerateHp()
-//{
-
-//}
-//public virtual void TakeDamage(int damage)
-//{
-//    CurrentHp -= damage;
-//  //  if (_currentHp <= 0) Die();
-//}
-//protected virtual void Heal(int amount)
-//{
-//    CurrentHp += amount;
-//}
-//public virtual void Die()
-//{
-//    gameObject.SetActive(false);
-//    Respawn();
-//}
-//protected virtual void Respawn()
-//{
-//    transform.position = _respawnPos;
-//    gameObject.SetActive(true);
-//    CurrentHp = _maxHealth;
-//}
-
-//   private void 
-
-public enum UnitType
-{
-    Unit,
-    Building
-}
