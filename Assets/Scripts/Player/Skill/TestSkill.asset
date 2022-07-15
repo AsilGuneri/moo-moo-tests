@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64fb8c1db116809439982d363dc7e56a, type: 3}
   m_Name: TestSkill
   m_EditorClassIdentifier: 
+  SkillImage: {fileID: 21300000, guid: 8d95bcf261f259f4786a397bc66e3705, type: 3}
+  Name: Test1
+  Description: attack speed

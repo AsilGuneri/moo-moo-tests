@@ -20,8 +20,4 @@ public class AnimationManager : Singleton<AnimationManager>
     }
 
 }
-public enum AnimType
-{
-    Bool,
-    Trigger
-}
+

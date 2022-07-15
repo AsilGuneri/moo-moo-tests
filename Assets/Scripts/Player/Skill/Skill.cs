@@ -31,6 +31,11 @@ public class Skill
 public abstract class SkillData : ScriptableObject
 {
     public abstract Type GetSkillControllerType();
+    public Sprite SkillImage;
+    public string Name;
+    public string Description;
+    public SkillTier Tier;
+    public ClassType Class;
 }
 public abstract class SkillController : MonoBehaviour, ISkillController
 {

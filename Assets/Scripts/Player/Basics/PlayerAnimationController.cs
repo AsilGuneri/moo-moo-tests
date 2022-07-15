@@ -21,9 +21,4 @@ public class PlayerAnimationController : MonoBehaviour
         _currentAnimState = nextState;
     }
 }
-[Serializable]
-public class AnimData
-{
-    public string name;
-    public Animation anim;
-}
+

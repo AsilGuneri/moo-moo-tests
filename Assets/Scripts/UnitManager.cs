@@ -38,8 +38,8 @@ public class UnitManager : NetworkSingleton<UnitManager>
             case UnitType.WaveEnemy:
                 if (WaveEnemies.Contains(unit))
                 {
-                    WaveEnemies.Remove(unit); 
-                    if(WaveEnemies.Count <= 0) WaveManager.Instance.SpawnNextWave();
+                    WaveEnemies.Remove(unit);
+                    if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd?.Invoke();
 
                 }
                 break;
@@ -60,6 +60,14 @@ public class UnitManager : NetworkSingleton<UnitManager>
             
         }
         return closestUnit;
+    }
+    public PlayerMertController GetPlayerController()
+    {
+        foreach(var player in Players)
+        {
+            if (player.GetComponent<PlayerMertController>().hasAuthority) return player.GetComponent<PlayerMertController>();
+        }
+        return null;
     }
 }
 public enum UnitType

@@ -19,7 +19,6 @@ public class TargetController : NetworkBehaviour
     {
         Target = target;
     }
-    //USE HOOK HERE
 
 
 }

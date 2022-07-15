@@ -9,9 +9,23 @@ public class WaveManager : Singleton<WaveManager>//
 {
     public Wave[] waves;
     [SerializeField] private SpawnPoint[] spawnPoints;
+    [SerializeField] private int[] newSkillWaves;
 
     private int _currentWave = 0;
+    private SkillTier _currentTier;
 
+    public SkillTier CurrentTier
+    {
+        get { return _currentTier; }
+        set { _currentTier = value; }
+    }
+
+    public Action OnWaveEnd;
+
+    private void Start()
+    {
+        OnWaveEnd += EndWave;
+    }
     public void SpawnWave(Wave nextWave)
     {
         float minionPerLine = Mathf.Sqrt(nextWave.minionPerPoint);
@@ -40,10 +54,40 @@ public class WaveManager : Singleton<WaveManager>//
             
         }
     }
-    public void SpawnNextWave()
+    private void EndWave()
+    {
+        if (IsNewSkillWave())
+        {
+            var panel = SkillSelectionPanel.Instance;
+            List<Skill> skillsToSet = new List<Skill>();
+            PlayerMertController playerController = UnitManager.Instance.GetPlayerController();
+            PlayerSkillController playerSkillController = playerController.GetComponent<PlayerSkillController>();
+            List<Skill> possibleSkills = SkillManager.Instance.GetSkillGroup(playerController.ClassType, playerController.CurrentTier);
+
+
+            foreach(var skill in possibleSkills)
+            {
+                skillsToSet.Add(skill);
+            }
+            panel.SetPanel(skillsToSet, playerSkillController);
+        } //open skill select ui
+        else SpawnNextWave();
+    }
+    private void SpawnNextWave()
     {
         _currentWave++;
         SpawnWave(waves[_currentWave]);
+    }
+    private bool IsNewSkillWave()
+    {
+        for (int i = 0; i < newSkillWaves.Length; i++)
+        {
+            if(_currentWave +1 == newSkillWaves[i])
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
 [Serializable]

@@ -11,6 +11,10 @@ public class PlayerMertController : NetworkBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private SelectIndicator indicators;
 
+    [SerializeField] private ClassType _classType;
+    [SerializeField] private SkillTier _currentTier;
+
+    [SerializeField] private KeyCode[] skillKeys;
 
     private Camera mainCamera;
     private Health _hc;
@@ -23,6 +27,12 @@ public class PlayerMertController : NetworkBehaviour
     private UnitMovementController _umc;
     private PlayerSkillController _psc;
 
+    public ClassType ClassType { get { return _classType; } }
+    public SkillTier CurrentTier 
+    {
+        get { return _currentTier; } 
+        set { _currentTier = value; }
+    }
 
     private void Awake()
     {
@@ -31,6 +41,9 @@ public class PlayerMertController : NetworkBehaviour
         _pac = GetComponent<PlayerAnimationController>();
         _umc = GetComponent<UnitMovementController>();
         _psc = GetComponent<PlayerSkillController>();
+        _hc = GetComponent<Health>();
+
+
     }
     private void Start()
     {
@@ -45,7 +58,6 @@ public class PlayerMertController : NetworkBehaviour
     {
         mainCamera = Camera.main;
         mainCamera.GetComponent<FollowingCamera>().target = transform;
-        _hc = GetComponent<Health>();
     }
     [ClientCallback]
     void Update()
@@ -62,6 +74,11 @@ public class PlayerMertController : NetworkBehaviour
         {
             WaveManager.Instance.SpawnWave(WaveManager.Instance.waves[0]);
         }
+        if (Input.GetKeyDown(skillKeys[0])) _psc.UseSkill(0);
+        if (Input.GetKeyDown(skillKeys[1])) _psc.UseSkill(1);
+        if (Input.GetKeyDown(skillKeys[2])) _psc.UseSkill(2);
+        if (Input.GetKeyDown(skillKeys[3])) _psc.UseSkill(3);
+
     }
 
     private void HandleInputs(InputType input)
