@@ -14,7 +14,7 @@ namespace Mirror
     /// <para>The NetworkAnimator synchronizes all animation parameters of the selected Animator. It does not automatically synchronize triggers. The function SetTrigger can by used by an object with authority to fire an animation trigger on other clients.</para>
     /// </remarks>
     [AddComponentMenu("Network/Network Animator")]
-    [RequireComponent(typeof(NetworkIdentity))]
+    
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-animator")]
     public class NetworkAnimator : NetworkBehaviour
     {

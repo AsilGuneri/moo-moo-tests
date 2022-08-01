@@ -18,14 +18,13 @@ public class PlayerSkillController : MonoBehaviour
         skill.SetController(transform);
         SelectedSkills.Add(skill);
         WaveManager.Instance.CurrentTier++;
-        SkillSelectionPanel.Instance.ChangeCanvasEnabled(false);
 
     }
     public void UseSkill(int tier)
     {
         if(tier > SelectedSkills.Count || tier < 0)
             return;
-            
+
         if (SelectedSkills[tier] != null) SelectedSkills[tier].SkillStart();
     }
 }

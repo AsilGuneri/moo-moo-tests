@@ -32,7 +32,7 @@ public class WaveManager : Singleton<WaveManager>//
         
         foreach (SpawnPoint point in spawnPoints)
         {
-            //setup point, point e vector3 listesi aç içini doldur spawn spaceleri kaþele, spawn spaceler deðiþmedikçe tekrar setup ý çaðýrma
+            //setup point, point e vector3 listesi aï¿½ iï¿½ini doldur spawn spaceleri kaï¿½ele, spawn spaceler deï¿½iï¿½medikï¿½e tekrar setup ï¿½ ï¿½aï¿½ï¿½rma
             float spawnSpaceZ = point.isHorizontal ? nextWave.spawnSpace.x : nextWave.spawnSpace.z;
             float spawnSpaceX = point.isHorizontal ? nextWave.spawnSpace.z : nextWave.spawnSpace.x;
 
@@ -58,7 +58,6 @@ public class WaveManager : Singleton<WaveManager>//
     {
         if (IsNewSkillWave())
         {
-            var panel = SkillSelectionPanel.Instance;
             List<Skill> skillsToSet = new List<Skill>();
             PlayerMertController playerController = UnitManager.Instance.GetPlayerController();
             PlayerSkillController playerSkillController = playerController.GetComponent<PlayerSkillController>();
@@ -69,7 +68,6 @@ public class WaveManager : Singleton<WaveManager>//
             {
                 skillsToSet.Add(skill);
             }
-            panel.SetPanel(skillsToSet, playerSkillController);
         } //open skill select ui
         else SpawnNextWave();
     }

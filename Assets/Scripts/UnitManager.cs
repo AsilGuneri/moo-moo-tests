@@ -52,7 +52,8 @@ public class UnitManager : NetworkSingleton<UnitManager>
         float closestDistance = Mathf.Infinity;
         GameObject closestUnit = null;
         foreach (GameObject unit in Players)
-        {
+        {       
+                Debug.Log("My Position: " + myPosition + "\n Unit Position: " + unit.transform.position);
                 float distance = Vector3.Distance(myPosition, unit.transform.position);
                 if (closestDistance < distance) continue;
                 closestDistance = distance;
