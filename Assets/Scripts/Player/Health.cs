@@ -40,7 +40,7 @@ public class Health : NetworkBehaviour
     [Server]
     private void Die()
     {
-        UnitManager.Instance.UnregisterUnits(gameObject, unitType);
+        UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), unitType);
         Destroy(gameObject);
     }
     #endregion

@@ -44,7 +44,7 @@ public class MyLog : MonoBehaviour
         GUIStyle s = new GUIStyle();
         s.fontSize = 16;
         s.normal.textColor = Color.green;
-        GUI.Label(new Rect(50, 50, Screen.width, Screen.height - 50), myLog, s);
+        GUI.Label(new Rect(10, 120, Screen.width, Screen.height - 50), myLog, s);
 
     }
 }

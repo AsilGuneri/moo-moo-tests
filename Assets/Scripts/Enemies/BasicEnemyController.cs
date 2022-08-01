@@ -24,7 +24,9 @@ public class BasicEnemyController : MonoBehaviour
     }
     private void PickTarget()
     {
-        if (!_tc.Target) _tc.Target= UnitManager.Instance.GetClosestUnit(transform.position);
+        if (!_tc.Target) {
+            _tc.Target = UnitManager.Instance.GetClosestUnit(transform.position);
+        }
         else Chase();
     }
     public void Activate()

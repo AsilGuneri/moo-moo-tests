@@ -47,7 +47,7 @@ public class WaveManager : Singleton<WaveManager>//
                     var obj = Instantiate(nextWave.prefab, spawnPoint, Quaternion.identity);
                     obj.GetComponent<BasicEnemyController>().Activate();
                     NetworkServer.Spawn(obj);
-                    UnitManager.Instance.RegisterUnit(obj, UnitType.WaveEnemy);
+                    UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(obj.GetComponent<NetworkIdentity>()), UnitType.WaveEnemy);
                     }
 
                 }

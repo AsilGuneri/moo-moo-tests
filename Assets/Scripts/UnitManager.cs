@@ -7,12 +7,12 @@ using Mirror;
 
 public class UnitManager : NetworkSingleton<UnitManager> 
 {
-    public SyncList<GameObject> Players { get; private set; } = new SyncList<GameObject>();
-    public SyncList<GameObject> WaveEnemies { get; private set; } = new SyncList<GameObject>();
+    public readonly SyncList<NetworkIdentityReference> Players = new SyncList<NetworkIdentityReference>();
+    public readonly SyncList<NetworkIdentityReference> WaveEnemies = new SyncList<NetworkIdentityReference>();
 
 
     [ServerCallback]
-    public void RegisterUnit(GameObject unit, UnitType unitType)
+    public void RegisterUnit(NetworkIdentityReference unit, UnitType unitType)
     {
         switch (unitType)
         {
@@ -28,7 +28,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
     }
     [ServerCallback]
-    public void UnregisterUnits(GameObject unit, UnitType unitType)
+    public void UnregisterUnits(NetworkIdentityReference unit, UnitType unitType)
     {
         switch (unitType)
         {
@@ -46,19 +46,17 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
     }
 
-
     public GameObject GetClosestUnit(Vector3 myPosition)
     {
         float closestDistance = Mathf.Infinity;
         GameObject closestUnit = null;
-        foreach (GameObject unit in Players)
-        {       
-                Debug.Log("My Position: " + myPosition + "\n Unit Position: " + unit.transform.position);
-                float distance = Vector3.Distance(myPosition, unit.transform.position);
-                if (closestDistance < distance) continue;
-                closestDistance = distance;
-                closestUnit = unit;
-            
+        foreach (NetworkIdentityReference unit in Players)
+        {
+            if(!unit.Value.gameObject) continue;
+            float distance = Vector3.Distance(myPosition, unit.Value.gameObject.transform.position);
+            if (closestDistance < distance) continue;
+            closestDistance = distance;
+            closestUnit = unit.Value.gameObject;
         }
         return closestUnit;
     }
@@ -66,7 +64,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
     {
         foreach(var player in Players)
         {
-            if (player.GetComponent<PlayerMertController>().hasAuthority) return player.GetComponent<PlayerMertController>();
+            if (player.Value.gameObject.GetComponent<PlayerMertController>().hasAuthority) return player.Value.gameObject.GetComponent<PlayerMertController>();
         }
         return null;
     }

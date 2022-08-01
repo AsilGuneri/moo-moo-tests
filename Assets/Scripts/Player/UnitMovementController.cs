@@ -24,5 +24,6 @@ public class UnitMovementController : MonoBehaviour
     {
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
+        pac.Animate("Idle", false);
     }
 }

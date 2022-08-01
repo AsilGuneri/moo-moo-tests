@@ -45,10 +45,6 @@ public class PlayerMertController : NetworkBehaviour
 
 
     }
-    private void Start()
-    {
-        UnitManager.Instance.RegisterUnit(gameObject, UnitType.Player);
-    }
     #region Server
 
     #endregion
@@ -59,6 +55,7 @@ public class PlayerMertController : NetworkBehaviour
         mainCamera = Camera.main;
         mainCamera.GetComponent<FollowingCamera>().target = transform;
     }
+
     [ClientCallback]
     void Update()
     {
@@ -70,7 +67,13 @@ public class PlayerMertController : NetworkBehaviour
 
         if (Input.GetMouseButtonDown(0)) HandleInputs(InputType.MouseLeft);
         if (Input.GetMouseButtonDown(1)) HandleInputs(InputType.MouseRight);
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S)) _umc.ClientStop();
+        if (Input.GetKeyDown(KeyCode.PageDown)){
+            Debug.Log("Player Count: " + UnitManager.Instance.Players.Count);
+            Debug.Log("Player 0 Name: " + UnitManager.Instance.Players[0].Value.gameObject.name);
+            Debug.Log("Player 1 Name: " + UnitManager.Instance.Players[1].Value.gameObject.name);
+        } 
+        if (Input.GetKeyDown(KeyCode.E))
         {
             WaveManager.Instance.SpawnWave(WaveManager.Instance.waves[0]);
         }
@@ -88,7 +91,7 @@ public class PlayerMertController : NetworkBehaviour
             Ray myRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(myRay, out _hitInfo, 100))
             {
-                if (_hitInfo.collider.TryGetComponent(out Health hc))
+                if (_hitInfo.collider.TryGetComponent(out Health hc) && !_hitInfo.collider.TryGetComponent(out PlayerMertController mc))
                 {
                     _tc.SyncTarget(hc.gameObject);
                     _tc.HasTarget = true;
@@ -131,6 +134,19 @@ public class PlayerMertController : NetworkBehaviour
     {
         indicators.SetupIndicator(null, false);
     }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
+    }
+
+    public override void OnStopClient()
+    {
+        UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
+        base.OnStopClient();
+    }
+
 
  
 
