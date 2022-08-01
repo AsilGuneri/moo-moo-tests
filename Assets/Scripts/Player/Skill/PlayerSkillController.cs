@@ -23,6 +23,9 @@ public class PlayerSkillController : MonoBehaviour
     }
     public void UseSkill(int tier)
     {
+        if(tier > SelectedSkills.Count || tier < 0)
+            return;
+            
         if (SelectedSkills[tier] != null) SelectedSkills[tier].SkillStart();
     }
 }
