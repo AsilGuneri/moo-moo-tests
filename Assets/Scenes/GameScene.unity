@@ -2561,13 +2561,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622623374}
-  m_LocalRotation: {x: 0.3637649, y: -0.0039722105, z: 0.0015555759, w: 0.93148106}
-  m_LocalPosition: {x: -5.12, y: 10.031971, z: -16.481453}
+  m_LocalRotation: {x: 0.34979862, y: 0, z: 0, w: 0.936825}
+  m_LocalPosition: {x: -8.61, y: 8.95, z: 2.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40.95, y: 0, z: 0}
 --- !u!114 &1622623378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2612,7 +2612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f5641cf13e09b40ae57ef399660f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 10, z: -15}
+  offset: {x: 0, y: 9, z: -13}
   target: {fileID: 0}
 --- !u!1 &1623362396
 GameObject:
@@ -2869,12 +2869,7 @@ MonoBehaviour:
   waves:
   - waveIndex: 0
     prefab: {fileID: 7498676492825279152, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
-    minionPerPoint: 1
-    spawnSpace: {x: 2, y: 0.5, z: 2}
-    isHorizontal: 0
-  - waveIndex: 0
-    prefab: {fileID: 7498676492825279152, guid: 9ba60f9fe21285c47866c6ef1058c1d6, type: 3}
-    minionPerPoint: 1
+    minionPerPoint: 9
     spawnSpace: {x: 2, y: 0.5, z: 2}
     isHorizontal: 0
   spawnPoints:
@@ -2928,9 +2923,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90188b8534824c04eb74b9ae78fe486d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _skillFields:
-  - {fileID: 1354421692}
-  - {fileID: 2088363711}
 --- !u!114 &1858674480
 MonoBehaviour:
   m_ObjectHideFlags: 0
