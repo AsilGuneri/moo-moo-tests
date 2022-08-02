@@ -22,7 +22,7 @@ public class BasicEnemyController : MonoBehaviour
     {
         PickTarget();
     }
-    private void PickTarget()
+    protected void PickTarget()
     {
         if (!_tc.Target) {
             _tc.Target = UnitManager.Instance.GetClosestUnit(transform.position);
@@ -32,10 +32,6 @@ public class BasicEnemyController : MonoBehaviour
     public void Activate()
     {
         _agent.enabled = true;
-    }
-    protected void ChooseTarget()
-    {
-
     }
     protected void Chase()
     {
