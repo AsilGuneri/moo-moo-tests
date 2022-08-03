@@ -20,7 +20,7 @@ public class Projectile : NetworkBehaviour
     {
         NetworkServer.Destroy(gameObject);
     }
-    [Command]
+    [Command(requiresAuthority = false)]
     private void CmdTargetHit()
     {
         _target.GetComponent<Health>().TakeDamage(_damage);
@@ -42,7 +42,7 @@ public class Projectile : NetworkBehaviour
     {
         if (_target == null || !_isMoving) return;
 
-        if (Vector2.Distance(Extensions.Vector3ToVector2(transform.position),Extensions.Vector3ToVector2(_target.transform.position)) > 2)
+        if (Vector2.Distance(Extensions.Vector3ToVector2(transform.position),Extensions.Vector3ToVector2(_target.transform.position)) > 0.4f)
         {
             transform.position += Vector3WithoutY(Direction(_target.transform.position) * Time.deltaTime * speed);
             transform.LookAt(_target.transform.position);
@@ -50,7 +50,7 @@ public class Projectile : NetworkBehaviour
         }
         else
         {
-            if(hasAuthority) CmdTargetHit();
+            CmdTargetHit();
             return;
         }
 

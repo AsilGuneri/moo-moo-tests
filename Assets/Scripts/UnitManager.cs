@@ -33,14 +33,20 @@ public class UnitManager : NetworkSingleton<UnitManager>
         switch (unitType)
         {
             case UnitType.Player:
-                if (Players.Contains(unit)) Players.Remove(unit);
+
+                foreach(var player in Players)
+                {
+                    if (player.networkId == unit.networkId) { Players.Remove(player);}
+                }
                 break;
             case UnitType.WaveEnemy:
-                if (WaveEnemies.Contains(unit))
+                foreach (var enemy in WaveEnemies)
                 {
-                    WaveEnemies.Remove(unit);
-                    if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd?.Invoke();
-
+                    if (enemy.networkId == unit.networkId) 
+                    { 
+                        Players.Remove(enemy);
+                        if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd?.Invoke();
+                    }
                 }
                 break;
         }

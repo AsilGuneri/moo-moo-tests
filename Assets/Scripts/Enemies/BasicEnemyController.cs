@@ -2,10 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using MyBox;
+using Mirror;
 
-public class BasicEnemyController : MonoBehaviour
+public class BasicEnemyController : NetworkBehaviour
 {
     [SerializeField] private float range;
+    [SerializeField] private float attackSpeed;
+
+    [Separator("Projectile")]
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private float projectileSpawnDelay;
+    [SerializeField] private int damage;
+    [SerializeField] private Transform projectileSpawnPoint;
 
 
     protected NavMeshAgent _agent;
@@ -17,6 +26,9 @@ public class BasicEnemyController : MonoBehaviour
     private bool isChasing;
     private bool isInAttackRange;
 
+    private float _counter = 0;
+    private bool _canAttack = false;
+
     private void Awake()
     {
         _tc = GetComponent<TargetController>();
@@ -25,7 +37,18 @@ public class BasicEnemyController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        PickTarget();
+        if (_counter < attackSpeed)
+        {
+            _counter += Time.fixedDeltaTime;
+            _canAttack = false;
+        }
+        else
+        {
+            _canAttack = true;
+            _counter = 0;
+        }
+        if (UnitManager.Instance.Players.Count > 0) PickTarget();
+        else StopMove();
     }
     protected void PickTarget()
     {
@@ -33,9 +56,12 @@ public class BasicEnemyController : MonoBehaviour
         {
             _tc.Target = UnitManager.Instance.GetClosestUnit(transform.position);
         }
-
         else if (Vector2.Distance(Extensions.Vector3ToVector2(_tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) < range)
-            Attack();
+        {
+            StopMove();
+            if (_canAttack) Attack();
+        }
+
         else Chase();
     }
     public void Activate()
@@ -52,6 +78,7 @@ public class BasicEnemyController : MonoBehaviour
     }
     protected void Attack()
     {
+        StartCoroutine(nameof(SpawnProjectileRoutine));
         transform.LookAt(new Vector3(_tc.Target.transform.position.x, transform.position.y, _tc.Target.transform.position.z));
         StopMove();
         _eac.OnAttack();
@@ -67,4 +94,16 @@ public class BasicEnemyController : MonoBehaviour
         _agent.SetDestination(destination);
 
     }
+    private IEnumerator SpawnProjectileRoutine()
+    {
+        yield return new WaitForSeconds(projectileSpawnDelay);
+        SpawnProjectile();
+    }
+    [Command(requiresAuthority = false)]
+    private void SpawnProjectile()
+    {
+        var projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+        projectile.GetComponent<Projectile>().SetupProjectile(_tc.Target, damage);
+        NetworkServer.Spawn(projectile);
+    }    
 }
