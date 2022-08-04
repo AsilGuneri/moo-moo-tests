@@ -12,18 +12,19 @@ public class UnitMovementController : MonoBehaviour
     [SerializeField] private TargetController tc;
     [SerializeField] private BasicAttackController bac;
 
-    public void ClientMove(Vector3 pos)
+    public void ClientMove(Vector3 pos, bool movingToTarget = false, float stoppingDistance = 0)
     {
         agent.isStopped = false;
+        if (stoppingDistance != 0) agent.stoppingDistance = stoppingDistance;
         agent.SetDestination(pos);
-        if (pac.CurrentAnimState != "Run") pac.Animate("Run", false);
-        tc.SyncTarget(null);
-        bac.IsAttacking = false;
+        pac.OnMove();
+        if(!movingToTarget) tc.SyncTarget(null);
     }
     public void ClientStop()
     {
+        pac.OnStop();
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
-        pac.Animate("Idle", false);
+
     }
 }

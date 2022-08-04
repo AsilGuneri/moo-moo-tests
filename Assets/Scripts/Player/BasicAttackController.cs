@@ -25,10 +25,12 @@ public class BasicAttackController : NetworkBehaviour
 
     private float counter;
     private float additionalAttackSpeed;
+    private bool isAttacking;
     
     public bool IsAttacking
     {
-        get;set;
+        get => isAttacking;
+        set => isAttacking = value;
     }
     public float AttackSpeed
     {
@@ -59,18 +61,27 @@ public class BasicAttackController : NetworkBehaviour
     private void Update()
     {
         if (!hasAuthority) return;
-        if (counter <= AttackSpeed) counter += Time.deltaTime;
-        if (!tc.Target) { agent.stoppingDistance = 0; return; }
+        if (counter <= (1 / AttackSpeed)) counter += Time.deltaTime;
+        if (!tc.Target) 
+        {
+            if (isAttacking)
+            {
+                isAttacking = false;
+                if (pac) pac.OnAttackEnd();
+            }
+            agent.stoppingDistance = 0; 
+            return; 
+        }
         if (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > range)
         {
-            agent.stoppingDistance = range;
-            agent.SetDestination(tc.Target.transform.position);
+            umc.ClientMove(tc.Target.transform.position, true, range);
         }
-        else if (counter >= AttackSpeed - ( additionalAttackSpeed != 0 ? (AttackSpeed / AdditionalAttackSpeed) : 0))
+        else if (counter >= (1 / AttackSpeed))
         {
             transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
             if(umc) umc.ClientStop();
-            if(pac) pac.Animate("Shoot", true, true);
+            if(pac) pac.OnAttackStart(attackSpeed);
+            isAttacking = true;
             CmdSpawnProjectile();
             counter = 0;
         }       

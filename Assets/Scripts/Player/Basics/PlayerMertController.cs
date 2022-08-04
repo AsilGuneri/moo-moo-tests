@@ -62,7 +62,7 @@ public class PlayerMertController : NetworkBehaviour
         if (!hasAuthority) return;
         if (!navMeshAgent.hasPath && !_tc.HasTarget)
         {
-            if (_pac.CurrentAnimState != "Idle") _pac.Animate("Idle", false);
+            _pac.OnStop();
         }
 
         if (Input.GetMouseButtonDown(0)) HandleInputs(InputType.MouseLeft);

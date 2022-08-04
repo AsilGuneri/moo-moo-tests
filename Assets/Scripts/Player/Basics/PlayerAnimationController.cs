@@ -7,18 +7,27 @@ public class PlayerAnimationController : MonoBehaviour
 {
     [SerializeField] private Animator animator;
 
-    private string _currentAnimState;
 
-    public string CurrentAnimState
+
+    public void OnMove()
     {
-        get => _currentAnimState;
-        set => _currentAnimState = value;
+        animator.SetBool("Move", true);
+        animator.SetBool("Idle", false);
     }
-    public void Animate(string nextState, bool canCancel, bool canRestart = false)
+    public void OnStop()
     {
+        animator.SetBool("Move", false);
+        animator.SetBool("Idle", true);
 
-        AnimationManager.Instance.ChangeAnimationState(nextState, _currentAnimState, animator, canCancel, canRestart);
-        _currentAnimState = nextState;
+    }
+    public void OnAttackStart(float attackSpeed)
+    {
+        animator.SetFloat("ShootSpeed", attackSpeed);
+        animator.SetBool("IsAttacking", true);
+    }
+    public void OnAttackEnd()
+    {
+        animator.SetBool("IsAttacking", false);
     }
 }
 
