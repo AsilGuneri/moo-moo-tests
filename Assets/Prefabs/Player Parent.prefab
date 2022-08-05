@@ -68428,8 +68428,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  displayName: Missing Name
-  nameText: {fileID: 6730259019542604515}
+  displayName: Player
+  displayNameText: {fileID: 0}
 --- !u!114 &7516589810736755903
 MonoBehaviour:
   m_ObjectHideFlags: 0
