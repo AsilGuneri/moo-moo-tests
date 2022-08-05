@@ -2713,7 +2713,7 @@ MonoBehaviour:
   runInBackground: 1
   autoStartServerBuild: 1
   serverTickRate: 30
-  offlineScene: Assets/Scenes/SteamLobby.unity
+  offlineScene: Assets/Scenes/LocalLobby.unity
   onlineScene: 
   transport: {fileID: 1391452909}
   networkAddress: localhost
