@@ -101,23 +101,18 @@ public class PlayerMertController : NetworkBehaviour
             return;
         if(input is InputType.MouseLeft && _isAttackClickMode)
         {
-            Debug.Log("1");
             var closestEnemy = UnitManager.Instance.GetClosestUnit(transform.position, true);
-            Debug.Log("2");
 
             if (!Extensions.IsInRange(closestEnemy.transform.position, transform.position, attackKeyRange))
             {
-                Debug.Log("3");
 
                 _isAttackClickMode = false;
                 return;
             }
-            Debug.Log("4");
 
             _tc.SyncTarget(closestEnemy);
             _tc.HasTarget = true;
             _isAttackClickMode = false;
-            Debug.Log("5");
 
             return;
         }

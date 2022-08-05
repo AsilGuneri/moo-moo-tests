@@ -99,11 +99,13 @@ public class BasicEnemyController : NetworkBehaviour
         yield return new WaitForSeconds(projectileSpawnDelay);
         SpawnProjectile();
     }
-    [Command(requiresAuthority = false)]
+    [ServerCallback]
     private void SpawnProjectile()
     {
+        Debug.Log("spawn" + StackTraceUtility.ExtractStackTrace());//
         var projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
         projectile.GetComponent<Projectile>().SetupProjectile(_tc.Target, damage);
         NetworkServer.Spawn(projectile);
+        //asdasd
     }    
 }

@@ -20,7 +20,7 @@ public class Projectile : NetworkBehaviour
     {
         NetworkServer.Destroy(gameObject);
     }
-    [Command(requiresAuthority = false)]
+    [ServerCallback]
     private void CmdTargetHit()
     {
         _target.GetComponent<Health>().TakeDamage(_damage);
@@ -37,7 +37,7 @@ public class Projectile : NetworkBehaviour
         _target = target;
         _damage = damage;
     }
-    [ClientCallback]
+    [ServerCallback]
     private void Update()
     {
         if (_target == null || !_isMoving) return;
