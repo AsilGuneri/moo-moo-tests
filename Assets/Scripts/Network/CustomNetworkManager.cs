@@ -56,6 +56,8 @@ public class CustomNetworkManager : NetworkManager
 
         CustomNetworkPlayer p = conn.identity.GetComponent<CustomNetworkPlayer>();
         players.Add(p);
+        
+        p.SetDisplayName($"Player {players.Count}");
 
         p.SetPartyOwner(players.Count == 1);
 

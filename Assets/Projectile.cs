@@ -45,11 +45,8 @@ public class Projectile : NetworkBehaviour
         if (Vector2.Distance(Extensions.Vector3ToVector2(transform.position),Extensions.Vector3ToVector2(_target.transform.position)) > 0.4f)
         {
             transform.position += Vector3WithoutY(Direction(_target.transform.position) * Time.deltaTime * speed);
-            // transform.LookAt(_target.transform.position);
-            Vector3 targetPostition = new Vector3( _target.transform.position.x, 
-                                        this.transform.position.y, 
-                                        _target.transform.position.z ) ;
-            this.transform.LookAt( targetPostition ) ;
+            Vector3 targetPos = new Vector3( _target.transform.position.x, transform.position.y, _target.transform.position.z ) ;
+            transform.LookAt(targetPos) ;
             return;
             
         }

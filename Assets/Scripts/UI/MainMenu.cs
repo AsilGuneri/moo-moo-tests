@@ -4,18 +4,35 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Mirror;
+using Steamworks;
 
 public class MainMenu : MonoBehaviour
 {
+    //Steam
+    [SerializeField] private bool useSteam = false;
+    protected Callback<LobbyCreated_t> lobbyCreated;
+    protected Callback<GameLobbyJoinRequested_t> gameLobbyJoinRequested;
+    protected Callback<LobbyEnter_t> lobbyEntered;
+
+
     [SerializeField] private GameObject landingPagePanel = null;
     [SerializeField] private GameObject joinLobbyPanel = null;
     [SerializeField] private GameObject lobbyPanel = null;
     [SerializeField] private TMP_InputField addressInput = null;
     [SerializeField] private Button joinButton = null;
     [SerializeField] private Button startGameButton = null;
+    [SerializeField] private TMP_Text[] playerNameTexts = new TMP_Text[4];
 
     private void Start() {
         CustomNetworkPlayer.AuthorityOnPartyOwnerStateUpdated += AuthorityHandlePartyOwnerStateUpdated;
+        CustomNetworkPlayer.ClientOnInfoUpdated += ClientHandleInfoUpdated;
+        
+        if (!useSteam) { return; }
+
+        lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
+        gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
+        lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+        
     }
 
     private void OnEnable() {
@@ -32,6 +49,8 @@ public class MainMenu : MonoBehaviour
         CustomNetworkManager.ClientOnConnected -= HandleClientConnected;
         CustomNetworkManager.ClientOnDisonnected -= HandleClientDisconnected;
         CustomNetworkPlayer.AuthorityOnPartyOwnerStateUpdated -= AuthorityHandlePartyOwnerStateUpdated;
+        CustomNetworkPlayer.ClientOnInfoUpdated -= ClientHandleInfoUpdated;
+
     }
 
     private void AuthorityHandlePartyOwnerStateUpdated(bool state){
@@ -41,6 +60,13 @@ public class MainMenu : MonoBehaviour
     public void HostLobby(){
         landingPagePanel.SetActive(false);
         lobbyPanel.SetActive(true);
+        
+        if (useSteam)
+        {
+            SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 4);
+            return;
+        }
+
         NetworkManager.singleton.StartHost();
     }
 
@@ -76,6 +102,23 @@ public class MainMenu : MonoBehaviour
             Back();
         }
     }
+    
+    private void ClientHandleInfoUpdated()
+    {
+        List<CustomNetworkPlayer> players = ((CustomNetworkManager)NetworkManager.singleton).players;
+
+        for (int i = 0; i < players.Count; i++)
+        {
+            playerNameTexts[i].text = players[i].GetDisplayName();
+        }
+
+        for (int i = players.Count; i < playerNameTexts.Length; i++)
+        {
+            playerNameTexts[i].text = "Waiting For Player...";
+        }
+
+        startGameButton.interactable = players.Count >= 1;
+    }
 
     private void HandleClientConnected(){
         joinButton.interactable = true;
@@ -86,5 +129,43 @@ public class MainMenu : MonoBehaviour
 
     private void HandleClientDisconnected(){
         joinButton.interactable = true;
+    }
+
+
+    //Steam
+    
+    private void OnLobbyCreated(LobbyCreated_t callback)
+    {
+        if (callback.m_eResult != EResult.k_EResultOK)
+        {
+            landingPagePanel.SetActive(true);
+            return;
+        }
+
+        NetworkManager.singleton.StartHost();
+
+        SteamMatchmaking.SetLobbyData(
+            new CSteamID(callback.m_ulSteamIDLobby),
+            "HostAddress",
+            SteamUser.GetSteamID().ToString());
+    }
+
+    private void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t callback)
+    {
+        SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
+    }
+
+    private void OnLobbyEntered(LobbyEnter_t callback)
+    {
+        if (NetworkServer.active) { return; }
+
+        string hostAddress = SteamMatchmaking.GetLobbyData(
+            new CSteamID(callback.m_ulSteamIDLobby),
+            "HostAddress");
+
+        NetworkManager.singleton.networkAddress = hostAddress;
+        NetworkManager.singleton.StartClient();
+
+        landingPagePanel.SetActive(false);
     }
 }

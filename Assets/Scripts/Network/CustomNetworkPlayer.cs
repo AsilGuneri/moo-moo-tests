@@ -9,16 +9,22 @@ public class CustomNetworkPlayer : NetworkBehaviour
 {
 
 
-    [SyncVar(hook = nameof(HandleDisplayNameUpdated))]
+    [SyncVar(hook = nameof(ClientHandleDisplayNameUpdated))]
     [SerializeField] private string displayName = "Missing Name";
 
     [SerializeField] private TMP_Text displayNameText;
     [SyncVar(hook = nameof(AuthorityHandlePartyOwnerStateUpdated))]private bool isPartyOwner = false;
 
+    public static event Action ClientOnInfoUpdated;
     public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
 
     public bool GetIsPartyOwner(){
         return isPartyOwner;
+    }
+    
+    public string GetDisplayName()
+    {
+        return displayName;
     }
 
     #region Server
@@ -89,8 +95,12 @@ public class CustomNetworkPlayer : NetworkBehaviour
     {
         // UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
         
-        if(isClientOnly)
-            ((CustomNetworkManager)NetworkManager.singleton).players.Remove(this);
+        ClientOnInfoUpdated?.Invoke();
+
+        if(!isClientOnly)
+            return;
+
+        ((CustomNetworkManager)NetworkManager.singleton).players.Remove(this);
     }
 
     #endregion
@@ -101,4 +111,10 @@ public class CustomNetworkPlayer : NetworkBehaviour
 
         AuthorityOnPartyOwnerStateUpdated?.Invoke(newState);
     }
+    
+    private void ClientHandleDisplayNameUpdated(string oldDisplayName, string newDisplayName)
+    {
+        ClientOnInfoUpdated?.Invoke();
+    }
+
 }
