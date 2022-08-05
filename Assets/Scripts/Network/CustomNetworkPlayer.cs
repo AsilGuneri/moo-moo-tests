@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class CustomNetworkPlayer : NetworkBehaviour
 {
@@ -10,13 +11,36 @@ public class CustomNetworkPlayer : NetworkBehaviour
 
     [SyncVar(hook = nameof(HandleDisplayNameUpdated))]
     [SerializeField] private string displayName = "Missing Name";
-    [SerializeField] private TMP_Text nameText;
+
+    [SerializeField] private TMP_Text displayNameText;
+    [SyncVar(hook = nameof(AuthorityHandlePartyOwnerStateUpdated))]private bool isPartyOwner = false;
+
+    public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
+
+    public bool GetIsPartyOwner(){
+        return isPartyOwner;
+    }
 
     #region Server
     [Server] 
     public void SetDisplayName(string name)
     {
         displayName = name;
+    }
+
+    [Server] 
+    public void SetPartyOwner(bool state)
+    {
+        isPartyOwner = state;
+    }
+
+    [Command]
+    public void CmdStartGame(){
+        if(!isPartyOwner)
+            return;
+
+        ((CustomNetworkManager)NetworkManager.singleton).StartGame();
+
     }
     
     [Command] //Clients calling a method on server
@@ -27,12 +51,17 @@ public class CustomNetworkPlayer : NetworkBehaviour
         SetDisplayName(newDisplayName);
     }
 
+    public override void OnStartServer()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
 
     #endregion
     #region Client
     private void HandleDisplayNameUpdated(string oldName, string newName)
     {
-        nameText.text = newName;
+        displayNameText.text = newName;
     }
 
     [ContextMenu("Set name")]
@@ -45,5 +74,31 @@ public class CustomNetworkPlayer : NetworkBehaviour
     {
         Debug.Log(newDisplayName);
     }
+
+    public override void OnStartClient()
+    {
+        
+        if(NetworkServer.active)
+            return;
+            
+        DontDestroyOnLoad(gameObject);
+        ((CustomNetworkManager)NetworkManager.singleton).players.Add(this);
+    }
+
+    public override void OnStopClient()
+    {
+        // UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
+        
+        if(isClientOnly)
+            ((CustomNetworkManager)NetworkManager.singleton).players.Remove(this);
+    }
+
     #endregion
+
+    private void AuthorityHandlePartyOwnerStateUpdated(bool oldState, bool newState){
+        if(!hasAuthority)
+            return;
+
+        AuthorityOnPartyOwnerStateUpdated?.Invoke(newState);
+    }
 }
