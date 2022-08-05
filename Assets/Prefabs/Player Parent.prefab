@@ -68501,10 +68501,10 @@ MonoBehaviour:
   projectilePrefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
   projectileSpawnPoint: {fileID: 3792548669549166751}
   attackRange: 10
-  attackSpeed: 1
+  attackSpeed: 5
   agent: {fileID: 7319744102357029728}
   range: 10
-  damage: 5
+  damage: 20
   tc: {fileID: 6411675676070392958}
   umc: {fileID: 2171894335096632730}
   pac: {fileID: 5397592318971391883}

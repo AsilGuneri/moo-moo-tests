@@ -55,6 +55,12 @@ public class BasicAttackController : NetworkBehaviour
         projectile.GetComponent<Projectile>().SetupProjectile(tc.Target, damage);
         NetworkServer.Spawn(projectile, connectionToClient);
     }
+    private IEnumerator DelayProjectileSpawn()
+    {
+        yield return new WaitForSeconds((1 / attackSpeed) / 2);
+        CmdSpawnProjectile();
+
+    }
     #endregion
     #region Client
     [ClientCallback]
@@ -62,12 +68,14 @@ public class BasicAttackController : NetworkBehaviour
     {
         if (!hasAuthority) return;
         if (counter <= (1 / AttackSpeed)) counter += Time.deltaTime;
-        if (!tc.Target) 
+        if (tc.Target == null) 
         {
             if (isAttacking)
             {
                 isAttacking = false;
+                StopCoroutine(nameof(DelayProjectileSpawn));
                 if (pac) pac.OnAttackEnd();
+
             }
             agent.stoppingDistance = 0; 
             return; 
@@ -82,7 +90,7 @@ public class BasicAttackController : NetworkBehaviour
             if(umc) umc.ClientStop();
             if(pac) pac.OnAttackStart(attackSpeed);
             isAttacking = true;
-            CmdSpawnProjectile();
+            StartCoroutine(nameof(DelayProjectileSpawn));
             counter = 0;
         }       
     }
