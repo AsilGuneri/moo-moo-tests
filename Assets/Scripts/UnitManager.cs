@@ -44,7 +44,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
                 {
                     if (enemy.networkId == unit.networkId) 
                     { 
-                        Players.Remove(enemy);
+                        WaveEnemies.Remove(enemy);
                         if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd?.Invoke();
                     }
                 }
@@ -61,7 +61,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
 
                 foreach(var player in Players)
                 {
-                    if (player.networkId == netId) { Players.Remove(player);}
+                    if (player.networkId == netId) { Players.Remove(player); Debug.Log("Player Removed From UnitList");}
                 }
                 break;
             case UnitType.WaveEnemy:
@@ -69,7 +69,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
                 {
                     if (enemy.networkId == netId) 
                     { 
-                        Players.Remove(enemy);
+                        WaveEnemies.Remove(enemy);
                         if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd?.Invoke();
                     }
                 }
