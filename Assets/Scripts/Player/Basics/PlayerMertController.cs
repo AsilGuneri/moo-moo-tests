@@ -8,25 +8,29 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMertController : NetworkBehaviour
 {
-    [SerializeField] private NavMeshAgent navMeshAgent;
     [SerializeField] private Animator animator;
-    [SerializeField] private SelectIndicator indicators;
 
     [SerializeField] private ClassType _classType;
     [SerializeField] private SkillTier _currentTier;
+    [SerializeField] private KeyCode attackKey;
+    [SerializeField] private float attackKeyRange;
+
 
     [SerializeField] private KeyCode[] skillKeys;
 
+    private SpecialClickType _currentClickType;
     private Camera mainCamera;
     private Health _hc;
     private RaycastHit _hitInfo;
     private bool _hasPath;
+    private bool _isAttackClickMode = false;
 
     private TargetController _tc;
     private BasicAttackController _bac;
     private PlayerAnimationController _pac;
     private UnitMovementController _umc;
     private PlayerSkillController _psc;
+    private NavMeshAgent _navMeshAgent;
 
     public ClassType ClassType { get { return _classType; } }
     public SkillTier CurrentTier 
@@ -43,6 +47,7 @@ public class PlayerMertController : NetworkBehaviour
         _umc = GetComponent<UnitMovementController>();
         _psc = GetComponent<PlayerSkillController>();
         _hc = GetComponent<Health>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
 
     }
 
@@ -67,10 +72,14 @@ public class PlayerMertController : NetworkBehaviour
     void Update()
     {
         if (!hasAuthority) return;
-        if (!navMeshAgent.hasPath && !_tc.HasTarget)
+        if (!_navMeshAgent.hasPath && !_tc.HasTarget)
         {
             _pac.OnStop();
         }
+
+
+        if (Input.GetKeyDown(attackKey)) _isAttackClickMode = true;
+        
 
         if (Input.GetMouseButtonDown(0)) HandleInputs(InputType.MouseLeft);
         if (Input.GetMouseButtonDown(1)) HandleInputs(InputType.MouseRight);
@@ -90,8 +99,33 @@ public class PlayerMertController : NetworkBehaviour
     {
         if(!mainCamera)
             return;
+        if(input is InputType.MouseLeft && _isAttackClickMode)
+        {
+            Debug.Log("1");
+            var closestEnemy = UnitManager.Instance.GetClosestUnit(transform.position, true);
+            Debug.Log("2");
+
+            if (!Extensions.IsInRange(closestEnemy.transform.position, transform.position, attackKeyRange))
+            {
+                Debug.Log("3");
+
+                _isAttackClickMode = false;
+                return;
+            }
+            Debug.Log("4");
+
+            _tc.SyncTarget(closestEnemy);
+            _tc.HasTarget = true;
+            _isAttackClickMode = false;
+            Debug.Log("5");
+
+            return;
+        }
+
+
         if (input is InputType.MouseLeft || input is InputType.MouseRight)
         {
+            _isAttackClickMode = false;
             Ray myRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(myRay, out _hitInfo, 100))
             {
@@ -136,13 +170,29 @@ public class PlayerMertController : NetworkBehaviour
     }
     private void DeselectUnit()
     {
-        indicators.SetupIndicator(null, false);
+       // indicators.SetupIndicator(null, false);
+    }
+    private void SetSpecialClickType(SpecialClickType clickType) 
+    {
+        _currentClickType = clickType;
+       
     }
 }
-
+[System.Serializable]
+public class ClickTypeGroup
+{
+    public KeyCode Key;
+    public SpecialClickType ClickType;
+}
 public enum InputType
 {
     MouseLeft,
     MouseRight,
     Keyboard
+}
+public enum SpecialClickType
+{
+    Attack,
+    Move,
+    None
 }

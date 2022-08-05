@@ -77,11 +77,11 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
     }
 
-    public GameObject GetClosestUnit(Vector3 myPosition)
+    public GameObject GetClosestUnit(Vector3 myPosition, bool isEnemy = false)
     {
         float closestDistance = Mathf.Infinity;
         GameObject closestUnit = null;
-        foreach (NetworkIdentityReference unit in Players)
+        foreach (NetworkIdentityReference unit in isEnemy ? WaveEnemies : Players)
         {
             if(!unit.Value.gameObject) continue;
             float distance = Vector3.Distance(myPosition, unit.Value.gameObject.transform.position);

@@ -9,4 +9,12 @@ public class Extensions : MonoBehaviour
         Vector2 finalVector = new Vector2(initialVector.x, initialVector.z);
         return finalVector;
     }
+    public static float Distance(Vector3 pointA, Vector3 pointB)
+    {
+        return Vector2.Distance(Vector3ToVector2(pointA), Vector3ToVector2(pointB));
+    }
+    public static bool IsInRange(Vector3 pointA, Vector3 pointB, float range)
+    {
+        return Distance(pointA, pointB) <= range;
+    }
 }
