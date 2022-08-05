@@ -2305,6 +2305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dcfcefc3f777fd45aa99d332aa9cb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useSteam: 1
   landingPagePanel: {fileID: 555913003}
   joinLobbyPanel: {fileID: 614940043}
   lobbyPanel: {fileID: 1126987847}
