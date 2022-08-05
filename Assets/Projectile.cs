@@ -37,7 +37,7 @@ public class Projectile : NetworkBehaviour
         _target = target;
         _damage = damage;
     }
-    [ClientCallback]
+    [ServerCallback]
     private void Update()
     {
         if (_target == null || !_isMoving) return;
