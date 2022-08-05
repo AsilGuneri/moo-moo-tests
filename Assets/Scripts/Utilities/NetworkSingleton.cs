@@ -16,7 +16,7 @@ namespace Utilities
                 _instance = FindObjectOfType<T>();
                 if (_instance == null)
                 {
-                    _instance = new GameObject("Instance of" + typeof(T)).AddComponent<T>();
+                    // _instance = new GameObject("Instance of" + typeof(T)).AddComponent<T>();
                 }
                 return _instance;
             }

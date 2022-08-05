@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Mirror;
 using MyBox;
+using UnityEngine.SceneManagement;
 
 public class PlayerMertController : NetworkBehaviour
 {
@@ -43,18 +44,24 @@ public class PlayerMertController : NetworkBehaviour
         _psc = GetComponent<PlayerSkillController>();
         _hc = GetComponent<Health>();
 
-
     }
-    #region Server
 
-    #endregion
-    #region Client
-
-    public override void OnStartAuthority()
-    {
+    [TargetRpc]
+    public void Activate() {
         mainCamera = Camera.main;
+        
         mainCamera.GetComponent<FollowingCamera>().target = transform;
+        Debug.Log("Target Adı: " + transform.name);
+
+        StartCoroutine("Wtf");
     }
+
+    private IEnumerator Wtf(){
+        yield return new WaitUntil(() => UnitManager.Instance != null );
+        UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
+
+    }
+    
 
     [ClientCallback]
     void Update()
@@ -68,11 +75,6 @@ public class PlayerMertController : NetworkBehaviour
         if (Input.GetMouseButtonDown(0)) HandleInputs(InputType.MouseLeft);
         if (Input.GetMouseButtonDown(1)) HandleInputs(InputType.MouseRight);
         if (Input.GetKeyDown(KeyCode.S)) _umc.ClientStop();
-        if (Input.GetKeyDown(KeyCode.PageDown)){
-            Debug.Log("Player Count: " + UnitManager.Instance.Players.Count);
-            Debug.Log("Player 0 Name: " + UnitManager.Instance.Players[0].Value.gameObject.name);
-            Debug.Log("Player 1 Name: " + UnitManager.Instance.Players[1].Value.gameObject.name);
-        } 
         if (Input.GetKeyDown(KeyCode.E))
         {
             WaveManager.Instance.SpawnWave(WaveManager.Instance.waves[0]);
@@ -86,6 +88,8 @@ public class PlayerMertController : NetworkBehaviour
 
     private void HandleInputs(InputType input)
     {
+        if(!mainCamera)
+            return;
         if (input is InputType.MouseLeft || input is InputType.MouseRight)
         {
             Ray myRay = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -134,23 +138,6 @@ public class PlayerMertController : NetworkBehaviour
     {
         indicators.SetupIndicator(null, false);
     }
-
-    public override void OnStartClient()
-    {
-        base.OnStartClient();
-        UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
-    }
-
-    public override void OnStopClient()
-    {
-        UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
-        base.OnStopClient();
-    }
-
-
- 
-
-    #endregion
 }
 
 public enum InputType

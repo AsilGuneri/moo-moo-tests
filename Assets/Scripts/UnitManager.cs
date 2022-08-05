@@ -52,6 +52,31 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
     }
 
+    [ServerCallback]
+    public void UnregisterUnits(uint netId, UnitType unitType)
+    {
+        switch (unitType)
+        {
+            case UnitType.Player:
+
+                foreach(var player in Players)
+                {
+                    if (player.networkId == netId) { Players.Remove(player);}
+                }
+                break;
+            case UnitType.WaveEnemy:
+                foreach (var enemy in WaveEnemies)
+                {
+                    if (enemy.networkId == netId) 
+                    { 
+                        Players.Remove(enemy);
+                        if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd?.Invoke();
+                    }
+                }
+                break;
+        }
+    }
+
     public GameObject GetClosestUnit(Vector3 myPosition)
     {
         float closestDistance = Mathf.Infinity;
