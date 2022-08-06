@@ -58,13 +58,7 @@ public class PlayerMertController : NetworkBehaviour
         mainCamera.GetComponent<FollowingCamera>().target = transform;
         Debug.Log("Target Adı: " + transform.name);
 
-        StartCoroutine("Wtf");
-    }
-
-    private IEnumerator Wtf(){
-        yield return new WaitUntil(() => UnitManager.Instance != null );
         UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
-
     }
     
 
