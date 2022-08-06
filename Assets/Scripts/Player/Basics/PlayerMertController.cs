@@ -21,6 +21,7 @@ public class PlayerMertController : NetworkBehaviour
     [SerializeField] private KeyCode attackKey;
     [SerializeField] private float attackKeyRange;
     [SerializeField] private Transform rangeIndicator;
+    [SerializeField] private SpriteRendererFadeOut attackIndicator;
 
     private SpecialClickType _currentClickType;
     private Camera mainCamera;
@@ -108,8 +109,14 @@ public class PlayerMertController : NetworkBehaviour
     {
         if(!mainCamera)
             return;
-        if(input is InputType.MouseLeft && IsAttackClickMode)
+
+        Ray myRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+        bool rayHit = Physics.Raycast(myRay, out _hitInfo, 100);
+
+        if (input is InputType.MouseLeft && IsAttackClickMode)
         {
+            // Instantiate(attackIndicatorPrefab, _hitInfo.point, attackIndicatorPrefab.transform.rotation);
+            attackIndicator.Setup(_hitInfo.point);
             var closestEnemy = UnitManager.Instance.GetClosestUnit(transform.position, true);
             if (!closestEnemy) 
             {
@@ -134,8 +141,7 @@ public class PlayerMertController : NetworkBehaviour
         if (input is InputType.MouseLeft || input is InputType.MouseRight)
         {
             IsAttackClickMode = false;
-            Ray myRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(myRay, out _hitInfo, 100))
+            if (rayHit)
             {
                 if (_hitInfo.collider.TryGetComponent(out Health hc) && !_hitInfo.collider.TryGetComponent(out PlayerMertController mc))
                 {
