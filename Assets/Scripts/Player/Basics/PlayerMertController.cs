@@ -12,18 +12,22 @@ public class PlayerMertController : NetworkBehaviour
 
     [SerializeField] private ClassType _classType;
     [SerializeField] private SkillTier _currentTier;
-    [SerializeField] private KeyCode attackKey;
-    [SerializeField] private float attackKeyRange;
+    
 
 
     [SerializeField] private KeyCode[] skillKeys;
+
+    [Separator("Attack With Key")]
+    [SerializeField] private KeyCode attackKey;
+    [SerializeField] private float attackKeyRange;
+    [SerializeField] private Transform rangeIndicator;
 
     private SpecialClickType _currentClickType;
     private Camera mainCamera;
     private Health _hc;
     private RaycastHit _hitInfo;
     private bool _hasPath;
-    private bool _isAttackClickMode = false;
+    private bool _isAttackClickMode;
 
     private TargetController _tc;
     private BasicAttackController _bac;
@@ -37,6 +41,15 @@ public class PlayerMertController : NetworkBehaviour
     {
         get { return _currentTier; } 
         set { _currentTier = value; }
+    }
+    public bool IsAttackClickMode
+    {
+        get { return _isAttackClickMode; }
+        private set
+        {
+            _isAttackClickMode = value;
+            SetRangeIndicator(value);
+        }
     }
 
     private void Awake()
@@ -54,13 +67,15 @@ public class PlayerMertController : NetworkBehaviour
     [TargetRpc]
     public void Activate() {
         mainCamera = Camera.main;
-        
         mainCamera.GetComponent<FollowingCamera>().target = transform;
-        Debug.Log("Target Adı: " + transform.name);
-
-        UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
+        StartCoroutine(nameof(RegisterRoutine));
     }
-    
+    private IEnumerator RegisterRoutine()
+    {
+        yield return new WaitUntil(() => TryGetComponent(out NetworkIdentity netId));
+        UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
+
+    }
 
     [ClientCallback]
     void Update()
@@ -72,7 +87,7 @@ public class PlayerMertController : NetworkBehaviour
         }
 
 
-        if (Input.GetKeyDown(attackKey)) _isAttackClickMode = true;
+        if (Input.GetKeyDown(attackKey)) IsAttackClickMode = true;
         
 
         if (Input.GetMouseButtonDown(0)) HandleInputs(InputType.MouseLeft);
@@ -93,24 +108,24 @@ public class PlayerMertController : NetworkBehaviour
     {
         if(!mainCamera)
             return;
-        if(input is InputType.MouseLeft && _isAttackClickMode)
+        if(input is InputType.MouseLeft && IsAttackClickMode)
         {
             var closestEnemy = UnitManager.Instance.GetClosestUnit(transform.position, true);
             if (!closestEnemy) 
             {
-                _isAttackClickMode = false;
+                IsAttackClickMode = false;
                 return;
             }
             if (!Extensions.IsInRange(closestEnemy.transform.position, transform.position, attackKeyRange))
             {
 
-                _isAttackClickMode = false;
+                IsAttackClickMode = false;
                 return;
             }
 
             _tc.SyncTarget(closestEnemy);
             _tc.HasTarget = true;
-            _isAttackClickMode = false;
+            IsAttackClickMode = false;
 
             return;
         }
@@ -118,7 +133,7 @@ public class PlayerMertController : NetworkBehaviour
 
         if (input is InputType.MouseLeft || input is InputType.MouseRight)
         {
-            _isAttackClickMode = false;
+            IsAttackClickMode = false;
             Ray myRay = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(myRay, out _hitInfo, 100))
             {
@@ -169,6 +184,11 @@ public class PlayerMertController : NetworkBehaviour
     {
         _currentClickType = clickType;
        
+    }
+    private void SetRangeIndicator(bool isOn)
+    {
+        rangeIndicator.gameObject.SetActive(isOn);
+        if(rangeIndicator.localScale != Vector3.one * _bac.Range) rangeIndicator.localScale = Vector3.one * _bac.Range;
     }
 }
 [System.Serializable]

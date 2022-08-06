@@ -10,7 +10,11 @@ public class UnitManager : NetworkSingleton<UnitManager>
     public readonly SyncList<NetworkIdentityReference> Players = new SyncList<NetworkIdentityReference>();
     public readonly SyncList<NetworkIdentityReference> WaveEnemies = new SyncList<NetworkIdentityReference>();
 
-    
+    private void Awake()
+    {
+        Debug.Log("initiliazed unitman");
+    }
+
     [ServerCallback]
     public void RegisterUnit(NetworkIdentityReference unit, UnitType unitType)
     {

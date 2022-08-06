@@ -11,16 +11,15 @@ public class BasicAttackController : NetworkBehaviour
 {
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform projectileSpawnPoint;
-    [SerializeField] private float attackRange;
     [SerializeField] private float attackSpeed;
-    [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float range;
     [SerializeField] private int damage;
 
-    [Separator("Script References")]
-    [SerializeField] private TargetController tc;
-    [SerializeField] private UnitMovementController umc;
-    [SerializeField] private PlayerAnimationController pac;
+    private TargetController tc;
+    private UnitMovementController umc;
+    private PlayerAnimationController pac;
+    private NavMeshAgent agent;
+
 
 
     private float counter;
@@ -41,13 +40,19 @@ public class BasicAttackController : NetworkBehaviour
         get => additionalAttackSpeed;
         set => additionalAttackSpeed = value;
     }
+    public float Range
+    {
+        get => range;
+    }
+    private void Awake()
+    {
+        tc = GetComponent<TargetController>();
+        umc = GetComponent<UnitMovementController>();
+        pac = GetComponent<PlayerAnimationController>();    
+        agent = GetComponent<NavMeshAgent>();
+    }
 
     #region Server
-    [Server]
-    private bool CanFireAtTarget()
-    {
-        return (tc.Target.transform.position - transform.position).sqrMagnitude > attackRange * attackRange;
-    }
     [Command]
     private void CmdSpawnProjectile()
     {
