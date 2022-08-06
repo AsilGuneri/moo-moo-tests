@@ -12,12 +12,10 @@ public class PlayerAnimationController : MonoBehaviour
     public void OnMove()
     {
         animator.SetBool("Move", true);
-        animator.SetBool("Idle", false);
     }
     public void OnStop()
     {
         animator.SetBool("Move", false);
-        animator.SetBool("Idle", true);
 
     }
     public void OnAttackStart(float attackSpeed)
