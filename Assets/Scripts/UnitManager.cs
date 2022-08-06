@@ -100,12 +100,6 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
         return null;
     }
-
-    public override void OnStartAuthority()
-    {
-        base.OnStartAuthority();
-        DontDestroyOnLoad(gameObject);
-    }
 }
 public enum UnitType
 {
