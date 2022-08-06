@@ -102,7 +102,11 @@ public class PlayerMertController : NetworkBehaviour
         if(input is InputType.MouseLeft && _isAttackClickMode)
         {
             var closestEnemy = UnitManager.Instance.GetClosestUnit(transform.position, true);
-
+            if (!closestEnemy) 
+            {
+                _isAttackClickMode = false;
+                return;
+            }
             if (!Extensions.IsInRange(closestEnemy.transform.position, transform.position, attackKeyRange))
             {
 
