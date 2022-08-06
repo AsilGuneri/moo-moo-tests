@@ -91,7 +91,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
         return closestUnit;
     }
-    
+
     public PlayerMertController GetPlayerController()
     {
         foreach(var player in Players)
@@ -100,9 +100,10 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
         return null;
     }
-    
-    public override void OnStartServer()
+
+    public override void OnStartAuthority()
     {
+        base.OnStartAuthority();
         DontDestroyOnLoad(gameObject);
     }
 }
