@@ -21,7 +21,7 @@ public class PlayerMertController : NetworkBehaviour
     [SerializeField] private KeyCode attackKey;
     [SerializeField] private float attackKeyRange;
     [SerializeField] private Transform rangeIndicator;
-    [SerializeField] private SpriteRendererFadeOut attackIndicator;
+    [SerializeField] private SpriteRendererFadeOut clickIndicator;
 
     private SpecialClickType _currentClickType;
     private Camera mainCamera;
@@ -116,7 +116,7 @@ public class PlayerMertController : NetworkBehaviour
         if (input is InputType.MouseLeft && IsAttackClickMode)
         {
             // Instantiate(attackIndicatorPrefab, _hitInfo.point, attackIndicatorPrefab.transform.rotation);
-            attackIndicator.Setup(_hitInfo.point);
+            clickIndicator.Setup(_hitInfo.point, false);
             var closestEnemy = UnitManager.Instance.GetClosestUnit(transform.position, true);
             if (!closestEnemy) 
             {
@@ -167,7 +167,11 @@ public class PlayerMertController : NetworkBehaviour
     }
     private void HandleRightClick(Vector3 point)
     {
-        if (!_tc.HasTarget) _umc.ClientMove(point);
+        if (!_tc.HasTarget)
+        {
+            _umc.ClientMove(point);
+            clickIndicator.Setup(point, true);
+        }
     }
     private void HandleLeftClick(GameObject target)
     {

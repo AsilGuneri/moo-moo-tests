@@ -3,22 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using MyBox;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class SpriteRendererFadeOut : MonoBehaviour
 {
     [SerializeField] private float time;
+    [SerializeField] private IndicatorGroup moveIndicator;
+    [SerializeField] private IndicatorGroup attackIndicator;
 
-    public void Setup(Vector3 pos)
+    private Tween fadeReset;
+    private Tween fadeOut;
+
+
+    public void Setup(Vector3 pos,bool isMove)
     {
+        var spriteRend = GetComponent<SpriteRenderer>();
+        spriteRend.sprite = isMove ? moveIndicator.IndicatorSprite : attackIndicator.IndicatorSprite;
+        spriteRend.color = isMove ? moveIndicator.IndicatorColor : attackIndicator.IndicatorColor;
+
+        fadeReset.Kill();
+        fadeOut.Kill();
         if (transform.parent != null) transform.parent = null;
-        var sprite = GetComponent<SpriteRenderer>();
         transform.position = new Vector3(pos.x, transform.position.y, pos.z);
-        gameObject.SetActive(true);
-        sprite.DOFade(1, 0);
-        sprite.DOFade(0, time).OnComplete(() =>
-        {
-            gameObject.SetActive(false);
-        });
+        fadeReset =  spriteRend.DOFade(1, 0);
+        fadeOut = spriteRend.DOFade(0, time);
     }
+
+}
+[System.Serializable]
+public class IndicatorGroup
+{
+    public Sprite IndicatorSprite;
+    public Color IndicatorColor;
 }

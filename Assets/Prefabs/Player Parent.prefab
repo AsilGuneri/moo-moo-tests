@@ -68598,9 +68598,9 @@ MonoBehaviour:
   _currentTier: 0
   skillKeys: 71000000770000006500000072000000
   attackKey: 97
-  attackKeyRange: 50
+  attackKeyRange: 25
   rangeIndicator: {fileID: 6362895330962804046}
-  attackIndicator: {fileID: 4204380154923225954}
+  clickIndicator: {fileID: 4204380154923225954}
 --- !u!114 &6601903507643346811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68721,6 +68721,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5419681646419041297}
     m_Modifications:
+    - target: {fileID: 2992136038609148322, guid: a85a1b75e01a0074986efaa09632881d, type: 3}
+      propertyPath: time
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992136038609148322, guid: a85a1b75e01a0074986efaa09632881d, type: 3}
+      propertyPath: moveIndicator.IndicatorSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5fb083e1c3bc7324ba0cba2956764636, type: 3}
+    - target: {fileID: 2992136038609148322, guid: a85a1b75e01a0074986efaa09632881d, type: 3}
+      propertyPath: moveIndicator.IndicatorColor.b
+      value: 0.4862745
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992136038609148322, guid: a85a1b75e01a0074986efaa09632881d, type: 3}
+      propertyPath: moveIndicator.IndicatorColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992136038609148322, guid: a85a1b75e01a0074986efaa09632881d, type: 3}
+      propertyPath: moveIndicator.IndicatorColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992136038609148322, guid: a85a1b75e01a0074986efaa09632881d, type: 3}
+      propertyPath: attackIndicator.IndicatorSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e200edd022aa22c42bfc504491fa3e48, type: 3}
+    - target: {fileID: 2992136038609148322, guid: a85a1b75e01a0074986efaa09632881d, type: 3}
+      propertyPath: attackIndicator.IndicatorColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992136038609148322, guid: a85a1b75e01a0074986efaa09632881d, type: 3}
+      propertyPath: attackIndicator.IndicatorColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992136038609148322, guid: a85a1b75e01a0074986efaa09632881d, type: 3}
+      propertyPath: attackIndicator.IndicatorColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5605111470763059402, guid: a85a1b75e01a0074986efaa09632881d, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -68771,6 +68807,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5611402011739195716, guid: a85a1b75e01a0074986efaa09632881d, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6643050622406677346, guid: a85a1b75e01a0074986efaa09632881d, type: 3}
+      propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
