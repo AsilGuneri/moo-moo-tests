@@ -10,7 +10,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
     public readonly SyncList<NetworkIdentityReference> Players = new SyncList<NetworkIdentityReference>();
     public readonly SyncList<NetworkIdentityReference> WaveEnemies = new SyncList<NetworkIdentityReference>();
 
-
+    
     [ServerCallback]
     public void RegisterUnit(NetworkIdentityReference unit, UnitType unitType)
     {
@@ -91,6 +91,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
         return closestUnit;
     }
+    
     public PlayerMertController GetPlayerController()
     {
         foreach(var player in Players)
@@ -98,6 +99,11 @@ public class UnitManager : NetworkSingleton<UnitManager>
             if (player.Value.gameObject.GetComponent<PlayerMertController>().hasAuthority) return player.Value.gameObject.GetComponent<PlayerMertController>();
         }
         return null;
+    }
+    
+    public override void OnStartServer()
+    {
+        DontDestroyOnLoad(gameObject);
     }
 }
 public enum UnitType
