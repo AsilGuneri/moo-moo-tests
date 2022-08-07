@@ -13,13 +13,6 @@ public class PlayerSkillController : MonoBehaviour
         set { _selectedSkills = value; }
     }
 
-    public void UnlockSkill(Skill skill)
-    {
-        skill.SetController(transform);
-        SelectedSkills.Add(skill);
-        WaveManager.Instance.CurrentTier++;
-
-    }
     public void UseSkill(int tier)
     {
         if(tier > SelectedSkills.Count || tier < 0)

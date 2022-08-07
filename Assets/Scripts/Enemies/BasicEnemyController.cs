@@ -35,6 +35,7 @@ public class BasicEnemyController : NetworkBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _eac = GetComponent<EnemyAnimationController>();
     }
+
     private void FixedUpdate()
     {
         if (_counter < attackSpeed)
