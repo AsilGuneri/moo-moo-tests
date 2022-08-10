@@ -4,19 +4,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using Steamworks;
 
 public class CustomNetworkPlayer : NetworkBehaviour
 {
 
 
-    [SyncVar(hook = nameof(ClientHandleDisplayNameUpdated))]
-    [SerializeField] private string displayName = "Missing Name";
 
-    [SerializeField] private TMP_Text displayNameText;
+    [SerializeField] private TMP_Text playerNameText;
     [SyncVar(hook = nameof(AuthorityHandlePartyOwnerStateUpdated))]private bool isPartyOwner = false;
 
     public static event Action ClientOnInfoUpdated;
     public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
+
+
+    [SyncVar] public int connectionID;
+    [SyncVar] public int playerIdNumber;
+    [SyncVar] public ulong playerSteamID;
+    [SyncVar(hook = nameof(ClientHandleDisplayNameUpdated))]
+    public string playerName = "Missing Name";
+
+    
+    private CustomNetworkManager _manager;
+    private CustomNetworkManager manager{
+        get{
+            if(_manager != null)
+                return _manager;
+            return _manager = CustomNetworkManager.singleton as CustomNetworkManager;
+        }
+    }
+
 
     public bool GetIsPartyOwner(){
         return isPartyOwner;
@@ -24,14 +41,14 @@ public class CustomNetworkPlayer : NetworkBehaviour
     
     public string GetDisplayName()
     {
-        return displayName;
+        return playerName;
     }
 
     #region Server
     [Server] 
     public void SetDisplayName(string name)
     {
-        displayName = name;
+        playerName = name;
     }
 
     [Server] 
@@ -62,12 +79,19 @@ public class CustomNetworkPlayer : NetworkBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public override void OnStartAuthority()
+    {
+        CmdSetDisplayName(SteamFriends.GetPersonaName().ToString());
+        LobbyController.instance.UpdateLobbyName();
+        LobbyController.instance.UpdatePlayerList();
+    }
+
 
     #endregion
     #region Client
     private void HandleDisplayNameUpdated(string oldName, string newName)
     {
-        displayNameText.text = newName;
+        playerNameText.text = newName;
     }
 
     [ContextMenu("Set name")]

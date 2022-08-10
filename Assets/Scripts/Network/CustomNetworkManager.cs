@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using Mirror;
 using UnityEngine.SceneManagement;
+using Steamworks;
 
 public class CustomNetworkManager : NetworkManager
 { 
@@ -57,8 +58,14 @@ public class CustomNetworkManager : NetworkManager
         CustomNetworkPlayer p = conn.identity.GetComponent<CustomNetworkPlayer>();
         players.Add(p);
         
-        p.SetDisplayName($"Player {players.Count}");
-
+        if(SceneManager.GetActiveScene().name == "SteamLobby"){
+            
+            foreach(CustomNetworkPlayer player in players){
+                player.connectionID = conn.connectionId;
+                player.playerIdNumber = players.Count + 1;
+                player.playerSteamID = (ulong)SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)SteamLobby.instance.currentLobbyID, players.Count - 1);
+            }
+        }
         p.SetPartyOwner(players.Count == 1);
 
     }
@@ -92,9 +99,14 @@ public class CustomNetworkManager : NetworkManager
         ClientOnDisonnected?.Invoke();
     }
 
+    public override void OnStartClient()
+    {
+    }
+
     public override void OnStopClient()
     {
         players.Clear();
+        LobbyController.instance.UpdatePlayerList();
         base.OnStopClient();
     }
 

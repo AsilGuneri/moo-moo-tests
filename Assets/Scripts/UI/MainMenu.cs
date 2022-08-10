@@ -29,8 +29,6 @@ public class MainMenu : MonoBehaviour
         
         if (!useSteam) { return; }
 
-        lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
-        gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
         lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
 
     }
@@ -55,19 +53,6 @@ public class MainMenu : MonoBehaviour
 
     private void AuthorityHandlePartyOwnerStateUpdated(bool state){
         startGameButton.gameObject.SetActive(state);
-    }
-
-    public void HostLobby(){
-        landingPagePanel.SetActive(false);
-        lobbyPanel.SetActive(true);
-        
-        if (useSteam)
-        {
-            SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 4);
-            return;
-        }
-
-        NetworkManager.singleton.StartHost();
     }
 
     public void JoinLobbyPanel(){
@@ -107,15 +92,15 @@ public class MainMenu : MonoBehaviour
     {
         List<CustomNetworkPlayer> players = ((CustomNetworkManager)NetworkManager.singleton).players;
 
-        for (int i = 0; i < players.Count; i++)
-        {
-            playerNameTexts[i].text = players[i].GetDisplayName();
-        }
+        // for (int i = 0; i < players.Count; i++)
+        // {
+        //     playerNameTexts[i].text = players[i].GetDisplayName();
+        // }
 
-        for (int i = players.Count; i < playerNameTexts.Length; i++)
-        {
-            playerNameTexts[i].text = "Waiting For Player...";
-        }
+        // for (int i = players.Count; i < playerNameTexts.Length; i++)
+        // {
+        //     playerNameTexts[i].text = "Waiting For Player...";
+        // }
 
         startGameButton.interactable = players.Count >= 1;
     }
@@ -133,38 +118,9 @@ public class MainMenu : MonoBehaviour
 
 
     //Steam
-    
-    private void OnLobbyCreated(LobbyCreated_t callback)
-    {
-        if (callback.m_eResult != EResult.k_EResultOK)
-        {
-            landingPagePanel.SetActive(true);
-            return;
-        }
-
-        NetworkManager.singleton.StartHost();
-
-        SteamMatchmaking.SetLobbyData(
-            new CSteamID(callback.m_ulSteamIDLobby),
-            "HostAddress",
-            SteamUser.GetSteamID().ToString());
-    }
-
-    private void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t callback)
-    {
-        SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
-    }
-
     private void OnLobbyEntered(LobbyEnter_t callback)
     {
         if (NetworkServer.active) { return; }
-
-        string hostAddress = SteamMatchmaking.GetLobbyData(
-            new CSteamID(callback.m_ulSteamIDLobby),
-            "HostAddress");
-
-        NetworkManager.singleton.networkAddress = hostAddress;
-        NetworkManager.singleton.StartClient();
 
         landingPagePanel.SetActive(false);
     }
