@@ -123,7 +123,7 @@ Transform:
   m_GameObject: {fileID: 8081231170285242933}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.2703457, y: 0.9642168, z: 4.3537803}
-  m_LocalScale: {x: 0.036547795, y: 0.059715662, z: 1}
+  m_LocalScale: {x: 0.93032414, y: 0.059715662, z: 1.319828}
   m_Children:
   - {fileID: 599898784614952519}
   m_Father: {fileID: 0}
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0
+  syncInterval: 0.01
   speed: 25
   _target: {fileID: 0}
 --- !u!114 &817598904071200291
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
   clientAuthority: 1
   sendInterval: 0.05
   syncPosition: 1
@@ -255,6 +255,10 @@ PrefabInstance:
     - target: {fileID: 5478695846654129223, guid: 5209a3b4c8895d741bc0e30faa1af367, type: 3}
       propertyPath: m_Name
       value: Fire_01_FX
+      objectReference: {fileID: 0}
+    - target: {fileID: 5478695846654129223, guid: 5209a3b4c8895d741bc0e30faa1af367, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5478695846654355559, guid: 5209a3b4c8895d741bc0e30faa1af367, type: 3}
       propertyPath: m_RootOrder
