@@ -23,6 +23,7 @@ public class Health : NetworkBehaviour
     public override void OnStartServer()
     {
         _currentHealth = _maxHealth;
+        UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), unitType);
 
     }
     [Server]

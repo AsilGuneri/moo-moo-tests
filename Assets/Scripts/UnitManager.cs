@@ -10,11 +10,6 @@ public class UnitManager : NetworkSingleton<UnitManager>
     public readonly SyncList<NetworkIdentityReference> Players = new SyncList<NetworkIdentityReference>();
     public readonly SyncList<NetworkIdentityReference> WaveEnemies = new SyncList<NetworkIdentityReference>();
 
-    private void Awake()
-    {
-        Debug.Log("initiliazed unitman");
-    }
-
     [ServerCallback]
     public void RegisterUnit(NetworkIdentityReference unit, UnitType unitType)
     {
@@ -49,7 +44,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
                     if (enemy.networkId == unit.networkId) 
                     { 
                         WaveEnemies.Remove(enemy);
-                        if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd?.Invoke();
+                        if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd();
                     }
                 }
                 break;
@@ -74,7 +69,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
                     if (enemy.networkId == netId) 
                     { 
                         WaveEnemies.Remove(enemy);
-                        if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd?.Invoke();
+                        if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd();
                     }
                 }
                 break;
@@ -87,7 +82,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
         GameObject closestUnit = null;
         foreach (NetworkIdentityReference unit in isEnemy ? WaveEnemies : Players)
         {
-            if(!unit.Value.gameObject) continue;
+            if (!unit.Value.gameObject) continue;
             float distance = Vector3.Distance(myPosition, unit.Value.gameObject.transform.position);
             if (closestDistance < distance) continue;
             closestDistance = distance;
