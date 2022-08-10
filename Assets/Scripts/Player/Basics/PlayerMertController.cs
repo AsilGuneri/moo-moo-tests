@@ -73,9 +73,8 @@ public class PlayerMertController : NetworkBehaviour
     }
     private IEnumerator RegisterRoutine()
     {
-        yield return new WaitUntil(() => TryGetComponent(out NetworkIdentity netId));
+        yield return new WaitUntil(() => UnitManager.Instance != null);
         UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
-
     }
 
     [ClientCallback]
