@@ -59,6 +59,7 @@ public class BasicAttackController : NetworkBehaviour
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
         projectile.GetComponent<Projectile>().SetupProjectile(tc.Target, damage);
         NetworkServer.Spawn(projectile, connectionToClient);
+        Debug.Log("spawned projectile");
     }
     private IEnumerator DelayProjectileSpawn()
     {
