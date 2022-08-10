@@ -987,7 +987,6 @@ MonoBehaviour:
   playerListContainer: {fileID: 731484632}
   currentLobbyID: 0
   playerItemCreated: 0
-  manager: {fileID: 1705192007}
 --- !u!4 &416196761
 Transform:
   m_ObjectHideFlags: 0
@@ -2743,8 +2742,10 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
-  - {fileID: 7498676492825279152, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
   - {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
+  - {fileID: 7498676492825279152, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
+  - {fileID: 7498676492825279152, guid: a415e70d6eed55a46b17feb2c3bd0074, type: 3}
+  - {fileID: 7498676492825279152, guid: 198158c6f7a7c4544b712ed389f0f03f, type: 3}
 --- !u!4 &1705192008
 Transform:
   m_ObjectHideFlags: 0
