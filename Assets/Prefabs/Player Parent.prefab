@@ -68543,8 +68543,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  displayName: Player
-  displayNameText: {fileID: 0}
+  playerNameText: {fileID: 0}
+  connectionID: 0
+  playerIdNumber: 0
+  playerSteamID: 0
+  playerName: Missing Name
 --- !u!114 &7516589810736755903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68650,7 +68653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  _maxHealth: 1000
+  _maxHealth: 100000000
   healthBar: {fileID: 5689978973427455355}
   unitType: 0
 --- !u!114 &5397592318971391883
