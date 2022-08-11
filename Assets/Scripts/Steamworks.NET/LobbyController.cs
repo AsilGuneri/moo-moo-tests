@@ -58,16 +58,19 @@ public class LobbyController : MonoBehaviour
     }
 
     public void CreateHostPlayerItem(){
+        Debug.Log("Create Host Player Item");
         foreach(CustomNetworkPlayer player in manager.players){
+            Debug.Log("Created!");
             InstantiatePlayerItem(player);
         }
         playerItemCreated = true;
     }
 
     public void CreateClientPlayerItem(){
-
+        Debug.Log("Create Client Player Item");
         foreach(CustomNetworkPlayer player in manager.players){
             if(!playerListItems.Any(b => b.connectionID == player.connectionID)){
+                Debug.Log("Client Created!");
                 InstantiatePlayerItem(player);
             }
         }
@@ -89,9 +92,11 @@ public class LobbyController : MonoBehaviour
 
     public void UpdatePlayerItem(){
 
+        Debug.Log("Update Player Item");
         foreach(CustomNetworkPlayer player in manager.players){
             foreach(PlayerListItem listItem in playerListItems){
                 if(listItem.connectionID == player.connectionID){
+                    Debug.Log("Updated Player Item!");
                     listItem.playerName = player.playerName;
                     listItem.SetPlayerValues();
                 }
