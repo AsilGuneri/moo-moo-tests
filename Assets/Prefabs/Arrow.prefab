@@ -123,7 +123,7 @@ Transform:
   m_GameObject: {fileID: 8081231170285242933}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.2703457, y: 0.9642168, z: 4.3537803}
-  m_LocalScale: {x: 0.93032414, y: 0.059715662, z: 1.319828}
+  m_LocalScale: {x: 0.08112892, y: 0.059715662, z: 1.319828}
   m_Children:
   - {fileID: 599898784614952519}
   m_Father: {fileID: 0}
@@ -226,7 +226,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   clientAuthority: 1
-  sendInterval: 0.05
+  sendInterval: 0
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
