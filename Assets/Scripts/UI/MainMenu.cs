@@ -84,8 +84,8 @@ public class MainMenu : MonoBehaviour
         }
         else{
             NetworkManager.singleton.StopClient();
-            Back();
         }
+        Back();
     }
     
     private void ClientHandleInfoUpdated()

@@ -2731,7 +2731,7 @@ MonoBehaviour:
   runInBackground: 1
   autoStartServerBuild: 1
   serverTickRate: 30
-  offlineScene: Assets/Scenes/SteamLobby.unity
+  offlineScene: 
   onlineScene: 
   transport: {fileID: 1705192006}
   networkAddress: localhost

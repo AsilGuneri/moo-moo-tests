@@ -37,7 +37,6 @@ public class CustomNetworkManager : NetworkManager
     {
         players.Clear();
         isGameInProgress = false;
-        base.OnStopServer();
     }
 
     public void StartGame(){
@@ -53,6 +52,7 @@ public class CustomNetworkManager : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {   
+        Debug.Log("On Server Add Player");
         base.OnServerAddPlayer(conn);
 
         CustomNetworkPlayer p = conn.identity.GetComponent<CustomNetworkPlayer>();
@@ -105,8 +105,8 @@ public class CustomNetworkManager : NetworkManager
 
     public override void OnStopClient()
     {
-        players.Clear();
         LobbyController.instance.UpdatePlayerList();
+        players.Clear();
         base.OnStopClient();
     }
 

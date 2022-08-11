@@ -45,10 +45,10 @@ public class LobbyController : MonoBehaviour
         if(playerListItems.Count < manager.players.Count)
             CreateClientPlayerItem();
 
-        if(playerListItems.Count > manager.players.Count)
+        else if(playerListItems.Count > manager.players.Count)
             RemovePlayerItem();
 
-        if(playerListItems.Count == manager.players.Count)
+        else if(playerListItems.Count == manager.players.Count)
             UpdatePlayerItem();
         
     }
@@ -100,21 +100,24 @@ public class LobbyController : MonoBehaviour
     }
 
     public void RemovePlayerItem(){
-        List<PlayerListItem> playerListItemsToRemove = new List<PlayerListItem>();
 
-        foreach(PlayerListItem playerListItem in playerListItems){
-            if(!manager.players.Any(b => b.connectionID == playerListItem.connectionID)){
-                playerListItemsToRemove.Add(playerListItem);
+        for (int j = 0; j < playerListItems.Count; j++)
+        {
+            bool isRemove = true;
+            for (int i = 0; i < manager.players.Count; i++)
+            {
+                if(manager.players[i].connectionID == playerListItems[j].connectionID){
+                    isRemove = false;
+                    break;
+                }
+            }
+            if(isRemove){
+                GameObject objToRemove = playerListItems[j].gameObject;
+                playerListItems.RemoveAt(j);
+                Destroy(objToRemove);
+                j--;
             }
         }
-        if(playerListItemsToRemove.Count > 0){
-            foreach(PlayerListItem listItemToRemove in playerListItemsToRemove){
-                GameObject objectToRemove = listItemToRemove.gameObject;
-                playerListItemsToRemove.Remove(listItemToRemove);
-                Destroy(objectToRemove);
-                objectToRemove = null;
-
-            }
-        }
+    
     }
 }
