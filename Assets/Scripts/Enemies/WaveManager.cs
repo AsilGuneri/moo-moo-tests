@@ -35,21 +35,6 @@ public class WaveManager : NetworkSingleton<WaveManager>
     {
 
     }
-    /*  BURAYA BAKARLAR   */
-    /*  BURAYA BAKARLAR   */
-    /*  BURAYA BAKARLAR   */
-    /*  BURAYA BAKARLAR   */
-    /*  BURAYA BAKARLAR   */
-    /*  BURAYA BAKARLAR   */
-    /*  BURAYA BAKARLAR   */
-    /*  BURAYA BAKARLAR   */
-    /*  BURAYA BAKARLAR   */
-    /*  BURAYA BAKARLAR   */
-    /*  BURAYA BAKARLAR   */
-    /*  BURAYA BAKARLAR   */
-    /*  BURAYA BAKARLAR   */
-    /*  BURAYA BAKARLAR   */
-    /*  BURAYA BAKARLAR   */
     private IEnumerator SpawnWaveRoutine()
     {
         foreach (SubWave subWave in _waveToSpawn.SubWaves)
