@@ -83,7 +83,6 @@ public class CustomNetworkPlayer : NetworkBehaviour
     {
         CmdSetDisplayName(SteamFriends.GetPersonaName().ToString());
         LobbyController.instance.UpdateLobbyName();
-        LobbyController.instance.UpdatePlayerList();
     }
 
 
@@ -94,11 +93,6 @@ public class CustomNetworkPlayer : NetworkBehaviour
         playerNameText.text = newName;
     }
 
-    [ContextMenu("Set name")]
-    private void SetMyName()
-    {
-        CmdSetDisplayName("new name");
-    }
     [ClientRpc] //Server calling a method on all clients
     private void RpcLogNewName(string newDisplayName)
     {
@@ -113,6 +107,8 @@ public class CustomNetworkPlayer : NetworkBehaviour
             
         DontDestroyOnLoad(gameObject);
         ((CustomNetworkManager)NetworkManager.singleton).players.Add(this);
+        LobbyController.instance.UpdateLobbyName();
+        LobbyController.instance.UpdatePlayerList();
     }
 
     public override void OnStopClient()

@@ -52,12 +52,12 @@ public class CustomNetworkManager : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {   
-        Debug.Log("On Server Add Player");
         base.OnServerAddPlayer(conn);
 
         CustomNetworkPlayer p = conn.identity.GetComponent<CustomNetworkPlayer>();
         players.Add(p);
         
+        Debug.Log("On Server Add Player Count: " + players.Count);
         if(SceneManager.GetActiveScene().name == "SteamLobby"){
             
             foreach(CustomNetworkPlayer player in players){
@@ -101,6 +101,7 @@ public class CustomNetworkManager : NetworkManager
 
     public override void OnStartClient()
     {
+        LobbyController.instance.UpdatePlayerList();
     }
 
     public override void OnStopClient()

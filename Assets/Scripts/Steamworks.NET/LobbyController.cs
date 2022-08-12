@@ -42,6 +42,8 @@ public class LobbyController : MonoBehaviour
         if(!playerItemCreated)
             CreateHostPlayerItem();
 
+        Debug.Log("PallistitemCount: " + playerListItems.Count);
+        Debug.Log("Manager Player Count: " + manager.players.Count);
         if(playerListItems.Count < manager.players.Count)
             CreateClientPlayerItem();
 
