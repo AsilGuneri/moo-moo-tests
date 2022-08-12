@@ -107,8 +107,6 @@ public class CustomNetworkPlayer : NetworkBehaviour
             
         DontDestroyOnLoad(gameObject);
         ((CustomNetworkManager)NetworkManager.singleton).players.Add(this);
-        LobbyController.instance.UpdateLobbyName();
-        LobbyController.instance.UpdatePlayerList();
     }
 
     public override void OnStopClient()

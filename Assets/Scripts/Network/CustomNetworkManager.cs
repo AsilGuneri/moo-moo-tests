@@ -67,6 +67,8 @@ public class CustomNetworkManager : NetworkManager
             }
         }
         p.SetPartyOwner(players.Count == 1);
+        LobbyController.instance.UpdateLobbyName();
+        LobbyController.instance.UpdatePlayerList();
 
     }
 
