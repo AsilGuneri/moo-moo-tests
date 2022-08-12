@@ -83,6 +83,7 @@ public class CustomNetworkPlayer : NetworkBehaviour
     {
         CmdSetDisplayName(SteamFriends.GetPersonaName().ToString());
         LobbyController.instance.UpdateLobbyName();
+        LobbyController.instance.UpdatePlayerList();
     }
 
 
