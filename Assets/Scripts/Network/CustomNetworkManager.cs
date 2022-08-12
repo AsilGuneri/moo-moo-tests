@@ -101,7 +101,6 @@ public class CustomNetworkManager : NetworkManager
 
     public override void OnStartClient()
     {
-        LobbyController.instance.UpdatePlayerList();
     }
 
     public override void OnStopClient()
