@@ -68604,6 +68604,7 @@ MonoBehaviour:
   attackKeyRange: 25
   rangeIndicator: {fileID: 6362895330962804046}
   clickIndicator: {fileID: 4204380154923225954}
+  _navMeshAgent: {fileID: 7319744102357029728}
 --- !u!114 &6601903507643346811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68623,6 +68624,7 @@ MonoBehaviour:
   attackSpeed: 1
   range: 10
   damage: 20
+  agent: {fileID: 7319744102357029728}
 --- !u!114 &4334566937998049036
 MonoBehaviour:
   m_ObjectHideFlags: 0

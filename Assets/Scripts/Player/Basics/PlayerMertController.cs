@@ -35,7 +35,7 @@ public class PlayerMertController : NetworkBehaviour
     private PlayerAnimationController _pac;
     private UnitMovementController _umc;
     private PlayerSkillController _psc;
-    private NavMeshAgent _navMeshAgent;
+    [SerializeField] private NavMeshAgent _navMeshAgent;
 
     public ClassType ClassType { get { return _classType; } }
     public SkillTier CurrentTier 
@@ -61,14 +61,18 @@ public class PlayerMertController : NetworkBehaviour
         _umc = GetComponent<UnitMovementController>();
         _psc = GetComponent<PlayerSkillController>();
         _hc = GetComponent<Health>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
+       // _navMeshAgent = GetComponent<NavMeshAgent>();
 
     }
 
     [TargetRpc]
     public void Activate() {
+        GameObject cameraTarget = new GameObject();
+        cameraTarget.transform.parent = null;
+        var followScript = cameraTarget.AddComponent<FollowPosition>();
+        followScript.TargetTransform = transform;
         mainCamera = Camera.main;
-        mainCamera.GetComponent<FollowingCamera>().target = transform;
+        mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(cameraTarget.transform);
         StartCoroutine(nameof(RegisterRoutine));
     }
     private IEnumerator RegisterRoutine()

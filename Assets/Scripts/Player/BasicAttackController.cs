@@ -18,7 +18,7 @@ public class BasicAttackController : NetworkBehaviour
     private TargetController tc;
     private UnitMovementController umc;
     private PlayerAnimationController pac;
-    private NavMeshAgent agent;
+    [SerializeField] private NavMeshAgent agent;
 
 
 
@@ -49,7 +49,7 @@ public class BasicAttackController : NetworkBehaviour
         tc = GetComponent<TargetController>();
         umc = GetComponent<UnitMovementController>();
         pac = GetComponent<PlayerAnimationController>();    
-        agent = GetComponent<NavMeshAgent>();
+      //  agent = GetComponent<NavMeshAgent>();
     }
 
     #region Server
