@@ -51,7 +51,16 @@ public class FollowingCamera : MonoBehaviour
     private void ToggleLock()
     {
         IsLocked = !IsLocked;
-        if (IsLocked) CenterCamera();
+        if (IsLocked)
+        {
+            cinemachineVirtualCamera.m_Follow = PlayerFollower.transform;
+            CenterCamera();
+        }
+        else
+        {
+            CenterCamera();
+            cinemachineVirtualCamera.m_Follow = null;
+        }
     }
     private void CenterCamera()
     {
