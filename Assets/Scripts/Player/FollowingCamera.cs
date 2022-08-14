@@ -5,6 +5,8 @@ using Cinemachine;
 
 public class FollowingCamera : MonoBehaviour
 {
+    public GameObject PlayerFollower;
+
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
     [SerializeField] private float cornerThickness;
     [SerializeField] private float cornerMovementSpeed;
@@ -41,9 +43,10 @@ public class FollowingCamera : MonoBehaviour
             cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset.z -= Time.deltaTime * cornerMovementSpeed;
         }
     }
-    public void SetupCinemachine(Transform target)
+    public void SetupCinemachine(Transform playerTransform)
     {
-        cinemachineVirtualCamera.m_Follow = target;
+        PlayerFollower.GetComponent<FollowPosition>().TargetTransform = playerTransform;
+        cinemachineVirtualCamera.m_Follow = PlayerFollower.transform;
     }
     private void ToggleLock()
     {
