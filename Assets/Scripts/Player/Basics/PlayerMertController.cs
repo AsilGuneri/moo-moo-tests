@@ -67,12 +67,9 @@ public class PlayerMertController : NetworkBehaviour
 
     [TargetRpc]
     public void Activate() {
-        GameObject cameraTarget = new GameObject();
-        cameraTarget.transform.parent = null;
-        var followScript = cameraTarget.AddComponent<FollowPosition>();
-        followScript.TargetTransform = transform;
+        UnitManager.Instance.PlayerFollowerObj.GetComponent<FollowPosition>().TargetTransform = transform;
         mainCamera = Camera.main;
-        mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(cameraTarget.transform);
+        mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(UnitManager.Instance.PlayerFollowerObj.transform);
         StartCoroutine(nameof(RegisterRoutine));
     }
     private IEnumerator RegisterRoutine()

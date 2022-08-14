@@ -16,7 +16,8 @@ public class FollowingCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        if (IsLocked) return;
+        if (Input.GetKeyDown(KeyCode.Z)) ToggleLock();
+        if (!IsLocked) return;
 
         
         if (Input.GetKeyDown(KeyCode.Space)) CenterCamera();
