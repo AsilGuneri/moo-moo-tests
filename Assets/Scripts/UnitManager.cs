@@ -9,7 +9,6 @@ public class UnitManager : NetworkSingleton<UnitManager>
 {
     public readonly SyncList<NetworkIdentityReference> Players = new SyncList<NetworkIdentityReference>();
     public readonly SyncList<NetworkIdentityReference> WaveEnemies = new SyncList<NetworkIdentityReference>();
-    public GameObject PlayerFollowerObj;
 
     [Command(requiresAuthority = false)]
     public void RegisterUnit(NetworkIdentityReference unit, UnitType unitType)
