@@ -11,7 +11,7 @@ public class FollowingCamera : MonoBehaviour
     [SerializeField] private float cornerThickness;
     [SerializeField] private float cornerMovementSpeed;
 
-    private CinemachineFramingTransposer _framingTransposer;
+    private Vector3 _initialCamPos;
     private bool _isLocked;
 
     public bool IsLocked { get { return _isLocked; } private set { _isLocked = value; } }
@@ -19,34 +19,40 @@ public class FollowingCamera : MonoBehaviour
     void LateUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Z)) ToggleLock();
-        if (!IsLocked) return;
+        if (IsLocked) return;
 
         
         if (Input.GetKeyDown(KeyCode.Space)) CenterCamera();
 
         if (Input.mousePosition.x >= Screen.width - cornerThickness) 
         {
-            cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset.x += Time.deltaTime * cornerMovementSpeed;
+            /*cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset.x*/
+            cinemachineVirtualCamera.transform.position += new Vector3(Time.deltaTime * cornerMovementSpeed, 0, 0);
         }
         else if(Input.mousePosition.x <= cornerThickness)
         {
-            cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset.x -= Time.deltaTime * cornerMovementSpeed;
+            /*cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset.x */
+            cinemachineVirtualCamera.transform.position -= new Vector3(Time.deltaTime * cornerMovementSpeed, 0, 0);
         }
 
         if (Input.mousePosition.y >= Screen.height - cornerThickness)
         {
-            cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset.z += Time.deltaTime * cornerMovementSpeed;
+            /*cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset.z*/
+            cinemachineVirtualCamera.transform.position += new Vector3(0, 0, Time.deltaTime * cornerMovementSpeed);
 
         }
         else if (Input.mousePosition.y <= cornerThickness)
         {
-            cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset.z -= Time.deltaTime * cornerMovementSpeed;
+            /*cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset.z*/
+            cinemachineVirtualCamera.transform.position -= new Vector3(0, 0, Time.deltaTime * cornerMovementSpeed);
         }
     }
     public void SetupCinemachine(Transform playerTransform)
     {
         PlayerFollower.GetComponent<FollowPosition>().TargetTransform = playerTransform;
         cinemachineVirtualCamera.m_Follow = PlayerFollower.transform;
+        _initialCamPos = cinemachineVirtualCamera.transform.position;
+
     }
     private void ToggleLock()
     {
@@ -64,6 +70,7 @@ public class FollowingCamera : MonoBehaviour
     }
     private void CenterCamera()
     {
-        cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = Vector3.zero;
+        // cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset = Vector3.zero;
+        cinemachineVirtualCamera.transform.position = _initialCamPos;
     }
 }
