@@ -2508,8 +2508,8 @@ MonoBehaviour:
   cinemachineVirtualCamera: {fileID: 1411961521}
   cornerThickness: 20
   cornerMovementSpeed: 10
-  minDistance: 10
-  maxDistance: 25
+  minDistance: 7
+  maxDistance: 20
   scrollSpeed: 750
   IsLocked: 1
   followEmptyObj: {fileID: 2119866719}
