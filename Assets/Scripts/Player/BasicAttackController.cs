@@ -65,6 +65,8 @@ public class BasicAttackController : NetworkBehaviour
     {
         yield return new WaitForSeconds((1 / attackSpeed) / 2);
         CmdSpawnProjectile();
+        yield return new WaitForSeconds((1 / attackSpeed) / 2);
+        isAttacking = false;
 
     }
     #endregion
@@ -86,7 +88,7 @@ public class BasicAttackController : NetworkBehaviour
             agent.stoppingDistance = 0; 
             return; 
         }
-        if (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > range)
+        if (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > range && !isAttacking)
         {
             umc.ClientMove(tc.Target.transform.position, true, range);
         }
