@@ -25,6 +25,7 @@ public class BasicAttackController : NetworkBehaviour
     private float counter;
     private float additionalAttackSpeed;
     private bool isAttacking;
+    private bool isChasing;
     
     public bool IsAttacking
     {
@@ -85,17 +86,19 @@ public class BasicAttackController : NetworkBehaviour
                 if (pac) pac.OnAttackEnd();//
 
             }
-            agent.stoppingDistance = 0; 
+            agent.stoppingDistance = 0;
+            if (isChasing) 
+            {
+                umc.ClientStop();
+                isChasing = false;
+            } 
             return; 
         }
         if (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > range && !isAttacking)
         {
             if (pac) pac.OnAttackEnd();
             umc.ClientMove(tc.Target.transform.position, true, range);
-            if (tc.Target == null)
-            {
-                umc.ClientStop();
-            }
+            isChasing = true;
         }
         else if (counter >= (1 / AttackSpeed) && !isAttacking)
         {
