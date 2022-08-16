@@ -65,7 +65,7 @@ public class BasicAttackController : NetworkBehaviour
     {
         yield return new WaitForSeconds((1 / attackSpeed) / 2);
         CmdSpawnProjectile();
-        yield return new WaitForSeconds((1 / attackSpeed) / 2);
+        yield return new WaitForSeconds(3f);
         isAttacking = false;
 
     }
