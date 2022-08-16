@@ -49,7 +49,7 @@ public class BasicAttackController : NetworkBehaviour
         tc = GetComponent<TargetController>();
         umc = GetComponent<UnitMovementController>();
         pac = GetComponent<PlayerAnimationController>();    
-      //  agent = GetComponent<NavMeshAgent>();
+      //  agent = GetComponent<NavMeshAgent>();//
     }
 
     #region Server
@@ -90,9 +90,10 @@ public class BasicAttackController : NetworkBehaviour
         }
         if (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > range && !isAttacking)
         {
+            if (pac) pac.OnAttackEnd();
             umc.ClientMove(tc.Target.transform.position, true, range);
         }
-        else if (counter >= (1 / AttackSpeed))
+        else if (counter >= (1 / AttackSpeed) && !isAttacking)
         {
             transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
             if(umc) umc.ClientStop();
