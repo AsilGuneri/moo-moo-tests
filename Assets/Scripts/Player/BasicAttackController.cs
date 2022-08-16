@@ -25,6 +25,7 @@ public class BasicAttackController : NetworkBehaviour
     private float counter;
     private float additionalAttackSpeed;
     private bool isAttacking;
+    private bool isChasing;
     
     public bool IsAttacking
     {
@@ -81,16 +82,18 @@ public class BasicAttackController : NetworkBehaviour
                 isAttacking = false;
                 StopCoroutine(nameof(DelayProjectileSpawn));
                 if (pac) pac.OnAttackEnd();
-
             }
             agent.stoppingDistance = 0; 
             return; 
         }
         if (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > range)
         {
+            if (counter >= (1 / attackSpeed)) return;
             umc.ClientMove(tc.Target.transform.position, true, range);
+            isChasing = true;
+
         }
-        else if (counter >= (1 / AttackSpeed))
+        else if (counter >= (1 / AttackSpeed) && !isChasing)
         {
             transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
             if(umc) umc.ClientStop();
