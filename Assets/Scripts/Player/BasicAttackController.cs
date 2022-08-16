@@ -74,10 +74,17 @@ public class BasicAttackController : NetworkBehaviour
     {
         if (!hasAuthority) return;
         if (counter <= (1 / AttackSpeed)) counter += Time.deltaTime;
-        if (tc.Target == null)//
+        if (tc.Target == null) 
         {
-            StopAttacking();
-            return;
+            if (isAttacking)
+            {
+                isAttacking = false;
+                StopCoroutine(nameof(DelayProjectileSpawn));
+                if (pac) pac.OnAttackEnd();
+
+            }
+            agent.stoppingDistance = 0; 
+            return; 
         }
         if (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > range)
         {
@@ -85,7 +92,6 @@ public class BasicAttackController : NetworkBehaviour
         }
         else if (counter >= (1 / AttackSpeed))
         {
-            if (umc.IsAgentMoving()) return;
             transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
             if(umc) umc.ClientStop();
             if(pac) pac.OnAttackStart(attackSpeed);
@@ -93,19 +99,6 @@ public class BasicAttackController : NetworkBehaviour
             StartCoroutine(nameof(DelayProjectileSpawn));
             counter = 0;
         }       
-    }
-
-    private void StopAttacking()
-    {
-        if (isAttacking)
-        {
-            isAttacking = false;
-            StopCoroutine(nameof(DelayProjectileSpawn));
-            if (pac) pac.OnAttackEnd();
-
-        }
-        agent.stoppingDistance = 0;
-        return;
     }
     #endregion
 }
