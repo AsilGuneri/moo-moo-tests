@@ -82,7 +82,7 @@ public class BasicAttackController : NetworkBehaviour
             {
                 isAttacking = false;
                 StopCoroutine(nameof(DelayProjectileSpawn));
-                if (pac) pac.OnAttackEnd();
+                if (pac) pac.OnAttackEnd();//
 
             }
             agent.stoppingDistance = 0; 
@@ -92,6 +92,10 @@ public class BasicAttackController : NetworkBehaviour
         {
             if (pac) pac.OnAttackEnd();
             umc.ClientMove(tc.Target.transform.position, true, range);
+            if (tc.Target == null)
+            {
+                umc.ClientStop();
+            }
         }
         else if (counter >= (1 / AttackSpeed) && !isAttacking)
         {
