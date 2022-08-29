@@ -25,6 +25,7 @@ public class BasicAttackController : NetworkBehaviour
     private float counter;
     private float additionalAttackSpeed;
     private bool isAttacking;
+    private bool isChasing;
     
     public bool IsAttacking
     {
@@ -49,7 +50,7 @@ public class BasicAttackController : NetworkBehaviour
         tc = GetComponent<TargetController>();
         umc = GetComponent<UnitMovementController>();
         pac = GetComponent<PlayerAnimationController>();    
-      //  agent = GetComponent<NavMeshAgent>();
+      //  agent = GetComponent<NavMeshAgent>();//
     }
 
     #region Server
@@ -65,6 +66,8 @@ public class BasicAttackController : NetworkBehaviour
     {
         yield return new WaitForSeconds((1 / attackSpeed) / 2);
         CmdSpawnProjectile();
+        yield return new WaitForSeconds((1 / attackSpeed) / 2);
+        isAttacking = false;
 
     }
     #endregion
@@ -80,17 +83,24 @@ public class BasicAttackController : NetworkBehaviour
             {
                 isAttacking = false;
                 StopCoroutine(nameof(DelayProjectileSpawn));
-                if (pac) pac.OnAttackEnd();
+                if (pac) pac.OnAttackEnd();//
 
             }
-            agent.stoppingDistance = 0; 
+            agent.stoppingDistance = 0;
+            if (isChasing) 
+            {
+                umc.ClientStop();
+                isChasing = false;
+            } 
             return; 
         }
-        if (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > range)
+        if (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > range && !isAttacking)
         {
+            if (pac) pac.OnAttackEnd();
             umc.ClientMove(tc.Target.transform.position, true, range);
+            isChasing = true;
         }
-        else if (counter >= (1 / AttackSpeed))
+        else if (counter >= (1 / AttackSpeed) && !isAttacking)
         {
             transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
             if(umc) umc.ClientStop();
