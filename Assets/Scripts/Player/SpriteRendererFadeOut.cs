@@ -17,7 +17,7 @@ public class SpriteRendererFadeOut : MonoBehaviour
         _currentIndicator = isMove ? moveIndicator : attackIndicator;
 
         if (transform.parent != null) transform.parent = null;
-        transform.position = new Vector3(pos.x, transform.position.y, pos.z);
+        transform.position = new Vector3(pos.x, pos.y, pos.z);
        _currentIndicator.GetComponent<ParticleSystem>().Play();
     }
 
