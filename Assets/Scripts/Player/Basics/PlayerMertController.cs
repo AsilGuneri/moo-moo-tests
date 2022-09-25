@@ -15,10 +15,8 @@ public class PlayerMertController : NetworkBehaviour
     [SerializeField] private Transform rangeIndicator;
     [SerializeField] private SpriteRendererFadeOut clickIndicator;
 
-    private SpecialClickType _currentClickType;
     private Camera mainCamera;
     private Health _hc;
-    private RaycastHit _hitInfo;
     private bool _hasPath;
     private bool _isAttackClickMode;
 
@@ -75,10 +73,9 @@ public class PlayerMertController : NetworkBehaviour
 
 
         if (Input.GetKeyDown(_inputKeys.AttackKey)) IsAttackClickMode = true;
-        
 
-        if (Input.GetKeyDown(_inputKeys.SelectKey)) HandleInputs(InputType.MouseLeft);
-        if (Input.GetKeyDown(_inputKeys.MoveKey)) HandleInputs(InputType.MouseRight);
+        if (Input.GetKeyDown(_inputKeys.SelectKey)) OnPointerInput();
+        if (Input.GetKeyDown(_inputKeys.MoveKey)) OnPointerInput();
         if (Input.GetKeyDown(_inputKeys.StopKey)) _umc.ClientStop();
         if (Input.GetKeyDown(_inputKeys.SpawnWaveKey))
         {
@@ -90,99 +87,76 @@ public class PlayerMertController : NetworkBehaviour
         if (Input.GetKeyDown(_inputKeys.SkillKeys[3])) _psc.UseSkill(3);
 
     }
-
-    private void HandleInputs(InputType input)
+    private void OnPointerInput()
     {
-        if(!mainCamera)
-            return;
+        if (!mainCamera) return;
+        Ray ray;
+        bool isRayHit;
+        RaycastHit hitInfo;
+        GetRayInfo(out ray, out isRayHit, out hitInfo);
 
-        Ray myRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-        bool rayHit = Physics.Raycast(myRay, out _hitInfo, 100);
-
-        if (input is InputType.MouseLeft && IsAttackClickMode)
+        if (IsAttackClickMode)
         {
-            clickIndicator.Setup(_hitInfo.point, false);
-            var closestEnemy = UnitManager.Instance.GetClosestUnit(transform.position, true);
-            if (!closestEnemy) 
-            {
-                IsAttackClickMode = false;
-                return;
-            }
-            if (!Extensions.IsInRange(closestEnemy.transform.position, transform.position, attackRange))
-            {
-
-                IsAttackClickMode = false;
-                return;
-            }
-
-            _tc.SyncTarget(closestEnemy);
-            _tc.HasTarget = true;
-            IsAttackClickMode = false;
-
+            OnAttackModeClick(hitInfo);
             return;
         }
-
-
-        if (input is InputType.MouseLeft || input is InputType.MouseRight)
+        IsAttackClickMode = false;
+        if (isRayHit)
         {
-            IsAttackClickMode = false;
-            if (rayHit)
-            {
-                if (_hitInfo.collider.TryGetComponent(out Health hc) && !_hitInfo.collider.TryGetComponent(out PlayerMertController mc))
-                {
-                    _tc.SyncTarget(hc.gameObject);
-                    _tc.HasTarget = true;
-                }
-                else
-                {
-                    _tc.SyncTarget(null);
-                    _tc.HasTarget = false;
-                }
-            }
+            OnRayHit(hitInfo);
         }
-        switch (input)
-        {
-            case InputType.MouseLeft:
-                break;
-            case InputType.MouseRight:
-                HandleRightClick(_hitInfo.point);
-                break;
-        }
+
     }
-    private void HandleRightClick(Vector3 point)
+    private void GetRayInfo(out Ray ray, out bool isRayHit, out RaycastHit hitInfo)
     {
+        ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        isRayHit = Physics.Raycast(ray, out hitInfo, 100);
+    }
+    private void OnRayHit(RaycastHit hitInfo)
+    {
+        if (hitInfo.collider.TryGetComponent(out Health hc) && !hitInfo.collider.TryGetComponent(out PlayerMertController mc))
+        {
+            _tc.SyncTarget(hc.gameObject);
+            _tc.HasTarget = true;
+        }
+        else
+        {
+            _tc.SyncTarget(null);
+            _tc.HasTarget = false;
+        }
+
         if (!_tc.HasTarget)
         {
-            _umc.ClientMove(point);
-            clickIndicator.Setup(point, true);
+            _umc.ClientMove(hitInfo.point);
+            clickIndicator.Setup(hitInfo.point, true);
         }
     }
-    private void SetSpecialClickType(SpecialClickType clickType) 
+
+    private void OnAttackModeClick(RaycastHit hitInfo)
     {
-        _currentClickType = clickType;
-       
+        clickIndicator.Setup(hitInfo.point, false);
+        var closestEnemy = UnitManager.Instance.GetClosestUnit(transform.position, true);
+        if (!closestEnemy)
+        {
+            IsAttackClickMode = false;
+            return;
+        }
+        if (!Extensions.IsInRange(closestEnemy.transform.position, transform.position, attackRange))
+        {
+
+            IsAttackClickMode = false;
+            return;
+        }
+
+        _tc.SyncTarget(closestEnemy);
+        _tc.HasTarget = true;
+        IsAttackClickMode = false;
+
+        return;
     }
     private void SetRangeIndicator(bool isOn)
     {
         rangeIndicator.gameObject.SetActive(isOn);
         if(rangeIndicator.localScale != Vector3.one * _bac.Range) rangeIndicator.localScale = Vector3.one * _bac.Range;
     }
-}
-[System.Serializable]
-public class ClickTypeGroup
-{
-    public KeyCode Key;
-    public SpecialClickType ClickType;
-}
-public enum InputType
-{
-    MouseLeft,
-    MouseRight,
-    Keyboard
-}
-public enum SpecialClickType
-{
-    Attack,
-    Move,
-    None
 }
