@@ -9,11 +9,15 @@ using MyBox;
 
 public class BasicAttackController : NetworkBehaviour
 {
+
+    [SerializeField] private float attackSpeed;
+    [SerializeField] private int damage;
+
+    [Separator()]
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform projectileSpawnPoint;
-    [SerializeField] private float attackSpeed;
     [SerializeField] private float range;
-    [SerializeField] private int damage;
+
 
     private TargetController tc;
     private UnitMovementController umc;

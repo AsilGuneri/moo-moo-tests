@@ -15,6 +15,8 @@ public class FollowingCamera : MonoBehaviour
     [SerializeField] private float minDistance;
     [SerializeField] private float maxDistance;
     [SerializeField] private float scrollSpeed;
+    [Separator("Input Data")]
+    [SerializeField] private InputKeysData inputKeysData;
 
 
     private Transform _playerTransform;
@@ -27,13 +29,13 @@ public class FollowingCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Z)) ToggleLock();
+        if (Input.GetKeyDown(inputKeysData.CameraLockKey)) ToggleLock();
         ZoomInOut();
 
         if (IsLocked) return;
 
         
-        if (Input.GetKey(KeyCode.Space)) CenterCamera();
+        if (Input.GetKey(inputKeysData.CenterCameraKey)) CenterCamera();
 
         if (Input.mousePosition.x >= Screen.width - cornerThickness) 
         {

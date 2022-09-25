@@ -9,17 +9,9 @@ using UnityEngine.SceneManagement;
 public class PlayerMertController : NetworkBehaviour
 {
     [SerializeField] private Animator animator;
-
-    [SerializeField] private ClassType _classType;
-    [SerializeField] private SkillTier _currentTier;
     
 
-
-    [SerializeField] private KeyCode[] skillKeys;
-
-    [Separator("Attack With Key")]
-    [SerializeField] private KeyCode attackKey;
-    [SerializeField] private float attackKeyRange;
+    [SerializeField] private float attackRange;
     [SerializeField] private Transform rangeIndicator;
     [SerializeField] private SpriteRendererFadeOut clickIndicator;
 
@@ -36,13 +28,9 @@ public class PlayerMertController : NetworkBehaviour
     private UnitMovementController _umc;
     private PlayerSkillController _psc;
     [SerializeField] private NavMeshAgent _navMeshAgent;
+    [SerializeField] private InputKeysData _inputKeys;
 
-    public ClassType ClassType { get { return _classType; } }
-    public SkillTier CurrentTier 
-    {
-        get { return _currentTier; } 
-        set { _currentTier = value; }
-    }
+
     public bool IsAttackClickMode
     {
         get { return _isAttackClickMode; }
@@ -61,8 +49,6 @@ public class PlayerMertController : NetworkBehaviour
         _umc = GetComponent<UnitMovementController>();
         _psc = GetComponent<PlayerSkillController>();
         _hc = GetComponent<Health>();
-       // _navMeshAgent = GetComponent<NavMeshAgent>();
-
     }
 
     [TargetRpc]
@@ -88,20 +74,20 @@ public class PlayerMertController : NetworkBehaviour
         }
 
 
-        if (Input.GetKeyDown(attackKey)) IsAttackClickMode = true;
+        if (Input.GetKeyDown(_inputKeys.AttackKey)) IsAttackClickMode = true;
         
 
-        if (Input.GetMouseButtonDown(0)) HandleInputs(InputType.MouseLeft);
-        if (Input.GetMouseButtonDown(1)) HandleInputs(InputType.MouseRight);
-        if (Input.GetKeyDown(KeyCode.S)) _umc.ClientStop();
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(_inputKeys.SelectKey)) HandleInputs(InputType.MouseLeft);
+        if (Input.GetKeyDown(_inputKeys.MoveKey)) HandleInputs(InputType.MouseRight);
+        if (Input.GetKeyDown(_inputKeys.StopKey)) _umc.ClientStop();
+        if (Input.GetKeyDown(_inputKeys.SpawnWaveKey))
         {
             WaveManager.Instance.SpawnWave(WaveManager.Instance.waves[0]);
         }
-        if (Input.GetKeyDown(skillKeys[0])) _psc.UseSkill(0);
-        if (Input.GetKeyDown(skillKeys[1])) _psc.UseSkill(1);
-        if (Input.GetKeyDown(skillKeys[2])) _psc.UseSkill(2);
-        if (Input.GetKeyDown(skillKeys[3])) _psc.UseSkill(3);
+        if (Input.GetKeyDown(_inputKeys.SkillKeys[0])) _psc.UseSkill(0);
+        if (Input.GetKeyDown(_inputKeys.SkillKeys[1])) _psc.UseSkill(1);
+        if (Input.GetKeyDown(_inputKeys.SkillKeys[2])) _psc.UseSkill(2);
+        if (Input.GetKeyDown(_inputKeys.SkillKeys[3])) _psc.UseSkill(3);
 
     }
 
@@ -115,7 +101,6 @@ public class PlayerMertController : NetworkBehaviour
 
         if (input is InputType.MouseLeft && IsAttackClickMode)
         {
-            // Instantiate(attackIndicatorPrefab, _hitInfo.point, attackIndicatorPrefab.transform.rotation);
             clickIndicator.Setup(_hitInfo.point, false);
             var closestEnemy = UnitManager.Instance.GetClosestUnit(transform.position, true);
             if (!closestEnemy) 
@@ -123,7 +108,7 @@ public class PlayerMertController : NetworkBehaviour
                 IsAttackClickMode = false;
                 return;
             }
-            if (!Extensions.IsInRange(closestEnemy.transform.position, transform.position, attackKeyRange))
+            if (!Extensions.IsInRange(closestEnemy.transform.position, transform.position, attackRange))
             {
 
                 IsAttackClickMode = false;
@@ -158,7 +143,6 @@ public class PlayerMertController : NetworkBehaviour
         switch (input)
         {
             case InputType.MouseLeft:
-                HandleLeftClick(_tc.Target);
                 break;
             case InputType.MouseRight:
                 HandleRightClick(_hitInfo.point);
@@ -172,23 +156,6 @@ public class PlayerMertController : NetworkBehaviour
             _umc.ClientMove(point);
             clickIndicator.Setup(point, true);
         }
-    }
-    private void HandleLeftClick(GameObject target)
-    {
-
-        if (target && target != gameObject) SelectUnit(target);
-        else DeselectUnit();
-    }
-    private void SelectUnit(GameObject target)
-    {
-        //if(I say no)
-        //        you say PLEAASE
-       // indicators.SetupIndicator(hc.GetComponent<SelectIndicator>().StaticIndicator, true);
-
-    }
-    private void DeselectUnit()
-    {
-       // indicators.SetupIndicator(null, false);
     }
     private void SetSpecialClickType(SpecialClickType clickType) 
     {
