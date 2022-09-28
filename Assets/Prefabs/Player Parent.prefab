@@ -68434,6 +68434,7 @@ GameObject:
   - component: {fileID: 6411675676070392958}
   - component: {fileID: 2171894335096632730}
   - component: {fileID: 6701862087618162149}
+  - component: {fileID: 3652992798137029967}
   m_Layer: 0
   m_Name: Player Parent
   m_TagString: Untagged
@@ -68597,11 +68598,9 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   animator: {fileID: 2814538736174975143}
-  attackRange: 15
   rangeIndicator: {fileID: 6362895330962804046}
   clickIndicator: {fileID: 4204380154923225954}
   _navMeshAgent: {fileID: 7319744102357029728}
-  _inputKeys: {fileID: 11400000, guid: 4064b8705b06cde43a1fa1c5d790afae, type: 2}
 --- !u!114 &6601903507643346811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68616,12 +68615,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  attackSpeed: 3
-  damage: 20
+  agent: {fileID: 7319744102357029728}
+  checkAuthority: 1
   projectilePrefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
   projectileSpawnPoint: {fileID: 3792548669549166751}
-  range: 10
-  agent: {fileID: 7319744102357029728}
 --- !u!114 &4334566937998049036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68652,7 +68649,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  _maxHealth: 100000000
   healthBar: {fileID: 5689978973427455355}
   unitType: 0
 --- !u!114 &5397592318971391883
@@ -68694,10 +68690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8297e1c507320bc41a3afce77679b5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 7319744102357029728}
-  pac: {fileID: 5397592318971391883}
-  tc: {fileID: 6411675676070392958}
-  bac: {fileID: 6601903507643346811}
+  bac: {fileID: 5397592318971391883}
 --- !u!114 &6701862087618162149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68712,6 +68705,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skills:
   - SkillData: {fileID: 11400000, guid: 84416912ee6f93741815598aa7c84f55, type: 2}
+--- !u!114 &3652992798137029967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8938534602783702256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7bf3d757e4a6fd44b6ad85074eced37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keysData: {fileID: 11400000, guid: 4064b8705b06cde43a1fa1c5d790afae, type: 2}
+  heroStatsData: {fileID: 11400000, guid: a6bf7a8ecff814b48a8120fc7dfae65d, type: 2}
 --- !u!1001 &1431800149530102464
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,8 +10,6 @@ public class PlayerMertController : NetworkBehaviour
 {
     [SerializeField] private Animator animator;
     
-
-    [SerializeField] private float attackRange;
     [SerializeField] private Transform rangeIndicator;
     [SerializeField] private SpriteRendererFadeOut clickIndicator;
 
@@ -21,12 +19,13 @@ public class PlayerMertController : NetworkBehaviour
     private bool _isAttackClickMode;
 
     private TargetController _tc;
-    private BasicAttackController _bac;
-    private PlayerAnimationController _pac;
+    private BasicRangedAttackController _bac;
+    private BasicAnimationController _pac;
     private UnitMovementController _umc;
     private PlayerSkillController _psc;
     [SerializeField] private NavMeshAgent _navMeshAgent;
-    [SerializeField] private InputKeysData _inputKeys;
+    private PlayerDataHolder _dataHolder;
+    private InputKeysData _inputKeys;
 
 
     public bool IsAttackClickMode
@@ -42,11 +41,12 @@ public class PlayerMertController : NetworkBehaviour
     private void Awake()
     {
         _tc = GetComponent<TargetController>();
-        _bac = GetComponent<BasicAttackController>();
-        _pac = GetComponent<PlayerAnimationController>();
+        _bac = GetComponent<BasicRangedAttackController>();
+        _pac = GetComponent<BasicAnimationController>();
         _umc = GetComponent<UnitMovementController>();
         _psc = GetComponent<PlayerSkillController>();
         _hc = GetComponent<Health>();
+        _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
     }
 
     [TargetRpc]
@@ -58,7 +58,6 @@ public class PlayerMertController : NetworkBehaviour
     private IEnumerator RegisterRoutine()
     {
         yield return new WaitUntil(() => UnitManager.Instance != null);
-        Debug.Log("Wtf");
         UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
     }
 
@@ -141,7 +140,7 @@ public class PlayerMertController : NetworkBehaviour
             IsAttackClickMode = false;
             return;
         }
-        if (!Extensions.IsInRange(closestEnemy.transform.position, transform.position, attackRange))
+        if (!Extensions.IsInRange(closestEnemy.transform.position, transform.position, _bac.Range))
         {
 
             IsAttackClickMode = false;

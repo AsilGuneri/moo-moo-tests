@@ -53653,12 +53653,6 @@ MonoBehaviour:
     - MinionPrefab: {fileID: 7498676492825279152, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
       Count: 5
       AfterDelay: 5
-    - MinionPrefab: {fileID: 7498676492825279152, guid: a415e70d6eed55a46b17feb2c3bd0074, type: 3}
-      Count: 5
-      AfterDelay: 5
-    - MinionPrefab: {fileID: 7498676492825279152, guid: 198158c6f7a7c4544b712ed389f0f03f, type: 3}
-      Count: 5
-      AfterDelay: 5
     SpawnSpace: {x: 0, y: 0, z: 0}
   spawnPoints:
   - {fileID: 1332031195}

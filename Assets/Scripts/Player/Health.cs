@@ -11,18 +11,25 @@ public class Health : NetworkBehaviour
     public int TeamId
     [SerializeField] private Slider healthBar;*/
 
-    [SerializeField] private int _maxHealth;
     [SerializeField] private Slider healthBar;
     [SerializeField] private UnitType unitType;
 
     [SyncVar(hook = nameof(UpdateHealthBar))] protected int _currentHealth;
 
+    private HeroBaseStatsData _heroStats;
+    private int baseHp;
+
     public event Action ServerOnDeath;
 
+    private void Awake()
+    {
+        _heroStats = GetComponent<PlayerDataHolder>().HeroStatsData;
+        baseHp = _heroStats.Hp;
+    }
     #region Server
     public override void OnStartServer()
     {
-        _currentHealth = _maxHealth;
+        _currentHealth = baseHp;
         if(unitType != UnitType.Player) UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), unitType);
 
     }
@@ -48,7 +55,7 @@ public class Health : NetworkBehaviour
     #region Client
     private void UpdateHealthBar(int oldHealth, int newHeatlh)
     {
-        healthBar.value = (float)((float)newHeatlh / (float)_maxHealth);
+        healthBar.value = (float)((float)newHeatlh / (float)baseHp);
     }
     #endregion
 

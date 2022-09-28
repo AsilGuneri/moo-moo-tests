@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class PlayerAnimationController : MonoBehaviour
+public class BasicAnimationController : MonoBehaviour, IAnimationController
 {
     [SerializeField] private Animator animator;
 
 
 
-    public void OnMove()
+    public virtual void OnMove()
     {
         animator.SetBool("Move", true);
     }
-    public void OnStop()
+    public virtual void OnStop()
     {
         animator.SetBool("Move", false);
 
     }
-    public void OnAttackStart(float attackSpeed)
+    public virtual void OnAttackStart(float attackSpeed)
     {
         animator.SetFloat("ShootSpeed", attackSpeed);
         animator.SetBool("IsAttacking", true);
     }
-    public void OnAttackEnd()
+    public virtual void OnAttackEnd()
     {
         animator.SetBool("IsAttacking", false);
     }

@@ -18,7 +18,7 @@ public class RapidFire : SkillData
 public class RapidFireController : SkillController
 {
     private RapidFire rapidFire;
-    private BasicAttackController bac;
+    private BasicRangedAttackController bac;
 
     private float counter = 0;
     private bool isCounterStarted = false;
@@ -26,7 +26,7 @@ public class RapidFireController : SkillController
     public override void SetupSkill(SkillData skillData)
     {
         rapidFire = (RapidFire) skillData;
-        bac = GetComponent<BasicAttackController>();
+        bac = GetComponent<BasicRangedAttackController>();
 
     }
     public override void OnSkillEnd()
