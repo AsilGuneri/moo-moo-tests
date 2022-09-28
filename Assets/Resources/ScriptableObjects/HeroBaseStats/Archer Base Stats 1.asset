@@ -16,3 +16,4 @@ MonoBehaviour:
   Range: 15
   Hp: 100000
   Damage: 25
+  AnimAttackMoment: 0.5

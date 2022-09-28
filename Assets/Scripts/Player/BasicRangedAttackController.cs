@@ -25,9 +25,9 @@ public class BasicRangedAttackController : ABasicAttackController
     }
     private IEnumerator DelayProjectileSpawn()
     {
-        yield return new WaitForSeconds((1 / stats.AttackSpeed) / 2);
+        yield return new WaitForSeconds((1 / stats.AttackSpeed) * stats.AnimAttackMoment);
         CmdSpawnProjectile();
-        yield return new WaitForSeconds((1 / stats.AttackSpeed) / 2);
+        yield return new WaitForSeconds((1 / stats.AttackSpeed) * (1 - stats.AnimAttackMoment));
         isAttacking = false;
 
     }
