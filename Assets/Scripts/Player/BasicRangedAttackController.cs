@@ -18,7 +18,7 @@ public class BasicRangedAttackController : ABasicAttackController
     [Command(requiresAuthority = false)]
     private void CmdSpawnProjectile()
     {
-        if (checkAuthority && !hasAuthority) return;
+        //if (checkAuthority && !hasAuthority) return;
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
         projectile.GetComponent<Projectile>().SetupProjectile(tc.Target, stats.Damage);
         NetworkServer.Spawn(projectile, connectionToClient);
