@@ -20,7 +20,7 @@ public class PlayerMertController : NetworkBehaviour
 
     private TargetController _tc;
     private BasicRangedAttackController _bac;
-    private BasicAnimationController _pac;
+    private AnimationController _pac;
     private UnitMovementController _umc;
     private PlayerSkillController _psc;
     [SerializeField] private NavMeshAgent _navMeshAgent;
@@ -42,7 +42,7 @@ public class PlayerMertController : NetworkBehaviour
     {
         _tc = GetComponent<TargetController>();
         _bac = GetComponent<BasicRangedAttackController>();
-        _pac = GetComponent<BasicAnimationController>();
+        _pac = GetComponent<AnimationController>();
         _umc = GetComponent<UnitMovementController>();
         _psc = GetComponent<PlayerSkillController>();
         _hc = GetComponent<Health>();
@@ -51,7 +51,7 @@ public class PlayerMertController : NetworkBehaviour
 
     [TargetRpc]
     public void Activate() {
-        mainCamera = Camera.main;
+        mainCamera = Camera.main; //DO NOT GET THE CAMERA LIKE THAT, get a reference to the cam.
         mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
         StartCoroutine(nameof(RegisterRoutine));
     }

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ArcherMat
+  m_Name: ArcherMat 1
   m_Shader: {fileID: 4800000, guid: 4a31887e3b64b2d4bbc64351abe099e2, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 2
@@ -148,14 +148,14 @@ Material:
     - _Color_BodyArt: {r: 0.5294118, g: 0.30980393, b: 0.64705884, a: 0}
     - _Color_Eyes: {r: 0, g: 0, b: 0, a: 1}
     - _Color_Hair: {r: 0.003921569, g: 0.09411766, b: 0.14901961, a: 0}
-    - _Color_Leather_Primary: {r: 0.49803922, g: 0.4627451, b: 0.3882353, a: 0}
-    - _Color_Leather_Secondary: {r: 0.16470589, g: 0.2509804, b: 0.2784314, a: 0}
-    - _Color_Metal_Dark: {r: 0.6, g: 0.6, b: 0.6, a: 0}
-    - _Color_Metal_Primary: {r: 0.6, g: 0.6, b: 0.6, a: 0}
-    - _Color_Metal_Secondary: {r: 0.6, g: 0.6, b: 0.6, a: 0}
-    - _Color_Primary: {r: 0.16470589, g: 0.2509804, b: 0.2784314, a: 0}
+    - _Color_Leather_Primary: {r: 0.3372549, g: 0.4666667, b: 0.54901963, a: 0}
+    - _Color_Leather_Secondary: {r: 0.003921569, g: 0.09411766, b: 0.14901961, a: 0}
+    - _Color_Metal_Dark: {r: 0.003921569, g: 0.09411766, b: 0.14901961, a: 0}
+    - _Color_Metal_Primary: {r: 0.6509804, g: 0.6509804, b: 0.6509804, a: 0}
+    - _Color_Metal_Secondary: {r: 0.3372549, g: 0.4666667, b: 0.54901963, a: 0}
+    - _Color_Primary: {r: 0.003921569, g: 0.09411766, b: 0.14901961, a: 0}
     - _Color_Scar: {r: 0.9294118, g: 0.6862745, b: 0.5921569, a: 0}
-    - _Color_Secondary: {r: 0.35, g: 0.27902097, b: 0.21783216, a: 0}
+    - _Color_Secondary: {r: 0.14509805, g: 0.2901961, b: 0.34901962, a: 0}
     - _Color_Skin: {r: 1, g: 0.8000001, b: 0.68235296, a: 0}
     - _Color_Stubble: {r: 0.80392164, g: 0.7019608, b: 0.6313726, a: 0}
     - _Color_Tertiary: {r: 0.7352941, g: 0.20004326, b: 0.20004326, a: 1}

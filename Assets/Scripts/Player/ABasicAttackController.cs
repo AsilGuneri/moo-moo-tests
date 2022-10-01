@@ -16,7 +16,7 @@ public abstract class ABasicAttackController : NetworkBehaviour
 
     protected TargetController tc;
     protected UnitMovementController umc;
-    protected BasicAnimationController pac;
+    protected AnimationController ac;
     protected HeroBaseStatsData stats;
 
     //Additional Fields : Use these to increase attack speed etc. in game with temp. buff or cases like this. Note: Permanent upgrades needs to be saveable.
@@ -40,7 +40,7 @@ public abstract class ABasicAttackController : NetworkBehaviour
     {
         tc = GetComponent<TargetController>();
         umc = GetComponent<UnitMovementController>();
-        pac = GetComponent<BasicAnimationController>();
+        ac = GetComponent<AnimationController>();
         stats = GetComponent<PlayerDataHolder>().HeroStatsData;
     }
     [ClientCallback]
@@ -66,7 +66,7 @@ public abstract class ABasicAttackController : NetworkBehaviour
     }
     protected virtual void ChaseToAttack()
     {
-        if (pac) pac.OnAttackEnd();
+        if (ac != null) ac.OnAttackEnd();
         umc.ClientMove(tc.Target.transform.position, true, stats.Range);
         isChasing = true;
     }

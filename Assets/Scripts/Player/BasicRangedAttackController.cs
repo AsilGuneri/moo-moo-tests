@@ -38,7 +38,7 @@ public class BasicRangedAttackController : ABasicAttackController
         {
             isAttacking = false;
             StopCoroutine(nameof(DelayProjectileSpawn));
-            if (pac) pac.OnAttackEnd();
+            if (ac) ac.OnAttackEnd();
         }
     }
 
@@ -46,7 +46,7 @@ public class BasicRangedAttackController : ABasicAttackController
     {
         transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
         if (umc) umc.ClientStop();
-        if (pac) pac.OnAttackStart(stats.AttackSpeed);
+        if (ac) ac.OnAttackStart(stats.AttackSpeed);
         isAttacking = true;
         StartCoroutine(nameof(DelayProjectileSpawn));
         counter = 0;

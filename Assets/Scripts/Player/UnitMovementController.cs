@@ -8,7 +8,7 @@ public class UnitMovementController : MonoBehaviour
 {
     [Separator("Script References")]
     private NavMeshAgent agent;
-    [SerializeField] private BasicAnimationController bac;
+    [SerializeField] private AnimationController bac;
     private TargetController tc;
     private void Awake()
     {

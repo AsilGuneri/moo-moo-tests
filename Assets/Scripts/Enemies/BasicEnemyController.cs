@@ -10,7 +10,7 @@ public class BasicEnemyController : NetworkBehaviour
     protected NavMeshAgent _agent;
     protected Health _hc;
     protected GameObject _target;
-    protected EnemyAnimationController _eac;
+    protected AnimationController _ac;
     private TargetController _tc;
 
 
@@ -18,9 +18,8 @@ public class BasicEnemyController : NetworkBehaviour
     {
         _tc = GetComponent<TargetController>();
         _agent = GetComponent<NavMeshAgent>();
-        _eac = GetComponent<EnemyAnimationController>();
+        _ac = GetComponent<AnimationController>();
     }
-
     private void FixedUpdate()
     {
         if (_tc.Target == null) PickTarget();

@@ -6,10 +6,11 @@ using Mirror;
 public class Projectile : NetworkBehaviour
 {
     [SerializeField] public float speed = 1;
-    //private Health _target;
-    private Vector3 _direction;
+    [SerializeField] private ParticleSystem onHitParticle;
+    [SerializeField] private float onHitParticleDestroySecond;
+
+
     [SyncVar] private bool _isMoving;
-    private Vector3 _targetPos;
     [SyncVar] private int _damage;
     [SyncVar] public GameObject _target;
 
@@ -24,6 +25,12 @@ public class Projectile : NetworkBehaviour
     private void CmdTargetHit()
     {
         _target.GetComponent<Health>().TakeDamage(_damage);
+        if (onHitParticle)
+        {
+            onHitParticle.transform.parent = null;
+            onHitParticle.Play();
+            Destroy(onHitParticle, onHitParticleDestroySecond);
+        }   
         DestroySelf();
     }
     #endregion
