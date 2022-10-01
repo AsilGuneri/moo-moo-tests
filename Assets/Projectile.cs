@@ -21,6 +21,11 @@ public class Projectile : NetworkBehaviour
     {
         NetworkServer.Destroy(gameObject);
     }
+    private IEnumerator DestroyOnHitParticle()
+    {
+        yield return new WaitForSeconds(onHitParticleDestroySecond);
+        NetworkServer.Destroy(onHitParticle.gameObject);
+    }
     [ServerCallback]
     private void CmdTargetHit()
     {
@@ -29,8 +34,9 @@ public class Projectile : NetworkBehaviour
         {
             onHitParticle.transform.parent = null;
             onHitParticle.Play();
-            Destroy(onHitParticle, onHitParticleDestroySecond);
-        }   
+            StartCoroutine(nameof(DestroyOnHitParticle));
+        }
+       
         DestroySelf();
     }
     #endregion
