@@ -5,13 +5,14 @@ using UnityEngine.AI;
 using Mirror;
 using MyBox;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class PlayerMertController : NetworkBehaviour
 {
     [SerializeField] private Animator animator;
     
     [SerializeField] private Transform rangeIndicator;
-    [SerializeField] private SpriteRendererFadeOut clickIndicator;
+    [SerializeField] private Indicators clickIndicator;
 
     private Camera mainCamera;
     private Health _hc;
@@ -26,6 +27,7 @@ public class PlayerMertController : NetworkBehaviour
     [SerializeField] private NavMeshAgent _navMeshAgent;
     private PlayerDataHolder _dataHolder;
     private InputKeysData _inputKeys;
+
 
 
     public bool IsAttackClickMode

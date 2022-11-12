@@ -91,7 +91,23 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
         return closestUnit;
     }
-
+    public GameObject GetUnitInRange(Vector3 myPosition, float range, bool isEnemy = false)
+    {
+        GameObject closestUnit = null;
+        foreach (NetworkIdentityReference unit in isEnemy ? WaveEnemies : Players)
+        {
+            if (!unit.Value) continue;
+            if (!unit.Value.gameObject) continue;
+            float distance = Vector3.Distance(myPosition, unit.Value.gameObject.transform.position);
+            if (range <= distance) return unit.Value.gameObject;
+        }
+        return closestUnit;
+    }
+    public bool IsInRange(Transform firstUnit, Transform secondUnit, float range)
+    {
+        if (Vector3.Distance(firstUnit.position, secondUnit.position) > range) return false;
+        else return true;
+    }
     public PlayerMertController GetPlayerController()
     {
         foreach(var player in Players)

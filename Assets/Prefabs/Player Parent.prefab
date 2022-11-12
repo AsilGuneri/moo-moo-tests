@@ -68597,6 +68597,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  PlayerControls:
+    m_Name: Player Controls
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ee5dcc78-05ed-447d-9dc3-4394d7e20ff2
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: b72d0c27-3c68-4a12-ac9a-f0eb8794d444
+      m_Path: <Keyboard>/#(Q)
+      m_Interactions: Press
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Controls
+      m_Flags: 0
+    m_Flags: 0
   animator: {fileID: 2814538736174975143}
   rangeIndicator: {fileID: 6362895330962804046}
   clickIndicator: {fileID: 4204380154923225954}

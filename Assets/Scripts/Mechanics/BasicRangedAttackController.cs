@@ -25,6 +25,7 @@ public class BasicRangedAttackController : ABasicAttackController
     }
     private IEnumerator DelayProjectileSpawn()
     {
+        ///TODO : Use async
         yield return new WaitForSeconds((1 / stats.AttackSpeed) * stats.AnimAttackMoment);
         CmdSpawnProjectile();
         yield return new WaitForSeconds((1 / stats.AttackSpeed) * (1 - stats.AnimAttackMoment));
@@ -44,7 +45,7 @@ public class BasicRangedAttackController : ABasicAttackController
 
     protected override void StartAttacking()
     {
-        transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
+        if(!isStable) transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
         if (umc) umc.ClientStop();
         if (ac) ac.OnAttackStart(stats.AttackSpeed);
         isAttacking = true;

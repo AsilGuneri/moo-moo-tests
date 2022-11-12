@@ -5,13 +5,13 @@ using Mirror;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(TargetController))]
-[RequireComponent(typeof(UnitMovementController))]
 [RequireComponent(typeof(PlayerDataHolder))]
 
 public abstract class ABasicAttackController : NetworkBehaviour
 {
     [SerializeField] protected NavMeshAgent agent;//
     [SerializeField] protected bool checkAuthority = true;
+    [SerializeField] protected bool isStable = false;
 
 
     protected TargetController tc;
@@ -39,9 +39,12 @@ public abstract class ABasicAttackController : NetworkBehaviour
     protected virtual void Awake()
     {
         tc = GetComponent<TargetController>();
-        umc = GetComponent<UnitMovementController>();
-        ac = GetComponent<AnimationController>();
         stats = GetComponent<PlayerDataHolder>().HeroStatsData;
+        if(!isStable)
+        {
+            umc = GetComponent<UnitMovementController>();
+            ac = GetComponent<AnimationController>();
+        }
     }
     [ClientCallback]
     protected virtual void Update()
@@ -51,11 +54,14 @@ public abstract class ABasicAttackController : NetworkBehaviour
         if (tc.Target == null)
         {
             StopAttacking();
-            ResetStoppingDistance();
-            StopChasing();
+            if (!isStable)
+            {
+                ResetStoppingDistance();
+                StopChasing();
+            }
             return;
         }
-        if (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > stats.Range && !isAttacking)
+        if (!isStable && (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > stats.Range && !isAttacking))
         {
             ChaseToAttack();
         }

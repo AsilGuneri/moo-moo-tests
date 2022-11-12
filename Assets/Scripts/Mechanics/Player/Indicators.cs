@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using MyBox;
 
-public class SpriteRendererFadeOut : MonoBehaviour
+public class Indicators : MonoBehaviour
 {
     [SerializeField] private GameObject moveIndicator;
     [SerializeField] private GameObject attackIndicator;
