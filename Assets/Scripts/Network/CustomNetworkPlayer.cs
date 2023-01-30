@@ -43,6 +43,12 @@ public class CustomNetworkPlayer : NetworkBehaviour
 
     public override void OnStartClient()
     {
+        
+        if(NetworkServer.active)
+            return;
+            
+        DontDestroyOnLoad(gameObject);
+        
         manager.players.Add(this);
         LobbyController.instance.UpdateLobbyName();
         LobbyController.instance.UpdatePlayerList();
