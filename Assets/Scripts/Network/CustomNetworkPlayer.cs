@@ -79,14 +79,10 @@ public class CustomNetworkPlayer : NetworkBehaviour
     }
 
     public void PlayerNameUpdate(string oldValue, string newValue){
-        if(isServer){
-            this.playerName = newValue;
-            playerNameText.text = newValue;
-            playerIcon.texture = Helper.GetTextureFromSteamID((CSteamID)playerSteamID);
-        }
-        else if(isClient){
-            LobbyController.instance.UpdatePlayerList();
-        }
+        this.playerName = newValue;
+        playerNameText.text = newValue;
+        playerIcon.texture = Helper.GetTextureFromSteamID((CSteamID)playerSteamID);
+        LobbyController.instance.UpdatePlayerList();
     }
 
     [Command]
