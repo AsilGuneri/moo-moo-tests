@@ -78,5 +78,11 @@ public class CustomNetworkPlayer : NetworkBehaviour
 
     }
     
+    [Server] 
+    public void SetPartyOwner(bool state)
+    {
+        isPartyOwner = state;
+    }
+    
 
 }

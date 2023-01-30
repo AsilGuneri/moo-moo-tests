@@ -20,14 +20,16 @@ public class CustomNetworkManager : NetworkManager
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
         base.OnServerAddPlayer(conn);
-        
+
+        CustomNetworkPlayer player = conn.identity.GetComponent<CustomNetworkPlayer>();
+
         if(SceneManager.GetActiveScene().name == "SteamLobby"){
-            CustomNetworkPlayer player = conn.identity.GetComponent<CustomNetworkPlayer>();
 
             player.connectionID = conn.connectionId;
             player.playerIdNumber = players.Count + 1;
             player.playerSteamID = (ulong)SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)SteamLobby.instance.currentLobbyID, players.Count);
         }
+        player.SetPartyOwner(players.Count == 1);
 
     }
 
