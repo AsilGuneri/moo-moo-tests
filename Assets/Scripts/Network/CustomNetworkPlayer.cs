@@ -33,6 +33,7 @@ public class CustomNetworkPlayer : NetworkBehaviour
         gameObject.name = "LocalGamePlayer";
         LobbyController.instance.FindLocalPlayer();
         LobbyController.instance.UpdateLobbyName();
+        LobbyController.instance.UpdatePlayerList();
     }
 
     public override void OnStartClient()
