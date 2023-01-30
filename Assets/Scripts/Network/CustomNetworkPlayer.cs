@@ -43,7 +43,6 @@ public class CustomNetworkPlayer : NetworkBehaviour
 
     public override void OnStartClient()
     {
-        Debug.Log("On Start Client: " + playerName);
         manager.players.Add(this);
         LobbyController.instance.UpdateLobbyName();
         LobbyController.instance.UpdatePlayerList();
