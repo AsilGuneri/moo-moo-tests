@@ -44,7 +44,7 @@ public class LobbyController : MonoBehaviour
         if(!playerItemCreated)
             CreateHostPlayerItem();
 
-        Debug.Log("Player Count: (" + playerListItems.Count + "/" + manager.players.Count + ")");
+        // Debug.Log("Player Count: (" + playerListItems.Count + "/" + manager.players.Count + ")");
         if(playerListItems.Count < manager.players.Count)
             CreateClientPlayerItem();
 
@@ -84,7 +84,7 @@ public class LobbyController : MonoBehaviour
         newPlayerListItem.playerName = player.playerName;
         newPlayerListItem.connectionID = player.connectionID;
         newPlayerListItem.playerSteamID = player.playerSteamID;
-        Debug.Log("Name: " + player.playerName + " - Conn ID: " + player.connectionID + " - Steam ID: " + player.playerSteamID);
+        // Debug.Log("Name: " + player.playerName + " - Conn ID: " + player.connectionID + " - Steam ID: " + player.playerSteamID);
         newPlayerListItem.SetPlayerValues();
 
         newPlayerItem.transform.SetParent(playerListContainer);
@@ -97,7 +97,7 @@ public class LobbyController : MonoBehaviour
         foreach(CustomNetworkPlayer player in manager.players){
             foreach(PlayerListItem listItem in playerListItems){
                 if(listItem.playerSteamID == player.playerSteamID){
-                    Debug.Log("Updated Player Item: " + player.playerName);
+                    // Debug.Log("Updated Player Item: " + player.playerName);
                     listItem.playerName = player.playerName;
                     listItem.SetPlayerValues();
                 }

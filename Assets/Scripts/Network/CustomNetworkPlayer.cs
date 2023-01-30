@@ -87,7 +87,7 @@ public class CustomNetworkPlayer : NetworkBehaviour
     }
 
     private void AuthorityHandlePartyOwnerStateUpdated(bool oldState, bool newState){
-        Debug.Log("AuthorityHandlePartyOwnerStateUpdated - Has Authority: " + hasAuthority + " - State: " + newState);
+        Debug.Log("AuthorityHandlePartyOwnerStateUpdated Name: " + playerName + " - Has Authority: " + hasAuthority + " - State: " + newState);
         if(!hasAuthority)
             return;
 
