@@ -2,12 +2,17 @@ using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using System;
 using Steamworks;
 
 public class CustomNetworkPlayer : NetworkBehaviour
 {
+    
+    [SerializeField]private TextMeshProUGUI playerNameText;
+    [SerializeField]private RawImage playerIcon;
+    
     [SyncVar]public int connectionID;
     [SyncVar]public int playerIdNumber;
     [SyncVar]public ulong playerSteamID;
@@ -52,8 +57,6 @@ public class CustomNetworkPlayer : NetworkBehaviour
 
     public override void OnStopClient()
     {
-        // manager.players.Remove(this);
-        // LobbyController.instance.UpdatePlayerList();
         
         if(!isClientOnly)
             return;
@@ -78,6 +81,8 @@ public class CustomNetworkPlayer : NetworkBehaviour
     public void PlayerNameUpdate(string oldValue, string newValue){
         if(isServer){
             this.playerName = newValue;
+            playerNameText.text = newValue;
+            playerIcon.texture = Helper.GetTextureFromSteamID((CSteamID)playerSteamID);
         }
         else if(isClient){
             LobbyController.instance.UpdatePlayerList();

@@ -47,10 +47,7 @@ public class CustomNetworkManager : NetworkManager
     public override void OnServerSceneChanged(string sceneName)
     {
         if(SceneManager.GetActiveScene().name == "GameScene"){
-            
-            Debug.Log("Scene Change player Count: " + players.Count);
             foreach(CustomNetworkPlayer p in players){
-                Debug.Log("Player " + p.playerName + " Activated");
                 p.GetComponent<PlayerMertController>().Activate();
             }
         }

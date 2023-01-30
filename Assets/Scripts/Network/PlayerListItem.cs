@@ -23,16 +23,19 @@ public class PlayerListItem : MonoBehaviour
     }
 
     private void OnImageLoaded(AvatarImageLoaded_t callback){
-        if(callback.m_steamID.m_SteamID == playerSteamID){
-            playerIcon.texture = GetSteamImageAsTexture(callback.m_iImage);
-        }
+        if(callback.m_steamID.m_SteamID != playerSteamID)
+            return;
+
+        if(!avatarRecieved)
+            GetPlayerIcon();
     }
 
     private void GetPlayerIcon(){
-        int imageID = SteamFriends.GetLargeFriendAvatar((CSteamID)playerSteamID);
-        if(imageID == -1)
+        Texture2D icon = Helper.GetTextureFromSteamID((CSteamID)playerSteamID);
+        if(!icon)
             return;
-        playerIcon.texture = GetSteamImageAsTexture(imageID);
+        playerIcon.texture = icon;
+        avatarRecieved = true;
     }
 
     public void SetPlayerValues(){
@@ -40,25 +43,5 @@ public class PlayerListItem : MonoBehaviour
         if(!avatarRecieved)
             GetPlayerIcon();
     }
-    
 
-    private Texture2D GetSteamImageAsTexture(int iImage){
-        Texture2D texture = null;
-
-        bool isValid = SteamUtils.GetImageSize(iImage, out uint width, out uint height);
-        if(isValid){
-            byte [] image = new byte[width * height * 4];
-
-            isValid = SteamUtils.GetImageRGBA(iImage, image, (int)(width * height * 4));
-
-            if(isValid){
-                texture = new Texture2D((int)width, (int)height, TextureFormat.RGBA32, false, true);
-                texture.LoadRawTextureData(image);
-                texture.Apply();
-            }
-        }
-
-        avatarRecieved = true;
-        return texture;
-    }
 }

@@ -102,7 +102,7 @@ public class MainMenu : MonoBehaviour
         //     playerNameTexts[i].text = "Waiting For Player...";
         // }
 
-        startGameButton.interactable = players.Count >= 1;
+        // startGameButton.interactable = true;
     }
 
     private void HandleClientConnected(){
