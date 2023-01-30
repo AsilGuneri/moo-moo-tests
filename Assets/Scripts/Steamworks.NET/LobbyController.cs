@@ -18,6 +18,8 @@ public class LobbyController : MonoBehaviour
     public ulong currentLobbyID;
     public bool playerItemCreated = false;
     private List<PlayerListItem> playerListItems = new List<PlayerListItem>();
+    public CustomNetworkPlayer localPlayerController;
+    public GameObject localPlayerObject;
 
     private CustomNetworkManager _manager;
 
@@ -42,7 +44,7 @@ public class LobbyController : MonoBehaviour
         if(!playerItemCreated)
             CreateHostPlayerItem();
 
-        Debug.Log("PallistitemCount: " + playerListItems.Count);
+        Debug.Log("Player List Item Count: " + playerListItems.Count);
         Debug.Log("Manager Player Count: " + manager.players.Count);
         if(playerListItems.Count < manager.players.Count)
             CreateClientPlayerItem();
@@ -56,7 +58,8 @@ public class LobbyController : MonoBehaviour
     }
 
     public void FindLocalPlayer(){
-
+        localPlayerObject = GameObject.Find("LocalGamePlayer");
+        localPlayerController = localPlayerObject.GetComponent<CustomNetworkPlayer>();
     }
 
     public void CreateHostPlayerItem(){

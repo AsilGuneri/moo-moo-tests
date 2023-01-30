@@ -8,35 +8,27 @@ using Steamworks;
 
 public class CustomNetworkManager : NetworkManager
 { 
+
     public static event Action ClientOnConnected;
     public static event Action ClientOnDisonnected;
     public static event Action HostOnStop;
 
     private bool isGameInProgress = false;
-    public List<CustomNetworkPlayer> players {get;} = new List<CustomNetworkPlayer>();
 
-    #region  Server
+    public List<CustomNetworkPlayer> players { get; } = new List<CustomNetworkPlayer>();
 
-    public override void OnServerConnect(NetworkConnectionToClient conn)
+    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-        if(!isGameInProgress)
-            return;
-        //If the game is not in progress, kick the player.
-        conn.Disconnect();
-    }
+        base.OnServerAddPlayer(conn);
+        
+        if(SceneManager.GetActiveScene().name == "SteamLobby"){
+            CustomNetworkPlayer player = conn.identity.GetComponent<CustomNetworkPlayer>();
 
-    public override void OnServerDisconnect(NetworkConnectionToClient conn)
-    {
-        CustomNetworkPlayer p = conn.identity.GetComponent<CustomNetworkPlayer>();
-        players.Remove(p);
+            player.connectionID = conn.connectionId;
+            player.playerIdNumber = players.Count + 1;
+            player.playerSteamID = (ulong)SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)SteamLobby.instance.currentLobbyID, players.Count);
+        }
 
-        base.OnServerDisconnect(conn);
-    }
-
-    public override void OnStopServer()
-    {
-        players.Clear();
-        isGameInProgress = false;
     }
 
     public void StartGame(){
@@ -50,26 +42,6 @@ public class CustomNetworkManager : NetworkManager
         ServerChangeScene("GameScene");
     }
 
-    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
-    {   
-        base.OnServerAddPlayer(conn);
-
-        CustomNetworkPlayer p = conn.identity.GetComponent<CustomNetworkPlayer>();
-        // players.Add(p);
-        
-        Debug.Log("On Server Add Player Count: " + players.Count);
-        if(SceneManager.GetActiveScene().name == "SteamLobby"){
-            
-            foreach(CustomNetworkPlayer player in players){
-                player.connectionID = conn.connectionId;
-                player.playerIdNumber = players.Count + 1;
-                player.playerSteamID = (ulong)SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)SteamLobby.instance.currentLobbyID, players.Count - 1);
-            }
-        }
-        p.SetPartyOwner(players.Count == 1);
-
-    }
-
     public override void OnServerSceneChanged(string sceneName)
     {
         if(SceneManager.GetActiveScene().name == "GameScene"){
@@ -81,10 +53,6 @@ public class CustomNetworkManager : NetworkManager
 
         base.OnServerSceneChanged(sceneName);
     }
-
-    #endregion
-
-    #region  Client
 
     public override void OnClientConnect()
     {
@@ -109,7 +77,4 @@ public class CustomNetworkManager : NetworkManager
         players.Clear();
         base.OnStopClient();
     }
-
-    #endregion
-
 }

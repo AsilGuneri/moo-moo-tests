@@ -8,23 +8,16 @@ using Steamworks;
 
 public class CustomNetworkPlayer : NetworkBehaviour
 {
+    [SyncVar]public int connectionID;
+    [SyncVar]public int playerIdNumber;
+    [SyncVar]public ulong playerSteamID;
 
+    [SyncVar(hook = nameof(PlayerNameUpdate))]
+    public string playerName;
 
+    [SyncVar]
+    private bool isPartyOwner = false;
 
-    [SerializeField] private TMP_Text playerNameText;
-    [SyncVar(hook = nameof(AuthorityHandlePartyOwnerStateUpdated))]private bool isPartyOwner = false;
-
-    public static event Action ClientOnInfoUpdated;
-    public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
-
-
-    [SyncVar] public int connectionID;
-    [SyncVar] public int playerIdNumber;
-    [SyncVar] public ulong playerSteamID;
-    [SyncVar(hook = nameof(ClientHandleDisplayNameUpdated))]
-    public string playerName = "Missing Name";
-
-    
     private CustomNetworkManager _manager;
     private CustomNetworkManager manager{
         get{
@@ -34,27 +27,39 @@ public class CustomNetworkPlayer : NetworkBehaviour
         }
     }
 
-
-    public bool GetIsPartyOwner(){
-        return isPartyOwner;
-    }
-    
-    public string GetDisplayName()
+    public override void OnStartAuthority()
     {
-        return playerName;
+        CmdSetPlayerName(SteamFriends.GetPersonaName().ToString());
+        gameObject.name = "LocalGamePlayer";
+        LobbyController.instance.FindLocalPlayer();
+        LobbyController.instance.UpdateLobbyName();
     }
 
-    #region Server
-    [Server] 
-    public void SetDisplayName(string name)
+    public override void OnStartClient()
     {
-        playerName = name;
+        manager.players.Add(this);
+        LobbyController.instance.UpdateLobbyName();
+        LobbyController.instance.UpdatePlayerList();
     }
 
-    [Server] 
-    public void SetPartyOwner(bool state)
+    public override void OnStopClient()
     {
-        isPartyOwner = state;
+        manager.players.Remove(this);
+        LobbyController.instance.UpdatePlayerList();
+    }
+
+    [Command]
+    private void CmdSetPlayerName(string playerName){
+        this.PlayerNameUpdate(this.playerName, playerName);
+    }
+
+    public void PlayerNameUpdate(string oldValue, string newValue){
+        if(isServer){
+            this.playerName = newValue;
+        }
+        else if(isClient){
+            LobbyController.instance.UpdatePlayerList();
+        }
     }
 
     [Command]
@@ -66,78 +71,5 @@ public class CustomNetworkPlayer : NetworkBehaviour
 
     }
     
-    [Command] //Clients calling a method on server
-    private void CmdSetDisplayName(string newDisplayName) 
-    {
-        if (newDisplayName.Length < 2 || newDisplayName.Length > 20) { return; } //Server authorization
-        RpcLogNewName(newDisplayName);
-        SetDisplayName(newDisplayName);
-    }
-
-    public override void OnStartServer()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-
-    public override void OnStartAuthority()
-    {
-        CmdSetDisplayName(SteamFriends.GetPersonaName().ToString());
-        LobbyController.instance.UpdateLobbyName();
-        LobbyController.instance.UpdatePlayerList();
-    }
-
-
-    #endregion
-    #region Client
-    private void HandleDisplayNameUpdated(string oldName, string newName)
-    {
-        playerNameText.text = newName;
-    }
-
-    [ClientRpc] //Server calling a method on all clients
-    private void RpcLogNewName(string newDisplayName)
-    {
-        Debug.Log(newDisplayName);
-    }
-
-    public override void OnStartClient()
-    {
-        
-        if(NetworkServer.active)
-            return;
-            
-        DontDestroyOnLoad(gameObject);
-        manager.players.Add(this);
-        LobbyController.instance.UpdateLobbyName();
-        LobbyController.instance.UpdatePlayerList();
-        // ((CustomNetworkManager)NetworkManager.singleton).players.Add(this);
-    }
-
-    public override void OnStopClient()
-    {
-        // UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
-        
-        ClientOnInfoUpdated?.Invoke();
-
-        if(!isClientOnly)
-            return;
-
-        manager.players.Remove(this);
-        LobbyController.instance.UpdatePlayerList();
-    }
-
-    #endregion
-
-    private void AuthorityHandlePartyOwnerStateUpdated(bool oldState, bool newState){
-        if(!hasAuthority)
-            return;
-
-        AuthorityOnPartyOwnerStateUpdated?.Invoke(newState);
-    }
-    
-    private void ClientHandleDisplayNameUpdated(string oldDisplayName, string newDisplayName)
-    {
-        ClientOnInfoUpdated?.Invoke();
-    }
 
 }

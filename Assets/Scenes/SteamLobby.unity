@@ -987,6 +987,8 @@ MonoBehaviour:
   playerListContainer: {fileID: 731484632}
   currentLobbyID: 0
   playerItemCreated: 0
+  localPlayerController: {fileID: 0}
+  localPlayerObject: {fileID: 0}
 --- !u!4 &416196761
 Transform:
   m_ObjectHideFlags: 0
@@ -1936,17 +1938,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcdf6c616326c4aaeb610b335fbb67fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundColor:
-    serializedVersion: 2
-    rgba: 4282729983
-  font: {fileID: 0}
-  textColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  fontSize: 12
-  fontStyle: 0
-  alignment: 4
-  textDropShadow: 0
 --- !u!1 &1238033145
 GameObject:
   m_ObjectHideFlags: 0
