@@ -55,7 +55,7 @@ public class CustomNetworkManager : NetworkManager
         base.OnServerAddPlayer(conn);
 
         CustomNetworkPlayer p = conn.identity.GetComponent<CustomNetworkPlayer>();
-        players.Add(p);
+        // players.Add(p);
         
         Debug.Log("On Server Add Player Count: " + players.Count);
         if(SceneManager.GetActiveScene().name == "SteamLobby"){

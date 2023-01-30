@@ -107,7 +107,10 @@ public class CustomNetworkPlayer : NetworkBehaviour
             return;
             
         DontDestroyOnLoad(gameObject);
-        ((CustomNetworkManager)NetworkManager.singleton).players.Add(this);
+        manager.players.Add(this);
+        LobbyController.instance.UpdateLobbyName();
+        LobbyController.instance.UpdatePlayerList();
+        // ((CustomNetworkManager)NetworkManager.singleton).players.Add(this);
     }
 
     public override void OnStopClient()
@@ -119,7 +122,8 @@ public class CustomNetworkPlayer : NetworkBehaviour
         if(!isClientOnly)
             return;
 
-        ((CustomNetworkManager)NetworkManager.singleton).players.Remove(this);
+        manager.players.Remove(this);
+        LobbyController.instance.UpdatePlayerList();
     }
 
     #endregion
