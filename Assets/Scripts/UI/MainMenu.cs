@@ -24,7 +24,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private TMP_Text[] playerNameTexts = new TMP_Text[4];
 
     private void Start() {
-        // CustomNetworkPlayer.AuthorityOnPartyOwnerStateUpdated += AuthorityHandlePartyOwnerStateUpdated;
+        CustomNetworkPlayer.AuthorityOnPartyOwnerStateUpdated += AuthorityHandlePartyOwnerStateUpdated;
         // CustomNetworkPlayer.ClientOnInfoUpdated += ClientHandleInfoUpdated;
         
         if (!useSteam) { return; }
@@ -44,9 +44,9 @@ public class MainMenu : MonoBehaviour
     }
 
     private void OnDestroy() {
-        // CustomNetworkManager.ClientOnConnected -= HandleClientConnected;
-        // CustomNetworkManager.ClientOnDisonnected -= HandleClientDisconnected;
-        // CustomNetworkPlayer.AuthorityOnPartyOwnerStateUpdated -= AuthorityHandlePartyOwnerStateUpdated;
+        CustomNetworkManager.ClientOnConnected -= HandleClientConnected;
+        CustomNetworkManager.ClientOnDisonnected -= HandleClientDisconnected;
+        CustomNetworkPlayer.AuthorityOnPartyOwnerStateUpdated -= AuthorityHandlePartyOwnerStateUpdated;
         // CustomNetworkPlayer.ClientOnInfoUpdated -= ClientHandleInfoUpdated;
 
     }

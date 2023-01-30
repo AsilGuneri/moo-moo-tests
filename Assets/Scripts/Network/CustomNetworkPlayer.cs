@@ -15,7 +15,9 @@ public class CustomNetworkPlayer : NetworkBehaviour
     [SyncVar(hook = nameof(PlayerNameUpdate))]
     public string playerName = "Missing Name";
 
-    [SyncVar]
+    public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
+
+    [SyncVar(hook = nameof(AuthorityHandlePartyOwnerStateUpdated))]
     private bool isPartyOwner = false;
 
     private CustomNetworkManager _manager;
@@ -82,6 +84,13 @@ public class CustomNetworkPlayer : NetworkBehaviour
     public void SetPartyOwner(bool state)
     {
         isPartyOwner = state;
+    }
+
+    private void AuthorityHandlePartyOwnerStateUpdated(bool oldState, bool newState){
+        if(!hasAuthority)
+            return;
+
+        AuthorityOnPartyOwnerStateUpdated?.Invoke(newState);
     }
     
 

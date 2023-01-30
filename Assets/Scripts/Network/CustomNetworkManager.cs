@@ -28,8 +28,8 @@ public class CustomNetworkManager : NetworkManager
             player.connectionID = conn.connectionId;
             player.playerIdNumber = players.Count + 1;
             player.playerSteamID = (ulong)SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)SteamLobby.instance.currentLobbyID, players.Count);
+            player.SetPartyOwner(players.Count == 1);
         }
-        player.SetPartyOwner(players.Count == 1);
 
     }
 
