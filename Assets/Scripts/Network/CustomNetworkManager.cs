@@ -49,7 +49,6 @@ public class CustomNetworkManager : NetworkManager
         if(SceneManager.GetActiveScene().name == "GameScene"){
             
             foreach(CustomNetworkPlayer p in players){
-                Debug.Log("Player " + p.playerName + " Activated");
                 p.GetComponent<PlayerMertController>().Activate();
             }
         }

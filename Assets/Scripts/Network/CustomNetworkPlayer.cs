@@ -38,6 +38,7 @@ public class CustomNetworkPlayer : NetworkBehaviour
 
     public override void OnStartClient()
     {
+        Debug.Log("On Start Client: " + playerName);
         manager.players.Add(this);
         LobbyController.instance.UpdateLobbyName();
         LobbyController.instance.UpdatePlayerList();
@@ -45,8 +46,9 @@ public class CustomNetworkPlayer : NetworkBehaviour
 
     public override void OnStopClient()
     {
-        manager.players.Remove(this);
-        LobbyController.instance.UpdatePlayerList();
+        Debug.Log("On Stop Client: " + playerName);
+        // manager.players.Remove(this);
+        // LobbyController.instance.UpdatePlayerList();
     }
 
     [Command] //Client calling a method on server
