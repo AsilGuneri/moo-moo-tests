@@ -96,7 +96,7 @@ public class LobbyController : MonoBehaviour
 
         foreach(CustomNetworkPlayer player in manager.players){
             foreach(PlayerListItem listItem in playerListItems){
-                if(listItem.connectionID == player.connectionID){
+                if(listItem.playerSteamID == player.playerSteamID){
                     Debug.Log("Updated Player Item: " + player.playerName);
                     listItem.playerName = player.playerName;
                     listItem.SetPlayerValues();
