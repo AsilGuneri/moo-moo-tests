@@ -26,9 +26,9 @@ public class CustomNetworkManager : NetworkManager
         if(SceneManager.GetActiveScene().name == "SteamLobby"){
 
             player.connectionID = conn.connectionId;
-            player.playerIdNumber = players.Count + 1;
+            player.playerIdNumber = players.Count ;
             player.playerSteamID = (ulong)SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)SteamLobby.instance.currentLobbyID, players.Count);
-            player.SetPartyOwner(players.Count == 1);
+            player.SetPartyOwner(players.Count == 0);
         }
 
     }
@@ -49,6 +49,7 @@ public class CustomNetworkManager : NetworkManager
         if(SceneManager.GetActiveScene().name == "GameScene"){
             
             foreach(CustomNetworkPlayer p in players){
+                Debug.Log("Player " + p.playerName + " Activated");
                 p.GetComponent<PlayerMertController>().Activate();
             }
         }
