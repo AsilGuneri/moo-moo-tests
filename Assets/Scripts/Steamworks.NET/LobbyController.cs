@@ -44,8 +44,7 @@ public class LobbyController : MonoBehaviour
         if(!playerItemCreated)
             CreateHostPlayerItem();
 
-        Debug.Log("Player List Item Count: " + playerListItems.Count);
-        Debug.Log("Manager Player Count: " + manager.players.Count);
+        Debug.Log("Player Count: (" + playerListItems.Count + "/" + manager.players.Count + ")");
         if(playerListItems.Count < manager.players.Count)
             CreateClientPlayerItem();
 
@@ -63,19 +62,17 @@ public class LobbyController : MonoBehaviour
     }
 
     public void CreateHostPlayerItem(){
-        Debug.Log("Create Host Player Item");
         foreach(CustomNetworkPlayer player in manager.players){
-            Debug.Log("Created!");
+            Debug.Log("Host Player Item Created!");
             InstantiatePlayerItem(player);
         }
         playerItemCreated = true;
     }
 
     public void CreateClientPlayerItem(){
-        Debug.Log("Create Client Player Item");
         foreach(CustomNetworkPlayer player in manager.players){
             if(!playerListItems.Any(b => b.connectionID == player.connectionID)){
-                Debug.Log("Client Created!");
+                Debug.Log("Client Player Item Created!");
                 InstantiatePlayerItem(player);
             }
         }
@@ -89,6 +86,7 @@ public class LobbyController : MonoBehaviour
         newPlayerListItem.playerName = player.playerName;
         newPlayerListItem.connectionID = player.connectionID;
         newPlayerListItem.playerSteamID = player.playerSteamID;
+        newPlayerListItem.SetPlayerValues();
 
         newPlayerItem.transform.SetParent(playerListContainer);
 

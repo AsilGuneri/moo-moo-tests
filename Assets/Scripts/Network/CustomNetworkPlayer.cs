@@ -13,7 +13,7 @@ public class CustomNetworkPlayer : NetworkBehaviour
     [SyncVar]public ulong playerSteamID;
 
     [SyncVar(hook = nameof(PlayerNameUpdate))]
-    public string playerName;
+    public string playerName = "Missing Name";
 
     [SyncVar]
     private bool isPartyOwner = false;
@@ -48,9 +48,16 @@ public class CustomNetworkPlayer : NetworkBehaviour
         LobbyController.instance.UpdatePlayerList();
     }
 
-    [Command]
+    [Command] //Client calling a method on server
     private void CmdSetPlayerName(string playerName){
         this.PlayerNameUpdate(this.playerName, playerName);
+        RpcLogNewName(playerName);
+    }
+
+    [ClientRpc] //Server calling a method on all clients
+    private void RpcLogNewName(string newDisplayName)
+    {
+        Debug.Log("Player Name Setted: " + newDisplayName);
     }
 
     public void PlayerNameUpdate(string oldValue, string newValue){
