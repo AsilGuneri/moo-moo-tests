@@ -57,6 +57,22 @@ public class CustomNetworkManager : NetworkManager
 
         base.OnServerSceneChanged(sceneName);
     }
+    
+    public override void OnServerConnect(NetworkConnectionToClient conn)
+    {
+        if(!isGameInProgress)
+            return;
+        //If the game is not in progress, kick the player.
+        conn.Disconnect();
+    }
+
+    public override void OnServerDisconnect(NetworkConnectionToClient conn)
+    {
+        CustomNetworkPlayer p = conn.identity.GetComponent<CustomNetworkPlayer>();
+        players.Remove(p);
+
+        base.OnServerDisconnect(conn);
+    }
 
     public override void OnClientConnect()
     {
