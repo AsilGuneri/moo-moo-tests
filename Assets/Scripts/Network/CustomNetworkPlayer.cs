@@ -32,8 +32,6 @@ public class CustomNetworkPlayer : NetworkBehaviour
         CmdSetPlayerName(SteamFriends.GetPersonaName().ToString());
         gameObject.name = "LocalGamePlayer";
         LobbyController.instance.FindLocalPlayer();
-        LobbyController.instance.UpdateLobbyName();
-        LobbyController.instance.UpdatePlayerList();
     }
 
     public override void OnStartClient()
@@ -53,6 +51,7 @@ public class CustomNetworkPlayer : NetworkBehaviour
     private void CmdSetPlayerName(string playerName){
         this.PlayerNameUpdate(this.playerName, playerName);
         RpcLogNewName(playerName);
+        LobbyController.instance.UpdatePlayerList();
     }
 
     [ClientRpc] //Server calling a method on all clients
