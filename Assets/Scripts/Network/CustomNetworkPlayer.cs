@@ -28,6 +28,11 @@ public class CustomNetworkPlayer : NetworkBehaviour
             return _manager = CustomNetworkManager.singleton as CustomNetworkManager;
         }
     }
+    
+    public override void OnStartServer()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     public override void OnStartAuthority()
     {
@@ -46,9 +51,14 @@ public class CustomNetworkPlayer : NetworkBehaviour
 
     public override void OnStopClient()
     {
-        Debug.Log("On Stop Client: " + playerName);
         // manager.players.Remove(this);
         // LobbyController.instance.UpdatePlayerList();
+        
+        if(!isClientOnly)
+            return;
+
+        Debug.Log("On Stop Client Removed: " + playerName);
+        ((CustomNetworkManager)NetworkManager.singleton).players.Remove(this);
     }
 
     [Command] //Client calling a method on server
