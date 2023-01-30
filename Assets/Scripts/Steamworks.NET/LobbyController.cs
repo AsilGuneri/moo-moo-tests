@@ -86,7 +86,7 @@ public class LobbyController : MonoBehaviour
         newPlayerListItem.playerName = player.playerName;
         newPlayerListItem.connectionID = player.connectionID;
         newPlayerListItem.playerSteamID = player.playerSteamID;
-        newPlayerListItem.SetPlayerValues();
+        // newPlayerListItem.SetPlayerValues();
 
         newPlayerItem.transform.SetParent(playerListContainer);
 
