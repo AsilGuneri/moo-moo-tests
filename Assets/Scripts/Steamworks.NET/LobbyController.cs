@@ -51,7 +51,7 @@ public class LobbyController : MonoBehaviour
         else if(playerListItems.Count > manager.players.Count)
             RemovePlayerItem();
 
-        else if(playerListItems.Count == manager.players.Count)
+        // else if(playerListItems.Count == manager.players.Count)
             UpdatePlayerItem();
         
     }
