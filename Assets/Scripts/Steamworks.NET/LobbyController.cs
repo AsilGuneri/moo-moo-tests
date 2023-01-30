@@ -51,8 +51,8 @@ public class LobbyController : MonoBehaviour
         else if(playerListItems.Count > manager.players.Count)
             RemovePlayerItem();
 
-        // else if(playerListItems.Count == manager.players.Count)
-        UpdatePlayerItem();
+        else if(playerListItems.Count == manager.players.Count)
+            UpdatePlayerItem();
         
     }
 
@@ -63,7 +63,6 @@ public class LobbyController : MonoBehaviour
 
     public void CreateHostPlayerItem(){
         foreach(CustomNetworkPlayer player in manager.players){
-            Debug.Log("Host Player Item Created!");
             InstantiatePlayerItem(player);
         }
         playerItemCreated = true;
@@ -72,7 +71,6 @@ public class LobbyController : MonoBehaviour
     public void CreateClientPlayerItem(){
         foreach(CustomNetworkPlayer player in manager.players){
             if(!playerListItems.Any(b => b.connectionID == player.connectionID)){
-                Debug.Log("Client Player Item Created!");
                 InstantiatePlayerItem(player);
             }
         }
@@ -86,7 +84,8 @@ public class LobbyController : MonoBehaviour
         newPlayerListItem.playerName = player.playerName;
         newPlayerListItem.connectionID = player.connectionID;
         newPlayerListItem.playerSteamID = player.playerSteamID;
-        // newPlayerListItem.SetPlayerValues();
+        Debug.Log("Name: " + player.playerName + " - Conn ID: " + player.connectionID + " - Steam ID: " + player.playerSteamID);
+        newPlayerListItem.SetPlayerValues();
 
         newPlayerItem.transform.SetParent(playerListContainer);
 
@@ -95,11 +94,10 @@ public class LobbyController : MonoBehaviour
 
     public void UpdatePlayerItem(){
 
-        Debug.Log("Update Player Item");
         foreach(CustomNetworkPlayer player in manager.players){
             foreach(PlayerListItem listItem in playerListItems){
                 if(listItem.connectionID == player.connectionID){
-                    Debug.Log("Updated Player Item!");
+                    Debug.Log("Updated Player Item: " + player.playerName);
                     listItem.playerName = player.playerName;
                     listItem.SetPlayerValues();
                 }
