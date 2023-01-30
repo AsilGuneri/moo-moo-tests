@@ -112,7 +112,7 @@ public class MainMenu : MonoBehaviour
         lobbyPanel.SetActive(true);
     }
 
-    private void HandleClientDisconnected(){
+    private void HandleClientDisconnected(NetworkConnection conn){
         joinButton.interactable = true;
     }
 

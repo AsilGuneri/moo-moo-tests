@@ -18,7 +18,7 @@ public class CustomNetworkPlayer : NetworkBehaviour
     [SyncVar]public ulong playerSteamID;
 
     [SyncVar(hook = nameof(PlayerNameUpdate))]
-    public string playerName = "Missing Name";
+    public string playerName = "";
 
     public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
 

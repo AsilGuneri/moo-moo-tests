@@ -34,6 +34,14 @@ public class LobbyController : MonoBehaviour
     private void Awake() {
         instance = this;
     }
+    
+    private void OnEnable() {
+        CustomNetworkManager.ClientOnDisonnected += HandleClientDisconnected;
+    }
+
+    private void OnDisable() {
+        CustomNetworkManager.ClientOnDisonnected -= HandleClientDisconnected;
+    }
 
     public void UpdateLobbyName(){
         currentLobbyID = SteamLobby.instance.currentLobbyID;
@@ -124,6 +132,24 @@ public class LobbyController : MonoBehaviour
                 j--;
             }
         }
+    }
+
+    public void RemovePlayerItem(NetworkConnection conn){
+
+        for (int i = 0; i < playerListItems.Count; i++)
+        {
+            if(playerListItems[i].connectionID != conn.connectionId)
+                continue;
+
+            GameObject objToRemove = playerListItems[i].gameObject;
+            playerListItems.RemoveAt(i);
+            Destroy(objToRemove);
+            return;
+            
+        }
+    }
     
+    private void HandleClientDisconnected(NetworkConnection conn){
+        RemovePlayerItem(conn);
     }
 }
