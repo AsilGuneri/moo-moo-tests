@@ -21,6 +21,8 @@ public class CustomNetworkPlayer : NetworkBehaviour
     public string playerName = "";
 
     public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
+    protected Callback<AvatarImageLoaded_t> ImageLoaded;
+    private bool avatarRecieved;
 
     [SyncVar(hook = nameof(AuthorityHandlePartyOwnerStateUpdated))]
     private bool isPartyOwner = false;
@@ -32,6 +34,18 @@ public class CustomNetworkPlayer : NetworkBehaviour
                 return _manager;
             return _manager = CustomNetworkManager.singleton as CustomNetworkManager;
         }
+    }
+    
+    private void Start() {
+        ImageLoaded = Callback<AvatarImageLoaded_t>.Create(OnImageLoaded);
+    }
+    
+    private void OnImageLoaded(AvatarImageLoaded_t callback){
+        if(callback.m_steamID.m_SteamID != playerSteamID)
+            return;
+
+        if(!avatarRecieved)
+            GetPlayerIcon();
     }
     
     public override void OnStartServer()
@@ -81,8 +95,20 @@ public class CustomNetworkPlayer : NetworkBehaviour
     public void PlayerNameUpdate(string oldValue, string newValue){
         this.playerName = newValue;
         playerNameText.text = newValue;
-        playerIcon.texture = Helper.GetTextureFromSteamID((CSteamID)playerSteamID);
+        GetPlayerIcon();
         LobbyController.instance.UpdatePlayerList();
+    }
+
+    private void GetPlayerIcon(){
+        if(avatarRecieved)
+            return;
+
+        Texture2D icon = Helper.GetTextureFromSteamID((CSteamID)playerSteamID);
+        if(!icon)
+            return;
+            
+        playerIcon.texture = icon;
+        avatarRecieved = true;
     }
 
     [Command]
