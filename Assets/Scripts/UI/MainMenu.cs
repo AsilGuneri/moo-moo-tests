@@ -14,14 +14,12 @@ public class MainMenu : MonoBehaviour
     protected Callback<GameLobbyJoinRequested_t> gameLobbyJoinRequested;
     protected Callback<LobbyEnter_t> lobbyEntered;
 
-
     [SerializeField] private GameObject landingPagePanel = null;
     [SerializeField] private GameObject joinLobbyPanel = null;
     [SerializeField] private GameObject lobbyPanel = null;
     [SerializeField] private TMP_InputField addressInput = null;
     [SerializeField] private Button joinButton = null;
     [SerializeField] private Button startGameButton = null;
-    [SerializeField] private TMP_Text[] playerNameTexts = new TMP_Text[4];
 
     private void Start() {
         CustomNetworkPlayer.AuthorityOnPartyOwnerStateUpdated += AuthorityHandlePartyOwnerStateUpdated;
@@ -92,17 +90,6 @@ public class MainMenu : MonoBehaviour
     {
         List<CustomNetworkPlayer> players = ((CustomNetworkManager)NetworkManager.singleton).players;
 
-        // for (int i = 0; i < players.Count; i++)
-        // {
-        //     playerNameTexts[i].text = players[i].GetDisplayName();
-        // }
-
-        // for (int i = players.Count; i < playerNameTexts.Length; i++)
-        // {
-        //     playerNameTexts[i].text = "Waiting For Player...";
-        // }
-
-        // startGameButton.interactable = true;
     }
 
     private void HandleClientConnected(){
