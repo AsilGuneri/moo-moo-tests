@@ -10,21 +10,22 @@ public abstract class SkillData : ScriptableObject
     public Class Class;
     //Grade will separate possible q skills from w,e,r etc.
     public int Grade;
+    //Required Mana
+    public int ManaCost;
+    //Skills cooldown without any buff/boost.
+    public float BaseCooldown;
 
-    protected SkillController SkillController;
-    public virtual SkillController SetController(GameObject playerObj)
+    public virtual void SetController(GameObject playerObj)
     {
-        if(playerObj.TryGetComponent(out SkillController skillController))
-        {
-            return skillController;
-        }
-        else
+        if(!playerObj.TryGetComponent(out SkillController skillController))
         {
             skillController = playerObj.AddComponent<PiercingArrowController>();
             skillController.OnSetup(this);
-            return skillController;
         }
-        
+    }
+    public SkillController GetController(GameObject playerObj)
+    {
+        return playerObj.GetComponent<PiercingArrowController>();
     }
 
 }

@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMertController : NetworkBehaviour
 {
+    public Class CharacterClass;
+
     [SerializeField] private Animator animator;
     
     [SerializeField] private Transform rangeIndicator;
@@ -27,8 +29,7 @@ public class PlayerMertController : NetworkBehaviour
     private PlayerDataHolder _dataHolder;
     private InputKeysData _inputKeys;
 
-    public SkillData skill;
-    private SkillController skillController;
+    private PlayerSkill[] playerSkills = new PlayerSkill[4];
 
     public bool IsAttackClickMode
     {
@@ -49,7 +50,6 @@ public class PlayerMertController : NetworkBehaviour
         _hc = GetComponent<Health>();
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
 
-        skillController = skill.SetController(gameObject);
     }
 
     [TargetRpc]
@@ -84,9 +84,18 @@ public class PlayerMertController : NetworkBehaviour
             WaveManager.Instance.SpawnWave(WaveManager.Instance.waves[0]);
         }
 
-        if(Input.GetKeyDown(KeyCode.Q)) { skillController.UseSkill(); }
+        if(Input.GetKeyDown(KeyCode.Q) && playerSkills[0] != null) 
+        { 
+            playerSkills[0].UseSkill(gameObject); 
+        }
         
     }
+    public void SetSkill(PlayerSkill skill)
+    {
+        skill.SkillData.SetController(gameObject);
+        playerSkills[skill.SkillData.Grade] = skill;
+    }
+
     private void OnPointerInput()
     {
         if (!mainCamera) return;

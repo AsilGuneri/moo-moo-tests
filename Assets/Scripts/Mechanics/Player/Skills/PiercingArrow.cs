@@ -12,6 +12,7 @@ public class PiercingArrowController : SkillController
 {
     private PiercingArrow skillData;
 
+    //Override if needed
     public override void UseSkill()
     {
         base.UseSkill();

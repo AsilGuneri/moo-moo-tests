@@ -68434,6 +68434,7 @@ GameObject:
   - component: {fileID: 6411675676070392958}
   - component: {fileID: 2171894335096632730}
   - component: {fileID: 3652992798137029967}
+  - component: {fileID: 2585341283395862557}
   m_Layer: 0
   m_Name: Player Parent
   m_TagString: Untagged
@@ -68596,11 +68597,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  CharacterClass: 0
   animator: {fileID: 2814538736174975143}
   rangeIndicator: {fileID: 6362895330962804046}
   clickIndicator: {fileID: 4204380154923225954}
   _navMeshAgent: {fileID: 7319744102357029728}
-  skill: {fileID: 11400000, guid: 7d8f918961e8e5a4bacedde3eb26bdc6, type: 2}
 --- !u!114 &6601903507643346811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68706,6 +68707,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keysData: {fileID: 11400000, guid: 4064b8705b06cde43a1fa1c5d790afae, type: 2}
   heroStatsData: {fileID: 11400000, guid: a6bf7a8ecff814b48a8120fc7dfae65d, type: 2}
+--- !u!114 &2585341283395862557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8938534602783702256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a46a0963fb9cf04fb13fd9b1428f9a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1431800149530102464
 PrefabInstance:
   m_ObjectHideFlags: 0
