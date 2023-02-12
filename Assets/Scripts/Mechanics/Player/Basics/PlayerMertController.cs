@@ -23,12 +23,12 @@ public class PlayerMertController : NetworkBehaviour
     private BasicRangedAttackController _bac;
     private AnimationController _pac;
     private UnitMovementController _umc;
-    private PlayerSkillController _psc;
     [SerializeField] private NavMeshAgent _navMeshAgent;
     private PlayerDataHolder _dataHolder;
     private InputKeysData _inputKeys;
 
-
+    public SkillData skill;
+    private SkillController skillController;
 
     public bool IsAttackClickMode
     {
@@ -46,9 +46,10 @@ public class PlayerMertController : NetworkBehaviour
         _bac = GetComponent<BasicRangedAttackController>();
         _pac = GetComponent<AnimationController>();
         _umc = GetComponent<UnitMovementController>();
-        _psc = GetComponent<PlayerSkillController>();
         _hc = GetComponent<Health>();
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
+
+        skillController = skill.SetController(gameObject);
     }
 
     [TargetRpc]
@@ -82,11 +83,9 @@ public class PlayerMertController : NetworkBehaviour
         {
             WaveManager.Instance.SpawnWave(WaveManager.Instance.waves[0]);
         }
-        if (Input.GetKeyDown(_inputKeys.SkillKeys[0])) _psc.UseSkill(0);
-        if (Input.GetKeyDown(_inputKeys.SkillKeys[1])) _psc.UseSkill(1);
-        if (Input.GetKeyDown(_inputKeys.SkillKeys[2])) _psc.UseSkill(2);
-        if (Input.GetKeyDown(_inputKeys.SkillKeys[3])) _psc.UseSkill(3);
 
+        if(Input.GetKeyDown(KeyCode.Q)) { skillController.UseSkill(); }
+        
     }
     private void OnPointerInput()
     {

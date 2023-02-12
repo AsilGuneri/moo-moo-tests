@@ -68433,7 +68433,6 @@ GameObject:
   - component: {fileID: 5397592318971391883}
   - component: {fileID: 6411675676070392958}
   - component: {fileID: 2171894335096632730}
-  - component: {fileID: 6701862087618162149}
   - component: {fileID: 3652992798137029967}
   m_Layer: 0
   m_Name: Player Parent
@@ -68597,27 +68596,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  PlayerControls:
-    m_Name: Player Controls
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: ee5dcc78-05ed-447d-9dc3-4394d7e20ff2
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: b72d0c27-3c68-4a12-ac9a-f0eb8794d444
-      m_Path: <Keyboard>/#(Q)
-      m_Interactions: Press
-      m_Processors: 
-      m_Groups: 
-      m_Action: Player Controls
-      m_Flags: 0
-    m_Flags: 0
   animator: {fileID: 2814538736174975143}
   rangeIndicator: {fileID: 6362895330962804046}
   clickIndicator: {fileID: 4204380154923225954}
   _navMeshAgent: {fileID: 7319744102357029728}
+  skill: {fileID: 11400000, guid: 7d8f918961e8e5a4bacedde3eb26bdc6, type: 2}
 --- !u!114 &6601903507643346811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68634,6 +68617,7 @@ MonoBehaviour:
   syncInterval: 0.1
   agent: {fileID: 7319744102357029728}
   checkAuthority: 1
+  isStable: 0
   projectilePrefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
   projectileSpawnPoint: {fileID: 3792548669549166751}
 --- !u!114 &4334566937998049036
@@ -68708,20 +68692,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bac: {fileID: 5397592318971391883}
---- !u!114 &6701862087618162149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8938534602783702256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4be1e832006631428f5610fbfa5b404, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _skills:
-  - SkillData: {fileID: 11400000, guid: 84416912ee6f93741815598aa7c84f55, type: 2}
 --- !u!114 &3652992798137029967
 MonoBehaviour:
   m_ObjectHideFlags: 0
