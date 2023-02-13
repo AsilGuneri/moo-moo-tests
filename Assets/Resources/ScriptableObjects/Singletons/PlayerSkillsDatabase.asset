@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64fb8c1db116809439982d363dc7e56a, type: 3}
-  m_Name: TestSkill
+  m_Script: {fileID: 11500000, guid: 7623bf57fad3f9b40a90edfa58ce24ff, type: 3}
+  m_Name: PlayerSkillsDatabase
   m_EditorClassIdentifier: 
-  SkillImage: {fileID: 21300000, guid: 8d95bcf261f259f4786a397bc66e3705, type: 3}
-  Name: Test1
-  Description: attack speed
+  SkillLists:
+  - Class: 0
+    AllClassSkills:
+    - Name: PiercingArrow
+      SkillData: {fileID: 11400000, guid: 7d8f918961e8e5a4bacedde3eb26bdc6, type: 2}

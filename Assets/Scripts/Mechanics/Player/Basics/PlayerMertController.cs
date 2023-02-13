@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMertController : NetworkBehaviour
 {
+    public Class CharacterClass;
+
     [SerializeField] private Animator animator;
     
     [SerializeField] private Transform rangeIndicator;
@@ -23,12 +25,11 @@ public class PlayerMertController : NetworkBehaviour
     private BasicRangedAttackController _bac;
     private AnimationController _pac;
     private UnitMovementController _umc;
-    private PlayerSkillController _psc;
     [SerializeField] private NavMeshAgent _navMeshAgent;
     private PlayerDataHolder _dataHolder;
     private InputKeysData _inputKeys;
 
-
+    private PlayerSkill[] playerSkills = new PlayerSkill[4];
 
     public bool IsAttackClickMode
     {
@@ -46,9 +47,9 @@ public class PlayerMertController : NetworkBehaviour
         _bac = GetComponent<BasicRangedAttackController>();
         _pac = GetComponent<AnimationController>();
         _umc = GetComponent<UnitMovementController>();
-        _psc = GetComponent<PlayerSkillController>();
         _hc = GetComponent<Health>();
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
+
     }
 
     [TargetRpc]
@@ -82,12 +83,19 @@ public class PlayerMertController : NetworkBehaviour
         {
             WaveManager.Instance.SpawnWave(WaveManager.Instance.waves[0]);
         }
-        if (Input.GetKeyDown(_inputKeys.SkillKeys[0])) _psc.UseSkill(0);
-        if (Input.GetKeyDown(_inputKeys.SkillKeys[1])) _psc.UseSkill(1);
-        if (Input.GetKeyDown(_inputKeys.SkillKeys[2])) _psc.UseSkill(2);
-        if (Input.GetKeyDown(_inputKeys.SkillKeys[3])) _psc.UseSkill(3);
 
+        if(Input.GetKeyDown(KeyCode.Q) && playerSkills[0] != null) 
+        { 
+            playerSkills[0].UseSkill(gameObject); 
+        }
+        
     }
+    public void SetSkill(PlayerSkill skill)
+    {
+        skill.SkillData.SetController(gameObject);
+        playerSkills[skill.SkillData.Grade] = skill;
+    }
+
     private void OnPointerInput()
     {
         if (!mainCamera) return;
