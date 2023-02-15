@@ -6,6 +6,7 @@ using Mirror;
 using MyBox;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class PlayerMertController : NetworkBehaviour
 {
@@ -98,7 +99,9 @@ public class PlayerMertController : NetworkBehaviour
 
     private void OnPointerInput()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
         if (!mainCamera) return;
+
         Ray ray;
         bool isRayHit;
         RaycastHit hitInfo;

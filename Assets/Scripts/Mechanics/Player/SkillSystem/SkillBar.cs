@@ -13,12 +13,12 @@ public class SkillBar : Singleton<SkillBar>
     {
         UISkills[skillGrade].Image.sprite = skillData.Icon;
         UISkills[skillGrade].Button.onClick.RemoveAllListeners();
-        var playerObj = UnitManager.Instance.GetPlayerController().gameObject;
+        var playerObj = UnitManager.Instance.GetPlayerController().gameObject; 
         UISkills[skillGrade].Button.onClick.AddListener(() => skillData.GetController(playerObj).UseSkill());
     }
-    public void OnSkillClick()
+    public void OnCooldownStart()
     {
-
+        //BURDAAAAAN
     }
 }
 [Serializable]
