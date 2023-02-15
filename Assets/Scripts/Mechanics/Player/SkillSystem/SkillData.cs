@@ -1,5 +1,8 @@
+using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public abstract class SkillData : ScriptableObject
@@ -14,6 +17,10 @@ public abstract class SkillData : ScriptableObject
     public int ManaCost;
     //Skills cooldown without any buff/boost.
     public float BaseCooldown;
+    //How long does it take to cast the skill.
+    public float CastTime;
+    public float CastStartDelay;
+    public float OnSkillStayInterval;
 
     public virtual void SetController(GameObject playerObj)
     {
@@ -31,15 +38,38 @@ public abstract class SkillData : ScriptableObject
 }
 public abstract class SkillController : MonoBehaviour
 {
-    public abstract void OnSetup(SkillData skillData);
+    protected SkillData SkillData;
+    private bool isSkillStayActive;
+
+    public virtual void OnSetup(SkillData skillData)
+    {
+        SkillData = skillData;
+    }
     public abstract void OnSkillStart();
     public abstract void OnSkillInterrupt();
     public abstract void OnSkillEnd();
-    public abstract void OnSkillStay();
+    public abstract void OnSkillStay();  //Not implemented yet.
     public virtual void UseSkill()
     {
+        CastSkill();
+    }
+    private async void CastSkill()
+    {
+        await Task.Delay(Extensions.ToMiliSeconds(SkillData.CastStartDelay));
         OnSkillStart();
+        isSkillStayActive = true;
+        StartOnSkillStay();
+        await Task.Delay(Extensions.ToMiliSeconds(SkillData.CastTime));
+        isSkillStayActive = false;
         OnSkillEnd();
+    }
+    private async void StartOnSkillStay()
+    {
+        while (isSkillStayActive)
+        {
+            OnSkillStay();
+            await Task.Delay(Extensions.ToMiliSeconds(SkillData.OnSkillStayInterval));
+        }
     }
 }
 public enum Class
