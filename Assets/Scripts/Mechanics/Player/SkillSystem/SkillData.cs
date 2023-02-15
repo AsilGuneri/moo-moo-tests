@@ -17,7 +17,7 @@ public abstract class SkillData : ScriptableObject
     public int ManaCost;
     //Skills cooldown without any buff/boost.
     public float BaseCooldown;
-    //How long does it take to cast the skill.
+    //Required time values of a skill.
     public float CastTime;
     public float CastStartDelay;
     public float OnSkillStayInterval;
@@ -39,6 +39,8 @@ public abstract class SkillData : ScriptableObject
 public abstract class SkillController : MonoBehaviour
 {
     protected SkillData SkillData;
+    protected bool isOnCooldown;
+
     private bool isSkillStayActive;
 
     public virtual void OnSetup(SkillData skillData)
@@ -55,6 +57,13 @@ public abstract class SkillController : MonoBehaviour
     }
     private async void CastSkill()
     {
+        if (isOnCooldown)
+        {
+            Debug.Log("on cooldown");
+            return;
+        }
+
+        StartCooldown();
         await Task.Delay(Extensions.ToMiliSeconds(SkillData.CastStartDelay));
         OnSkillStart();
         isSkillStayActive = true;
@@ -70,6 +79,14 @@ public abstract class SkillController : MonoBehaviour
             OnSkillStay();
             await Task.Delay(Extensions.ToMiliSeconds(SkillData.OnSkillStayInterval));
         }
+    }
+    private async void StartCooldown()
+    {
+        isOnCooldown = true;
+        float requiredMinTime = SkillData.CastStartDelay + SkillData.CastTime;
+        float cooldown = SkillData.BaseCooldown < (requiredMinTime) ? requiredMinTime : SkillData.BaseCooldown; 
+        await Task.Delay(Extensions.ToMiliSeconds(cooldown));
+        isOnCooldown = false;
     }
 }
 public enum Class
