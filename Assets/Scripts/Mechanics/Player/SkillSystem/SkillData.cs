@@ -46,9 +46,9 @@ public abstract class SkillController : MonoBehaviour
         SkillData = skillData;
     }
     public abstract void OnSkillStart();
-    public abstract void OnSkillInterrupt();
+    public abstract void OnSkillInterrupt();  //Not implemented yet.
     public abstract void OnSkillEnd();
-    public abstract void OnSkillStay();  //Not implemented yet.
+    public abstract void OnSkillStay();
     public virtual void UseSkill()
     {
         CastSkill();
