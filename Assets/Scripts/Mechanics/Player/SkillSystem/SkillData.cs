@@ -22,6 +22,8 @@ public abstract class SkillData : ScriptableObject
     public float CastStartDelay;
     public float OnSkillStayInterval;
 
+    public Sprite Icon;
+
     public virtual void SetController(GameObject playerObj)
     {
         if(!playerObj.TryGetComponent(out SkillController skillController))
@@ -59,10 +61,8 @@ public abstract class SkillController : MonoBehaviour
     {
         if (isOnCooldown)
         {
-            Debug.Log("on cooldown");
             return;
         }
-
         StartCooldown();
         await Task.Delay(Extensions.ToMiliSeconds(SkillData.CastStartDelay));
         OnSkillStart();
