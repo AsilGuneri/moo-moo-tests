@@ -15,4 +15,9 @@ MonoBehaviour:
   Name: PiercingArrow
   Class: 0
   Grade: 0
-  a: 5
+  ManaCost: 0
+  BaseCooldown: 5
+  CastTime: 1
+  CastStartDelay: 0
+  OnSkillStayInterval: 0.1
+  Icon: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}

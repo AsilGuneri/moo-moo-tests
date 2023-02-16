@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Extensions : MonoBehaviour
@@ -16,5 +17,11 @@ public class Extensions : MonoBehaviour
     public static bool IsInRange(Vector3 pointA, Vector3 pointB, float range)
     {
         return Distance(pointA, pointB) <= range;
+    }
+    public static int ToMiliSeconds(float seconds)
+    {
+        if (seconds == 0) return 0;
+        int miliSeconds = (int)(seconds * 1000);
+        return miliSeconds;
     }
 }

@@ -6,6 +6,7 @@ using Mirror;
 using MyBox;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class PlayerMertController : NetworkBehaviour
 {
@@ -29,7 +30,7 @@ public class PlayerMertController : NetworkBehaviour
     private PlayerDataHolder _dataHolder;
     private InputKeysData _inputKeys;
 
-    private PlayerSkill[] playerSkills = new PlayerSkill[4];
+    public PlayerSkill[] PlayerSkills = new PlayerSkill[4];
 
     public bool IsAttackClickMode
     {
@@ -84,21 +85,23 @@ public class PlayerMertController : NetworkBehaviour
             WaveManager.Instance.SpawnWave(WaveManager.Instance.waves[0]);
         }
 
-        if(Input.GetKeyDown(KeyCode.Q) && playerSkills[0] != null) 
+        if(Input.GetKeyDown(KeyCode.Q) && PlayerSkills[0] != null) 
         { 
-            playerSkills[0].UseSkill(gameObject); 
+            PlayerSkills[0].UseSkill(gameObject); 
         }
         
     }
     public void SetSkill(PlayerSkill skill)
     {
         skill.SkillData.SetController(gameObject);
-        playerSkills[skill.SkillData.Grade] = skill;
+        PlayerSkills[skill.SkillData.Grade] = skill;
     }
 
     private void OnPointerInput()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
         if (!mainCamera) return;
+
         Ray ray;
         bool isRayHit;
         RaycastHit hitInfo;

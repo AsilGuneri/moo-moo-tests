@@ -5,13 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PiercingArrow", menuName = "Scriptable Objects/PiercingArrow", order = 1)]
 public class PiercingArrow : SkillData
 {
-    public int a;
 
 }
 public class PiercingArrowController : SkillController
 {
-    private PiercingArrow skillData;
-
     //Override if needed
     public override void UseSkill()
     {
@@ -19,13 +16,11 @@ public class PiercingArrowController : SkillController
     }
     public override void OnSetup(SkillData skillData)
     {
-        this.skillData = (PiercingArrow)skillData;
-        Debug.Log(this.skillData.a);
-
+        base.OnSetup(skillData);
     }
     public override void OnSkillStart()
     {
-        Debug.Log($"Started Skill : {skillData.name}");
+        Debug.Log($"Started Skill : {SkillData.name}");
     }
     public override void OnSkillInterrupt()
     {
@@ -33,7 +28,7 @@ public class PiercingArrowController : SkillController
     }
     public override void OnSkillEnd()
     {
-        Debug.Log($"Ended Skill : {skillData.name}");
+        Debug.Log($"Ended Skill : {SkillData.name}");
     }
     public override void OnSkillStay()
     {
