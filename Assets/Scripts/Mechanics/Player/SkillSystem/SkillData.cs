@@ -84,7 +84,8 @@ public abstract class SkillController : MonoBehaviour
     {
         isOnCooldown = true;
         float requiredMinTime = SkillData.CastStartDelay + SkillData.CastTime;
-        float cooldown = SkillData.BaseCooldown < (requiredMinTime) ? requiredMinTime : SkillData.BaseCooldown; 
+        float cooldown = SkillData.BaseCooldown < requiredMinTime ? requiredMinTime : SkillData.BaseCooldown;
+        SkillBar.Instance.OnCooldownStart(SkillData.Grade, cooldown);
         await Task.Delay(Extensions.ToMiliSeconds(cooldown));
         isOnCooldown = false;
     }
