@@ -8,6 +8,15 @@ using System;
 public class PlayerSkillsDatabase : ScriptableSingleton<PlayerSkillsDatabase>
 {
     public List<ClassSkillsPair> SkillLists = new List<ClassSkillsPair>();
+
+    public ClassSkillsPair GetClassSkills(Class characterClass)
+    {
+        foreach(var pair in SkillLists) 
+        {
+            if(pair.Class == characterClass) return pair;
+        }
+        return null;
+    }
 }
 [Serializable]
 public class ClassSkillsPair

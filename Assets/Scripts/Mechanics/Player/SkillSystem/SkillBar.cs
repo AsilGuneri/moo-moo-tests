@@ -20,7 +20,6 @@ public class SkillBar : Singleton<SkillBar>
     }
     public void OnCooldownStart(int skillGrade, float cooldown)
     {
-        //BURDAAAAAN
         float fillAmount = 1;
         DOTween.To(() => fillAmount, x => fillAmount = x, 0, cooldown).OnUpdate(() =>
         {

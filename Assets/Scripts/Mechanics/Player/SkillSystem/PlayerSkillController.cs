@@ -7,7 +7,7 @@ public class PlayerSkillController : MonoBehaviour
 {
     private PlayerMertController PlayerController;
     private Dictionary<Class, List<PlayerSkill>> skillDictionary = new Dictionary<Class, List<PlayerSkill>>();
-    private SkillBar SkillBarInstance;
+    private SkillBar SkillBarInstance; //Remember to check skillbarinstance after the merge of the scenes.
 
     private void Awake()
     {
@@ -21,17 +21,8 @@ public class PlayerSkillController : MonoBehaviour
                 SetClassSkills(skillList);
             }
         }
-        StartCoroutine(TestSkillBar());
-
     }
-    IEnumerator TestSkillBar()
-    {
-        //Sceneleri birle?tirdi?inde buray? sil, bu test yöntemi
-        yield return new WaitUntil(() => SkillBar.Instance != null);
-        yield return new WaitForSeconds(3);
-        SkillBarInstance = SkillBar.Instance;
-        SetSkill("PiercingArrow");
-    }
+   
     public void SetSkill(string skillName)
     {
         var possibleSkills = skillDictionary[PlayerController.CharacterClass];
@@ -41,7 +32,7 @@ public class PlayerSkillController : MonoBehaviour
             {
                 skill.SkillData.SetController(gameObject);
                 PlayerController.PlayerSkills[skill.SkillData.Grade] = skill;
-                SkillBarInstance.OnSkillSet(skill.SkillData.Grade, skill.SkillData);
+                SkillBar.Instance.OnSkillSet(skill.SkillData.Grade, skill.SkillData);
             }
         }
     }
