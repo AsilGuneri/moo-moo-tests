@@ -12,11 +12,17 @@ public class SelectableUISkill : MonoBehaviour
     bool isLocked; //not implemented yet
     SkillData skillData;
 
+
     public void Setup(SkillData skillData)
     {
         this.skillData = skillData;
         SetButton();
         SetIcons();
+    }
+    public void UnSelectSkill()
+    {
+        selectedIcon.SetActive(false);
+        selectButton.interactable = true;
     }
 
     private void SetIcons()
@@ -28,7 +34,11 @@ public class SelectableUISkill : MonoBehaviour
     private void SetButton()
     {
         selectButton.onClick.RemoveAllListeners();
-        selectButton.onClick.AddListener(SetSelectEvent);
+        selectButton.onClick.AddListener(() =>
+        {
+            SkillSelectionPanel.Instance.ResetSelectedGradeSkills(skillData);
+            SetSelectEvent();
+        });
         selectButton.interactable = true;
     }
 

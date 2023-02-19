@@ -24,17 +24,11 @@ public abstract class SkillData : ScriptableObject
 
     public Sprite Icon;
 
-    public virtual void SetController(GameObject playerObj)
-    {
-        if(!playerObj.TryGetComponent(out SkillController skillController))
-        {
-            skillController = playerObj.AddComponent<PiercingArrowController>();
-            skillController.OnSetup(this);
-        }
-    }
+    public abstract void SetController(GameObject playerObj);
+
     public SkillController GetController(GameObject playerObj)
     {
-        return playerObj.GetComponent<PiercingArrowController>();
+        return playerObj.GetComponent<SkillController>();
     }
 
 }

@@ -1,24 +1,24 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PiercingArrow", menuName = "Scriptable Objects/PiercingArrow", order = 1)]
-public class PiercingArrow : SkillData
+[CreateAssetMenu(fileName = "SikisenArrow", menuName = "Scriptable Objects/SikisenArrow", order = 1)]
+public class SikisenArrow : SkillData
 {
     public override void SetController(GameObject playerObj)
     {
-        if(playerObj.TryGetComponent(out SkillController baseSkillController))
+        if (playerObj.TryGetComponent(out SkillController baseSkillController))
         {
             Destroy(baseSkillController);
         }
-        if (!playerObj.TryGetComponent(out PiercingArrowController skillController))
+        if (!playerObj.TryGetComponent(out SikisenArrowController skillController))
         {
-            skillController = playerObj.AddComponent<PiercingArrowController>();
+            skillController = playerObj.AddComponent<SikisenArrowController>();
             skillController.OnSetup(this);
         }
     }
 }
-public class PiercingArrowController : SkillController
+public class SikisenArrowController : SkillController
 {
     //Override if needed
     public override void UseSkill()
@@ -39,7 +39,7 @@ public class PiercingArrowController : SkillController
     }
     public override void OnSkillEnd()
     {
-
+       // Debug.Log($"Ended Skill : {SkillData.name}");
     }
     public override void OnSkillStay()
     {

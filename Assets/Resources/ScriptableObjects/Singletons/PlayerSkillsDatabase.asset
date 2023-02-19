@@ -17,3 +17,5 @@ MonoBehaviour:
     AllClassSkills:
     - Name: PiercingArrow
       SkillData: {fileID: 11400000, guid: 7d8f918961e8e5a4bacedde3eb26bdc6, type: 2}
+    - Name: SikisenArrow
+      SkillData: {fileID: 11400000, guid: aa78b8ee756f3054ba925666407b17a3, type: 2}
