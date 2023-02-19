@@ -10,6 +10,11 @@ public class Extensions : MonoBehaviour
         Vector2 finalVector = new Vector2(initialVector.x, initialVector.z);
         return finalVector;
     }
+    public static Vector3 Vector3WithoutY(Vector3 vector)
+    {
+        Vector3 newVector = new Vector3(vector.x, 0, vector.z);
+        return newVector;
+    }
     public static float Distance(Vector3 pointA, Vector3 pointB)
     {
         return Vector2.Distance(Vector3ToVector2(pointA), Vector3ToVector2(pointB));
