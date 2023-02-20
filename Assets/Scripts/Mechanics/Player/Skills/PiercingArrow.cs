@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PiercingArrow", menuName = "Scriptable Objects/PiercingArrow", order = 1)]
 public class PiercingArrow : SkillData
 {
+    public GameObject Prefab;
     public override void SetController(GameObject playerObj)
     {
         if(playerObj.TryGetComponent(out SkillController baseSkillController))
@@ -20,6 +21,7 @@ public class PiercingArrow : SkillData
 }
 public class PiercingArrowController : SkillController
 {
+    PiercingArrow piercingArrowData;
     //Override if needed
     public override void UseSkill()
     {
@@ -28,10 +30,13 @@ public class PiercingArrowController : SkillController
     public override void OnSetup(SkillData skillData)
     {
         base.OnSetup(skillData);
+        piercingArrowData = (PiercingArrow) skillData;
+        GetComponent<SkillSpawner>().RegisterPrefab(piercingArrowData.Name, piercingArrowData.Prefab);
     }
     public override void OnSkillStart()
     {
         Debug.Log($"Started Skill : {SkillData.name}");
+        GetComponent<SkillSpawner>().SpawnPiercingArrow();
     }
     public override void OnSkillInterrupt()
     {

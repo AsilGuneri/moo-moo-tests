@@ -21,3 +21,4 @@ MonoBehaviour:
   CastStartDelay: 0
   OnSkillStayInterval: 0.1
   Icon: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}
+  Prefab: {fileID: 8081231170285242933, guid: 10dc0758f302e994e8df7287548a25b4, type: 3}

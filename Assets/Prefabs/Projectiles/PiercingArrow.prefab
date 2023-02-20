@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  speed: 1
+  speed: 50
   range: 50
 --- !u!1001 &3385749275417953548
 PrefabInstance:
