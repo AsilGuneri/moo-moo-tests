@@ -10,14 +10,14 @@ public class SkillProjectile : NetworkBehaviour
     [SerializeField] float range;
 
     [SyncVar] private bool isStarted = false;
-    [SyncVar] private int _damage;
+    [SyncVar] private int damage;
 
     private Vector2 startPoint;
 
     public void SetupProjectile(int damage, Transform startTransform)
     {
         isStarted = true;
-        _damage = damage;
+        this.damage = damage;
         startPoint = Extensions.Vector3ToVector2(startTransform.position);
     }
 
@@ -42,6 +42,13 @@ public class SkillProjectile : NetworkBehaviour
     private void DestroySelf()
     {
         NetworkServer.Destroy(gameObject);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.TryGetComponent(out Health health) && health.UnitType != UnitType.Player)
+        {
+            health.TakeDamage(damage);
+        }
     }
 
 }

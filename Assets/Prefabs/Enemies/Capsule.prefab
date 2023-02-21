@@ -714,6 +714,7 @@ GameObject:
   - component: {fileID: -5071490410464351964}
   - component: {fileID: -7293562589862931238}
   - component: {fileID: 3080633388320237946}
+  - component: {fileID: 3087869301616359077}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -747,8 +748,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 2.16
-  m_Height: 1.99
+  m_Radius: 0.55
+  m_Height: 7.08
   m_Direction: 1
   m_Center: {x: 0, y: 0.76, z: 0}
 --- !u!114 &2552249028951478317
@@ -946,6 +947,7 @@ MonoBehaviour:
   syncInterval: 0.1
   agent: {fileID: 818599698009061425}
   checkAuthority: 0
+  isStable: 0
   projectilePrefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
   projectileSpawnPoint: {fileID: 5510830196393226273}
 --- !u!114 &3080633388320237946
@@ -961,6 +963,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 700732724531390349}
+--- !u!54 &3087869301616359077
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498676492825279152}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &4584912764243608144
 PrefabInstance:
   m_ObjectHideFlags: 0

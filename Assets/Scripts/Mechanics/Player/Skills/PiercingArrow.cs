@@ -21,7 +21,11 @@ public class PiercingArrow : SkillData
 }
 public class PiercingArrowController : SkillController
 {
+    PlayerMertController playerController;
+    UnitMovementController unitMovementController;
     PiercingArrow piercingArrowData;
+    Vector3 arrowPos;
+    Quaternion arrowRot;
     //Override if needed
     public override void UseSkill()
     {
@@ -32,17 +36,18 @@ public class PiercingArrowController : SkillController
         base.OnSetup(skillData);
         piercingArrowData = (PiercingArrow) skillData;
         GetComponent<SkillSpawner>().RegisterPrefab(piercingArrowData.Name, piercingArrowData.Prefab);
+        playerController = UnitManager.Instance.GetPlayerController();
+        unitMovementController = GetComponent<UnitMovementController>();
     }
     public override void OnSkillStart()
     {
-        Debug.Log($"Started Skill : {SkillData.name}");
-        GameObject arrow = GetComponent<SkillSpawner>().SpawnSkillPrefab(piercingArrowData.Name);
-        SkillProjectile projectile = arrow.GetComponent<SkillProjectile>();
-        projectile.SetupProjectile(50, transform);
-
-        SetPiercingArrowRotation(arrow.transform);
-        SetPiercingArrowPosition(arrow.transform);
-
+        CachePiercingArrowRotation();
+        CachePiercingArrowPosition();
+        transform.rotation = arrowRot;
+        playerController.Animator.CrossFade("PiercingArrow", 0.25f);
+        playerController.IsCastingSkill = true;
+        unitMovementController.ClientStop();
+        
     }
     public override void OnSkillInterrupt()
     {
@@ -50,24 +55,29 @@ public class PiercingArrowController : SkillController
     }
     public override void OnSkillEnd()
     {
-
+        GameObject arrow = GetComponent<SkillSpawner>().SpawnSkillPrefab(piercingArrowData.Name);
+        SkillProjectile projectile = arrow.GetComponent<SkillProjectile>();
+        projectile.SetupProjectile(50, transform);
+        arrow.transform.rotation = arrowRot;
+        arrow.transform.position = arrowPos;
+        playerController.IsCastingSkill = false;
     }
     public override void OnSkillStay()
     {
         //throw new System.NotImplementedException();
     }
-    private void SetPiercingArrowRotation(Transform arrowTransform)
+    private void CachePiercingArrowRotation()
     {
         // Calculate the direction vector from the start to the end transform
         Vector3 direction = Extensions.GetMouseHitPosition() - transform.position;
 
         // Calculate the rotation needed to face the direction vector
         Quaternion rotation = Quaternion.LookRotation(direction);
-        arrowTransform.rotation = Quaternion.Euler(new Vector3(0, rotation.eulerAngles.y, rotation.eulerAngles.z));
+        arrowRot = Quaternion.Euler(new Vector3(0, rotation.eulerAngles.y, rotation.eulerAngles.z));
     }
-    private void SetPiercingArrowPosition(Transform arrowTransform)
+    private void CachePiercingArrowPosition()
     {
         var p = transform.position + ((Extensions.GetMouseHitPosition() - transform.position).normalized * 1);
-        arrowTransform.position = new Vector3(p.x, 1, p.z);
+        arrowPos =  new Vector3(p.x, 1, p.z);
     }
 }

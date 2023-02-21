@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 817598904071200291}
   - component: {fileID: 6983154253710124881}
   - component: {fileID: 3502681834213444700}
+  - component: {fileID: 6786203912489097466}
   m_Layer: 0
   m_Name: PiercingArrow
   m_TagString: Untagged
@@ -99,8 +100,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  speed: 10
+  speed: 80
   range: 20
+--- !u!136 &6786203912489097466
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8081231170285242933}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.23
+  m_Height: 3.35
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3385749275417953548
 PrefabInstance:
   m_ObjectHideFlags: 0

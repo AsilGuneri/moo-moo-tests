@@ -32,6 +32,12 @@ public class PlayerMertController : NetworkBehaviour
 
     public PlayerSkill[] PlayerSkills = new PlayerSkill[4];
 
+    public bool IsCastingSkill { get; set; } = false;
+    public Animator Animator
+    {
+        get => animator;
+    }
+
     public bool IsAttackClickMode
     {
         get { return _isAttackClickMode; }
@@ -69,6 +75,7 @@ public class PlayerMertController : NetworkBehaviour
     void Update()
     {
         if (!hasAuthority) return;
+        if (IsCastingSkill) return;
         if (!_navMeshAgent.hasPath && !_tc.HasTarget)
         {
             _pac.OnStop();

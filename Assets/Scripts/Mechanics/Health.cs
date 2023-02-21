@@ -20,6 +20,7 @@ public class Health : NetworkBehaviour
     private int baseHp;
 
     public event Action ServerOnDeath;
+    public UnitType UnitType { get { return unitType; } }
 
     private void Awake()
     {
