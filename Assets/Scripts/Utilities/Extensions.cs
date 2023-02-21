@@ -29,4 +29,16 @@ public class Extensions : MonoBehaviour
         int miliSeconds = (int)(seconds * 1000);
         return miliSeconds;
     }
+    public static Vector3 GetMouseHitPosition()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        LayerMask mask = LayerMask.GetMask("Ground");
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
+        {
+            var hitPoint = hit.point;
+            return hitPoint;
+        }
+        return Vector3.zero;
+    }
 }

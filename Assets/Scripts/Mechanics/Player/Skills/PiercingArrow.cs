@@ -36,7 +36,13 @@ public class PiercingArrowController : SkillController
     public override void OnSkillStart()
     {
         Debug.Log($"Started Skill : {SkillData.name}");
-        GetComponent<SkillSpawner>().SpawnPiercingArrow();
+        GameObject arrow = GetComponent<SkillSpawner>().SpawnSkillPrefab(piercingArrowData.Name);
+        SkillProjectile projectile = arrow.GetComponent<SkillProjectile>();
+        projectile.SetupProjectile(50, transform);
+
+        SetPiercingArrowRotation(arrow.transform);
+        SetPiercingArrowPosition(arrow.transform);
+
     }
     public override void OnSkillInterrupt()
     {
@@ -49,5 +55,19 @@ public class PiercingArrowController : SkillController
     public override void OnSkillStay()
     {
         //throw new System.NotImplementedException();
+    }
+    private void SetPiercingArrowRotation(Transform arrowTransform)
+    {
+        // Calculate the direction vector from the start to the end transform
+        Vector3 direction = Extensions.GetMouseHitPosition() - transform.position;
+
+        // Calculate the rotation needed to face the direction vector
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        arrowTransform.rotation = Quaternion.Euler(new Vector3(0, rotation.eulerAngles.y, rotation.eulerAngles.z));
+    }
+    private void SetPiercingArrowPosition(Transform arrowTransform)
+    {
+        var p = transform.position + ((Extensions.GetMouseHitPosition() - transform.position).normalized * 1);
+        arrowTransform.position = new Vector3(p.x, 1, p.z);
     }
 }

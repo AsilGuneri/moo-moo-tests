@@ -1,4 +1,4 @@
-using Mirror;
+﻿using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,11 +12,10 @@ public class SkillSpawner : NetworkBehaviour
         if (SkillNamePrefabPairs.ContainsKey(name)) return;
         SkillNamePrefabPairs.Add(name, prefab);
     }
-
-    public void SpawnPiercingArrow()
+    public GameObject SpawnSkillPrefab(string skillName)
     {
-        GameObject projectile = Instantiate(SkillNamePrefabPairs["PiercingArrow"], transform.position, Quaternion.identity);
-        projectile.GetComponent<SkillProjectile>().SetupProjectile(50, transform);
+        GameObject projectile = Instantiate(SkillNamePrefabPairs[skillName], transform.position, Quaternion.identity);
         NetworkServer.Spawn(projectile, connectionToClient);
+        return projectile;
     }
 }

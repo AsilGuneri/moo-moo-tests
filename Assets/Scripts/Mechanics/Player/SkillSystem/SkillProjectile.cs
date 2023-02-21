@@ -1,10 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
 public class SkillProjectile : NetworkBehaviour
 {
+    [Tooltip("Bu değişken ananın amıdır.")]
     [SerializeField] float speed = 1;
     [SerializeField] float range;
 
@@ -23,19 +24,19 @@ public class SkillProjectile : NetworkBehaviour
     [ClientCallback]
     private void FixedUpdate()
     {
-        if (isStarted) return;
+        if (!isStarted) return;
         bool shouldMove = false;
-        shouldMove = Vector2.Distance(Extensions.Vector3ToVector2(transform.position), startPoint) <= range;
+        float distance = Vector2.Distance(Extensions.Vector3ToVector2(transform.position), startPoint);
+        shouldMove = distance <= range;
         if (shouldMove)
         {
             transform.position += transform.forward * Time.deltaTime * speed;
             return;
         }
-        else
-        {
-            isStarted = false;
-            DestroySelf();
-        }
+
+        isStarted = false;
+        DestroySelf();
+        
     }
     [Server]
     private void DestroySelf()
