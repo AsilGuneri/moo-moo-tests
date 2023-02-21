@@ -44,7 +44,7 @@ public class PiercingArrowController : SkillController
         CachePiercingArrowRotation();
         CachePiercingArrowPosition();
         transform.rotation = arrowRot;
-        playerController.Animator.CrossFade("PiercingArrow", 0.25f);
+        playerController.Animator.Play("PiercingArrow");
         playerController.IsCastingSkill = true;
         unitMovementController.ClientStop();
         
