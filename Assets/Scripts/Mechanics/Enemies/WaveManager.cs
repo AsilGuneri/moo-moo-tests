@@ -7,70 +7,68 @@ using Mirror;
 
 public class WaveManager : NetworkSingleton<WaveManager>
 {
-    [SerializeField] public Wave[] waves;
-    [SerializeField] private SpawnPoint[] spawnPoints;
-
-
-    [SyncVar] private int _currentWave = 0;
-    private Wave _waveToSpawn;
-
-    public int CurrentWave
+#if UNITY_EDITOR
+    void OnDrawGizmos()
     {
-        get => _currentWave;
+        // Set the Gizmo color to red
+        Gizmos.color = Color.red;
+        // Draw a wire sphere at the GameObject's position
+        Gizmos.DrawSphere(transform.position, 1);
+    }
+#endif
+    public List<WaveData> WavesData = new List<WaveData>();
+    public Transform spawnArea;
+    public float spacing = 2f;
+    private Vector3 initialSpawnPos;
+
+    private void Start()
+    {
+        initialSpawnPos = spawnArea.position;
     }
 
-    [ServerCallback]
-    public void SetCurrentWave(int waveIndex)
+    public void TestWaveSpawn()
     {
-        _currentWave = waveIndex;
+        SpawnWave(WavesData[0]);
     }
 
-    [ServerCallback]
-    public void SpawnWave(Wave nextWave)
+    public void SpawnWave(WaveData waveData)
     {
-        _waveToSpawn = nextWave;
-        StartCoroutine(nameof(SpawnWaveRoutine));
-    }
-    public void OnWaveEnd()
-    {
+        Vector3 offset = Vector3.zero;
+        int maxRows = 0;
 
-    }
-    private IEnumerator SpawnWaveRoutine()
-    {
-        foreach (SubWave subWave in _waveToSpawn.SubWaves)
+        foreach (SubWave subWave in waveData.SubWaves)
         {
-            for (int i = 0; i < subWave.Count; i++)
+            int columnsPerRow = Mathf.CeilToInt((float)subWave.Count / subWave.Columns);
+            int middleRowIndex = columnsPerRow / 2;
+            int middleColumnIndex = subWave.Columns / 2;
+
+            for (int column = 0; column < subWave.Columns; column++)
             {
-                GameObject minion = Instantiate(subWave.MinionPrefab, spawnPoints[0].transform.position, Quaternion.identity);
-                NetworkServer.Spawn(minion);
-            }          
-            yield return new WaitForSeconds(subWave.AfterDelay);
+                int offsetColumnIndex = column - middleColumnIndex;
+
+                for (int row = 0; row < columnsPerRow; row++)
+                {
+                    int index = row * subWave.Columns + column;
+                    if (index >= subWave.Count)
+                        break;
+
+                    int offsetRowIndex = row - middleRowIndex;
+
+                    offset.x = offsetColumnIndex * spacing;
+                    offset.z = offsetRowIndex * spacing;
+
+                    Vector3 position = spawnArea.position + offset;
+
+                    var enemy = Instantiate(subWave.Prefab, position, Quaternion.identity);
+                    NetworkServer.Spawn(enemy);
+                }
+            }
+
+            maxRows += columnsPerRow;
+            spawnArea.position -= Vector3.forward * spacing * (maxRows + 1);
         }
+        spawnArea.position = initialSpawnPos;
     }
-    private void EndWave()
-    {
-         SpawnNextWave();
-    }
-    private void SpawnNextWave()
-    {
-        _currentWave++;
-        SpawnWave(waves[_currentWave]);
-    }
-    
-}
-[Serializable]
-public class Wave
-{
-    public int WaveIndex;
-    public SubWave[] SubWaves;
-    public Vector3 SpawnSpace;
-    
-}
-[Serializable]
-public class SubWave
-{
-    public GameObject MinionPrefab;
-    public float Count;
-    public float AfterDelay;
+
 }
 

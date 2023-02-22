@@ -44,7 +44,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
                     if (enemy.networkId == unit.networkId) 
                     { 
                         WaveEnemies.Remove(enemy);
-                        if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd();
+                        //if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd();
                     }
                 }
                 break;
@@ -69,7 +69,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
                     if (enemy.networkId == netId) 
                     { 
                         WaveEnemies.Remove(enemy);
-                        if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd();
+                        //if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd();
                     }
                 }
                 break;

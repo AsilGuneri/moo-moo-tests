@@ -89,14 +89,27 @@ public class PlayerMertController : NetworkBehaviour
         if (Input.GetKeyDown(_inputKeys.StopKey)) _umc.ClientStop();
         if (Input.GetKeyDown(_inputKeys.SpawnWaveKey))
         {
-            WaveManager.Instance.SpawnWave(WaveManager.Instance.waves[0]);
+             WaveManager.Instance.TestWaveSpawn();
+            
         }
 
         if(Input.GetKeyDown(KeyCode.Q) && PlayerSkills[0] != null) 
         { 
             PlayerSkills[0].UseSkill(gameObject); 
         }
-        
+        if (Input.GetKeyDown(KeyCode.W) && PlayerSkills[1] != null)
+        {
+            PlayerSkills[1].UseSkill(gameObject);
+        }
+        if (Input.GetKeyDown(KeyCode.E) && PlayerSkills[2] != null)
+        {
+            PlayerSkills[2].UseSkill(gameObject);
+        }
+        if (Input.GetKeyDown(KeyCode.R) && PlayerSkills[3] != null)
+        {
+            PlayerSkills[3].UseSkill(gameObject);
+        }
+
     }
     public void SetSkill(PlayerSkill skill)
     {
