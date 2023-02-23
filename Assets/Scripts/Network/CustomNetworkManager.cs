@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using Steamworks;
 
 public class CustomNetworkManager : NetworkManager
-{ 
+{
     public static event Action ClientOnConnected;
     public static event Action ClientOnDisonnected;
     public static event Action HostOnStop;
