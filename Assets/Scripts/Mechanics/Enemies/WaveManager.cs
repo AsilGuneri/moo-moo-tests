@@ -23,7 +23,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
 
     public void TestWaveSpawn()
     {
-        SpawnWave(WavesData[0]);
+        CmdSpawnWave(WavesData[0]);
     }
 
     public void OnWaveEnd()
@@ -45,7 +45,8 @@ public class WaveManager : NetworkSingleton<WaveManager>
                 TestWaveSpawn();
         });
     }
-    private void SpawnWave(WaveData waveData)
+    [Command(requiresAuthority = false)]
+    private void CmdSpawnWave(WaveData waveData)
     {
         spawnArea.position = initialSpawnPos;
         Vector3 offset = Vector3.zero;
