@@ -20,10 +20,10 @@ public class WaveManager : NetworkSingleton<WaveManager>
     {
         initialSpawnPos = spawnArea.position;
     }
-
-    public void TestWaveSpawn()
+    [Command(requiresAuthority = false)]
+    public void CmdSpawnWave()
     {
-        CmdSpawnWave(WavesData[0]);
+        SpawnWave(WavesData[0]);
     }
 
     public void OnWaveEnd()
@@ -42,11 +42,10 @@ public class WaveManager : NetworkSingleton<WaveManager>
         readyButton.interactable = false;
         readyCount++;
             if (readyCount >= CustomNetworkManager.singleton.numPlayers)
-                TestWaveSpawn();
+                CmdSpawnWave();
         });
     }
-    [Command(requiresAuthority = false)]
-    private void CmdSpawnWave(WaveData waveData)
+    private void SpawnWave(WaveData waveData)
     {
         spawnArea.position = initialSpawnPos;
         Vector3 offset = Vector3.zero;
