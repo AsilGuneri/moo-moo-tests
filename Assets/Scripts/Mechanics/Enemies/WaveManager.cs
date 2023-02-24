@@ -20,7 +20,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
     {
         initialSpawnPos = spawnArea.position;
     }
-    [Command(requiresAuthority = false)]
+    [Server]
     public void SpawnTestWave()
     {
         SpawnWave(WavesData[0]);
