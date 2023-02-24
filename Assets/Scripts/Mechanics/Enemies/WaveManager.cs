@@ -14,7 +14,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
     [SerializeField] Button readyButton;
     Vector3 initialSpawnPos;
     int lastSpawnedIndex = -1;
-    [SyncVar] static int readyCount;
+    [SyncVar] int readyCount;
 
     private void Start()
     {
