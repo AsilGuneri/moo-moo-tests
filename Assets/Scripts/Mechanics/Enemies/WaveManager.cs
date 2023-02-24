@@ -30,7 +30,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
     {
         StartVote();
     }
-    
+    [ClientRpc]
     private void StartVote()
     {
         readyCount = 0;
