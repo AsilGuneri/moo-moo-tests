@@ -4,35 +4,66 @@ using UnityEngine;
 using Utilities;
 using System;
 using Mirror;
+using UnityEngine.UI;
 
 public class WaveManager : NetworkSingleton<WaveManager>
 {
-#if UNITY_EDITOR
-    void OnDrawGizmos()
-    {
-        // Set the Gizmo color to red
-        Gizmos.color = Color.red;
-        // Draw a wire sphere at the GameObject's position
-        Gizmos.DrawSphere(transform.position, 1);
-    }
-#endif
-    public List<WaveData> WavesData = new List<WaveData>();
-    public Transform spawnArea;
-    public float spacing = 2f;
-    private Vector3 initialSpawnPos;
+    [SerializeField] List<WaveData> WavesData = new List<WaveData>();
+    [SerializeField] Transform spawnArea;
+    [SerializeField] float spacing = 2f;
+    [SerializeField] Button readyButton;
+    Vector3 initialSpawnPos;
+    int lastSpawnedIndex = -1;
+    int readyCount;
 
     private void Start()
     {
         initialSpawnPos = spawnArea.position;
     }
-
-    public void TestWaveSpawn()
+    [Server]
+    public void SpawnTestWave()
     {
         SpawnWave(WavesData[0]);
     }
 
-    public void SpawnWave(WaveData waveData)
+    public void OnWaveEnd()
     {
+        StartVote();
+    }
+    [ClientRpc]
+    private void StartVote()
+    {
+        readyCount = 0;
+        readyButton.interactable = true;
+        readyButton.gameObject.SetActive(true);
+        readyButton.onClick.RemoveAllListeners();
+        readyButton.onClick.AddListener(() =>
+        {
+            readyButton.interactable = false;
+            Vote();
+        });
+    }
+
+    [Command(requiresAuthority = false)]
+    private void Vote()
+    {
+        readyCount++;
+        CheckVotes();
+    }
+
+    [Server]
+    private void CheckVotes()
+    {
+        if (readyCount >= CustomNetworkManager.singleton.numPlayers)
+        {
+            SpawnTestWave();
+        }
+    }
+
+
+    private void SpawnWave(WaveData waveData)
+    {
+        spawnArea.position = initialSpawnPos;
         Vector3 offset = Vector3.zero;
         int maxRows = 0;
 
@@ -67,8 +98,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
             maxRows += columnsPerRow;
             spawnArea.position -= Vector3.forward * spacing * (maxRows + 1);
         }
-        spawnArea.position = initialSpawnPos;
+        lastSpawnedIndex++;
     }
-
 }
 

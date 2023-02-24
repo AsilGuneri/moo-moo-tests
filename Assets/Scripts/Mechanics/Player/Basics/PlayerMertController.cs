@@ -89,7 +89,7 @@ public class PlayerMertController : NetworkBehaviour
         if (Input.GetKeyDown(_inputKeys.StopKey)) _umc.ClientStop();
         if (Input.GetKeyDown(_inputKeys.SpawnWaveKey))
         {
-             WaveManager.Instance.TestWaveSpawn();
+             WaveManager.Instance.SpawnTestWave();
             
         }
 
