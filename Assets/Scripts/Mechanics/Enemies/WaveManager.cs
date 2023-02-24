@@ -39,11 +39,15 @@ public class WaveManager : NetworkSingleton<WaveManager>
         readyButton.onClick.RemoveAllListeners();
         readyButton.onClick.AddListener(() =>
         {
-        readyButton.interactable = false;
-        readyCount++;
+            readyButton.interactable = false;
+            readyCount++;
             if (readyCount >= CustomNetworkManager.singleton.numPlayers)
+            {
                 CmdSpawnWave();
+            }
+            Debug.Log(readyCount + " " + CustomNetworkManager.singleton.numPlayers);
         });
+        Debug.Log(readyCount + " " + CustomNetworkManager.singleton.numPlayers);
     }
     private void SpawnWave(WaveData waveData)
     {
