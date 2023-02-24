@@ -40,8 +40,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
         readyButton.onClick.AddListener(() =>
         {
             readyButton.interactable = false;
-            VoteClient();
-            CheckVotes();
+            Vote();
             
             Debug.Log(readyCount + " " + CustomNetworkManager.singleton.numPlayers);
         });
@@ -49,9 +48,10 @@ public class WaveManager : NetworkSingleton<WaveManager>
     }
 
     [Command(requiresAuthority = false)]
-    private void VoteClient()
+    private void Vote()
     {
         readyCount++;
+        CheckVotes();
     }
 
     [Server]
