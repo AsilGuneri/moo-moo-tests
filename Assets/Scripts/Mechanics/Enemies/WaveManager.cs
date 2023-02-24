@@ -14,14 +14,14 @@ public class WaveManager : NetworkSingleton<WaveManager>
     [SerializeField] Button readyButton;
     Vector3 initialSpawnPos;
     int lastSpawnedIndex = -1;
-    [SyncVar] int readyCount;
+    int readyCount;
 
     private void Start()
     {
         initialSpawnPos = spawnArea.position;
     }
     [Command(requiresAuthority = false)]
-    public void CmdSpawnWave()
+    public void SpawnTestWave()
     {
         SpawnWave(WavesData[0]);
     }
@@ -40,15 +40,30 @@ public class WaveManager : NetworkSingleton<WaveManager>
         readyButton.onClick.AddListener(() =>
         {
             readyButton.interactable = false;
-            readyCount++;
-            if (readyCount >= CustomNetworkManager.singleton.numPlayers)
-            {
-                CmdSpawnWave();
-            }
+            VoteClient();
+            CheckVotes();
+            
             Debug.Log(readyCount + " " + CustomNetworkManager.singleton.numPlayers);
         });
         Debug.Log(readyCount + " " + CustomNetworkManager.singleton.numPlayers);
     }
+
+    [Command(requiresAuthority = false)]
+    private void VoteClient()
+    {
+        readyCount++;
+    }
+
+    [Server]
+    private void CheckVotes()
+    {
+        if (readyCount >= CustomNetworkManager.singleton.numPlayers)
+        {
+            SpawnTestWave();
+        }
+    }
+
+
     private void SpawnWave(WaveData waveData)
     {
         spawnArea.position = initialSpawnPos;
