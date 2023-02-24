@@ -41,10 +41,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
         {
             readyButton.interactable = false;
             Vote();
-            
-            Debug.Log(readyCount + " " + CustomNetworkManager.singleton.numPlayers);
         });
-        Debug.Log(readyCount + " " + CustomNetworkManager.singleton.numPlayers);
     }
 
     [Command(requiresAuthority = false)]
