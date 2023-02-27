@@ -869,6 +869,7 @@ MonoBehaviour:
   syncInterval: 0.1
   healthBar: {fileID: 9030761385466806426}
   unitType: 1
+  ExpToGain: 1
 --- !u!95 &700732724531390349
 Animator:
   serializedVersion: 3

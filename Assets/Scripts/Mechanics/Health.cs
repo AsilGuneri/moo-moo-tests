@@ -1,4 +1,5 @@
 using Mirror;
+using MyBox;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,13 +14,13 @@ public class Health : NetworkBehaviour
 
     [SerializeField] private Slider healthBar;
     [SerializeField] private UnitType unitType;
+    [ConditionalField(nameof(unitType), false, UnitType.WaveEnemy)] public int ExpToGain;
 
     [SyncVar(hook = nameof(UpdateHealthBar))] protected int _currentHealth;
 
     private HeroBaseStatsData _heroStats;
     private int baseHp;
 
-    public event Action ServerOnDeath;
     public UnitType UnitType { get { return unitType; } }
 
     private void Awake()
@@ -35,21 +36,24 @@ public class Health : NetworkBehaviour
 
     }
     [Server]
-    public void TakeDamage(int dmg)
+    public void TakeDamage(int dmg, Transform dealerTransform)
     {
         if (_currentHealth <= 0) return;
         _currentHealth -= dmg;
         if (_currentHealth <= 0)
         {
-            ServerOnDeath?.Invoke();
-            Die();
+            Die(dealerTransform);
         }
 
     }
     [Server]
-    private void Die()
+    private void Die(Transform damageDealerTransform)
     {
         UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), unitType);
+        if(damageDealerTransform.TryGetComponent(out PlayerLevelController levelController))
+        {
+            levelController.GainExperience(ExpToGain);
+        }
         NetworkServer.Destroy(gameObject);
     }
     #endregion

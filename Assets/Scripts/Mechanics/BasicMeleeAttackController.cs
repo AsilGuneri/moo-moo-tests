@@ -14,7 +14,7 @@ public class BasicMeleeAttackController : ABasicAttackController
     }
     private void DealDamage()
     {
-        tc.Target.GetComponent<Health>().TakeDamage(stats.Damage);
+        tc.Target.GetComponent<Health>().TakeDamage(stats.Damage, transform);
     }
 
     protected override void StopAttacking()

@@ -20,7 +20,7 @@ public class BasicRangedAttackController : ABasicAttackController
     {
         //if (checkAuthority && !hasAuthority) return;
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-        projectile.GetComponent<Projectile>().SetupProjectile(tc.Target, stats.Damage);
+        projectile.GetComponent<Projectile>().SetupProjectile(tc.Target, stats.Damage, transform);
         NetworkServer.Spawn(projectile, connectionToClient);
     }
     private IEnumerator DelayProjectileSpawn()

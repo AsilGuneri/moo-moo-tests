@@ -11,14 +11,17 @@ public class SkillProjectile : NetworkBehaviour
 
     [SyncVar] private bool isStarted = false;
     [SyncVar] private int damage;
+    [SyncVar] private Transform spawnerTransform;
+
 
     private Vector2 startPoint;
 
-    public void SetupProjectile(int damage, Transform startTransform)
+    public void SetupProjectile(int damage, Transform spawnerTransform)
     {
         isStarted = true;
         this.damage = damage;
-        startPoint = Extensions.Vector3ToVector2(startTransform.position);
+        startPoint = Extensions.Vector3ToVector2(spawnerTransform.position);
+        this.spawnerTransform = spawnerTransform;
     }
 
     [ClientCallback]
@@ -47,7 +50,7 @@ public class SkillProjectile : NetworkBehaviour
     {
         if(other.TryGetComponent(out Health health) && health.UnitType != UnitType.Player)
         {
-            health.TakeDamage(damage);
+            health.TakeDamage(damage, spawnerTransform);
         }
     }
 

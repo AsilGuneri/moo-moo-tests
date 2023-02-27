@@ -12,6 +12,7 @@ public class Projectile : NetworkBehaviour
 
     [SyncVar] private bool _isMoving;
     [SyncVar] private int _damage;
+    [SyncVar] private Transform spawnerTransform;
     [SyncVar] public GameObject _target;
 
 
@@ -29,7 +30,7 @@ public class Projectile : NetworkBehaviour
     [ServerCallback]
     private void CmdTargetHit()
     {
-        _target.GetComponent<Health>().TakeDamage(_damage);
+        _target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
         if (onHitParticle)
         {
             onHitParticle.transform.parent = null;
@@ -44,11 +45,12 @@ public class Projectile : NetworkBehaviour
     {
         base.OnStartAuthority();
     }
-    public void SetupProjectile(GameObject target, int damage)
+    public void SetupProjectile(GameObject target, int damage, Transform spawnerTransform)
     {
         _isMoving = true;
         _target = target;
         _damage = damage;
+        this.spawnerTransform = spawnerTransform;
     }
     [ClientCallback]
     private void Update()
