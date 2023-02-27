@@ -1,6 +1,7 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerLevelController : NetworkBehaviour
@@ -8,6 +9,13 @@ public class PlayerLevelController : NetworkBehaviour
     [SyncVar] int currentExperience = 0;
     [SyncVar] int currentLevel = 1;
     int levelUpBaseCost = 1;
+
+    [SerializeField] TextMeshProUGUI levelText;
+
+    private void Start()
+    {
+        SetLevelText();
+    }
 
     public void GainExperience(int exp)
     {
@@ -24,6 +32,11 @@ public class PlayerLevelController : NetworkBehaviour
     private void LevelUp()
     {
         currentLevel++;
-        Debug.Log("Level up to " + currentLevel);
+        currentExperience = 0;
+        SetLevelText();
+    }
+    private void SetLevelText()
+    {
+        levelText.text = currentLevel.ToString();
     }
 }

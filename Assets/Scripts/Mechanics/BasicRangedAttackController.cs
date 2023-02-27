@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using Mirror;
 using UnityEngine.UIElements;
 using MyBox;
+using System.Threading.Tasks;
 
 public class BasicRangedAttackController : ABasicAttackController
 {
@@ -20,17 +21,15 @@ public class BasicRangedAttackController : ABasicAttackController
     {
         //if (checkAuthority && !hasAuthority) return;
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-        projectile.GetComponent<Projectile>().SetupProjectile(tc.Target, stats.Damage, transform);
+        projectile.GetComponent<Projectile>().SetupProjectile(tc.Target, baseStats.Damage, transform);
         NetworkServer.Spawn(projectile, connectionToClient);
     }
-    private IEnumerator DelayProjectileSpawn()
+    private async void DelayProjectileSpawn()
     {
-        ///TODO : Use async
-        yield return new WaitForSeconds((1 / stats.AttackSpeed) * stats.AnimAttackMoment);
+        await Task.Delay(Extensions.ToMiliSeconds(((1 / baseStats.AttackSpeed) * baseStats.AnimAttackMoment)));
         CmdSpawnProjectile();
-        yield return new WaitForSeconds((1 / stats.AttackSpeed) * (1 - stats.AnimAttackMoment));
+        await Task.Delay(Extensions.ToMiliSeconds((1 / baseStats.AttackSpeed) * (1 - baseStats.AnimAttackMoment)));
         isAttacking = false;
-
     }
 
     protected override void StopAttacking()
@@ -38,7 +37,7 @@ public class BasicRangedAttackController : ABasicAttackController
         if (isAttacking)
         {
             isAttacking = false;
-            StopCoroutine(nameof(DelayProjectileSpawn));
+            DelayProjectileSpawn();
             if (ac) ac.OnAttackEnd();
         }
     }
@@ -47,9 +46,9 @@ public class BasicRangedAttackController : ABasicAttackController
     {
         if(!isStable) transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
         if (umc) umc.ClientStop();
-        if (ac) ac.OnAttackStart(stats.AttackSpeed);
+        if (ac) ac.OnAttackStart(baseStats.AttackSpeed);
         isAttacking = true;
-        StartCoroutine(nameof(DelayProjectileSpawn));
+        DelayProjectileSpawn();
         counter = 0;
     }
 }

@@ -17,7 +17,7 @@ public abstract class ABasicAttackController : NetworkBehaviour
     protected TargetController tc;
     protected UnitMovementController umc;
     protected AnimationController ac;
-    protected HeroBaseStatsData stats;
+    protected HeroBaseStatsData baseStats;
 
     //Additional Fields : Use these to increase attack speed etc. in game with temp. buff or cases like this. Note: Permanent upgrades needs to be saveable.
     protected float additionalAttackSpeed;
@@ -31,15 +31,13 @@ public abstract class ABasicAttackController : NetworkBehaviour
 
     protected float counter;
 
-    public float AdditionalAttackSpeed { get { return additionalAttackSpeed; } set { additionalAttackSpeed = value; } }
-    public int AdditionalDamage { get { return additionalDamage; } set { additionalDamage = value; } }
-    public float AttackSpeed { get { return stats.AttackSpeed; } set { stats.AttackSpeed = value; } }
-    public float Range { get { return stats.Range; } set { stats.Range = value; } }
+    public float AttackSpeed { get { return baseStats.AttackSpeed; } set { baseStats.AttackSpeed = value; } }
+    public float Range { get { return baseStats.Range; } set { baseStats.Range = value; } }
 
     protected virtual void Awake()
     {
         tc = GetComponent<TargetController>();
-        stats = GetComponent<PlayerDataHolder>().HeroStatsData;
+        baseStats = GetComponent<PlayerDataHolder>().HeroStatsData;
         if(!isStable)
         {
             umc = GetComponent<UnitMovementController>();
@@ -50,7 +48,7 @@ public abstract class ABasicAttackController : NetworkBehaviour
     protected virtual void Update()
     {
         if (checkAuthority && !hasAuthority) return;
-        if (counter <= (1 / stats.AttackSpeed)) counter += Time.deltaTime;
+        if (counter <= (1 / baseStats.AttackSpeed)) counter += Time.deltaTime;
         if (tc.Target == null)
         {
             StopAttacking();
@@ -61,11 +59,11 @@ public abstract class ABasicAttackController : NetworkBehaviour
             }
             return;
         }
-        if (!isStable && (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > stats.Range && !isAttacking))
+        if (!isStable && (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > baseStats.Range && !isAttacking))
         {
             ChaseToAttack();
         }
-        else if (counter >= (1 / stats.AttackSpeed) && !isAttacking)
+        else if (counter >= (1 / baseStats.AttackSpeed) && !isAttacking)
         {
             StartAttacking();
         }
@@ -73,7 +71,7 @@ public abstract class ABasicAttackController : NetworkBehaviour
     protected virtual void ChaseToAttack()
     {
         if (ac != null) ac.OnAttackEnd();
-        umc.ClientMove(tc.Target.transform.position, true, stats.Range);
+        umc.ClientMove(tc.Target.transform.position, true, baseStats.Range);
         isChasing = true;
     }
     protected virtual void StopChasing()

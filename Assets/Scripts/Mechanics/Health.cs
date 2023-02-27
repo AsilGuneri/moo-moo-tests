@@ -12,7 +12,7 @@ public class Health : NetworkBehaviour
     public int TeamId
     [SerializeField] private Slider healthBar;*/
 
-    [SerializeField] private Slider healthBar;
+    [SerializeField] private Image healthBar;
     [SerializeField] private UnitType unitType;
     [ConditionalField(nameof(unitType), false, UnitType.WaveEnemy)] public int ExpToGain;
 
@@ -60,7 +60,7 @@ public class Health : NetworkBehaviour
     #region Client
     private void UpdateHealthBar(int oldHealth, int newHeatlh)
     {
-        healthBar.value = (float)((float)newHeatlh / (float)baseHp);
+        healthBar.fillAmount = (float)((float)newHeatlh / (float)baseHp);
     }
     #endregion
 
