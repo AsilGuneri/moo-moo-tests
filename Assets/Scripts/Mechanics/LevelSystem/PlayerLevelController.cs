@@ -12,6 +12,8 @@ public class PlayerLevelController : NetworkBehaviour
 
     [SerializeField] TextMeshProUGUI levelText;
 
+    public int CurrentLevel { get { return currentLevel; } }
+
     private void Start()
     {
         SetLevelText();
@@ -24,6 +26,7 @@ public class PlayerLevelController : NetworkBehaviour
         {
             LevelUp();
         }
+        UIStatsManager.Instance.UpdateSlider(currentExperience, ExperienceRequired());
     }
     private int ExperienceRequired()
     {
@@ -34,6 +37,7 @@ public class PlayerLevelController : NetworkBehaviour
         currentLevel++;
         currentExperience = 0;
         SetLevelText();
+        UIStatsManager.Instance.UpdateLevelText(currentLevel.ToString());
     }
     private void SetLevelText()
     {
