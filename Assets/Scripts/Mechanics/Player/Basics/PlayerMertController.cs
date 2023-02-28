@@ -56,7 +56,6 @@ public class PlayerMertController : NetworkBehaviour
         _umc = GetComponent<UnitMovementController>();
         _hc = GetComponent<Health>();
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
-
     }
 
     [TargetRpc]
@@ -109,7 +108,6 @@ public class PlayerMertController : NetworkBehaviour
         {
             PlayerSkills[3].UseSkill(gameObject);
         }
-
     }
     public void SetSkill(PlayerSkill skill)
     {

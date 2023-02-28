@@ -68403,6 +68403,8 @@ GameObject:
   - component: {fileID: 2585341283395862557}
   - component: {fileID: 51552712664590443}
   - component: {fileID: 3155766693921809012}
+  - component: {fileID: 7607041217502291502}
+  - component: {fileID: 3040988855370842870}
   m_Layer: 0
   m_Name: Player Parent
   m_TagString: Untagged
@@ -68726,6 +68728,37 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   levelText: {fileID: 500658041628478524}
+--- !u!114 &7607041217502291502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8938534602783702256}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 0, g: 1, b: 0.5058824, a: 1}
+  outlineWidth: 3
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &3040988855370842870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8938534602783702256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24f2b1200d6544b4e921d9e551bae590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Outline: {fileID: 7607041217502291502}
 --- !u!1001 &1431800149530102464
 PrefabInstance:
   m_ObjectHideFlags: 0
