@@ -14,7 +14,7 @@ public class PlayerSkillController : MonoBehaviour
         PlayerController = GetComponent<PlayerMertController>();
         InitializeDictionary();
 
-        foreach (var skillList in PlayerSkillsDatabase.instance.SkillLists)
+        foreach (var skillList in PlayerSkillsDatabase.Instance.SkillLists)
         {
             if (skillList.Class == PlayerController.CharacterClass)
             {

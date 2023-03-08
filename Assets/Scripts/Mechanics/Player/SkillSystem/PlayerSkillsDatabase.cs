@@ -5,7 +5,7 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "PlayerSkillsDatabase", menuName = "Scriptable Objects/PlayerSkillsDatabase", order = 1)]
-public class PlayerSkillsDatabase : ScriptableSingleton<PlayerSkillsDatabase>
+public class PlayerSkillsDatabase : MyScriptableSingleton<PlayerSkillsDatabase>
 {
     public List<ClassSkillsPair> SkillLists = new List<ClassSkillsPair>();
 

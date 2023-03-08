@@ -56,7 +56,7 @@ public class SkillSelectionPanel : Singleton<SkillSelectionPanel>
     {
         yield return new WaitForSeconds(3);
         characterClass = UnitManager.Instance.GetPlayerController().CharacterClass;
-        classSkills = PlayerSkillsDatabase.instance.GetClassSkills(characterClass);
+        classSkills = PlayerSkillsDatabase.Instance.GetClassSkills(characterClass);
         SetClassSkills();
     }
     private void CacheGradeSelectableSkills(SelectableUISkill skill, int grade)

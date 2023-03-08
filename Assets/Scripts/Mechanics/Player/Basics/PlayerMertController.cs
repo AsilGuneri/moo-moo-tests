@@ -48,6 +48,11 @@ public class PlayerMertController : NetworkBehaviour
         }
     }
 
+    private void Start()
+    {
+        Activate();
+    }
+
     private void Awake()
     {
         _tc = GetComponent<TargetController>();

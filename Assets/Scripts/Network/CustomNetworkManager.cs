@@ -72,12 +72,12 @@ public class CustomNetworkManager : NetworkManager
 
     public override void OnServerSceneChanged(string sceneName)
     {
-        if(SceneManager.GetActiveScene().name == "GameScene"){
+        //if(SceneManager.GetActiveScene().name == "GameScene"){
             
-            foreach(CustomNetworkPlayer p in players){
-                p.GetComponent<PlayerMertController>().Activate();
-            }
-        }
+        //    foreach(CustomNetworkPlayer p in players){
+        //        p.GetComponent<PlayerMertController>().Activate();
+        //    }
+        //}
 
         base.OnServerSceneChanged(sceneName);
     }
