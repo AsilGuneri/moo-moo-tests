@@ -7,11 +7,14 @@ public class CustomNetworkRoomManager : NetworkRoomManager
 {
     //geçiciler
     public GameObject PlayerPrefab;
+    public GameObject PlayerPrefab2;
+    public bool purple;
 
 
-    private void CreateGamePlayer(NetworkConnectionToClient conn)
+    public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
     {
-        GameObject gamePlayer = Instantiate(PlayerPrefab, Vector3.zero, Quaternion.identity);
-        NetworkServer.ReplacePlayerForConnection(conn, gamePlayer, true);
+        GameObject prefab = purple ? PlayerPrefab2 : PlayerPrefab;
+        GameObject gamePlayer = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        return gamePlayer;
     }
 }
