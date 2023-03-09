@@ -2,6 +2,7 @@ using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CustomNetworkRoomManager : NetworkRoomManager
 {
@@ -10,7 +11,11 @@ public class CustomNetworkRoomManager : NetworkRoomManager
     public GameObject PlayerPrefab2;
     public bool purple;
 
-
+    public void HostLobby()
+    {
+        StartHost();
+    }
+    
     public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
     {
         GameObject prefab = purple ? PlayerPrefab2 : PlayerPrefab;
