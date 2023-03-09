@@ -11,23 +11,27 @@ public class RoomManager : NetworkBehaviour
 {
     public static RoomManager Instance { get; private set; }
 
-    private CustomNetworkRoomManager CustomNetworkRoomManager;
+    private CustomNetworkRoomManager CustomManager;
 
     private void Awake()
     {
         Instance = this;
-        CustomNetworkRoomManager = NetworkRoomManager.singleton as CustomNetworkRoomManager;
+        CustomManager = NetworkRoomManager.singleton as CustomNetworkRoomManager;
     }
-
+    public void StartGame()
+    {
+        CustomManager.ServerChangeScene(CustomManager.GameplayScene);
+        CustomManager.IsGameInProgress = true;
+    }
     public void LeaveLobby()
     {
         if (NetworkServer.active && NetworkClient.isConnected)
         {
-            CustomNetworkRoomManager.StopHost();
+            CustomManager.StopHost();
         }
         else
         {
-            CustomNetworkRoomManager.StopClient();
+            CustomManager.StopClient();
         }
         SceneManager.LoadScene(0);
     }
