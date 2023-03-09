@@ -63,8 +63,9 @@ public class PlayerMertController : NetworkBehaviour
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
     }
 
-    [TargetRpc]
-    public void Activate() {
+    public void Activate() 
+    {
+        if (!hasAuthority) return;
         mainCamera = Camera.main; //DO NOT GET THE CAMERA LIKE THAT, get a reference to the cam.
         mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
         StartCoroutine(nameof(RegisterRoutine));

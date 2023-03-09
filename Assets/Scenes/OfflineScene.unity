@@ -477,7 +477,7 @@ MonoBehaviour:
   networkAddress: localhost
   maxConnections: 4
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 8938534602783702256, guid: 07f25eb048b773949a9ea2aeb2b5fb05, type: 3}
+  playerPrefab: {fileID: 8938534602783702256, guid: 1d4ef9df86a487949bb862566cb3654a, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
@@ -485,6 +485,8 @@ MonoBehaviour:
   - {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
   - {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
   - {fileID: 7498676492825279152, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
+  - {fileID: 8938534602783702256, guid: 07f25eb048b773949a9ea2aeb2b5fb05, type: 3}
+  - {fileID: 8938534602783702256, guid: 3b9942192ad793c4a93fcbfb1c0ac5ce, type: 3}
   showRoomGUI: 1
   minPlayers: 1
   roomPlayerPrefab: {fileID: 6834872046357989823, guid: cccb446e601c593428faa427254bb6e7, type: 3}
@@ -496,6 +498,7 @@ MonoBehaviour:
   PlayerPrefab: {fileID: 8938534602783702256, guid: 07f25eb048b773949a9ea2aeb2b5fb05, type: 3}
   PlayerPrefab2: {fileID: 8938534602783702256, guid: 3b9942192ad793c4a93fcbfb1c0ac5ce, type: 3}
   purple: 1
+  IsGameInProgress: 0
 --- !u!4 &702153654
 Transform:
   m_ObjectHideFlags: 0

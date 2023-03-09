@@ -21,7 +21,6 @@ public class CustomNetworkRoomManager : NetworkRoomManager
     {
         StartHost();
     }
-
     public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
     {
         GameObject prefab = purple ? PlayerPrefab2 : PlayerPrefab;
