@@ -34,7 +34,7 @@ public class CustomNetworkRoomManager : NetworkRoomManager
     }
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
-        base.OnServerDisconnect(conn);
+        base.OnServerDisconnect(conn);//see if it causes the destroy of object on leave
         if (!IsGameInProgress)
         {
             var player = conn.identity.GetComponent<CustomNetworkRoomPlayer>();
@@ -47,8 +47,14 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         base.OnServerAddPlayer(conn);
         if (!IsGameInProgress)
         {
+            //Everyone
             var player = conn.identity.GetComponent<CustomNetworkRoomPlayer>();
             RoomPlayers.Add(player);
+            //Server
+            if (NetworkServer.active)
+            {
+                SpawnPlayerFrameWithAuthority(conn);
+            }
             return;
         }
     }
@@ -56,5 +62,11 @@ public class CustomNetworkRoomManager : NetworkRoomManager
     {
         base.OnStopClient();
         RoomPlayers.Clear();
+    }
+    private void SpawnPlayerFrameWithAuthority(NetworkConnectionToClient conn)
+    {
+        var frame = LobbyUI.Instance.SpawnPlayerFrame();
+        NetworkServer.Spawn(frame, conn);
+        frame.GetComponent<PlayerLobbyFrame>().OnAuthorityAssigned();
     }
 }
