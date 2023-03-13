@@ -12,9 +12,9 @@ public class LobbyManager : NetworkBehaviour
     public static LobbyManager Instance { get; private set; }
 
     [SerializeField] private GameObject roomPlayerPrefab;
-    [SerializeField] private NetworkIdentity roomPlayerParent;
+    [SerializeField] private Transform roomPlayerParent;
 
-    public NetworkIdentity RoomPlayerParent
+    public Transform RoomPlayerParent
     {
         get => roomPlayerParent;
     }
@@ -44,13 +44,5 @@ public class LobbyManager : NetworkBehaviour
             CustomManager.StopClient();
         }
         SceneManager.LoadScene(0);
-    }
-
-    public void UpdatePlayerItems()
-    {
-        //foreach (var player in CustomManager.RoomPlayers)
-        //{
-        //    player.CmdSetParent(RoomPlayerParent);
-        //}
     }
 }

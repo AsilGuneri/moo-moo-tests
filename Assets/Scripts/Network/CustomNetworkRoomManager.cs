@@ -27,26 +27,10 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         GameObject gamePlayer = Instantiate(prefab, Vector3.zero, Quaternion.identity);
         return gamePlayer;
     }
-
     public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnectionToClient conn)
     {
-        return null;//Instantiate(roomPlayerPrefab, LobbyManager.Instance.RoomPlayerParent.transform).gameObject;
-    }
-
-    public override void OnStopServer()
-    {
-        RoomPlayers.Clear();
-        IsGameInProgress = false;
-    }
-
-
-    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
-    {
-        base.OnServerAddPlayer(conn);
-        if (!IsGameInProgress)
-        {
-            var player = conn.identity.GetComponent<CustomNetworkRoomPlayer>();
-            return;
-        }
+        CustomNetworkRoomPlayer roomPlayer = (CustomNetworkRoomPlayer)Instantiate(roomPlayerPrefab);
+        roomPlayer.SetPlayerData(conn.connectionId);
+        return roomPlayer.gameObject;
     }
 }

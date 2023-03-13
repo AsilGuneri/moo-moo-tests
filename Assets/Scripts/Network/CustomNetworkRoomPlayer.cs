@@ -1,13 +1,22 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CustomNetworkRoomPlayer : NetworkRoomPlayer
 {
+    [SyncVar] private int connectionId;
+    [SyncVar(hook = nameof(UpdatePlayerName))] private string playerName;
 
+    public int ConnectionId { get { return connectionId; } private set { connectionId = value; } }
 
-    CustomNetworkRoomManager CustomManager;
+    private CustomNetworkRoomManager CustomManager;
+
+    [SerializeField] private Button[] selectionButtons;
+    [SerializeField] private TextMeshProUGUI nameText;
+
 
     private void Awake()
     {
@@ -15,13 +24,17 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
     }
     private void OnEnable()
     {
-        transform.SetParent(GameObject.Find("PlayerObjects").transform);
+        DisableSelectionButtons();
+        EnableSelectionButtons();
+        transform.SetParent(LobbyManager.Instance.RoomPlayerParent);
+
     }
+
+    #region Network
     public override void OnStartClient()
     {
         base.OnStartClient();
         CustomManager.RoomPlayers.Add(this);
-        //StartCoroutine(tst());
     }
     public override void OnStopClient()
     {
@@ -29,32 +42,39 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
         CustomManager.RoomPlayers.Remove(this);
 
     }
+    #endregion
 
-    //private IEnumerator tst()
-    //{
-    //    yield return new WaitForSeconds(5);
-    //    LobbyManager.Instance.UpdatePlayerItems();
-    //}
+    public void SetPlayerData(int connectionId)
+    {
+        ConnectionId = connectionId;
+        playerName = ConnectionId.ToString();
+    }
 
-    //[SyncVar(hook = nameof(OnParentChanged))]
-    //private NetworkIdentity parentIdentity;
+    private void DisableSelectionButtons()
+    {
+        foreach (var button in selectionButtons)
+        {
+            if (button.interactable)
+            {
+                button.interactable = false;
+            }
+        }
+    }
 
-    //private void OnParentChanged(NetworkIdentity oldParent, NetworkIdentity newParent)
-    //{
-    //    if (newParent != null)
-    //    {
-    //        transform.SetParent(newParent.transform);
-    //    }
-    //    else
-    //    {
-    //        transform.SetParent(null);
-    //    }
-    //}
+    private void EnableSelectionButtons()
+    {
+        if (hasAuthority)
+        {
+            foreach (var button in selectionButtons)
+            {
+                button.interactable = true;
+            }
+        }
 
-    //public void CmdSetParent(NetworkIdentity newParent)
-    //{
-    //    if (parentIdentity == newParent) return;
-    //    parentIdentity = newParent;
-    //}
+    }
 
+    private void UpdatePlayerName(string oldValue, string newValue)
+    {
+        nameText.text = newValue;
+    }
 }

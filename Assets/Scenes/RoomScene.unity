@@ -239,53 +239,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!1 &128269183
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 128269185}
-  - component: {fileID: 128269184}
-  m_Layer: 0
-  m_Name: RoomManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &128269184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 128269183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69508fbd77b618c4ca4239221f107d50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  roomPlayerPrefab: {fileID: 873052961081734598, guid: 06b8331bf05c9fa408481d217ce8c941, type: 3}
-  roomPlayerParent: {fileID: 1009448526}
---- !u!4 &128269185
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 128269183}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1000.1411, y: 581.2993, z: -758.1466}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &223719597
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,7 +323,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 128269184}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RoomManager, Assembly-CSharp
         m_MethodName: LeaveLobby
         m_Mode: 1
@@ -788,7 +741,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 128269184}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RoomManager, Assembly-CSharp
         m_MethodName: StartGame
         m_Mode: 1
@@ -998,6 +951,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1351143202}
   - component: {fileID: 1351143203}
+  - component: {fileID: 1351143204}
   m_Layer: 5
   m_Name: LobbyUI
   m_TagString: Untagged
@@ -1035,6 +989,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1351143201}
   m_CullTransparentMesh: 1
+--- !u!114 &1351143204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351143201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69508fbd77b618c4ca4239221f107d50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  roomPlayerPrefab: {fileID: 873052961081734598, guid: 06b8331bf05c9fa408481d217ce8c941, type: 3}
+  roomPlayerParent: {fileID: 1009448524}
 --- !u!1 &1529651834
 GameObject:
   m_ObjectHideFlags: 0
