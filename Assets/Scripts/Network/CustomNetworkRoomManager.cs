@@ -12,8 +12,7 @@ public class CustomNetworkRoomManager : NetworkRoomManager
     public bool purple;
     //olmayanlar
 
-    public List<CustomNetworkRoomPlayer> RoomPlayers { get; } = new List<CustomNetworkRoomPlayer>();
-
+    public List<CustomNetworkRoomPlayer> RoomPlayers = new List<CustomNetworkRoomPlayer>();
 
     public bool IsGameInProgress = false;
 
@@ -21,52 +20,33 @@ public class CustomNetworkRoomManager : NetworkRoomManager
     {
         StartHost();
     }
+
     public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
     {
         GameObject prefab = purple ? PlayerPrefab2 : PlayerPrefab;
         GameObject gamePlayer = Instantiate(prefab, Vector3.zero, Quaternion.identity);
         return gamePlayer;
     }
+
+    public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnectionToClient conn)
+    {
+        return null;//Instantiate(roomPlayerPrefab, LobbyManager.Instance.RoomPlayerParent.transform).gameObject;
+    }
+
     public override void OnStopServer()
     {
         RoomPlayers.Clear();
         IsGameInProgress = false;
     }
-    public override void OnServerDisconnect(NetworkConnectionToClient conn)
-    {
-        base.OnServerDisconnect(conn);//see if it causes the destroy of object on leave
-        if (!IsGameInProgress)
-        {
-            var player = conn.identity.GetComponent<CustomNetworkRoomPlayer>();
-            RoomPlayers.Remove(player);
-            return;
-        }
-    }
+
+
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
         base.OnServerAddPlayer(conn);
         if (!IsGameInProgress)
         {
-            //Everyone
             var player = conn.identity.GetComponent<CustomNetworkRoomPlayer>();
-            RoomPlayers.Add(player);
-            //Server
-            if (NetworkServer.active)
-            {
-                SpawnPlayerFrameWithAuthority(conn);
-            }
             return;
         }
-    }
-    public override void OnStopClient()
-    {
-        base.OnStopClient();
-        RoomPlayers.Clear();
-    }
-    private void SpawnPlayerFrameWithAuthority(NetworkConnectionToClient conn)
-    {
-        var frame = LobbyUI.Instance.SpawnPlayerFrame();
-        NetworkServer.Spawn(frame, conn);
-        frame.GetComponent<PlayerLobbyFrame>().OnAuthorityAssigned();
     }
 }
