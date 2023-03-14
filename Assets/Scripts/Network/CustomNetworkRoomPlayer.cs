@@ -1,13 +1,11 @@
 using Mirror;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CustomNetworkRoomPlayer : NetworkRoomPlayer
 {
-    private int connectionId;
+    [SyncVar]private int connectionId;
     //[SyncVar(hook = nameof(UpdatePlayerName))] private string playerName;
 
     public int ConnectionId { get { return connectionId; } private set { connectionId = value; } }
@@ -37,8 +35,7 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
         CustomManager.RoomPlayers.Add(this);
         DisableSelectionButtons();
         EnableSelectionButtons();
-
-        nameText.text = connectionId.ToString();
+        nameText.text = connectionId.ToString();       
     }
     public override void OnStopClient()
     {
