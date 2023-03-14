@@ -6,21 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SteamLobby.unity
-    guid: 68cec129a1b0c1042825a1d4c7b3e1a1
-  - enabled: 0
-    path: Assets/Scenes/LocalLobby.unity
-    guid: 1e10dce4619c07945ab5c479955f424f
-  - enabled: 1
-    path: Assets/Scenes/GameScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
-    path: Assets/Mirror/Examples/Pong/Scenes/Scene.unity
-    guid: 89a84548859e3b643b4fb27984dc2b0d
-  - enabled: 1
     path: Assets/Scenes/OfflineScene.unity
     guid: e7fa54145bb56ae408c121b0dd439fbb
   - enabled: 1
     path: Assets/Scenes/RoomScene.unity
     guid: 95e42f6eced04c2428e651cf1d87be7b
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

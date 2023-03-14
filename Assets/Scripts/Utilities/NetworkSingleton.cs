@@ -17,6 +17,7 @@ namespace Utilities
                 if (_instance == null)
                 {
                     // _instance = new GameObject("Instance of" + typeof(T)).AddComponent<T>();
+                    Debug.Log("Null NetworkSingleton " + typeof(T));
                 }
                 return _instance;
             }
