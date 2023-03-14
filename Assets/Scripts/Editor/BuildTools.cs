@@ -1,19 +1,21 @@
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using System.Diagnostics;
 
-public class DeleteBuildTool : EditorWindow
+public class BuildTools : EditorWindow
 {
     private string buildPath = "";
 
-    private const int WINDOW_WIDTH = 300;
-    private const int WINDOW_HEIGHT = 90;
+    private const int WINDOW_WIDTH = 400;
+    private const int WINDOW_HEIGHT = 170;
 
-    [MenuItem("Tools/Delete Build")]
+
+    [MenuItem("Tools/Build Tools")]
     private static void ShowWindow()
     {
-        DeleteBuildTool window = EditorWindow.GetWindow<DeleteBuildTool>();
-        window.titleContent = new GUIContent("Delete Build");
+        BuildTools window = EditorWindow.GetWindow<BuildTools>();
+        window.titleContent = new GUIContent("Build Tools");
         window.minSize = new Vector2(WINDOW_WIDTH, WINDOW_HEIGHT);
         window.maxSize = new Vector2(WINDOW_WIDTH, WINDOW_HEIGHT);
         window.Show();
@@ -21,12 +23,53 @@ public class DeleteBuildTool : EditorWindow
 
     private void OnGUI()
     {
-        GUILayout.Label("Delete Build", EditorStyles.boldLabel);
+        GUILayout.Label("Build Tools", EditorStyles.boldLabel);
 
         GUILayout.Space(5);
 
         // Build path input field
         buildPath = EditorGUILayout.TextField("Build Path", buildPath);
+
+        GUILayout.Space(5);
+
+        // Run button
+        if (GUILayout.Button("Run"))
+        {
+            if (!string.IsNullOrEmpty(buildPath))
+            {
+                if (Directory.Exists(buildPath))
+                {
+                    string exePath = Path.Combine(buildPath, PlayerSettings.productName + ".exe");
+
+                    if (File.Exists(exePath))
+                    {
+                        // Run the built executable
+                        Process.Start(exePath);
+
+                        // Display a success message
+                        UnityEngine.Debug.Log("Executable started.");
+                    }
+                    else
+                    {
+                        // Display an error message if the executable doesn't exist
+                        EditorUtility.DisplayDialog("Build Tools", "Executable not found at " + exePath, "OK");
+                    }
+                }
+                else
+                {
+                    // Display an error message if the directory doesn't exist
+                    EditorUtility.DisplayDialog("Build Tools", "The specified directory does not exist.", "OK");
+                }
+            }
+            else
+            {
+                // Display an error message if the build path is empty
+                EditorUtility.DisplayDialog("Build Tools", "Please enter a build path.", "OK");
+            }
+        }
+
+
+      
 
         GUILayout.Space(5);
 
@@ -44,7 +87,7 @@ public class DeleteBuildTool : EditorWindow
                     AssetDatabase.Refresh();
 
                     // Display a success message
-                    EditorUtility.DisplayDialog("Delete Build", "All files and folders in " + buildPath + " have been deleted.", "OK");
+                    UnityEngine.Debug.Log("All files and folders in " + buildPath + " have been deleted.");
                 }
                 else
                 {
@@ -88,7 +131,7 @@ public class DeleteBuildTool : EditorWindow
             foreach (string directory in directories)
             {
                 DeleteAllFilesAndFolders(directory);
-                if(directory != EditorPrefs.GetString("DeleteBuild_BuildPath")) Directory.Delete(directory);
+                if (directory != EditorPrefs.GetString("DeleteBuild_BuildPath")) Directory.Delete(directory);
             }
         }
 

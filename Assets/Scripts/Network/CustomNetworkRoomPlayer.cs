@@ -25,24 +25,20 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
     //for everyone
     private void OnEnable()
     {
-
+        transform.localScale = Vector3.one;
         transform.SetParent(LobbyManager.Instance.RoomPlayerParent);
     }
 
-    //for personal thing
-    public override void OnStartAuthority()
-    {
-        base.OnStartAuthority();
-        DisableSelectionButtons();
-        EnableSelectionButtons();
-        nameText.text = connectionId.ToString();
-    }
-
     #region Network
+    //for personal things
     public override void OnStartClient()
     {
         base.OnStartClient();
         CustomManager.RoomPlayers.Add(this);
+        DisableSelectionButtons();
+        EnableSelectionButtons();
+
+        nameText.text = connectionId.ToString();
     }
     public override void OnStopClient()
     {
@@ -51,7 +47,6 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
 
     }
     #endregion
-
     public void SetPlayerData(int connectionId)
     {
         ConnectionId = connectionId;
