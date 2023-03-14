@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class CustomNetworkRoomPlayer : NetworkRoomPlayer
 {
-    [SyncVar] private int connectionId;
-    [SyncVar(hook = nameof(UpdatePlayerName))] private string playerName;
+    private int connectionId;
+    //[SyncVar(hook = nameof(UpdatePlayerName))] private string playerName;
 
     public int ConnectionId { get { return connectionId; } private set { connectionId = value; } }
 
@@ -22,12 +22,20 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
     {
         CustomManager = NetworkRoomManager.singleton as CustomNetworkRoomManager;
     }
+    //for everyone
     private void OnEnable()
     {
+
+        transform.SetParent(LobbyManager.Instance.RoomPlayerParent);
+    }
+
+    //for personal thing
+    public override void OnStartAuthority()
+    {
+        base.OnStartAuthority();
         DisableSelectionButtons();
         EnableSelectionButtons();
-        transform.SetParent(LobbyManager.Instance.RoomPlayerParent);
-
+        nameText.text = connectionId.ToString();
     }
 
     #region Network
@@ -47,7 +55,7 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
     public void SetPlayerData(int connectionId)
     {
         ConnectionId = connectionId;
-        playerName = ConnectionId.ToString();
+        //playerName = ConnectionId.ToString();
     }
 
     private void DisableSelectionButtons()
