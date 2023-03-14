@@ -68,9 +68,6 @@ public class BuildTools : EditorWindow
             }
         }
 
-
-      
-
         GUILayout.Space(5);
 
         // Delete button
