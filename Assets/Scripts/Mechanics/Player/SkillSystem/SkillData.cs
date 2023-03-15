@@ -86,5 +86,6 @@ public abstract class SkillController : MonoBehaviour
 }
 public enum Class
 {
-    Archer
+    Archer,
+    TestClass
 }

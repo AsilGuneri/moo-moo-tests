@@ -7,20 +7,26 @@ using System;
 [CreateAssetMenu(fileName = "PlayerSkillsDatabase", menuName = "Scriptable Objects/PlayerSkillsDatabase", order = 1)]
 public class PlayerSkillsDatabase : ScriptableSingleton<PlayerSkillsDatabase>
 {
-    public List<ClassSkillsPair> SkillLists = new List<ClassSkillsPair>();
+    public List<ClassData> ClassList = new List<ClassData>();
 
-    public ClassSkillsPair GetClassSkills(Class characterClass)
+    public ClassData GetClassData(Class characterClass)
     {
-        foreach(var pair in SkillLists) 
+        foreach(var data in ClassList) 
         {
-            if(pair.Class == characterClass) return pair;
+            if(data.Class == characterClass) return data;
         }
         return null;
     }
+    public ClassData GetClassData(int index)
+    {
+        return ClassList[index];
+    }
 }
 [Serializable]
-public class ClassSkillsPair
+public class ClassData
 {
     public Class Class;
+    public Sprite ClassLobbySprite;
+    public GameObject ClassPrefab;
     public List<PlayerSkill> AllClassSkills;
 }

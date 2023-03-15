@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,10 +12,12 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
     public int ConnectionId { get { return connectionId; } private set { connectionId = value; } }
 
     private CustomNetworkRoomManager CustomManager;
+    private int currentOfflineIndex = 0;
 
     [SerializeField] private Button[] selectionButtons;
-    [SerializeField] private TextMeshProUGUI nameText;
-
+    [SerializeField] private TextMeshProUGUI playerNameText;
+    [SerializeField] private Image classImage;
+    [SerializeField] private TextMeshProUGUI classNameText;
 
     private void Awake()
     {
@@ -28,14 +31,25 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
     }
 
     #region Network
-    //for personal things
     public override void OnStartClient()
     {
         base.OnStartClient();
+
+        //For Everyone
         CustomManager.RoomPlayers.Add(this);
         DisableSelectionButtons();
         EnableSelectionButtons();
-        nameText.text = connectionId.ToString();       
+        playerNameText.text = connectionId.ToString(); //temp
+        ChangeCharacter(0);
+
+        if (!hasAuthority) //For Everyone but owner
+        {
+
+        }
+        else //For Owner
+        {
+            //name variable should be syncvar and set here.
+        }
     }
     public override void OnStopClient()
     {
@@ -48,6 +62,23 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
     {
         ConnectionId = connectionId;
         //playerName = ConnectionId.ToString();
+    }
+    //Has a reference on Next/Previous buttons
+    public void ChangeCharacterLinear(bool isNext)
+    {
+        int newIndex = isNext ? currentOfflineIndex + 1 : currentOfflineIndex - 1;
+        int maxIndex = PlayerSkillsDatabase.Instance.ClassList.Count - 1;
+        if(newIndex > maxIndex) newIndex = 0;
+        if(newIndex < 0) newIndex = maxIndex;
+        ChangeCharacter(newIndex);
+    }
+    private void ChangeCharacter(int index)
+    {
+        var classData = PlayerSkillsDatabase.Instance.GetClassData(index);
+        currentOfflineIndex = index;
+        classImage.sprite = classData.ClassLobbySprite;
+        classNameText.text = classData.Class.ToString();
+        //how to sync these on ready
     }
 
     private void DisableSelectionButtons()
@@ -75,6 +106,6 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
 
     private void UpdatePlayerName(string oldValue, string newValue)
     {
-        nameText.text = newValue;
+        playerNameText.text = newValue;
     }
 }
