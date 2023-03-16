@@ -6,18 +6,23 @@ using UnityEngine.UI;
 
 public class CustomNetworkRoomPlayer : NetworkRoomPlayer
 {
-    [SyncVar]private int connectionId;
+    [SyncVar] private int connectionId;
+    [SyncVar(hook = nameof(OnCharacterIndexChange))]private int currentIndex = 0;
+    private Sprite currentCharacterSprite = null;
+    [SyncVar(hook = nameof(ChangeClassName))] private string currentCharacterName = null;
+
     //[SyncVar(hook = nameof(UpdatePlayerName))] private string playerName;
 
     public int ConnectionId { get { return connectionId; } private set { connectionId = value; } }
 
     private CustomNetworkRoomManager CustomManager;
-    private int currentOfflineIndex = 0;
 
+    [SerializeField] private RectTransform playerUITransform;
     [SerializeField] private Button[] selectionButtons;
     [SerializeField] private TextMeshProUGUI playerNameText;
     [SerializeField] private Image classImage;
     [SerializeField] private TextMeshProUGUI classNameText;
+    [SerializeField] private TextMeshProUGUI readyButtonText;
 
     private void Awake()
     {
@@ -27,7 +32,7 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
     private void OnEnable()
     {
         transform.localScale = Vector3.one;
-        transform.SetParent(LobbyManager.Instance.RoomPlayerParent);
+        playerUITransform.SetParent(LobbyManager.Instance.RoomPlayerParent);
     }
 
     #region Network
@@ -66,18 +71,41 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
     //Has a reference on Next/Previous buttons
     public void ChangeCharacterLinear(bool isNext)
     {
-        int newIndex = isNext ? currentOfflineIndex + 1 : currentOfflineIndex - 1;
+        int newIndex = isNext ? currentIndex + 1 : currentIndex - 1;
         int maxIndex = PlayerSkillsDatabase.Instance.ClassList.Count - 1;
-        if(newIndex > maxIndex) newIndex = 0;
-        if(newIndex < 0) newIndex = maxIndex;
-        ChangeCharacter(newIndex);
+        if (newIndex > maxIndex) newIndex = 0;
+        if (newIndex < 0) newIndex = maxIndex;
+        currentIndex = newIndex;
+    }
+    public void ToggleReadyButton()
+    {
+        if (NetworkClient.isConnected)
+        {
+            NetworkClient.ready = !NetworkClient.ready;
+            if (NetworkClient.ready)
+            {
+                OnReady();
+            }
+            else
+            {
+                OnUnready();
+            }
+        }
+    }
+    private void OnReady()
+    {
+
+    }
+    private void OnUnready()
+    {
+
     }
     private void ChangeCharacter(int index)
     {
         var classData = PlayerSkillsDatabase.Instance.GetClassData(index);
-        currentOfflineIndex = index;
+        currentCharacterSprite = classData.ClassLobbySprite;
         classImage.sprite = classData.ClassLobbySprite;
-        classNameText.text = classData.Class.ToString();
+        currentCharacterName = classData.Class. ToString();
         //how to sync these on ready
     }
 
@@ -107,5 +135,17 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
     private void UpdatePlayerName(string oldValue, string newValue)
     {
         playerNameText.text = newValue;
+    }
+    private void OnCharacterIndexChange(int oldValue, int newValue)
+    {
+        ChangeCharacter(newValue);
+    }
+    private void ChangeCharacterImage(Sprite oldValue, Sprite newValue)
+    {
+        classImage.sprite = newValue;
+    }
+    private void ChangeClassName(string oldValue, string newValue)
+    {
+        classNameText.text = newValue;
     }
 }
