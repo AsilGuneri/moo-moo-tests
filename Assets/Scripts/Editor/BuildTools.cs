@@ -8,7 +8,7 @@ public class BuildTools : EditorWindow
     private string buildPath = "";
 
     private const int WINDOW_WIDTH = 400;
-    private const int WINDOW_HEIGHT = 170;
+    private const int WINDOW_HEIGHT = 100;
 
 
     [MenuItem("Tools/Build Tools")]
