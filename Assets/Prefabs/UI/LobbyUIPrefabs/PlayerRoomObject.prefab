@@ -525,6 +525,7 @@ MonoBehaviour:
   showRoomGUI: 1
   readyToBegin: 0
   index: 0
+  CurrentMertIndex: 0
   playerUITransform: {fileID: 3141377108496931647}
   selectionButtons:
   - {fileID: 3104223707511054664}
@@ -532,6 +533,7 @@ MonoBehaviour:
   playerNameText: {fileID: 873052961236889427}
   classImage: {fileID: 873052960475343567}
   classNameText: {fileID: 8870250410250188627}
+  readyButton: {fileID: 2706208533624371005}
   readyButtonText: {fileID: 7211364091043722802}
 --- !u!1 &873052961236889437
 GameObject:

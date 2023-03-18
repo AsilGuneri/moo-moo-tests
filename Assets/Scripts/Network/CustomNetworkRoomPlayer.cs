@@ -19,7 +19,9 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
     [SerializeField] private TextMeshProUGUI playerNameText;
     [SerializeField] private Image classImage;
     [SerializeField] private TextMeshProUGUI classNameText;
+    [SerializeField] private Button readyButton;
     [SerializeField] private TextMeshProUGUI readyButtonText;
+
 
     private void Awake()
     {
@@ -42,6 +44,7 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
         CustomManager.RoomPlayers.Add(this);
         DisableSelectionButtons();
         EnableSelectionButtons();
+        readyButton.interactable = false;
         playerNameText.text = connectionId.ToString(); //temp
         CmdSetCurrentIndex(0);
         if (!hasAuthority) //For Everyone but owner
@@ -50,6 +53,7 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
         }
         else //For Owner
         {
+            readyButton.interactable = true;
             //name variable should be syncvar and set here.
         }
     }
@@ -76,27 +80,31 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
     }
     public void ToggleReadyButton()
     {
-        if (NetworkClient.isConnected)
+        if (NetworkClient.active && isLocalPlayer)
         {
-            if (NetworkClient.ready)
+
+            if (readyToBegin)
             {
-                NetworkClient.ready = false;
+                CmdChangeReadyState(false);
                 OnUnready();
             }
             else
             {
-                NetworkClient.Ready();
+                CmdChangeReadyState(true);
                 OnReady();
+
             }
         }
     }
     private void OnReady()
     {
         DisableSelectionButtons();
+        readyButtonText.text = "Cancel";
     }
     private void OnUnready()
     {
         EnableSelectionButtons();
+        readyButtonText.text = "Ready";
     }
     [Command(requiresAuthority = false)]
     private void CmdSetCurrentIndex(int index)
