@@ -1,17 +1,12 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CustomNetworkRoomManager : NetworkRoomManager
 {
-    //geçiciler
-    public GameObject PlayerPrefab;
-    public GameObject PlayerPrefab2;
-    public bool purple;
-    //olmayanlar
-
     public List<CustomNetworkRoomPlayer> RoomPlayers = new List<CustomNetworkRoomPlayer>();
 
     public bool IsGameInProgress = false;
@@ -23,7 +18,9 @@ public class CustomNetworkRoomManager : NetworkRoomManager
 
     public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
     {
-        GameObject prefab = purple ? PlayerPrefab2 : PlayerPrefab;
+        int playerClassIndex = roomPlayer.GetComponent<CustomNetworkRoomPlayer>().CurrentMertIndex;
+        var classData = PlayerSkillsDatabase.Instance.GetClassData(playerClassIndex);
+        GameObject prefab = classData.ClassPrefab;
         GameObject gamePlayer = Instantiate(prefab, Vector3.zero, Quaternion.identity);
         return gamePlayer;
     }
