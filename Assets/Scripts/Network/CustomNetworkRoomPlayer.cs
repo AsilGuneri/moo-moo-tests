@@ -46,7 +46,7 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
     {
         base.OnStopClient();
         CustomManager.RoomPlayers.Remove(this);
-        if (playerUITransform.gameObject != null)
+        if (playerUITransform != null)
         {
             Destroy(playerUITransform.gameObject);
         }
