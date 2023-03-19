@@ -419,6 +419,8 @@ GameObject:
   - component: {fileID: 702153653}
   - component: {fileID: 702153652}
   - component: {fileID: 702153655}
+  - component: {fileID: 702153657}
+  - component: {fileID: 702153656}
   m_Layer: 0
   m_Name: NetworkRoomManager
   m_TagString: Untagged
@@ -433,7 +435,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 702153651}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
   m_Name: 
@@ -473,7 +475,7 @@ MonoBehaviour:
   serverTickRate: 30
   offlineScene: Assets/Scenes/OfflineScene.unity
   onlineScene: Assets/Scenes/RoomScene.unity
-  transport: {fileID: 702153652}
+  transport: {fileID: 702153656}
   networkAddress: localhost
   maxConnections: 4
   authenticator: {fileID: 0}
@@ -495,11 +497,9 @@ MonoBehaviour:
   _allPlayersReady: 0
   roomSlots: []
   clientIndex: 0
-  PlayerPrefab: {fileID: 8938534602783702256, guid: 07f25eb048b773949a9ea2aeb2b5fb05, type: 3}
-  PlayerPrefab2: {fileID: 8938534602783702256, guid: 3b9942192ad793c4a93fcbfb1c0ac5ce, type: 3}
-  purple: 1
   RoomPlayers: []
   IsGameInProgress: 0
+  useSteam: 1
 --- !u!4 &702153654
 Transform:
   m_ObjectHideFlags: 0
@@ -521,13 +521,41 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 702153651}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   offsetX: 0
   offsetY: 0
+--- !u!114 &702153656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702153651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6e55fca1f4e4844593a3dd65a3ecb39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Channels: 0200000001000000
+  Timeout: 25
+  AllowSteamRelay: 1
+  UseNextGenSteamNetworking: 1
+--- !u!114 &702153657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702153651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4bffeda13d7a748973ff9204401c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &760003851
 GameObject:
   m_ObjectHideFlags: 0
