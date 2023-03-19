@@ -37,18 +37,9 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
         //For Everyone
         playerUITransform.SetParent(LobbyManager.Instance.RoomPlayerParent);
         roomPlayerUI = GetComponent<RoomPlayerUI>();
-        //
         CustomManager.RoomPlayers.Add(this);
-        roomPlayerUI.InitializeUI(hasAuthority, connectionId);
-        if (!hasAuthority) //For Everyone but owner
-        {
-            roomPlayerUI.CmdRefreshPlayerUI();
-        }
-        else //For Owner
-        {
-            roomPlayerUI.CmdSetCurrentIndex(0);
-            //name variable should be syncvar and set here.
-        }
+        roomPlayerUI.InitializeUI(this);
+        
     }
 
     public override void OnStopClient()
@@ -65,21 +56,12 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
 
     public void ToggleReadyButton()
     {
+        bool readyState = !readyToBegin;
         if (NetworkClient.active && isLocalPlayer)
         {
-
-            if (readyToBegin)
-            {
-                CmdChangeReadyState(false);
-                roomPlayerUI.OnSetReady(false);
-            }
-            else
-            {
-                CmdChangeReadyState(true);
-                roomPlayerUI.OnSetReady(true);
-
-            }
+            CmdChangeReadyState(readyState);
         }
+        roomPlayerUI.CmdOnSetReady(readyState);
     }
     public void SetPlayerData(int connectionId)
     {

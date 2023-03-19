@@ -25,17 +25,26 @@ public class RoomPlayerUI : NetworkBehaviour
     [SerializeField] private Image classImage;
     [SerializeField] private TextMeshProUGUI classNameText;
 
-    private int connectionId;
+    private CustomNetworkRoomPlayer roomPlayer;
    // private new bool hasAuthority;
 
     #region General
-    public void InitializeUI(bool hasAuthority, int connectionId)
+    public void InitializeUI(CustomNetworkRoomPlayer roomPlayer)
     {
-        //this.hasAuthority = hasAuthority;
-        this.connectionId = connectionId;
+        this.roomPlayer = roomPlayer;
         InitializeSelectionButtons();
         InitializeReadyButton();
-        playerNameText.text = connectionId.ToString();
+        playerNameText.text = roomPlayer.ConnectionId.ToString(); //temp
+
+        if (!hasAuthority) //For Everyone but owner
+        {
+            CmdRefreshPlayerUI();
+        }
+        else //For Owner
+        {
+            CmdSetCurrentIndex(0);
+            //name variable should be syncvar and set here.
+        }
     }
     public void ChangeCharacterLinear(bool isNext)
     {
@@ -53,31 +62,30 @@ public class RoomPlayerUI : NetworkBehaviour
         if(!hasAuthority)//default way of the prefab for the player with authority
         {
             readyButton.interactable = false;
-            readyButtonText.text = "Not Ready";
             readyButtonImage.enabled = false;
-        }  
+            CmdOnSetReady(roomPlayer.readyToBegin);
+        }
     }
 
-    public void OnSetReady(bool setToReady)
+    [Command(requiresAuthority = false)]
+    public void CmdOnSetReady(bool readyState)
     {
-        if (setToReady)
+        RpcOnSetReady(readyState);
+    }
+    [ClientRpc]
+    [ServerCallback]
+    private void RpcOnSetReady(bool readyState)
+    {
+        if (readyState)
         {
             DisableSelectionButtons();
-            if (hasAuthority)
-            {
-                readyButtonText.text = "Cancel";
-            }
-            else
-            {
-                readyButtonText.text = "Not Ready";
-            }
+            readyButtonText.text = hasAuthority ? "Cancel" : "Ready";
         }
         else
         {
             EnableSelectionButtons();
-            readyButtonText.text = "Ready";
+            readyButtonText.text = hasAuthority ? "Ready Up" : "Not Ready";
         }
-
     }
     #endregion
 
@@ -118,7 +126,7 @@ public class RoomPlayerUI : NetworkBehaviour
     }
 
     [Command(requiresAuthority = false)]
-    public void CmdRefreshPlayerUI()
+    private void CmdRefreshPlayerUI()
     {
         RefreshPlayerUI(CurrentClassIndex); //index on the host
     }
