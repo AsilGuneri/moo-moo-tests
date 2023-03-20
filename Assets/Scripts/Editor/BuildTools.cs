@@ -40,6 +40,8 @@ public class BuildTools : EditorWindow
             Build();
             Run();
         }
+        GUILayout.Space(5);
+
         GUILayout.BeginHorizontal();
 
         Vector2 size = new Vector2(125, 50);
