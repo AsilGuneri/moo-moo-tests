@@ -495,11 +495,10 @@ MonoBehaviour:
   _allPlayersReady: 0
   roomSlots: []
   clientIndex: 0
-  PlayerPrefab: {fileID: 8938534602783702256, guid: 07f25eb048b773949a9ea2aeb2b5fb05, type: 3}
-  PlayerPrefab2: {fileID: 8938534602783702256, guid: 3b9942192ad793c4a93fcbfb1c0ac5ce, type: 3}
-  purple: 1
   RoomPlayers: []
+  GamePlayers: []
   IsGameInProgress: 0
+  useSteam: 0
 --- !u!4 &702153654
 Transform:
   m_ObjectHideFlags: 0
