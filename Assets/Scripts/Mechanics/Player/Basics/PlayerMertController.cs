@@ -7,9 +7,11 @@ using MyBox;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using System;
 
 public class PlayerMertController : NetworkBehaviour
 {
+    public PlayerStats Stats;
     public Class CharacterClass;
 
     [SerializeField] private Animator animator;
@@ -30,7 +32,7 @@ public class PlayerMertController : NetworkBehaviour
     private PlayerDataHolder _dataHolder;
     private InputKeysData _inputKeys;
 
-    public PlayerSkill[] PlayerSkills = new PlayerSkill[4];
+    [NonSerialized] public PlayerSkill[] PlayerSkills = new PlayerSkill[4];
 
     public bool IsCastingSkill { get; set; } = false;
     public Animator Animator
@@ -194,5 +196,21 @@ public class PlayerMertController : NetworkBehaviour
     {
         rangeIndicator.gameObject.SetActive(isOn);
         if(rangeIndicator.localScale != Vector3.one * _bac.Range) rangeIndicator.localScale = Vector3.one * _bac.Range;
+    }
+
+    // Add methods for updating PlayerStats
+    public void AddDamageDealt(float damage)
+    {
+        Stats.TotalDamageDealt += damage;
+    }
+
+    public void AddHealAmount(float heal)
+    {
+        Stats.TotalHealAmount += heal;
+    }
+
+    public void AddDamageTanked(float damage)
+    {
+        Stats.TotalDamageTanked += damage;
     }
 }

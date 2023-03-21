@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 public class CustomNetworkRoomManager : NetworkRoomManager
 {
     public List<CustomNetworkRoomPlayer> RoomPlayers = new List<CustomNetworkRoomPlayer>();
+    public List<PlayerMertController> GamePlayers = new List<PlayerMertController>();
 
     public bool IsGameInProgress = false;
 
@@ -84,6 +85,7 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         var classData = PlayerSkillsDatabase.Instance.GetClassData(playerClassIndex);
         GameObject prefab = classData.ClassPrefab;
         GameObject gamePlayer = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        AddGamePlayer(gamePlayer.GetComponent<PlayerMertController>());
         return gamePlayer;
     }
     public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnectionToClient conn)
@@ -91,5 +93,10 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         CustomNetworkRoomPlayer roomPlayer = (CustomNetworkRoomPlayer)Instantiate(roomPlayerPrefab);
         roomPlayer.SetPlayerData(conn.connectionId);
         return roomPlayer.gameObject;
+    }
+    private void AddGamePlayer(PlayerMertController newPlayer)
+    {
+        GamePlayers.Add(newPlayer);
+        GoldManager.Instance.GameBank.AddBankAccount(newPlayer);
     }
 }
