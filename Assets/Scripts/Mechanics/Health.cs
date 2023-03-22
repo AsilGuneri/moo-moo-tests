@@ -40,12 +40,32 @@ public class Health : NetworkBehaviour
     {
         if (_currentHealth <= 0) return;
         _currentHealth -= dmg;
+        AddDamageStats(dmg, dealerTransform);
         if (_currentHealth <= 0)
         {
             Die(dealerTransform);
         }
 
     }
+
+    private void AddDamageStats(int dmg, Transform dealerTransform)
+    {
+        if(dealerTransform == null)
+        {
+            Debug.Log("asilxx " + StackTraceUtility.ExtractStackTrace());
+        }
+        if (dealerTransform.TryGetComponent(out PlayerMertController playerController))
+        {
+            playerController.AddDamageDealt(dmg);
+        }
+        if (TryGetComponent(out PlayerMertController myPlayerController))
+        {
+            {
+                myPlayerController.AddDamageTanked(dmg);
+            }
+        }
+    }
+
     [Server]
     private void Die(Transform damageDealerTransform)
     {

@@ -51,31 +51,6 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
     }
 
-    [ServerCallback]
-    public void UnregisterUnits(uint netId, UnitType unitType)
-    {
-        switch (unitType)
-        {
-            case UnitType.Player:
-
-                foreach(var player in Players)
-                {
-                    if (player.networkId == netId) { Players.Remove(player); Debug.Log("Player Removed From UnitList");}
-                }
-                break;
-            case UnitType.WaveEnemy:
-                foreach (var enemy in WaveEnemies)
-                {
-                    if (enemy.networkId == netId) 
-                    { 
-                        WaveEnemies.Remove(enemy);
-                        if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd();
-                    }
-                }
-                break;
-        }
-    }
-
     public GameObject GetClosestUnit(Vector3 myPosition, bool isEnemy = false)
     {
         float closestDistance = Mathf.Infinity;
@@ -122,3 +97,34 @@ public enum UnitType
     Player,
     WaveEnemy
 }
+
+
+
+
+
+
+//its probably working but not needed.
+//[ServerCallback]
+//public void UnregisterUnits(uint netId, UnitType unitType)
+//{
+//    switch (unitType)
+//    {
+//        case UnitType.Player:
+
+//            foreach(var player in Players)
+//            {
+//                if (player.networkId == netId) { Players.Remove(player); Debug.Log("Player Removed From UnitList");}
+//            }
+//            break;
+//        case UnitType.WaveEnemy:
+//            foreach (var enemy in WaveEnemies)
+//            {
+//                if (enemy.networkId == netId) 
+//                { 
+//                    WaveEnemies.Remove(enemy);
+//                    if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd();
+//                }
+//            }
+//            break;
+//    }
+//}

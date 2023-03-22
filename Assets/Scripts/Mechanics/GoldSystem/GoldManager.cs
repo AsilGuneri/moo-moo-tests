@@ -50,6 +50,7 @@ public class GoldManager : NetworkSingleton<GoldManager>
     public float CalculateContributionPercentage(PlayerStats stats, float totalScore)
     {
         float playerScore = CalculateContributionScore(stats);
+        if (playerScore <= 0) return 0;
         return playerScore / totalScore;
     }
 }
