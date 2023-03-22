@@ -5,8 +5,14 @@ using System;
 
 [CreateAssetMenu(fileName = "WaveData", menuName = "Scriptable Objects/Wave Data", order = 1)]
 
-public class WaveData : ScriptableObject
+public class AllWavesData : ScriptableSingleton<AllWavesData>
 {
+    public List<WaveData> WavesData = new List<WaveData>();
+}
+[Serializable]
+public class WaveData
+{
+    public int WaveGoldReward;
     public List<SubWave> SubWaves = new List<SubWave>();
 }
 [Serializable]

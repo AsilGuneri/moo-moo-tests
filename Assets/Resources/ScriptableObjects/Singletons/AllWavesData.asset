@@ -10,6 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7484dfd02de17284c9066a03c5b845e0, type: 3}
-  m_Name: FirstWave
+  m_Name: AllWavesData
   m_EditorClassIdentifier: 
-  WavesData: []
+  WavesData:
+  - WaveGoldReward: 100
+    SubWaves:
+    - Prefab: {fileID: 7498676492825279152, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
+      Count: 8
+      Spacing: 2
+      Columns: 4

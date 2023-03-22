@@ -30,6 +30,10 @@ public class Projectile : NetworkBehaviour
     [ServerCallback]
     private void CmdTargetHit()
     {
+        if(_target == null || spawnerTransform == null)
+        {
+            return;
+        }
         _target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
         if (onHitParticle)
         {

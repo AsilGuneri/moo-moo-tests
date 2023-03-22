@@ -8,13 +8,13 @@ using UnityEngine.UI;
 
 public class WaveManager : NetworkSingleton<WaveManager>
 {
-    [SerializeField] List<WaveData> WavesData = new List<WaveData>();
     [SerializeField] Transform spawnArea;
     [SerializeField] float spacing = 2f;
     [SerializeField] Button readyButton;
     Vector3 initialSpawnPos;
     int lastSpawnedIndex = -1;
     int readyCount;
+    int currentWaveIndex = 0;
 
     private void Start()
     {
@@ -23,11 +23,13 @@ public class WaveManager : NetworkSingleton<WaveManager>
     [Server]
     public void SpawnTestWave()
     {
-        SpawnWave(WavesData[0]);
+        SpawnWave(AllWavesData.Instance.WavesData[0]);
     }
-
+    [ServerCallback]
     public void OnWaveEnd()
     {
+        GoldManager.Instance.DistributeGold(AllWavesData.Instance.WavesData[currentWaveIndex].WaveGoldReward);
+        currentWaveIndex++;
         StartVote();
     }
     [ClientRpc]
@@ -56,10 +58,19 @@ public class WaveManager : NetworkSingleton<WaveManager>
     {
         if (readyCount >= CustomNetworkManager.singleton.numPlayers)
         {
-            SpawnTestWave();
+            SpawnNextWave();
         }
     }
 
+    [ServerCallback]
+    private void SpawnNextWave()
+    {
+        if (AllWavesData.Instance.WavesData.Count - 1 > currentWaveIndex)
+        {
+            currentWaveIndex = AllWavesData.Instance.WavesData.Count - 1;
+        }
+        SpawnWave(AllWavesData.Instance.WavesData[currentWaveIndex]);
+    }
 
     private void SpawnWave(WaveData waveData)
     {
