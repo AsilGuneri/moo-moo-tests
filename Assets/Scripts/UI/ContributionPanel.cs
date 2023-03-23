@@ -9,6 +9,7 @@ using Utilities;
 
 public class ContributionPanel : NetworkSingleton<ContributionPanel>
 {
+    public Transform ContributionFieldParent { get => contributionFieldParent; }
     [SerializeField] private PlayerContribution contributionFieldPrefab;
     [SerializeField] private Transform contributionFieldParent;
     private List<PlayerContribution> Contributions = new List<PlayerContribution>();
@@ -22,21 +23,26 @@ public class ContributionPanel : NetworkSingleton<ContributionPanel>
     [ServerCallback]
     public void AddPlayerContributionField(PlayerMertController playerController)
     {
-        var field = Instantiate(contributionFieldPrefab, contributionFieldParent);
+        var field = Instantiate(contributionFieldPrefab);
         field.PlayerController = playerController;
         NetworkServer.Spawn(field.gameObject);
-        field.UpdatePlayerNameText(playerController.PlayerName);//temp
+        field.RpcUpdatePlayerNameText(playerController.PlayerName);//temp
         Contributions.Add(field);
     }
-    [ServerCallback]
-    public void UpdateContribution(PlayerMertController playerController)
-    { 
+
+    [Command(requiresAuthority = false)]
+    public void CmdUpdateContribution()
+    {
+        UpdateAllContributions();
+    }
+    private void UpdateAllContributions()
+    {
         foreach (PlayerMertController player in CustomManager.GamePlayers)
         {
             var contributionField = GetPlayersContributionField(player);
             float totalScore = CalculateTotalContributionScore(CustomManager.GamePlayers);
             float newPercentage = CalculateContributionPercentage(contributionField.PlayerController.Stats, totalScore);
-            contributionField.UpdateContributionPercentText(newPercentage);
+            contributionField.RpcUpdateContributionPercentText(newPercentage);
         }
     }
     private PlayerContribution GetPlayersContributionField(PlayerMertController playerController)

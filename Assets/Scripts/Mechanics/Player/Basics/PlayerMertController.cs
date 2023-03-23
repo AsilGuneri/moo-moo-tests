@@ -204,7 +204,7 @@ public class PlayerMertController : NetworkBehaviour
     public void AddDamageDealt(int damage)
     {
         Stats.TotalDamageDealt += damage;
-        ContributionPanel.Instance.UpdateContribution(this);
+        ContributionPanel.Instance.CmdUpdateContribution();
     }
 
     public void AddHealAmount(int heal)

@@ -9,13 +9,18 @@ public class PlayerContribution : NetworkBehaviour
     [SerializeField] TextMeshProUGUI ContributionPercentageText;
     public PlayerMertController PlayerController { get; set; }
 
+    private void OnEnable()
+    {
+        transform.SetParent(ContributionPanel.Instance.ContributionFieldParent, false);
+    }
+
     [ClientRpc]
-    public void UpdatePlayerNameText(string text)
+    public void RpcUpdatePlayerNameText(string text)
     {
         PlayerNameText.text = text;
     }
     [ClientRpc]
-    public void UpdateContributionPercentText(float amount)
+    public void RpcUpdateContributionPercentText(float amount)
     {
         var text = (amount * 100).ToString("F1");
         ContributionPercentageText.text = text;
