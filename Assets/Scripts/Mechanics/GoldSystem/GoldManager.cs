@@ -16,41 +16,18 @@ public class GoldManager : NetworkSingleton<GoldManager>
     {
         CustomManager = NetworkRoomManager.singleton as CustomNetworkRoomManager;
     }
-    [ButtonMethod]
     public void DistributeGold(float totalGold)
     {
 
-        float totalScore = CalculateTotalContributionScore(CustomManager.GamePlayers);
+        float totalScore = ContributionPanel.Instance.CalculateTotalContributionScore(CustomManager.GamePlayers);
 
         foreach (PlayerMertController player in CustomManager.GamePlayers)
         {
-            float percentage = CalculateContributionPercentage(player.Stats, totalScore);
+            float percentage = ContributionPanel.Instance.CalculateContributionPercentage(player.Stats, totalScore);
             int goldReward = Mathf.CeilToInt(totalGold * percentage);
             GameBank.GiveGold(goldReward, player);
             player.Stats.ResetStats();
         }
-    }
-    public float CalculateContributionScore(PlayerStats stats)
-    {
-        float damageWeight = 1.0f;
-        float healWeight = 0.8f;
-        float tankWeight = 0.6f;
-
-        return (stats.TotalDamageDealt * damageWeight) + (stats.TotalHealAmount * healWeight) + (stats.TotalDamageTanked * tankWeight);
-    }
-    private float CalculateTotalContributionScore(List<PlayerMertController> players)
-    {
-        float totalScore = 0;
-        foreach (PlayerMertController player in players)
-        {
-            totalScore += CalculateContributionScore(player.Stats);
-        }
-        return totalScore;
-    }
-    public float CalculateContributionPercentage(PlayerStats stats, float totalScore)
-    {
-        float playerScore = CalculateContributionScore(stats);
-        return playerScore / totalScore;
     }
 }
 [Serializable]
@@ -122,9 +99,9 @@ public class BankAccount
 [Serializable]
 public class PlayerStats
 {
-    public float TotalDamageDealt;
-    public float TotalHealAmount;
-    public float TotalDamageTanked;
+    public int TotalDamageDealt;
+    public int TotalHealAmount;
+    public int TotalDamageTanked;
 
     public void ResetStats()
     {

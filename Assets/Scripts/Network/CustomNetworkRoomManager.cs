@@ -85,7 +85,10 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         var classData = PlayerSkillsDatabase.Instance.GetClassData(playerClassIndex);
         GameObject prefab = classData.ClassPrefab;
         GameObject gamePlayer = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-        GamePlayers.Add(gamePlayer.GetComponent<PlayerMertController>());
+
+        var playerController = gamePlayer.GetComponent<PlayerMertController>();
+        playerController.PlayerName = conn.connectionId.ToString(); // temp
+        GamePlayers.Add(playerController);
         return gamePlayer;
     }
     public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnectionToClient conn)

@@ -9,7 +9,9 @@ using Utilities;
 public class ClientGoldManager : NetworkSingleton<ClientGoldManager>
 {
     [SerializeField] private TextMeshProUGUI goldText;
+
     int currentGold;
+
     public int GoldAmount 
     {
         get => currentGold; 

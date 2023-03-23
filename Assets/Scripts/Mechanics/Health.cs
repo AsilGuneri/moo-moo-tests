@@ -50,10 +50,6 @@ public class Health : NetworkBehaviour
 
     private void AddDamageStats(int dmg, Transform dealerTransform)
     {
-        if(dealerTransform == null)
-        {
-            Debug.Log("asilxx " + StackTraceUtility.ExtractStackTrace());
-        }
         if (dealerTransform.TryGetComponent(out PlayerMertController playerController))
         {
             playerController.AddDamageDealt(dmg);

@@ -13,6 +13,7 @@ public class PlayerMertController : NetworkBehaviour
 {
     public PlayerStats Stats;
     public Class CharacterClass;
+    public string PlayerName { get; set; }
 
     [SerializeField] private Animator animator;
     
@@ -74,6 +75,7 @@ public class PlayerMertController : NetworkBehaviour
         if (NetworkServer.active)
         {
             GoldManager.Instance.GameBank.AddBankAccount(this);
+            ContributionPanel.Instance.AddPlayerContributionField(this);
         }
 
     }
@@ -199,18 +201,21 @@ public class PlayerMertController : NetworkBehaviour
     }
 
     // Add methods for updating PlayerStats
-    public void AddDamageDealt(float damage)
+    public void AddDamageDealt(int damage)
     {
         Stats.TotalDamageDealt += damage;
+        ContributionPanel.Instance.UpdateContribution(this);
     }
 
-    public void AddHealAmount(float heal)
+    public void AddHealAmount(int heal)
     {
         Stats.TotalHealAmount += heal;
+        //ContributionPanel.Instance.UpdateContribution();
     }
 
-    public void AddDamageTanked(float damage)
+    public void AddDamageTanked(int damage)
     {
         Stats.TotalDamageTanked += damage;
+        //ContributionPanel.Instance.UpdateContribution();
     }
 }
