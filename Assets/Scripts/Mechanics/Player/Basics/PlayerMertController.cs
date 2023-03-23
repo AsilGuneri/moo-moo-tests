@@ -49,7 +49,6 @@ public class PlayerMertController : NetworkBehaviour
             SetRangeIndicator(value);
         }
     }
-
     private void Start()
     {
         Activate();
@@ -64,18 +63,19 @@ public class PlayerMertController : NetworkBehaviour
         _hc = GetComponent<Health>();
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
     }
-
     public void Activate() 
     {
-        if (!hasAuthority) return;
-        mainCamera = Camera.main; //DO NOT GET THE CAMERA LIKE THAT, get a reference to the cam.
-        mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
-        StartCoroutine(nameof(RegisterRoutine));
-    }
-    private IEnumerator RegisterRoutine()
-    {
-        yield return new WaitUntil(() => UnitManager.Instance != null);
-        UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
+        if (hasAuthority)
+        {
+            mainCamera = Camera.main; //DO NOT GET THE CAMERA LIKE THAT, get a reference to the cam.
+            mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
+            UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
+        }
+        if (NetworkServer.active)
+        {
+            GoldManager.Instance.GameBank.AddBankAccount(this);
+        }
+
     }
 
     [ClientCallback]

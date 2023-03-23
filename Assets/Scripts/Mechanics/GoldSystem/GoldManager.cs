@@ -8,7 +8,7 @@ using MyBox;
 
 public class GoldManager : NetworkSingleton<GoldManager>
 {
-    [SerializeField][ReadOnly] private Bank bank =  new Bank();
+    [SerializeField][ReadOnly] private Bank bank = new Bank();
     public Bank GameBank { get { return bank; } }
 
     private CustomNetworkRoomManager CustomManager;
@@ -50,7 +50,6 @@ public class GoldManager : NetworkSingleton<GoldManager>
     public float CalculateContributionPercentage(PlayerStats stats, float totalScore)
     {
         float playerScore = CalculateContributionScore(stats);
-        if (playerScore <= 0) return 0;
         return playerScore / totalScore;
     }
 }
@@ -63,13 +62,13 @@ public class Bank
     {
         BankAccount newAccount = new BankAccount();
         newAccount.PlayerController = player;
-        newAccount.Gold = 0;
+        newAccount.SetGold(0);
         BankAccounts.Add(newAccount);
     }
     public void GiveGold(int amount, PlayerMertController player)
     {
         var account = GetAccountHolder(player);
-        account.Gold += amount;
+        account.AddGold(amount);
         Debug.Log($"{amount} golds given to player {player}");
     }
     public int GetGoldAmount(PlayerMertController player)
@@ -90,8 +89,35 @@ public class Bank
 [Serializable]
 public class BankAccount
 {
-    public int Gold;
+    [ReadOnly][SerializeField] private int gold;
+    public int Gold
+    {
+        get
+        {
+            return gold;
+        }
+        private set
+        {
+            gold = value;
+        }
+    }
     public PlayerMertController PlayerController;
+
+    public void SetGold(int newGoldAmount)
+    {
+        Gold = newGoldAmount;
+        ClientGoldManager.Instance.UpdateGold(PlayerController.netIdentity.connectionToClient, gold);
+    }
+    public void AddGold(int additionAmount)
+    {
+        Gold += additionAmount;
+        ClientGoldManager.Instance.UpdateGold(PlayerController.netIdentity.connectionToClient, gold);
+    }
+    public void PayGold(int price)
+    {
+        Gold -= price;//use out parameter here.
+        ClientGoldManager.Instance.UpdateGold(PlayerController.netIdentity.connectionToClient, gold);
+    }
 }
 [Serializable]
 public class PlayerStats

@@ -4,6 +4,7 @@ using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,7 +22,6 @@ public class CustomNetworkRoomManager : NetworkRoomManager
     protected Callback<LobbyCreated_t> lobbyCreated;
     protected Callback<GameLobbyJoinRequested_t> gameLobbyJoinRequested;
     protected Callback<LobbyEnter_t> lobbyEntered;
-
 
 
     private new void Start()
@@ -85,7 +85,7 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         var classData = PlayerSkillsDatabase.Instance.GetClassData(playerClassIndex);
         GameObject prefab = classData.ClassPrefab;
         GameObject gamePlayer = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-        AddGamePlayer(gamePlayer.GetComponent<PlayerMertController>());
+        GamePlayers.Add(gamePlayer.GetComponent<PlayerMertController>());
         return gamePlayer;
     }
     public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnectionToClient conn)
@@ -93,10 +93,5 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         CustomNetworkRoomPlayer roomPlayer = (CustomNetworkRoomPlayer)Instantiate(roomPlayerPrefab);
         roomPlayer.SetPlayerData(conn.connectionId);
         return roomPlayer.gameObject;
-    }
-    private void AddGamePlayer(PlayerMertController newPlayer)
-    {
-        GamePlayers.Add(newPlayer);
-        GoldManager.Instance.GameBank.AddBankAccount(newPlayer);
     }
 }
