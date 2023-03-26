@@ -589,7 +589,7 @@ GameObject:
   - component: {fileID: 1009448525}
   - component: {fileID: 1009448526}
   m_Layer: 5
-  m_Name: PlayerObjects
+  m_Name: + PlayerObjects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -953,7 +953,7 @@ GameObject:
   - component: {fileID: 1351143203}
   - component: {fileID: 1351143204}
   m_Layer: 5
-  m_Name: LobbyUI
+  m_Name: '- LobbyUI'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1459,7 +1459,7 @@ GameObject:
   - component: {fileID: 2020661023}
   - component: {fileID: 2020661025}
   m_Layer: 5
-  m_Name: LobbyObjects
+  m_Name: + LobbyObjects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1504,7 +1504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2055720505}
   m_Layer: 0
-  m_Name: LobbyCanvasParent
+  m_Name: = LobbyCanvasParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

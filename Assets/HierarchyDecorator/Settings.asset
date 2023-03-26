@@ -39,7 +39,7 @@ MonoBehaviour:
     styles:
     - prefix: =
       name: Header (Centered)
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 5e63515167650a541b309ba3bfd4db3d, type: 3}
       fontSize: 15
       fontAlignment: 3
       fontStyle: 1
@@ -103,7 +103,7 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        m_Font: {fileID: 0}
+        m_Font: {fileID: 12800000, guid: 5e63515167650a541b309ba3bfd4db3d, type: 3}
         m_FontSize: 15
         m_FontStyle: 1
         m_Alignment: 3
@@ -118,7 +118,7 @@ MonoBehaviour:
         m_StretchHeight: 0
     - prefix: '-'
       name: Subheader
-      font: {fileID: 0}
+      font: {fileID: 12800000, guid: 5e63515167650a541b309ba3bfd4db3d, type: 3}
       fontSize: 13
       fontAlignment: 3
       fontStyle: 1
@@ -182,7 +182,7 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        m_Font: {fileID: 0}
+        m_Font: {fileID: 12800000, guid: 5e63515167650a541b309ba3bfd4db3d, type: 3}
         m_FontSize: 13
         m_FontStyle: 1
         m_Alignment: 3
@@ -197,16 +197,16 @@ MonoBehaviour:
         m_StretchHeight: 0
     - prefix: +
       name: Mini Header (Centered)
-      font: {fileID: 0}
-      fontSize: 10
-      fontAlignment: 4
+      font: {fileID: 12800000, guid: 5e63515167650a541b309ba3bfd4db3d, type: 3}
+      fontSize: 12
+      fontAlignment: 3
       fontStyle: 1
-      textFormatting: 0
+      textFormatting: 2
       modes:
       - fontColour: {r: 1, g: 1, b: 1, a: 1}
         backgroundColour: {r: 0.38568, g: 0.6335747, b: 0.764151, a: 1}
       - fontColour: {r: 1, g: 1, b: 1, a: 1}
-        backgroundColour: {r: 0.2671325, g: 0.4473481, b: 0.6509434, a: 1}
+        backgroundColour: {r: 0.06356999, g: 0.1391928, b: 0.16299999, a: 1}
       style:
         m_Name: Mini Header (Centered)
         m_Normal:
@@ -261,10 +261,10 @@ MonoBehaviour:
           m_Right: 0
           m_Top: 0
           m_Bottom: 0
-        m_Font: {fileID: 0}
-        m_FontSize: 10
+        m_Font: {fileID: 12800000, guid: 5e63515167650a541b309ba3bfd4db3d, type: 3}
+        m_FontSize: 12
         m_FontStyle: 1
-        m_Alignment: 4
+        m_Alignment: 3
         m_WordWrap: 0
         m_RichText: 1
         m_TextClipping: 0
@@ -2219,6 +2219,22 @@ MonoBehaviour:
         shown: 0
         isBuiltIn: 0
         script: {fileID: 11500000, guid: 20f63e1b7cc87ea4294a77d5abb5f1ca, type: 3}
+      - name: LobbyManager
+        content:
+          m_Text: LobbyManager
+          m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000, type: 0}
+          m_Tooltip: LobbyManager
+        shown: 0
+        isBuiltIn: 0
+        script: {fileID: 11500000, guid: 69508fbd77b618c4ca4239221f107d50, type: 3}
+      - name: NetworkIdentity
+        content:
+          m_Text: NetworkIdentity
+          m_Image: {fileID: 0}
+          m_Tooltip: NetworkIdentity
+        shown: 0
+        isBuiltIn: 0
+        script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
     excludedComponents:
       name: Excluded
       components:
