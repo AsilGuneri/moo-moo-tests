@@ -1539,11 +1539,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headerSettings:
-    headerText: '      Canvas'
-    headerColor: {r: 0.5576834, g: 0.2811356, b: 0.582, a: 1}
+    headerText: Lobby Canvas Parent
+    headerColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
     editorOnly: 1
     textAlignmentOptions: 1
     fontStyleOptions: 0
     fontSize: 12
     fontColor: {r: 0.89, g: 0.89, b: 0.89, a: 1}
-    dropShadow: 0
+    dropShadow: 1

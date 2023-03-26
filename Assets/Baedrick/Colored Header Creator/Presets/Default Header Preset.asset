@@ -13,24 +13,64 @@ MonoBehaviour:
   m_Name: Default Header Preset
   m_EditorClassIdentifier: 
   coloredHeaderPreset:
-  - headerText: '      Managers'
-    headerColor: {r: 0.13333334, g: 0.2, b: 0.58431375, a: 1}
+  - headerText: System
+    headerColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     editorOnly: 1
     textAlignmentOptions: 1
     fontStyleOptions: 0
     fontSize: 12
     fontColor: {r: 1, g: 1, b: 1, a: 1}
     dropShadow: 0
-  - headerText: '      Environment'
-    headerColor: {r: 0.22352943, g: 0.46274513, b: 0.28235295, a: 1}
+  - headerText: UI
+    headerColor: {r: 0.33333334, g: 0.73333335, b: 0.6901961, a: 1}
     editorOnly: 1
     textAlignmentOptions: 1
     fontStyleOptions: 0
     fontSize: 12
-    fontColor: {r: 1, g: 1, b: 1, a: 1}
+    fontColor: {r: 0, g: 0, b: 0, a: 1}
     dropShadow: 0
-  - headerText: '      Canvas'
-    headerColor: {r: 0.5568628, g: 0.28235295, b: 0.5803922, a: 1}
+  - headerText: Cinemachine
+    headerColor: {r: 0.33333334, g: 0.73333335, b: 0.6901961, a: 1}
+    editorOnly: 1
+    textAlignmentOptions: 1
+    fontStyleOptions: 0
+    fontSize: 12
+    fontColor: {r: 0, g: 0, b: 0, a: 1}
+    dropShadow: 0
+  - headerText: Player
+    headerColor: {r: 0.33333334, g: 0.73333335, b: 0.6901961, a: 1}
+    editorOnly: 1
+    textAlignmentOptions: 1
+    fontStyleOptions: 0
+    fontSize: 12
+    fontColor: {r: 0, g: 0, b: 0, a: 1}
+    dropShadow: 0
+  - headerText: Environment
+    headerColor: {r: 0.33333334, g: 0.73333335, b: 0.6901961, a: 1}
+    editorOnly: 1
+    textAlignmentOptions: 1
+    fontStyleOptions: 0
+    fontSize: 12
+    fontColor: {r: 0, g: 0, b: 0, a: 1}
+    dropShadow: 0
+  - headerText: Lighting
+    headerColor: {r: 0.33333334, g: 0.73333335, b: 0.6901961, a: 1}
+    editorOnly: 1
+    textAlignmentOptions: 1
+    fontStyleOptions: 0
+    fontSize: 12
+    fontColor: {r: 0, g: 0, b: 0, a: 1}
+    dropShadow: 0
+  - headerText: Audio
+    headerColor: {r: 0.33333334, g: 0.73333335, b: 0.6901961, a: 1}
+    editorOnly: 1
+    textAlignmentOptions: 1
+    fontStyleOptions: 0
+    fontSize: 12
+    fontColor: {r: 0, g: 0, b: 0, a: 1}
+    dropShadow: 0
+  - headerText: Spawned Prefabs
+    headerColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     editorOnly: 1
     textAlignmentOptions: 1
     fontStyleOptions: 0
