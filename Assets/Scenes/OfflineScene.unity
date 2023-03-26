@@ -419,10 +419,9 @@ GameObject:
   - component: {fileID: 702153653}
   - component: {fileID: 702153652}
   - component: {fileID: 702153655}
-  - component: {fileID: 702153656}
   m_Layer: 0
-  m_Name: '%$ Header'
-  m_TagString: EditorOnly
+  m_Name: NetworkRoomManager
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -529,27 +528,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offsetX: 0
   offsetY: 0
---- !u!114 &702153656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 702153651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd08058c8f786114eb9ec6564be9957c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headerSettings:
-    headerText: '      NetworkManager'
-    headerColor: {r: 0, g: 0, b: 0, a: 1}
-    editorOnly: 1
-    textAlignmentOptions: 1
-    fontStyleOptions: 0
-    fontSize: 0
-    fontColor: {r: 1, g: 1, b: 1, a: 1}
-    dropShadow: 0
 --- !u!1 &760003851
 GameObject:
   m_ObjectHideFlags: 0

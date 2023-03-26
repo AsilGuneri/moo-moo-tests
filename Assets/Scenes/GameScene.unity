@@ -762,10 +762,9 @@ GameObject:
   - component: {fileID: 334110790}
   - component: {fileID: 334110789}
   - component: {fileID: 334110794}
-  - component: {fileID: 334110795}
   m_Layer: 0
-  m_Name: '%$ Header'
-  m_TagString: EditorOnly
+  m_Name: Managers
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -879,27 +878,6 @@ MonoBehaviour:
   syncInterval: 0.1
   contributionFieldPrefab: {fileID: 1019676739148843741, guid: 11ea5b7ac5ddc324684f5931b3883e13, type: 3}
   contributionFieldParent: {fileID: 175155515}
---- !u!114 &334110795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 334110787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd08058c8f786114eb9ec6564be9957c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headerSettings:
-    headerText: '      managers'
-    headerColor: {r: 0.13519046, g: 0.19898942, b: 0.5849056, a: 1}
-    editorOnly: 1
-    textAlignmentOptions: 1
-    fontStyleOptions: 0
-    fontSize: 12
-    fontColor: {r: 1, g: 1, b: 1, a: 1}
-    dropShadow: 0
 --- !u!1 &361532535
 GameObject:
   m_ObjectHideFlags: 0
@@ -3482,35 +3460,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1295523493}
-  - component: {fileID: 1295523492}
   m_Layer: 0
-  m_Name: '%$ Header'
-  m_TagString: EditorOnly
+  m_Name: Environment
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1295523492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1295523491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd08058c8f786114eb9ec6564be9957c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headerSettings:
-    headerText: '      Environment'
-    headerColor: {r: 0.22459063, g: 0.46226418, b: 0.2808482, a: 1}
-    editorOnly: 1
-    textAlignmentOptions: 1
-    fontStyleOptions: 0
-    fontSize: 12
-    fontColor: {r: 1, g: 1, b: 1, a: 1}
-    dropShadow: 0
 --- !u!4 &1295523493
 Transform:
   m_ObjectHideFlags: 0
