@@ -22,7 +22,6 @@ public class SkillSelectionPanel : Singleton<SkillSelectionPanel>
 
     private void Start()
     {
-        CacheClassSkills();
         //SetClassSkills(); bu burda dursun buna dönücez
     }
 
@@ -51,7 +50,7 @@ public class SkillSelectionPanel : Singleton<SkillSelectionPanel>
 
 
     }
-    private void CacheClassSkills()
+    public void CacheClassSkills()
     {
         characterClass = UnitManager.Instance.GetPlayerController().CharacterClass;
         classSkills = PlayerSkillsDatabase.Instance.GetClassData(characterClass);

@@ -71,6 +71,8 @@ public class PlayerMertController : NetworkBehaviour
             mainCamera = Camera.main; //DO NOT GET THE CAMERA LIKE THAT, get a reference to the cam.
             mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
             UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
+            SkillSelectionPanel.Instance.CacheClassSkills();
+
         }
         if (NetworkServer.active)
         {
