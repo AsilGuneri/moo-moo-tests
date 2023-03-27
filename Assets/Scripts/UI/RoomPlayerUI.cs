@@ -52,6 +52,7 @@ public class RoomPlayerUI : NetworkBehaviour
         int maxIndex = PlayerSkillsDatabase.Instance.ClassList.Count - 1;
         if (newIndex > maxIndex) newIndex = 0;
         if (newIndex < 0) newIndex = maxIndex;
+        CurrentClassIndex = newIndex;
         CmdSetCurrentIndex(newIndex);
     }
     #endregion
