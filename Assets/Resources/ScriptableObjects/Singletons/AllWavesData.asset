@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -16,6 +16,6 @@ MonoBehaviour:
   - WaveGoldReward: 100
     SubWaves:
     - Prefab: {fileID: 7498676492825279152, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
-      Count: 8
+      Count: 1
       Spacing: 2
       Columns: 4

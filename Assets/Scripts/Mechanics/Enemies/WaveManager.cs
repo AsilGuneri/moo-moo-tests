@@ -65,7 +65,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
     [ServerCallback]
     private void SpawnNextWave()
     {
-        if (AllWavesData.Instance.WavesData.Count - 1 > currentWaveIndex)
+        if (currentWaveIndex > AllWavesData.Instance.WavesData.Count - 1)
         {
             currentWaveIndex = AllWavesData.Instance.WavesData.Count - 1;
         }
