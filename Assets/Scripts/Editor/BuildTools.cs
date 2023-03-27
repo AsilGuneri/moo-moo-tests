@@ -57,6 +57,7 @@ public class BuildTools : EditorWindow
 
         // Delete button
         DeleteButton("Delete Old Build", size);
+        GUILayout.EndHorizontal();
     }
 
     private void DeleteButton(string buttonName, Vector2 size)

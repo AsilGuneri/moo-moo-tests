@@ -22,7 +22,7 @@ public class SkillSelectionPanel : Singleton<SkillSelectionPanel>
 
     private void Start()
     {
-        StartCoroutine(CacheClassSkills());
+        CacheClassSkills();
         //SetClassSkills(); bu burda dursun buna dönücez
     }
 
@@ -51,10 +51,8 @@ public class SkillSelectionPanel : Singleton<SkillSelectionPanel>
 
 
     }
-    //this is for test only, its not supposed to a void 
-    private IEnumerator CacheClassSkills()
+    private void CacheClassSkills()
     {
-        yield return new WaitForSeconds(3);
         characterClass = UnitManager.Instance.GetPlayerController().CharacterClass;
         classSkills = PlayerSkillsDatabase.Instance.GetClassData(characterClass);
         SetClassSkills();
