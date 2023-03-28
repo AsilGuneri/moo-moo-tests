@@ -21,7 +21,11 @@ public class UnitMovementController : MonoBehaviour
         //agent.isStopped = false;
         //if (stoppingDistance != 0) agent.stoppingDistance = stoppingDistance;
         //agent.SetDestination(pos);
-        if(bac != null) bac.OnMove();
+        if (bac != null) 
+        {
+            bac.OnAttackEnd();
+            bac.OnMove();
+        }
         if(!movingToTarget) tc.SyncTarget(null);
         agentController.SetTarget(pos);
     }

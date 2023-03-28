@@ -51,7 +51,10 @@ public abstract class ABasicAttackController : NetworkBehaviour
         if (counter <= (1 / baseStats.AttackSpeed)) counter += Time.deltaTime;
         if (tc.Target == null)
         {
-            StopAttacking();
+            if (isAttacking)
+            {
+                StopAttacking();
+            }
             if (!isStable)
             {
                 ResetStoppingDistance();
@@ -70,7 +73,6 @@ public abstract class ABasicAttackController : NetworkBehaviour
     }
     protected virtual void ChaseToAttack()
     {
-        if (ac != null) ac.OnAttackEnd();
         umc.ClientMove(tc.Target.transform.position, true, baseStats.Range);
         isChasing = true;
     }
