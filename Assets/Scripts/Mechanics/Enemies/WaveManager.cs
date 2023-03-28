@@ -28,10 +28,20 @@ public class WaveManager : NetworkSingleton<WaveManager>
     [ServerCallback]
     public void OnWaveEnd()
     {
+        int maxWaveIndex = AllWavesData.Instance.WavesData.Count - 1;
+
         GoldManager.Instance.DistributeGold(AllWavesData.Instance.WavesData[currentWaveIndex].WaveGoldReward);
+
         currentWaveIndex++;
+
+        if (currentWaveIndex > maxWaveIndex)
+        {
+            currentWaveIndex = maxWaveIndex;
+        }
+
         StartVote();
     }
+
     [ClientRpc]
     private void StartVote()
     {

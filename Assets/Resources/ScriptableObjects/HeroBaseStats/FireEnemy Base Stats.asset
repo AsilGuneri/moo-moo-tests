@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FireEnemy Base Stats
   m_EditorClassIdentifier: 
   AttackSpeed: 1
-  Range: 10
-  Hp: 100
+  Range: 4
+  Hp: 40
   Damage: 10
   AnimAttackMoment: 0.63
