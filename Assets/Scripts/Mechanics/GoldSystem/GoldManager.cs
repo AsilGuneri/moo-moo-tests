@@ -27,6 +27,7 @@ public class GoldManager : NetworkSingleton<GoldManager>
             int goldReward = Mathf.CeilToInt(totalGold * percentage);
             GameBank.GiveGold(goldReward, player);
             player.Stats.ResetStats();
+            ContributionPanel.Instance.CmdUpdateContribution();
         }
     }
 }
