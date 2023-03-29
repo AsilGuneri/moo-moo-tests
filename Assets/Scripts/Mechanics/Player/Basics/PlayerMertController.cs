@@ -64,23 +64,22 @@ public class PlayerMertController : NetworkBehaviour
         _hc = GetComponent<Health>();
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
     }
-    public void Activate() 
+    private void Activate()
     {
-        if (hasAuthority)
-        {
-            mainCamera = Camera.main; //DO NOT GET THE CAMERA LIKE THAT, get a reference to the cam.
-            mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
-            UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
-            SkillSelectionPanel.Instance.CacheClassSkills();
-
-        }
         if (NetworkServer.active)
         {
             GoldManager.Instance.GameBank.AddBankAccount(this);
             ContributionPanel.Instance.AddPlayerContributionField(this);
         }
-
+        if (isLocalPlayer)
+        {
+            mainCamera = Camera.main;
+            mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
+            UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
+            SkillSelectionPanel.Instance.CacheClassSkills();
+        }
     }
+
 
     [ClientCallback]
     void Update()
