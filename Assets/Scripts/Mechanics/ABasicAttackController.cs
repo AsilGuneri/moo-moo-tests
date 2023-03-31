@@ -86,7 +86,7 @@ public abstract class ABasicAttackController : NetworkBehaviour
     }
     protected virtual void ResetStoppingDistance()
     {
-        if (agent.stoppingDistance != 0) agent.stoppingDistance = 0;
+        //if (agent.stoppingDistance != 0) agent.stoppingDistance = 0;
     }
     protected abstract void StopAttacking();
     protected abstract void StartAttacking();

@@ -86,10 +86,10 @@ public class PlayerMertController : NetworkBehaviour
     {
         if (!hasAuthority) return;
         if (IsCastingSkill) return;
-        if (!_navMeshAgent.hasPath && !_tc.HasTarget)
-        {
-            _pac.OnStop();
-        }
+        //if (!_navMeshAgent.hasPath && !_tc.HasTarget)
+        //{
+        //    _pac.OnStop();
+        //}
 
 
         if (Input.GetKeyDown(_inputKeys.AttackKey)) IsAttackClickMode = true;
