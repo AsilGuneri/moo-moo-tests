@@ -11,8 +11,11 @@ public class UnitMovementController : MonoBehaviour
 
     private TargetController targetController;
     private AnimationController animationController;
- 
+
     private RichAI richAI;
+
+    private bool isMoving = false;
+
 
     private void Awake()
     {
@@ -23,7 +26,7 @@ public class UnitMovementController : MonoBehaviour
 
     private void Update()
     {
-        if (richAI.reachedEndOfPath || richAI.pathPending)
+        if (!isMoving || richAI.reachedEndOfPath || richAI.pathPending)
         {
             return;
         }
@@ -47,6 +50,7 @@ public class UnitMovementController : MonoBehaviour
 
         richAI.endReachedDistance = stoppingDistance;
         richAI.destination = pos;
+        isMoving = true;
     }
 
     public void ClientStop()
@@ -54,5 +58,6 @@ public class UnitMovementController : MonoBehaviour
         if (animationController != null) animationController.OnStop();
 
         richAI.destination = transform.position;
+        isMoving = false;
     }
 }
