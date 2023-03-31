@@ -6,90 +6,53 @@ using Pathfinding;
 
 public class UnitMovementController : MonoBehaviour
 {
-    [Separator("Script References")]
-    [SerializeField] private AnimationController bac;
-    public float moveSpeed = 10;
-    private TargetController tc;
-    private Seeker seeker;
-    private Path currentPath;
-    private int currentWaypoint;
-    private Coroutine moveCoroutine;
+    public float moveSpeed = 5f;
+    public float rotationSpeed = 30f;
+
+    private TargetController targetController;
+    private AnimationController animationController;
+ 
+    private RichAI richAI;
 
     private void Awake()
     {
-        tc = GetComponent<TargetController>();
-        seeker = GetComponent<Seeker>();
+        targetController = GetComponent<TargetController>();
+        richAI = GetComponent<RichAI>();
+        animationController = GetComponent<AnimationController>();
     }
 
-    public void ClientMove(Vector3 pos, bool movingToTarget = false, float stoppingDistance = 0)
+    private void Update()
     {
-        if (bac != null)
+        if (richAI.reachedEndOfPath || richAI.pathPending)
         {
-            bac.OnAttackEnd();
-            bac.OnMove();
-        }
-        if (!movingToTarget) tc.SyncTarget(null);
-
-        if (moveCoroutine != null)
-        {
-            StopCoroutine(moveCoroutine);
+            return;
         }
 
-        seeker.StartPath(transform.position, pos, OnPathComplete);
+        Vector3 targetDirection = (richAI.steeringTarget - transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+        // Move the character at a constant speed
+        transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, moveSpeed * Time.deltaTime);
     }
 
-    private void OnPathComplete(Path p)
+    public void ClientMove(Vector3 pos, bool movingToTarget = false, float stoppingDistance = 0.05f)
     {
-        if (!p.error)
+        if (animationController != null)
         {
-            currentPath = p;
-            currentWaypoint = 0;
-            moveCoroutine = StartCoroutine(MoveAlongPath());
+            animationController.OnAttackEnd();
+            animationController.OnMove();
         }
+        if (!movingToTarget) targetController.SyncTarget(null);
+
+        richAI.endReachedDistance = stoppingDistance;
+        richAI.destination = pos;
     }
-
-    private IEnumerator MoveAlongPath()
-    {
-        if (currentPath != null)
-        {
-            float pickNextWaypointDist = 0.3f; // Increase this value to switch waypoints earlier
-
-            while (currentWaypoint < currentPath.vectorPath.Count)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, currentPath.vectorPath[currentWaypoint], moveSpeed * Time.deltaTime);
-
-                float distanceToWaypoint = Vector3.Distance(transform.position, currentPath.vectorPath[currentWaypoint]);
-                if (distanceToWaypoint < pickNextWaypointDist)
-                {
-                    currentWaypoint++;
-                }
-
-                // Smoothly rotate to face the next waypoint
-                if (currentWaypoint < currentPath.vectorPath.Count)
-                {
-                    Vector3 targetDirection = (currentPath.vectorPath[currentWaypoint] - transform.position).normalized;
-                    Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
-                    float rotationSpeed = 10f; // Adjust this value to control the speed of rotation
-                    transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-                }
-
-                yield return null;
-            }
-
-            currentPath = null;
-            moveCoroutine = null;
-        }
-    }
-
 
     public void ClientStop()
     {
-        if (bac != null) bac.OnStop();
+        if (animationController != null) animationController.OnStop();
 
-        if (moveCoroutine != null)
-        {
-            StopCoroutine(moveCoroutine);
-            moveCoroutine = null;
-        }
+        richAI.destination = transform.position;
     }
 }
