@@ -6,8 +6,8 @@ using Pathfinding;
 
 public class UnitMovementController : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public float rotationSpeed = 30f;
+    public float moveSpeed;
+    public float rotationSpeed;
 
     private TargetController targetController;
     private AnimationController animationController;
