@@ -36,7 +36,10 @@ public class UnitMovementController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         // Move the character at a constant speed
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, moveSpeed * Time.deltaTime);
+        // transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, moveSpeed * Time.deltaTime);
+        Vector3 deltaPosition = transform.forward * moveSpeed * Time.deltaTime;
+        richAI.Move(deltaPosition);
+
     }
 
     public void ClientMove(Vector3 pos, bool movingToTarget = false, float stoppingDistance = 0.05f)

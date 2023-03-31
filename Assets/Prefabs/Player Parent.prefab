@@ -69789,6 +69789,7 @@ GameObject:
   - component: {fileID: 3155766693921809012}
   - component: {fileID: 4418393636416734988}
   - component: {fileID: 4125647100601672240}
+  - component: {fileID: 4535905350768289142}
   m_Layer: 0
   m_Name: Player Parent
   m_TagString: Untagged
@@ -70128,6 +70129,21 @@ MonoBehaviour:
   funnelSimplification: 0
   slowWhenNotFacingTarget: 1
   animCompatibility: {fileID: 0}
+--- !u!114 &4535905350768289142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8938534602783702256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f586f285b3847808d79083bd19ef1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  unwrap: 1
+  splitAtEveryPortal: 0
 --- !u!1001 &1431800149530102464
 PrefabInstance:
   m_ObjectHideFlags: 0
