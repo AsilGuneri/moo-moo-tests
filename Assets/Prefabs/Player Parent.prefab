@@ -69791,7 +69791,7 @@ GameObject:
   - component: {fileID: 988319338483672383}
   - component: {fileID: -591139989494012233}
   - component: {fileID: 4213695741055512807}
-  - component: {fileID: 3938257042109949026}
+  - component: {fileID: -7574101156300118801}
   m_Layer: 0
   m_Name: Player Parent
   m_TagString: Untagged
@@ -70152,7 +70152,7 @@ MonoBehaviour:
   bezierTangentLength: 0.4
   offset: 0.2
   factor: 0.1
---- !u!114 &3938257042109949026
+--- !u!114 &-7574101156300118801
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70161,7 +70161,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8938534602783702256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
+  m_Script: {fileID: 11500000, guid: ce11ea984e202491d9271f53021d8b89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
@@ -70169,7 +70169,7 @@ MonoBehaviour:
   height: 2
   canMove: 1
   maxSpeed: 7
-  gravity: {x: 0, y: 0, z: 0}
+  gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -70185,15 +70185,15 @@ MonoBehaviour:
     maximumInterval: 2
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
-  maxAcceleration: 1e+29
-  rotationSpeed: 10000
-  slowdownDistance: 0.6
-  pickNextWaypointDist: 2
-  endReachedDistance: 0.2
-  alwaysDrawGizmos: 1
+  acceleration: 1e+29
+  rotationSpeed: 30
+  slowdownTime: 0.1
+  endReachedDistance: 0.01
+  wallForce: 3
+  wallDist: 1
+  funnelSimplification: 0
   slowWhenNotFacingTarget: 1
-  whenCloseToDestination: 0
-  constrainInsideGraph: 0
+  animCompatibility: {fileID: 0}
 --- !u!1 &8946106163135306598
 GameObject:
   m_ObjectHideFlags: 0
