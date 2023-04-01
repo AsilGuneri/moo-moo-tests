@@ -69913,7 +69913,6 @@ MonoBehaviour:
   animator: {fileID: 2814538736174975143}
   rangeIndicator: {fileID: 6362895330962804046}
   clickIndicator: {fileID: 4204380154923225954}
-  _navMeshAgent: {fileID: 0}
 --- !u!114 &6601903507643346811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70106,7 +70105,7 @@ MonoBehaviour:
   heightBackingField: 2
   centerBackingField: 1
   locked: 0
-  lockWhenNotMoving: 0
+  lockWhenNotMoving: 1
   agentTimeHorizon: 2
   obstacleTimeHorizon: 2
   maxNeighbours: 10
@@ -70169,7 +70168,7 @@ MonoBehaviour:
   radius: 0.5
   height: 2
   canMove: 1
-  maxSpeed: 1
+  maxSpeed: 7
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
     serializedVersion: 2
@@ -70186,8 +70185,8 @@ MonoBehaviour:
     maximumInterval: 2
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
-  maxAcceleration: 10000
-  rotationSpeed: 720
+  maxAcceleration: 1e+29
+  rotationSpeed: 10000
   slowdownDistance: 0.6
   pickNextWaypointDist: 2
   endReachedDistance: 0.2

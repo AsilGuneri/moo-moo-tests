@@ -12,7 +12,7 @@ public class UnitMovementController : MonoBehaviour
 
     private TargetController targetController;
     private AnimationController animationController;
-    private IAstarAI ai;
+    private IAstarAI aiMovement;
 
     public float rotationSpeed = 5f;
 
@@ -20,7 +20,7 @@ public class UnitMovementController : MonoBehaviour
     {
         targetController = GetComponent<TargetController>();
         animationController = GetComponent<AnimationController>();
-        ai = GetComponent<IAstarAI>();
+        aiMovement = GetComponent<IAstarAI>();
     }
     
 
@@ -32,8 +32,8 @@ public class UnitMovementController : MonoBehaviour
             animationController.OnMove();
         }
         if (!movingToTarget) targetController.SyncTarget(null);
-        ai.destination = pos;
-      
+        //dont forget the stopping distance part
+        aiMovement.destination = pos;
     }
 
 
@@ -41,8 +41,7 @@ public class UnitMovementController : MonoBehaviour
     public void ClientStop()
     {
         if (animationController != null) animationController.OnStop();
-
-       
+        aiMovement.isStopped = true;
     }
 
 }
