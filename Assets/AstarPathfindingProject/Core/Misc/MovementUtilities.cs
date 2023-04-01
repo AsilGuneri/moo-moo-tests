@@ -19,44 +19,8 @@ namespace Pathfinding.Util {
 		/// <param name="forward">Forward direction of the character. Used together with the slowWhenNotFacingTarget parameter.</param>
 		public static Vector2 ClampVelocity (Vector2 velocity, float maxSpeed, float slowdownFactor, bool slowWhenNotFacingTarget, Vector2 forward) {
 			// Max speed to use for this frame
-			var currentMaxSpeed = maxSpeed * slowdownFactor;
-
-			// Check if the agent should slow down in case it is not facing the direction it wants to move in
-			if (slowWhenNotFacingTarget && (forward.x != 0 || forward.y != 0)) {
-				float currentSpeed;
-				var normalizedVelocity = VectorMath.Normalize(velocity, out currentSpeed);
-				float dot = Vector2.Dot(normalizedVelocity, forward);
-
-				// Lower the speed when the character's forward direction is not pointing towards the desired velocity
-				// 1 when velocity is in the same direction as forward
-				// 0.2 when they point in the opposite directions
-				float directionSpeedFactor = Mathf.Clamp(dot+0.707f, 0.2f, 1.0f);
-				currentMaxSpeed *= directionSpeedFactor;
-				currentSpeed = Mathf.Min(currentSpeed, currentMaxSpeed);
-
-				// Angle between the forwards direction of the character and our desired velocity
-				float angle = Mathf.Acos(Mathf.Clamp(dot, -1, 1));
-
-				// Clamp the angle to 20 degrees
-				// We cannot keep the velocity exactly in the forwards direction of the character
-				// because we use the rotation to determine in which direction to rotate and if
-				// the velocity would always be in the forwards direction of the character then
-				// the character would never rotate.
-				// Allow larger angles when near the end of the path to prevent oscillations.
-				angle = Mathf.Min(angle, (20f + 180f*(1 - slowdownFactor*slowdownFactor))*Mathf.Deg2Rad);
-
-				float sin = Mathf.Sin(angle);
-				float cos = Mathf.Cos(angle);
-
-				// Determine if we should rotate clockwise or counter-clockwise to move towards the current velocity
-				sin *= Mathf.Sign(normalizedVelocity.x*forward.y - normalizedVelocity.y*forward.x);
-				// Rotate the #forward vector by #angle radians
-				// The rotation is done using an inlined rotation matrix.
-				// See https://en.wikipedia.org/wiki/Rotation_matrix
-				return new Vector2(forward.x*cos + forward.y*sin, forward.y*cos - forward.x*sin) * currentSpeed;
-			} else {
-				return Vector2.ClampMagnitude(velocity, currentMaxSpeed);
-			}
+			var currentMaxSpeed = maxSpeed /** slowdownFactor*/;
+			return Vector2.ClampMagnitude(velocity, currentMaxSpeed);
 		}
 
 		/// <summary>Calculate an acceleration to move deltaPosition units and get there with approximately a velocity of targetVelocity</summary>

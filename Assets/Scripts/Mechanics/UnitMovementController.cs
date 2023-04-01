@@ -3,46 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
 using Pathfinding;
+using Pathfinding.RVO;
+using UnityEditor.Rendering;
 
 public class UnitMovementController : MonoBehaviour
 {
-    public float moveSpeed;
-    public float rotationSpeed;
+
 
     private TargetController targetController;
     private AnimationController animationController;
+    private IAstarAI ai;
 
-    private RichAI richAI;
-
-    private bool isMoving = false;
-
+    public float rotationSpeed = 5f;
 
     private void Awake()
     {
         targetController = GetComponent<TargetController>();
-        richAI = GetComponent<RichAI>();
         animationController = GetComponent<AnimationController>();
+        ai = GetComponent<IAstarAI>();
     }
+    
 
-    private void Update()
-    {
-        if (!isMoving || richAI.reachedEndOfPath || richAI.pathPending)
-        {
-            return;
-        }
-
-        Vector3 targetDirection = (richAI.steeringTarget - transform.position).normalized;
-        Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-        // Move the character at a constant speed
-        // transform.position = Vector3.MoveTowards(transform.position, transform.position + transform.forward, moveSpeed * Time.deltaTime);
-        Vector3 deltaPosition = transform.forward * moveSpeed * Time.deltaTime;
-        richAI.Move(deltaPosition);
-
-    }
-
-    public void ClientMove(Vector3 pos, bool movingToTarget = false, float stoppingDistance = 0.05f)
+    public void ClientMove(Vector3 pos, bool movingToTarget = false, float stoppingDistance = 2f)
     {
         if (animationController != null)
         {
@@ -50,17 +32,17 @@ public class UnitMovementController : MonoBehaviour
             animationController.OnMove();
         }
         if (!movingToTarget) targetController.SyncTarget(null);
-
-        richAI.endReachedDistance = stoppingDistance;
-        richAI.destination = pos;
-        isMoving = true;
+        ai.destination = pos;
+      
     }
+
+
 
     public void ClientStop()
     {
         if (animationController != null) animationController.OnStop();
 
-        richAI.destination = transform.position;
-        isMoving = false;
+       
     }
+
 }
