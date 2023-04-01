@@ -70177,7 +70177,7 @@ MonoBehaviour:
   repathRateCompatibility: NaN
   canSearchCompability: 0
   orientation: 0
-  enableRotation: 1
+  enableRotation: 0
   autoRepath:
     mode: 2
     interval: 0.5
@@ -70186,7 +70186,7 @@ MonoBehaviour:
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
   acceleration: 1e+29
-  rotationSpeed: 30
+  rotationSpeed: 300
   slowdownTime: 0.1
   endReachedDistance: 0.01
   wallForce: 3

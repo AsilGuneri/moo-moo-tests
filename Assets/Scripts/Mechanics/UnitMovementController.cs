@@ -22,8 +22,18 @@ public class UnitMovementController : MonoBehaviour
         animationController = GetComponent<AnimationController>();
         aiMovement = GetComponent<IAstarAI>();
     }
-    
-
+    private void Update()
+    {
+        RotateTowardsSteeringTarget();
+    }
+    private void RotateTowardsSteeringTarget()
+    {
+        if (aiMovement.steeringTarget != null && aiMovement.velocity.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(aiMovement.steeringTarget - transform.position, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        }
+    }
     public void ClientMove(Vector3 pos, bool movingToTarget = false, float stoppingDistance = 2f)
     {
         if (animationController != null)
