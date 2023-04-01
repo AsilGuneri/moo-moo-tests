@@ -1,40 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using MyBox;
+using Pathfinding;
+using Pathfinding.RVO;
+using UnityEditor.Rendering;
 
 public class UnitMovementController : MonoBehaviour
 {
-    [Separator("Script References")]
-    [SerializeField] private AnimationController bac;
-    private TargetController tc;
-    private CustomAgentController agentController;
+
+
+    private TargetController targetController;
+    private AnimationController animationController;
+    private IAstarAI aiMovement;
+
+    public float rotationSpeed = 5f;
+
     private void Awake()
     {
-        tc = GetComponent<TargetController>();
-        agentController = GetComponent<CustomAgentController>();
+        targetController = GetComponent<TargetController>();
+        animationController = GetComponent<AnimationController>();
+        aiMovement = GetComponent<IAstarAI>();
+    }
+    private void Update()
+    {
+        RotateTowardsSteeringTarget();
+    }
+    private void RotateTowardsSteeringTarget()
+    {
+        if (aiMovement.steeringTarget != null && aiMovement.velocity.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(aiMovement.steeringTarget - transform.position, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        }
+    }
+    public void ClientMove(Vector3 pos, bool movingToTarget = false, float stoppingDistance = 2f)
+    {
+        if (animationController != null)
+        {
+            animationController.OnAttackEnd();
+            animationController.OnMove();
+        }
+        if (!movingToTarget) targetController.SyncTarget(null);
+        //dont forget the stopping distance part
+        aiMovement.destination = pos;
     }
 
-    public void ClientMove(Vector3 pos, bool movingToTarget = false, float stoppingDistance = 0)
-    {
-        //agent.isStopped = false;
-        //if (stoppingDistance != 0) agent.stoppingDistance = stoppingDistance;
-        //agent.SetDestination(pos);
-        if (bac != null) 
-        {
-            bac.OnAttackEnd();
-            bac.OnMove();
-        }
-        if(!movingToTarget) tc.SyncTarget(null);
-        agentController.SetTarget(pos);
-    }
+
+
     public void ClientStop()
     {
-        if(bac != null) bac.OnStop();
-        //agent.isStopped = true;
-        //agent.velocity = Vector3.zero;
-        agentController.SetTarget(Vector3.zero);
-
+        if (animationController != null) animationController.OnStop();
+        aiMovement.isStopped = true;
     }
+
 }

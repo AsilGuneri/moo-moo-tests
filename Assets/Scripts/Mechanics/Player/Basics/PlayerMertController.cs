@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System;
+using Pathfinding;
 
 public class PlayerMertController : NetworkBehaviour
 {
@@ -22,14 +23,13 @@ public class PlayerMertController : NetworkBehaviour
 
     private Camera mainCamera;
     private Health _hc;
-    private bool _hasPath;
     private bool _isAttackClickMode;
 
+    private IAstarAI aiMovement;
     private TargetController _tc;
     private BasicRangedAttackController _bac;
     private AnimationController _pac;
     private UnitMovementController _umc;
-    [SerializeField] private NavMeshAgent _navMeshAgent;
     private PlayerDataHolder _dataHolder;
     private InputKeysData _inputKeys;
 
@@ -63,6 +63,7 @@ public class PlayerMertController : NetworkBehaviour
         _umc = GetComponent<UnitMovementController>();
         _hc = GetComponent<Health>();
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
+        aiMovement = GetComponent<IAstarAI>();
     }
     private void Activate()
     {
@@ -86,7 +87,7 @@ public class PlayerMertController : NetworkBehaviour
     {
         if (!hasAuthority) return;
         if (IsCastingSkill) return;
-        if (!_navMeshAgent.hasPath && !_tc.HasTarget)
+        if (aiMovement.reachedEndOfPath && !_tc.HasTarget)
         {
             _pac.OnStop();
         }
