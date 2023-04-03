@@ -8,8 +8,6 @@ using UnityEditor.Rendering;
 
 public class UnitMovementController : MonoBehaviour
 {
-
-
     private TargetController targetController;
     private AnimationController animationController;
     private IAstarAI aiMovement;
@@ -25,6 +23,10 @@ public class UnitMovementController : MonoBehaviour
     private void Update()
     {
         RotateTowardsSteeringTarget();
+        if (aiMovement.reachedEndOfPath && !targetController.HasTarget)
+        {
+            animationController.OnStop();
+        }
     }
     private void RotateTowardsSteeringTarget()
     {

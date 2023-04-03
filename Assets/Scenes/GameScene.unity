@@ -3228,6 +3228,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1934913354016064533, guid: 80ff5c281c2d32d4b92b673fa2b9706d, type: 3}
+      propertyPath: lockWhenNotMoving
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6655077784827510075, guid: 80ff5c281c2d32d4b92b673fa2b9706d, type: 3}
       propertyPath: m_RootOrder
       value: 1

@@ -726,6 +726,7 @@ GameObject:
   - component: {fileID: 5974903067789525227}
   - component: {fileID: 7865192546204400565}
   - component: {fileID: 8352895751573529896}
+  - component: {fileID: -4375854397861334358}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -931,7 +932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8297e1c507320bc41a3afce77679b5ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bac: {fileID: 3080633388320237946}
+  rotationSpeed: 5
 --- !u!114 &-5071490410464351964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1039,6 +1040,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   rotationSpeed: 720
+--- !u!114 &-4375854397861334358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498676492825279152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de49ee75718ef94398bd86a6a4f23fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TreeBlueprint: {fileID: 11400000, guid: 90b8ff1cb118f6d4cb55bc1c77fa4751, type: 2}
 --- !u!1001 &4584912764243608144
 PrefabInstance:
   m_ObjectHideFlags: 0

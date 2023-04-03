@@ -87,10 +87,7 @@ public class PlayerMertController : NetworkBehaviour
     {
         if (!hasAuthority) return;
         if (IsCastingSkill) return;
-        if (aiMovement.reachedEndOfPath && !_tc.HasTarget)
-        {
-            _pac.OnStop();
-        }
+
 
 
         if (Input.GetKeyDown(_inputKeys.AttackKey)) IsAttackClickMode = true;
