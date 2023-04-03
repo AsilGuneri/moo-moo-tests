@@ -2,15 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AnimationController : MonoBehaviour
+public class AnimationControllerBase : MonoBehaviour
 {
-    [SerializeField] protected Animator animator;
+    protected Animator animator;
+
+    protected void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+    public virtual void OnAttackToMove()
+    {
+            OnAttackEnd();
+            OnMove();
+    }
     public virtual void OnMove()
     {
         animator.SetBool("Move", true);
     }
     public virtual void OnStop()
     {
+        Debug.Log("asilxx123");
         animator.SetBool("Move", false);
     }
     public virtual void OnAttackStart(float attackSpeed)

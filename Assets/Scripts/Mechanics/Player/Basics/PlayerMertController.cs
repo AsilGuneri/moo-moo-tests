@@ -28,7 +28,7 @@ public class PlayerMertController : NetworkBehaviour
     private IAstarAI aiMovement;
     private TargetController _tc;
     private BasicRangedAttackController _bac;
-    private AnimationController _pac;
+    private AnimationControllerBase _pac;
     private UnitMovementController _umc;
     private PlayerDataHolder _dataHolder;
     private InputKeysData _inputKeys;
@@ -59,7 +59,7 @@ public class PlayerMertController : NetworkBehaviour
     {
         _tc = GetComponent<TargetController>();
         _bac = GetComponent<BasicRangedAttackController>();
-        _pac = GetComponent<AnimationController>();
+        _pac = GetComponent<AnimationControllerBase>();
         _umc = GetComponent<UnitMovementController>();
         _hc = GetComponent<Health>();
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;

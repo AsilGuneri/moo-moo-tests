@@ -16,7 +16,7 @@ public abstract class ABasicAttackController : NetworkBehaviour
 
     protected TargetController tc;
     protected UnitMovementController umc;
-    protected AnimationController ac;
+    protected AnimationControllerBase ac;
     protected HeroBaseStatsData baseStats;
 
     //Additional Fields : Use these to increase attack speed etc. in game with temp. buff or cases like this. Note: Permanent upgrades needs to be saveable.
@@ -33,6 +33,7 @@ public abstract class ABasicAttackController : NetworkBehaviour
 
     public float AttackSpeed { get { return baseStats.AttackSpeed; } set { baseStats.AttackSpeed = value; } }
     public float Range { get { return baseStats.Range; } set { baseStats.Range = value; } }
+    public bool IsAttacking { get { return isAttacking; } set { isAttacking = value; } }
 
     protected virtual void Awake()
     {
@@ -41,7 +42,7 @@ public abstract class ABasicAttackController : NetworkBehaviour
         if(!isStable)
         {
             umc = GetComponent<UnitMovementController>();
-            ac = GetComponent<AnimationController>();
+            ac = GetComponent<AnimationControllerBase>();
         }
     }
     [ClientCallback]

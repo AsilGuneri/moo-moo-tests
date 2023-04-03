@@ -69774,13 +69774,13 @@ GameObject:
   m_Component:
   - component: {fileID: 5419681646419041297}
   - component: {fileID: 2814538736174975143}
+  - component: {fileID: 6486060856413021335}
   - component: {fileID: 5196469712631140113}
   - component: {fileID: 7516589810736755903}
   - component: {fileID: 3369806330851504492}
   - component: {fileID: 6601903507643346811}
   - component: {fileID: 4334566937998049036}
   - component: {fileID: 45772237907561860}
-  - component: {fileID: 5397592318971391883}
   - component: {fileID: 6411675676070392958}
   - component: {fileID: 3652992798137029967}
   - component: {fileID: 2585341283395862557}
@@ -69840,6 +69840,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6486060856413021335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8938534602783702256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8305d2c59507ab47886a2e69dd71bff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2814538736174975143}
 --- !u!114 &5196469712631140113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69965,19 +69978,6 @@ MonoBehaviour:
   healthBar: {fileID: 8853805720119880122}
   unitType: 0
   ExpToGain: 0
---- !u!114 &5397592318971391883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8938534602783702256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e74ea43a94881964482d74a97bf80985, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 2814538736174975143}
 --- !u!114 &6411675676070392958
 MonoBehaviour:
   m_ObjectHideFlags: 0
