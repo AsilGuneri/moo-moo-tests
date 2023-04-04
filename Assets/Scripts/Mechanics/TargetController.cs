@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
@@ -18,6 +18,7 @@ public class TargetController : NetworkBehaviour
     public void SyncTarget(GameObject target)
     {
         Target = target;
+        //bi yerden client stopı çağırmıyorum
     }
 
 

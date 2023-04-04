@@ -94,7 +94,12 @@ public class PlayerMertController : NetworkBehaviour
 
         if (Input.GetKeyDown(_inputKeys.SelectKey)) OnPointerInput();
         if (Input.GetKeyDown(_inputKeys.MoveKey)) OnPointerInput();
-        if (Input.GetKeyDown(_inputKeys.StopKey)) _umc.ClientStop();
+        if (Input.GetKeyDown(_inputKeys.StopKey))
+        {
+            _umc.ClientStop();
+            _tc.SyncTarget(null);
+            _pac.OnAttackEnd();
+        }
         if (Input.GetKeyDown(_inputKeys.SpawnWaveKey))
         {
              WaveManager.Instance.SpawnTestWave();
@@ -174,13 +179,14 @@ public class PlayerMertController : NetworkBehaviour
     private void OnAttackModeClick(RaycastHit hitInfo)
     {
         clickIndicator.Setup(hitInfo.point, false);
-        var closestEnemy = UnitManager.Instance.GetClosestUnit(transform.position, true);
+        var closestEnemy = UnitManager.Instance.GetClosestUnit(hitInfo.point, true);
         if (!closestEnemy)
         {
             IsAttackClickMode = false;
             return;
         }
-        if (!Extensions.IsInRange(closestEnemy.transform.position, transform.position, _bac.Range))
+        float maxDistanceBetweenPointAndUnit = 20; /*distance between the click and monster change that*/
+        if (!Extensions.IsInRange(closestEnemy.transform.position, hitInfo.point, maxDistanceBetweenPointAndUnit))
         {
 
             IsAttackClickMode = false;
