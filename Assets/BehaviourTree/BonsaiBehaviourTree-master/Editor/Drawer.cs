@@ -1,4 +1,5 @@
-﻿
+﻿#if UNITY_EDITOR
+
 using UnityEngine;
 using UnityEditor;
 
@@ -395,3 +396,4 @@ namespace Bonsai.Designer
   }
 
 }
+#endif

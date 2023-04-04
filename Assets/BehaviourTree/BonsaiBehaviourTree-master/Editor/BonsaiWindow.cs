@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+
+using System.Collections.Generic;
 using System.Linq;
 using Bonsai.Core;
 using UnityEditor;
@@ -488,3 +490,4 @@ namespace Bonsai.Designer
     }
   }
 }
+#endif
