@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿#if UNITY_EDITOR
+
+using System.Linq;
 using UnityEngine;
 
 namespace Bonsai.Designer
@@ -66,3 +68,4 @@ namespace Bonsai.Designer
 
   }
 }
+#endif

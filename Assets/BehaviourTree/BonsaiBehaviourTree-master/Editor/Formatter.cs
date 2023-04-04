@@ -1,4 +1,6 @@
-﻿using Bonsai.Core;
+﻿
+#if UNITY_EDITOR
+using Bonsai.Core;
 using UnityEngine;
 
 namespace Bonsai.Designer
@@ -128,3 +130,4 @@ namespace Bonsai.Designer
   }
 
 }
+#endif
