@@ -26,6 +26,7 @@ public class BasicRangedAttackController : ABasicAttackController
     }
     private async void DelayProjectileSpawn()
     {
+        ac.SetAutoAttackStatus(true);
         await Task.Delay(Extensions.ToMiliSeconds(((1 / baseStats.AttackSpeed) * baseStats.AnimAttackMoment)));
         CmdSpawnProjectile();
         await Task.Delay(Extensions.ToMiliSeconds((1 / baseStats.AttackSpeed) * (1 - baseStats.AnimAttackMoment)));
@@ -38,6 +39,7 @@ public class BasicRangedAttackController : ABasicAttackController
         {
             IsAttacking = false;
             DelayProjectileSpawn();
+            ac.SetAutoAttackStatus(false);
         }
     }
 

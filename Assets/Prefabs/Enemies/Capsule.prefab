@@ -749,6 +749,8 @@ GameObject:
   - component: {fileID: 2447787136065078288}
   - component: {fileID: 7058546635512306139}
   - component: {fileID: 6436984686369435751}
+  - component: {fileID: -1095627938935048596}
+  - component: {fileID: 6714525313842687756}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -1130,6 +1132,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8305d2c59507ab47886a2e69dd71bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1095627938935048596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498676492825279152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f586f285b3847808d79083bd19ef1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  unwrap: 1
+  splitAtEveryPortal: 0
+--- !u!114 &6714525313842687756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498676492825279152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6a34d769a1e4ac7b0b30e433aa443c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  smoothType: 0
+  subdivisions: 2
+  iterations: 2
+  strength: 0.5
+  uniformLength: 1
+  maxSegmentLength: 2
+  bezierTangentLength: 0.4
+  offset: 0.2
+  factor: 0.1
 --- !u!1001 &4584912764243608144
 PrefabInstance:
   m_ObjectHideFlags: 0

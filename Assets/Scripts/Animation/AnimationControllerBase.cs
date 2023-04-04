@@ -10,6 +10,10 @@ public class AnimationControllerBase : MonoBehaviour
     {
         animator = GetComponent<Animator>();
     }
+    public void SetAutoAttackStatus(bool isOn)
+    {
+        animator.SetBool("OnAutoAttack", isOn);
+    }
     public virtual void OnAttackToMove()
     {
             OnAttackEnd();
@@ -30,6 +34,6 @@ public class AnimationControllerBase : MonoBehaviour
     }
     public virtual void OnAttackEnd()
     {
-        animator.SetBool("IsAttacking", false);
+        if (animator != null) animator.SetBool("IsAttacking", false);
     }
 }
