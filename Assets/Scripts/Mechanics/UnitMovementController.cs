@@ -83,6 +83,7 @@ public class UnitMovementController : MonoBehaviour
         {
             //move from attack
             animationController.OnAttackToMove();
+            Debug.Log("asilxx123");
         }
         else
         {

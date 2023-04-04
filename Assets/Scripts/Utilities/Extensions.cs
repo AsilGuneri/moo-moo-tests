@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Extensions : MonoBehaviour
 {
-    public static Vector2 Vector3ToVector2(Vector3 initialVector)
+    public static Vector2 To2D(Vector3 initialVector)
     {
         Vector2 finalVector = new Vector2(initialVector.x, initialVector.z);
         return finalVector;
@@ -17,7 +17,7 @@ public class Extensions : MonoBehaviour
     }
     public static float Distance(Vector3 pointA, Vector3 pointB)
     {
-        return Vector2.Distance(Vector3ToVector2(pointA), Vector3ToVector2(pointB));
+        return Vector2.Distance(To2D(pointA), To2D(pointB));
     }
     public static bool IsInRange(Vector3 pointA, Vector3 pointB, float range)
     {

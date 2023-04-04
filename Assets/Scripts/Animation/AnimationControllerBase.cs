@@ -21,13 +21,15 @@ public class AnimationControllerBase : MonoBehaviour
     }
     public virtual void OnStop()
     {
-        Debug.Log("asilxx123");
         animator.SetBool("Move", false);
     }
     public virtual void OnAttackStart(float attackSpeed)
     {
         animator.SetFloat("ShootSpeed", attackSpeed);
         animator.SetBool("IsAttacking", true);
+      
+            Debug.Log("asilxx1 " + name +" " + StackTraceUtility.ExtractStackTrace());
+        
     }
     public virtual void OnAttackEnd()
     {
