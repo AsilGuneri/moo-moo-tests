@@ -81,9 +81,7 @@ public class UnitMovementController : MonoBehaviour
         if (TryGetComponent(out ABasicAttackController attackController)
             && attackController.IsAttacking)
         {
-            //move from attack
             animationController.OnAttackToMove();
-            Debug.Log("asilxx123");
         }
         else
         {

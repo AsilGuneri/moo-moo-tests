@@ -26,10 +26,7 @@ public class AnimationControllerBase : MonoBehaviour
     public virtual void OnAttackStart(float attackSpeed)
     {
         animator.SetFloat("ShootSpeed", attackSpeed);
-        animator.SetBool("IsAttacking", true);
-      
-            Debug.Log("asilxx1 " + name +" " + StackTraceUtility.ExtractStackTrace());
-        
+        animator.SetBool("IsAttacking", true);        
     }
     public virtual void OnAttackEnd()
     {
