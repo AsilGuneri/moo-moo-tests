@@ -18,12 +18,11 @@ public class BasicMeleeAttackController : ABasicAttackController
     }
 
     protected override void StopAttacking()
-    {
-        if (isAttacking)
+    {   
+        if (IsAttacking)
         {
-            isAttacking = false;
+            IsAttacking = false;
             StopCoroutine(nameof(DelayMeleeAttack));
-            if (ac) ac.OnAttackEnd();
         }
     }
 
@@ -32,7 +31,7 @@ public class BasicMeleeAttackController : ABasicAttackController
         transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
         if (umc) umc.ClientStop();
         if (ac) ac.OnAttackStart(baseStats.AttackSpeed);
-        isAttacking = true;
+        IsAttacking = true;
         StartCoroutine(nameof(DelayMeleeAttack));
         counter = 0;
     }

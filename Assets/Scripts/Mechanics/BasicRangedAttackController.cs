@@ -29,16 +29,15 @@ public class BasicRangedAttackController : ABasicAttackController
         await Task.Delay(Extensions.ToMiliSeconds(((1 / baseStats.AttackSpeed) * baseStats.AnimAttackMoment)));
         CmdSpawnProjectile();
         await Task.Delay(Extensions.ToMiliSeconds((1 / baseStats.AttackSpeed) * (1 - baseStats.AnimAttackMoment)));
-        isAttacking = false;
+        IsAttacking = false;
     }
 
     protected override void StopAttacking()
     {
-        if (isAttacking)
+        if (IsAttacking)
         {
-            isAttacking = false;
+            IsAttacking = false;
             DelayProjectileSpawn();
-            if (ac) ac.OnAttackEnd();
         }
     }
 
@@ -46,8 +45,7 @@ public class BasicRangedAttackController : ABasicAttackController
     {
         if(!isStable) transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
         if (umc) umc.ClientStop();
-        if (ac) ac.OnAttackStart(baseStats.AttackSpeed);
-        isAttacking = true;
+        IsAttacking = true;
         DelayProjectileSpawn();
         counter = 0;
     }

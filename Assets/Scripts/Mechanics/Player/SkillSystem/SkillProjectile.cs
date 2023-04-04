@@ -20,7 +20,7 @@ public class SkillProjectile : NetworkBehaviour
     {
         isStarted = true;
         this.damage = damage;
-        startPoint = Extensions.Vector3ToVector2(spawnerTransform.position);
+        startPoint = Extensions.To2D(spawnerTransform.position);
         this.spawnerTransform = spawnerTransform;
     }
 
@@ -29,7 +29,7 @@ public class SkillProjectile : NetworkBehaviour
     {
         if (!isStarted) return;
         bool shouldMove = false;
-        float distance = Vector2.Distance(Extensions.Vector3ToVector2(transform.position), startPoint);
+        float distance = Vector2.Distance(Extensions.To2D(transform.position), startPoint);
         shouldMove = distance <= range;
         if (shouldMove)
         {

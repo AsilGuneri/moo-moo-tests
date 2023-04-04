@@ -26,14 +26,26 @@ public abstract class ABasicAttackController : NetworkBehaviour
     protected int additionalHp;
 
 
-    protected bool isAttacking;
+    private bool isAttacking;
     protected bool isChasing;
 
     protected float counter;
 
     public float AttackSpeed { get { return baseStats.AttackSpeed; } set { baseStats.AttackSpeed = value; } }
     public float Range { get { return baseStats.Range; } set { baseStats.Range = value; } }
-    public bool IsAttacking { get { return isAttacking; } set { isAttacking = value; } }
+    public bool IsAttacking 
+    { 
+        get 
+        {
+            return isAttacking; 
+        } 
+        protected set 
+        { 
+            isAttacking = value;
+            if (value) ac.OnAttackStart(baseStats.AttackSpeed);
+            else ac.OnAttackEnd();
+        } 
+    }
 
     protected virtual void Awake()
     {
@@ -52,22 +64,24 @@ public abstract class ABasicAttackController : NetworkBehaviour
         if (counter <= (1 / baseStats.AttackSpeed)) counter += Time.deltaTime;
         if (tc.Target == null)
         {
-            if (isAttacking)
+            if (IsAttacking)
             {
                 StopAttacking();
             }
-            if (!isStable)
+            if (!IsAttacking)
             {
                 ResetStoppingDistance();
                 StopChasing();
             }
             return;
         }
-        if (!isStable && (Vector2.Distance(Extensions.Vector3ToVector2(tc.Target.transform.position), Extensions.Vector3ToVector2(transform.position)) > baseStats.Range && !isAttacking))
+        bool isOutOfRange = Vector2.Distance(Extensions.To2D(tc.Target.transform.position),
+            Extensions.To2D(transform.position)) > baseStats.Range;
+        if (!isStable && !IsAttacking && isOutOfRange)
         {
             ChaseToAttack();
         }
-        else if (counter >= (1 / baseStats.AttackSpeed) && !isAttacking)
+        else if (counter >= (1 / baseStats.AttackSpeed) && !IsAttacking)
         {
             StartAttacking();
         }
