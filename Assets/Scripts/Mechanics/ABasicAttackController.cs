@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using UnityEngine.AI;
+using Pathfinding;
+using System.Threading;
+using System;
+using System.Threading.Tasks;
 
 [RequireComponent(typeof(TargetController))]
 [RequireComponent(typeof(PlayerDataHolder))]
@@ -11,8 +15,13 @@ public abstract class ABasicAttackController : NetworkBehaviour
 {
     [SerializeField] protected NavMeshAgent agent;//
     [SerializeField] protected bool checkAuthority = true;
-    [SerializeField] protected bool isStable = false;
+    [SerializeField] private float pathUpdateInterval = 1f; // Interval to update the path (in seconds)
 
+    private Vector3 lastTargetPosition;
+    private CancellationTokenSource cancellationTokenSource;
+
+    private RichAI richAI;
+    private bool isAttacking;
 
     protected TargetController tc;
     protected UnitMovementController umc;
@@ -26,36 +35,34 @@ public abstract class ABasicAttackController : NetworkBehaviour
     protected int additionalHp;
 
 
-    private bool isAttacking;
     protected bool isChasing;
 
     protected float counter;
 
     public float AttackSpeed { get { return baseStats.AttackSpeed; } set { baseStats.AttackSpeed = value; } }
     public float Range { get { return baseStats.Range; } set { baseStats.Range = value; } }
-    public bool IsAttacking 
-    { 
-        get 
+    public bool IsAttacking
+    {
+        get
         {
-            return isAttacking; 
-        } 
-        protected set 
-        { 
+            return isAttacking;
+        }
+        protected set
+        {
             isAttacking = value;
             if (value) ac.OnAttackStart(baseStats.AttackSpeed);
             else ac.OnAttackEnd();
-        } 
+        }
     }
 
     protected virtual void Awake()
     {
         tc = GetComponent<TargetController>();
         baseStats = GetComponent<PlayerDataHolder>().HeroStatsData;
-        if(!isStable)
-        {
-            umc = GetComponent<UnitMovementController>();
-            ac = GetComponent<AnimationControllerBase>();
-        }
+        richAI = GetComponent<RichAI>();
+        umc = GetComponent<UnitMovementController>();
+        ac = GetComponent<AnimationControllerBase>();
+
     }
     [ClientCallback]
     protected virtual void Update()
@@ -77,34 +84,67 @@ public abstract class ABasicAttackController : NetworkBehaviour
         }
         bool isOutOfRange = Vector2.Distance(Extensions.To2D(tc.Target.transform.position),
             Extensions.To2D(transform.position)) > baseStats.Range;
-        if (!isStable && !IsAttacking && isOutOfRange)
+        if (!IsAttacking && isOutOfRange)
         {
-            ChaseToAttack();
+            if(!isChasing)
+            {
+                StartChasing();
+            }
         }
-        else if (counter >= (1 / baseStats.AttackSpeed) && !IsAttacking)
+        if (counter >= (1 / baseStats.AttackSpeed) && !IsAttacking && !isOutOfRange)
         {
             StartAttacking();
         }
     }
-    protected virtual void ChaseToAttack()
+    protected virtual async void StartChasing()
     {
-        umc.ClientMove(tc.Target.transform.position, true, baseStats.Range);
-        isChasing = true;
+        if (!isChasing)
+        {
+            isChasing = true;
+            cancellationTokenSource = new CancellationTokenSource();
+            await ChaseRoutine(cancellationTokenSource.Token);
+        }
     }
+
     protected virtual void StopChasing()
     {
         if (isChasing)
         {
             umc.ClientStop();
             isChasing = false;
+            cancellationTokenSource.Cancel();
         }
     }
+
+    private async Task ChaseRoutine(CancellationToken cancellationToken)
+    {
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            if (tc.Target != null)
+            {
+                Vector3 currentTargetPosition = tc.Target.transform.position;
+                float distanceToTarget = Vector2.Distance(Extensions.To2D(currentTargetPosition), Extensions.To2D(transform.position));
+
+                if (distanceToTarget > baseStats.Range && (lastTargetPosition == Vector3.zero || Vector3.Distance(lastTargetPosition, currentTargetPosition) > baseStats.Range * 0.1f))
+                {
+                    umc.ClientMove(currentTargetPosition, true, baseStats.Range);
+                    lastTargetPosition = currentTargetPosition;
+                }
+            }
+            else
+            {
+                StopChasing();
+            }
+            await Task.Delay(TimeSpan.FromSeconds(pathUpdateInterval), cancellationToken);
+        }
+    }
+
     protected virtual void ResetStoppingDistance()
     {
         //if (agent.stoppingDistance != 0) agent.stoppingDistance = 0;
     }
     protected abstract void StopAttacking();
     protected abstract void StartAttacking();
-    
+
 
 }

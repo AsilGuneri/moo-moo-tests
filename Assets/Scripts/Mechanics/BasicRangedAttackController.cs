@@ -45,7 +45,7 @@ public class BasicRangedAttackController : ABasicAttackController
 
     protected override void StartAttacking()
     {
-        if(!isStable) transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
+        transform.LookAt(new Vector3(tc.Target.transform.position.x, transform.position.y, tc.Target.transform.position.z));
         if (umc) umc.ClientStop();
         IsAttacking = true;
         DelayProjectileSpawn();
