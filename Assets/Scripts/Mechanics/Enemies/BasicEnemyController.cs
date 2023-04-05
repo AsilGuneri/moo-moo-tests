@@ -7,7 +7,6 @@ using Mirror;
 
 public class BasicEnemyController : NetworkBehaviour
 {
-    protected NavMeshAgent _agent;
     protected Health _hc;
     protected GameObject _target;
     protected AnimationControllerBase _ac;
@@ -17,7 +16,6 @@ public class BasicEnemyController : NetworkBehaviour
     private void Awake()
     {
         _tc = GetComponent<TargetController>();
-        _agent = GetComponent<NavMeshAgent>();
         _ac = GetComponent<AnimationControllerBase>();
     }
     private void FixedUpdate()
@@ -30,9 +28,5 @@ public class BasicEnemyController : NetworkBehaviour
         {
             _tc.Target = UnitManager.Instance.GetClosestUnit(transform.position);
         }
-    }
-    public void Activate()
-    {
-        _agent.enabled = true;
     }
 }
