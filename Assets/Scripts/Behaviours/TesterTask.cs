@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Bonsai.Standard
 {
     [BonsaiNode("Tasks/", "Timer")]
-    public class TestTask : Task
+    public class TesterTask : Task
     {
         public override void OnEnter()
         {

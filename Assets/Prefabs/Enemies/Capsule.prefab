@@ -1050,7 +1050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6de49ee75718ef94398bd86a6a4f23fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TreeBlueprint: {fileID: 11400000, guid: 90b8ff1cb118f6d4cb55bc1c77fa4751, type: 2}
+  TreeBlueprint: {fileID: 11400000, guid: a3c38bfd86c37ad469d85018ed0458bb, type: 2}
 --- !u!114 &2447787136065078288
 MonoBehaviour:
   m_ObjectHideFlags: 0

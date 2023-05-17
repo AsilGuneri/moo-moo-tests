@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6824664788585213941
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d69459a49e550f8429e431ae0c62ac32, type: 3}
+  m_Name: TesterTask
+  m_EditorClassIdentifier: 
+  preOrderIndex: 0
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: 60, y: 298.5}
+--- !u!114 &-1942271602810078303
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09a07908f6a5fd44e906d041ac135bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keys: []
+--- !u!114 &-313128953173303940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98e42124d794d24baddf03f67db4d0b, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  preOrderIndex: 0
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: 203.82523, y: 120.74988}
+  children:
+  - {fileID: -6824664788585213941}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e327cacc628d65b4faa51b0a82bf63c2, type: 3}
+  m_Name: FirstTestTree
+  m_EditorClassIdentifier: 
+  allNodes: []
+  blackboard: {fileID: -1942271602810078303}
+  actor: {fileID: 0}
+  panPosition: {x: -153, y: -119}
+  zoomPosition: {x: 1.3824002, y: 1.3824002}
+  unusedNodes: []
