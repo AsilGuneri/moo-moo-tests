@@ -23,7 +23,6 @@ public class CustomNetworkRoomManager : NetworkRoomManager
     protected Callback<GameLobbyJoinRequested_t> gameLobbyJoinRequested;
     protected Callback<LobbyEnter_t> lobbyEntered;
 
-
     private new void Start()
     {
         base.Start();
@@ -96,5 +95,13 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         CustomNetworkRoomPlayer roomPlayer = (CustomNetworkRoomPlayer)Instantiate(roomPlayerPrefab);
         roomPlayer.SetPlayerData(conn.connectionId);
         return roomPlayer.gameObject;
+    }
+    public override void OnServerSceneChanged(string sceneName)
+    {
+        base.OnServerSceneChanged(sceneName);
+        if (sceneName == GameplayScene)
+        {
+            ObjectPooler.Instance.Initialize();
+        }
     }
 }

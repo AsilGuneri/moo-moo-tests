@@ -20,16 +20,19 @@ public class BasicRangedAttackController : ABasicAttackController
     private void CmdSpawnProjectile()
     {
         //if (checkAuthority && !hasAuthority) return;
-        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+
+        GameObject projectile = ObjectPooler.Instance.SpawnFromPoolWithPrefab(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
         projectile.GetComponent<Projectile>().SetupProjectile(tc.Target, baseStats.Damage, transform);
         NetworkServer.Spawn(projectile, connectionToClient);
     }
     private async void DelayProjectileSpawn()
     {
         ac.SetAutoAttackStatus(true);
-        await Task.Delay(Extensions.ToMiliSeconds(((1 / baseStats.AttackSpeed) * baseStats.AnimAttackMoment)));
+        int msBeforeAttack = Extensions.ToMiliSeconds(((1 / baseStats.AttackSpeed) * baseStats.AnimAttackMoment));
+        int msAfterAttack = Extensions.ToMiliSeconds((1 / baseStats.AttackSpeed) * (1 - baseStats.AnimAttackMoment));
+        await Task.Delay(msBeforeAttack);
         CmdSpawnProjectile();
-        await Task.Delay(Extensions.ToMiliSeconds((1 / baseStats.AttackSpeed) * (1 - baseStats.AnimAttackMoment)));
+        await Task.Delay(msAfterAttack);
         IsAttacking = false;
     }
 

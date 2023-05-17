@@ -751,6 +751,7 @@ GameObject:
   - component: {fileID: 6436984686369435751}
   - component: {fileID: -1095627938935048596}
   - component: {fileID: 6714525313842687756}
+  - component: {fileID: 5124271025845029258}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -987,7 +988,7 @@ MonoBehaviour:
   syncInterval: 0.1
   agent: {fileID: 818599698009061425}
   checkAuthority: 0
-  isStable: 0
+  pathUpdateInterval: 0.5
   projectilePrefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
   projectileSpawnPoint: {fileID: 5510830196393226273}
 --- !u!54 &3087869301616359077
@@ -1169,6 +1170,33 @@ MonoBehaviour:
   bezierTangentLength: 0.4
   offset: 0.2
   factor: 0.1
+--- !u!114 &5124271025845029258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498676492825279152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 560112f876f5746c780eca0d404e7139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 2
+  radiusBackingField: 0.5
+  heightBackingField: 2
+  centerBackingField: 1
+  locked: 0
+  lockWhenNotMoving: 1
+  agentTimeHorizon: 2
+  obstacleTimeHorizon: 2
+  maxNeighbours: 10
+  layer: 1
+  collidesWith: -1
+  wallAvoidForce: 1
+  wallAvoidFalloff: 1
+  priority: 0.5
+  debug: 0
 --- !u!1001 &4584912764243608144
 PrefabInstance:
   m_ObjectHideFlags: 0
