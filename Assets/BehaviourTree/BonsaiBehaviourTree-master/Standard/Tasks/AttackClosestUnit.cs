@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Text;
+using Bonsai.Core;
 using UnityEngine;
 
-public class AttackClosestUnit : MonoBehaviour
+namespace Bonsai.Standard
 {
-    // Start is called before the first frame update
-    void Start()
+    [BonsaiNode("Tasks/", "Timer")]
+    public class AttackClosestUnit : Task
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override void OnEnter()
+        {
+
+        }
+        public override Status Run()
+        {
+
+            return Status.Success;
+        }
     }
 }
