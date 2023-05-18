@@ -10,16 +10,7 @@ public class TargetController : NetworkBehaviour
     private bool _hasTarget;
     public bool HasTarget
     {
-        get => _hasTarget;
-        set => _hasTarget = value;
+        get => Target != null;
     }
-
-    [Command]
-    public void SyncTarget(GameObject target)
-    {
-        Target = target;
-        //bi yerden client stopı çağırmıyorum
-    }
-
 
 }

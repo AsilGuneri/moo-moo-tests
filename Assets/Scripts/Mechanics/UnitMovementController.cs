@@ -73,7 +73,7 @@ public class UnitMovementController : MonoBehaviour
        
         //dont forget the stopping distance part
         aiMovement.destination = pos;
-        if (!movingToTarget) targetController.SyncTarget(null);
+        if (!movingToTarget) targetController.Target = null;
         isMoving = true;
         aiMovement.isStopped = false;
 

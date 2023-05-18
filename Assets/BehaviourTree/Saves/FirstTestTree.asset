@@ -16,6 +16,24 @@ MonoBehaviour:
   title: 
   comment: 
   bonsaiNodePosition: {x: 60, y: 298.5}
+--- !u!114 &-5175763352888309483
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98e42124d794d24baddf03f67db4d0b, type: 3}
+  m_Name: Sequence
+  m_EditorClassIdentifier: 
+  preOrderIndex: 0
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -628.5, y: -469.5}
+  children:
+  - {fileID: 1040392258952514417}
 --- !u!114 &-1942271602810078303
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -59,9 +77,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e327cacc628d65b4faa51b0a82bf63c2, type: 3}
   m_Name: FirstTestTree
   m_EditorClassIdentifier: 
-  allNodes: []
+  allNodes:
+  - {fileID: -5175763352888309483}
+  - {fileID: 1040392258952514417}
   blackboard: {fileID: -1942271602810078303}
   actor: {fileID: 0}
-  panPosition: {x: -153, y: -119}
-  zoomPosition: {x: 1.3824002, y: 1.3824002}
+  panPosition: {x: 590, y: 275}
+  zoomPosition: {x: 1.2, y: 1.2}
   unusedNodes: []
+--- !u!114 &1040392258952514417
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf16952298c479a4fbdcf4aa4904bde8, type: 3}
+  m_Name: ChaseUnit
+  m_EditorClassIdentifier: 
+  preOrderIndex: 1
+  title: 
+  comment: 
+  bonsaiNodePosition: {x: -872, y: -277.5}
+  timeOutLoopCount: 0

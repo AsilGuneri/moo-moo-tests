@@ -97,7 +97,7 @@ public class PlayerMertController : NetworkBehaviour
         if (Input.GetKeyDown(_inputKeys.StopKey))
         {
             _umc.ClientStop();
-            _tc.SyncTarget(null);
+            _tc.Target = null;
             _pac.OnAttackEnd();
         }
         if (Input.GetKeyDown(_inputKeys.SpawnWaveKey))
@@ -160,13 +160,11 @@ public class PlayerMertController : NetworkBehaviour
     {
         if (hitInfo.collider.TryGetComponent(out Health hc) && !hitInfo.collider.TryGetComponent(out PlayerMertController mc))
         {
-            _tc.SyncTarget(hc.gameObject);
-            _tc.HasTarget = true;
+            _tc.Target = hc.gameObject;
         }
         else
         {
-            _tc.SyncTarget(null);
-            _tc.HasTarget = false;
+            _tc.Target = null;
         }
 
         if (!_tc.HasTarget)
@@ -193,8 +191,7 @@ public class PlayerMertController : NetworkBehaviour
             return;
         }
 
-        _tc.SyncTarget(closestEnemy);
-        _tc.HasTarget = true;
+        _tc.Target = closestEnemy;
         IsAttackClickMode = false;
 
         return;
