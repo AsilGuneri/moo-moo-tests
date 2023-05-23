@@ -26,7 +26,7 @@ public class BasicEnemyController : NetworkBehaviour
     {
         if (!_tc.Target)
         {
-            _tc.Target = UnitManager.Instance.GetClosestUnit(transform.position);
+            _tc.Target = UnitManager.Instance.GetBaseBuilding();
         }
     }
 }

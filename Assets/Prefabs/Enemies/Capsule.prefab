@@ -745,7 +745,6 @@ GameObject:
   - component: {fileID: 3087869301616359077}
   - component: {fileID: 5974903067789525227}
   - component: {fileID: 7865192546204400565}
-  - component: {fileID: -4375854397861334358}
   - component: {fileID: 2447787136065078288}
   - component: {fileID: 7058546635512306139}
   - component: {fileID: 6436984686369435751}
@@ -848,7 +847,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7498676492825279152}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b49709240f5e4a48b3c6a5cc476bbb6, type: 3}
   m_Name: 
@@ -1038,19 +1037,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Outline: {fileID: 5974903067789525227}
---- !u!114 &-4375854397861334358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7498676492825279152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6de49ee75718ef94398bd86a6a4f23fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TreeBlueprint: {fileID: 11400000, guid: a3c38bfd86c37ad469d85018ed0458bb, type: 2}
 --- !u!114 &2447787136065078288
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,10 +17,11 @@ public class Projectile : NetworkBehaviour
 
 
     #region Server
-    [Server]
+    //[Server]
     private void DestroySelf()
     {
-        NetworkServer.Destroy(gameObject);
+        //NetworkServer.Destroy(gameObject);
+        ObjectPooler.Instance.ReturnToPool("ArcherArrow", gameObject);
     }
     private IEnumerator DestroyOnHitParticle()
     {

@@ -31,6 +31,7 @@ public class Health : NetworkBehaviour
     #region Server
     public override void OnStartServer()
     {
+        if (name == "MooMoo") Debug.Log("asilxx1 " + UnitManager.Instance == null);
         _currentHealth = baseHp;
         if(unitType != UnitType.Player) UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), unitType);
 

@@ -10,6 +10,8 @@ public class UnitManager : NetworkSingleton<UnitManager>
     public readonly SyncList<NetworkIdentityReference> Players = new SyncList<NetworkIdentityReference>();
     public readonly SyncList<NetworkIdentityReference> WaveEnemies = new SyncList<NetworkIdentityReference>();
 
+    public readonly SyncList<NetworkIdentityReference> Buildings = new SyncList<NetworkIdentityReference>();
+
     [Command(requiresAuthority = false)]
     public void RegisterUnit(NetworkIdentityReference unit, UnitType unitType)
     {
@@ -23,6 +25,14 @@ public class UnitManager : NetworkSingleton<UnitManager>
                 if (WaveEnemies.Contains(unit)) return;
                 WaveEnemies.Add(unit);
                 break;
+            case UnitType.Building:
+                Debug.Log("asilxx2");
+                if (Buildings.Contains(unit)) return;
+                Debug.Log("asilxx3");
+                Buildings.Add(unit);
+                Debug.Log("asilxx4");
+                break;
+
 
         }
     }
@@ -49,6 +59,15 @@ public class UnitManager : NetworkSingleton<UnitManager>
                 }
                 break;
         }
+    }
+
+    public GameObject GetBaseBuilding()
+    {
+        foreach(var x in Buildings)
+        {
+            return x.Value.gameObject;
+        }
+        return null;
     }
 
     public GameObject GetClosestUnit(Vector3 myPosition, bool isEnemy = false)
@@ -95,7 +114,8 @@ public class UnitManager : NetworkSingleton<UnitManager>
 public enum UnitType
 {
     Player,
-    WaveEnemy
+    WaveEnemy,
+    Building
 }
 
 

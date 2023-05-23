@@ -43,16 +43,21 @@ public class ObjectPooler : ScriptableSingleton<ObjectPooler>
             return null;
         }
 
+        if (poolDictionary[tag].Count == 0)
+        {
+            Debug.LogError("No objects remaining in pool with tag " + tag);
+            return null;
+        }
+
         GameObject objectToSpawn = poolDictionary[tag].Dequeue();
 
         objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
 
-        poolDictionary[tag].Enqueue(objectToSpawn);
-
         return objectToSpawn;
     }
+
     public GameObject SpawnFromPoolWithPrefab(GameObject prefab, Vector3 position, Quaternion rotation)
     {
         string tag = string.Empty;
@@ -74,4 +79,16 @@ public class ObjectPooler : ScriptableSingleton<ObjectPooler>
 
         return SpawnFromPool(tag, position, rotation);
     }
+    public void ReturnToPool(string tag, GameObject objectToReturn)
+    {
+        if (!poolDictionary.ContainsKey(tag))
+        {
+            Debug.LogError("Pool with tag " + tag + " doesn't exist.");
+            return;
+        }
+
+        objectToReturn.SetActive(false);
+        poolDictionary[tag].Enqueue(objectToReturn);
+    }
+
 }
