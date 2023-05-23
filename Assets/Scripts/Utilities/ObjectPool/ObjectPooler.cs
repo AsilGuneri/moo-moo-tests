@@ -54,6 +54,8 @@ public class ObjectPooler : ScriptableSingleton<ObjectPooler>
         objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
+        var poolObj = objectToSpawn.AddComponent<PoolObject>();
+        poolObj.PoolTag = tag;
 
         return objectToSpawn;
     }

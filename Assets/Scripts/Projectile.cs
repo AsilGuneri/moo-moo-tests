@@ -14,6 +14,7 @@ public class Projectile : NetworkBehaviour
     [SyncVar] private int _damage;
     [SyncVar] private Transform spawnerTransform;
     [SyncVar] public GameObject _target;
+    [SyncVar] public string PoolTag;
 
 
     #region Server
@@ -21,7 +22,7 @@ public class Projectile : NetworkBehaviour
     private void DestroySelf()
     {
         //NetworkServer.Destroy(gameObject);
-        ObjectPooler.Instance.ReturnToPool("ArcherArrow", gameObject);
+        ObjectPooler.Instance.ReturnToPool(PoolTag, gameObject);
     }
     private IEnumerator DestroyOnHitParticle()
     {
@@ -55,6 +56,7 @@ public class Projectile : NetworkBehaviour
         _isMoving = true;
         _target = target;
         _damage = damage;
+        PoolTag = GetComponent<PoolObject>().PoolTag;
         this.spawnerTransform = spawnerTransform;
     }
     [ClientCallback]

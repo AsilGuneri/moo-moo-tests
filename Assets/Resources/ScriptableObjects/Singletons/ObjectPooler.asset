@@ -18,7 +18,7 @@ MonoBehaviour:
     size: 20
   - tag: ArcherArrow
     prefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
-    size: 50
+    size: 10
   - tag: ArcherPiercingArrow
     prefab: {fileID: 8081231170285242933, guid: 10dc0758f302e994e8df7287548a25b4, type: 3}
     size: 20
