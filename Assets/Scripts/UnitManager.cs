@@ -31,11 +31,8 @@ public class UnitManager : NetworkSingleton<UnitManager>
                 WaveEnemies.Add(unit);
                 break;
             case UnitType.Building:
-                Debug.Log("asilxx2");
                 if (Buildings.Contains(unit)) return;
-                Debug.Log("asilxx3");
                 Buildings.Add(unit);
-                Debug.Log("asilxx4");
                 break;
 
 
