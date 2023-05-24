@@ -50,11 +50,18 @@ public class PlayerMertController : NetworkBehaviour
             SetRangeIndicator(value);
         }
     }
+
     private void Start()
     {
-        Activate();
+        StartCoroutine(nameof(ActivateRoutine));
     }
+    private IEnumerator ActivateRoutine()
+    {
+        yield return new WaitUntil(() => UnitManager.Instance != null);
+        Activate();
+        Debug.Log("mert controller activated");
 
+    }
     private void Awake()
     {
         _tc = GetComponent<TargetController>();

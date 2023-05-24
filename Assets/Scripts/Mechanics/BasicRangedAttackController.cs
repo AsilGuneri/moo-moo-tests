@@ -41,7 +41,6 @@ public class BasicRangedAttackController : ABasicAttackController
         if (IsAttacking)
         {
             IsAttacking = false;
-            DelayProjectileSpawn();
             ac.SetAutoAttackStatus(false);
         }
     }

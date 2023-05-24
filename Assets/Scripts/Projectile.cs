@@ -62,7 +62,7 @@ public class Projectile : NetworkBehaviour
     [ClientCallback]
     private void Update()
     {
-        if (_isMoving && _target == null) NetworkServer.Destroy(gameObject);
+        if (_isMoving && _target == null) DestroySelf();
         if (_target == null || !_isMoving) return;
 
         if (Vector2.Distance(Extensions.To2D(transform.position),Extensions.To2D(_target.transform.position)) > 0.4f)

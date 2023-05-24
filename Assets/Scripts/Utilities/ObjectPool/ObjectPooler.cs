@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Utilities;
 
 [CreateAssetMenu(fileName = "ObjectPooler", menuName = "Scriptable Objects/Object Pooler", order = 1)]
-public class ObjectPooler : ScriptableSingleton<ObjectPooler>
+public class ObjectPooler : Singleton<ObjectPooler>
 {
     [System.Serializable]
     public class Pool
@@ -28,7 +29,17 @@ public class ObjectPooler : ScriptableSingleton<ObjectPooler>
             {
                 GameObject obj = Instantiate(pool.prefab);
                 obj.SetActive(false);
+                 if (obj.TryGetComponent<PoolObject>(out PoolObject poolObject))
+                {
+                    poolObject.PoolTag = pool.tag;
+                }
+                else
+                {
+                    var poolObj = obj.AddComponent<PoolObject>();
+                    poolObj.PoolTag = pool.tag;
+                }
                 objectPool.Enqueue(obj);
+               
             }
 
             poolDictionary.Add(pool.tag, objectPool);
@@ -54,8 +65,6 @@ public class ObjectPooler : ScriptableSingleton<ObjectPooler>
         objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
-        var poolObj = objectToSpawn.AddComponent<PoolObject>();
-        poolObj.PoolTag = tag;
 
         return objectToSpawn;
     }

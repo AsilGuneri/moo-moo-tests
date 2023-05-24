@@ -12,6 +12,11 @@ public class UnitManager : NetworkSingleton<UnitManager>
 
     public readonly SyncList<NetworkIdentityReference> Buildings = new SyncList<NetworkIdentityReference>();
 
+    private void Start()
+    {
+        Debug.Log("unit manager is started");
+    }
+
     [Command(requiresAuthority = false)]
     public void RegisterUnit(NetworkIdentityReference unit, UnitType unitType)
     {
