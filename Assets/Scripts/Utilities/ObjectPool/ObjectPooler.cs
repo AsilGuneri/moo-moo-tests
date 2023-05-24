@@ -16,7 +16,10 @@ public class ObjectPooler : Singleton<ObjectPooler>
 
     public List<Pool> pools;
     private Dictionary<string, Queue<GameObject>> poolDictionary;
-
+    private void Start()
+    {
+        Initialize();
+    }
     public void Initialize()
     {
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
