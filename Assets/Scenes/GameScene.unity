@@ -1568,18 +1568,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pools:
-  - tag: Enemy1.1
-    prefab: {fileID: 7498676492825279152, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
-    size: 20
-  - tag: ArcherArrow
-    prefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
-    size: 10
-  - tag: ArcherPiercingArrow
-    prefab: {fileID: 8081231170285242933, guid: 10dc0758f302e994e8df7287548a25b4, type: 3}
-    size: 20
-  - tag: enemy
-    prefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
-    size: 20
+  - Prefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
+    Size: 10
+    Key: arrow
+    currentCount: 0
 --- !u!1 &350843464
 GameObject:
   m_ObjectHideFlags: 0

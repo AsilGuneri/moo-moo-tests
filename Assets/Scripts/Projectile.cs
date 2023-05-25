@@ -14,7 +14,6 @@ public class Projectile : NetworkBehaviour
     [SyncVar] private int _damage;
     [SyncVar] private Transform spawnerTransform;
     [SyncVar] public GameObject _target;
-    [SyncVar] public string PoolTag;
 
 
     #region Server
@@ -22,13 +21,15 @@ public class Projectile : NetworkBehaviour
     private void DestroySelf()
     {
         //NetworkServer.Destroy(gameObject);
-        ObjectPooler.Instance.ReturnToPool(PoolTag, gameObject);
+        //ObjectPooler.Instance.ReturnToPool(PoolTag, gameObject);
+        NetworkServer.UnSpawn(gameObject);
+        ObjectPooler.Instance.Return(gameObject);
     }
-    private IEnumerator DestroyOnHitParticle()
-    {
-        yield return new WaitForSeconds(onHitParticleDestroySecond);
-        NetworkServer.Destroy(onHitParticle.gameObject);
-    }
+    //private IEnumerator DestroyOnHitParticle()
+    //{
+    //    yield return new WaitForSeconds(onHitParticleDestroySecond);
+    //    NetworkServer.Destroy(onHitParticle.gameObject);
+    //}
     [ServerCallback]
     private void CmdTargetHit()
     {
@@ -41,7 +42,7 @@ public class Projectile : NetworkBehaviour
         {
             onHitParticle.transform.parent = null;
             onHitParticle.Play();
-            StartCoroutine(nameof(DestroyOnHitParticle));
+            //StartCoroutine(nameof(DestroyOnHitParticle));
         }
        
         DestroySelf();
@@ -56,7 +57,6 @@ public class Projectile : NetworkBehaviour
         _isMoving = true;
         _target = target;
         _damage = damage;
-        PoolTag = GetComponent<PoolObject>().PoolTag;
         this.spawnerTransform = spawnerTransform;
     }
     [ClientCallback]
