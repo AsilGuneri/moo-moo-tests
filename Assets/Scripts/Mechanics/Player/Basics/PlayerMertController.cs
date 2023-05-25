@@ -172,10 +172,6 @@ public class PlayerMertController : NetworkBehaviour
         else
         {
             _tc.SetTarget(null);
-        }
-
-        if (!_tc.HasTarget)
-        {
             _umc.ClientMove(hitInfo.point);
             clickIndicator.Setup(hitInfo.point, true);
         }
