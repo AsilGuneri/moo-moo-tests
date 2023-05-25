@@ -167,11 +167,11 @@ public class PlayerMertController : NetworkBehaviour
     {
         if (hitInfo.collider.TryGetComponent(out Health hc) && !hitInfo.collider.TryGetComponent(out PlayerMertController mc))
         {
-            _tc.Target = hc.gameObject;
+            _tc.SetTarget(hc.gameObject);
         }
         else
         {
-            _tc.Target = null;
+            _tc.SetTarget(null);
         }
 
         if (!_tc.HasTarget)

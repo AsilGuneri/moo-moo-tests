@@ -13,11 +13,11 @@ public class Projectile : NetworkBehaviour
     [SyncVar] private bool _isMoving;
     [SyncVar] private int _damage;
     [SyncVar] private Transform spawnerTransform;
-    [SyncVar] public GameObject _target;
+    [SyncVar] public GameObject TargetId;
 
 
     #region Server
-    //[Server]
+    [Server]
     private void DestroySelf()
     {
         //NetworkServer.Destroy(gameObject);
@@ -33,11 +33,11 @@ public class Projectile : NetworkBehaviour
     [ServerCallback]
     private void CmdTargetHit()
     {
-        if(_target == null || spawnerTransform == null)
+        if(TargetId == null || spawnerTransform == null)
         {
             return;
         }
-        _target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
+        TargetId.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
         if (onHitParticle)
         {
             onHitParticle.transform.parent = null;
@@ -52,26 +52,27 @@ public class Projectile : NetworkBehaviour
     {
         base.OnStartAuthority();
     }
+    [Server]
     public void SetupProjectile(GameObject target, int damage, Transform spawnerTransform)
     {
         _isMoving = true;
-        _target = target;
+        TargetId = target;
         _damage = damage;
         this.spawnerTransform = spawnerTransform;
     }
     [ClientCallback]
     private void Update()
     {
-        if (_isMoving && _target == null) DestroySelf();
-        if (_target == null || !_isMoving) return;
-
-        if (Vector2.Distance(Extensions.To2D(transform.position),Extensions.To2D(_target.transform.position)) > 0.4f)
+        // if (_isMoving && _target == null) DestroySelf();
+        if (TargetId == null || !_isMoving) return;
+        //if (!isLocalPlayer) return;
+        if (Vector2.Distance(Extensions.To2D(transform.position), Extensions.To2D(TargetId.transform.position)) > 0.4f)
         {
-            transform.position += Extensions.Vector3WithoutY(Direction(_target.transform.position) * Time.deltaTime * speed);
-            Vector3 targetPos = new Vector3( _target.transform.position.x, transform.position.y, _target.transform.position.z ) ;
-            transform.LookAt(targetPos) ;
+            transform.position += Extensions.Vector3WithoutY(Direction(TargetId.transform.position) * Time.deltaTime * speed);
+            Vector3 targetPos = new Vector3(TargetId.transform.position.x, transform.position.y, TargetId.transform.position.z);
+            transform.LookAt(targetPos);
             return;
-            
+
         }
         else
         {
