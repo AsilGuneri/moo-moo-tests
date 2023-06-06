@@ -14,6 +14,7 @@ public class PlayerMertController : NetworkBehaviour
 {
     public PlayerStats Stats;
     public Class CharacterClass;
+
     public string PlayerName { get; set; }
 
     [SerializeField] private Animator animator;
@@ -53,24 +54,7 @@ public class PlayerMertController : NetworkBehaviour
 
     private void Start()
     {
-        StartCoroutine(nameof(ActivateRoutine));
-    }
-    private IEnumerator ActivateRoutine()
-    {
-        yield return new WaitUntil(() => UnitManager.Instance != null);
         Activate();
-        Debug.Log("mert controller activated");
-
-    }
-    private void Awake()
-    {
-        _tc = GetComponent<TargetController>();
-        _bac = GetComponent<BasicRangedAttackController>();
-        _pac = GetComponent<AnimationControllerBase>();
-        _umc = GetComponent<UnitMovementController>();
-        _hc = GetComponent<Health>();
-        _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
-        aiMovement = GetComponent<IAstarAI>();
     }
     private void Activate()
     {
@@ -84,10 +68,24 @@ public class PlayerMertController : NetworkBehaviour
             mainCamera = Camera.main;
             mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
             UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
-            SkillSelectionPanel.Instance.CacheClassSkills();
         }
     }
-
+    [TargetRpc]
+    public void OnRegister()
+    {
+        Debug.Log("asilxx" + UnitManager.Instance.Players.Count);
+        SkillSelectionPanel.Instance.CacheClassSkills();
+    }
+    private void Awake()
+    {
+        _tc = GetComponent<TargetController>();
+        _bac = GetComponent<BasicRangedAttackController>();
+        _pac = GetComponent<AnimationControllerBase>();
+        _umc = GetComponent<UnitMovementController>();
+        _hc = GetComponent<Health>();
+        _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
+        aiMovement = GetComponent<IAstarAI>();
+    }
 
     [ClientCallback]
     void Update()
