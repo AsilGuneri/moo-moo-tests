@@ -96,12 +96,21 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         roomPlayer.SetPlayerData(conn.connectionId);
         return roomPlayer.gameObject;
     }
-    public override void OnServerSceneChanged(string sceneName)
-    {
-        base.OnServerSceneChanged(sceneName);
-        if (sceneName == GameplayScene)
-        {
-            ObjectPooler.Instance.Initialize();
-        }
-    }
+    //public override void OnServerSceneChanged(string sceneName)
+    //{
+    //    base.OnServerSceneChanged(sceneName);
+    //    if (sceneName == GameplayScene)
+    //    {
+    //        ObjectPooler.Instance.Initialize();
+    //    }
+    //}
+    //public override void OnClientSceneChanged()
+    //{
+    //    base.OnClientSceneChanged();
+    //    Debug.Log("asilxx name : " + SceneManager.GetActiveScene().name);
+    //    if (SceneManager.GetActiveScene().name == "GameScene")
+    //    {
+    //        ObjectPooler.Instance.Initialize();
+    //    }
+    //}
 }

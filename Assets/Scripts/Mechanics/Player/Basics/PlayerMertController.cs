@@ -14,6 +14,7 @@ public class PlayerMertController : NetworkBehaviour
 {
     public PlayerStats Stats;
     public Class CharacterClass;
+
     public string PlayerName { get; set; }
 
     [SerializeField] private Animator animator;
@@ -50,20 +51,10 @@ public class PlayerMertController : NetworkBehaviour
             SetRangeIndicator(value);
         }
     }
+
     private void Start()
     {
         Activate();
-    }
-
-    private void Awake()
-    {
-        _tc = GetComponent<TargetController>();
-        _bac = GetComponent<BasicRangedAttackController>();
-        _pac = GetComponent<AnimationControllerBase>();
-        _umc = GetComponent<UnitMovementController>();
-        _hc = GetComponent<Health>();
-        _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
-        aiMovement = GetComponent<IAstarAI>();
     }
     private void Activate()
     {
@@ -77,10 +68,24 @@ public class PlayerMertController : NetworkBehaviour
             mainCamera = Camera.main;
             mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
             UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
-            SkillSelectionPanel.Instance.CacheClassSkills();
         }
     }
-
+    [TargetRpc]
+    public void OnRegister()
+    {
+        Debug.Log("asilxx" + UnitManager.Instance.Players.Count);
+        SkillSelectionPanel.Instance.CacheClassSkills();
+    }
+    private void Awake()
+    {
+        _tc = GetComponent<TargetController>();
+        _bac = GetComponent<BasicRangedAttackController>();
+        _pac = GetComponent<AnimationControllerBase>();
+        _umc = GetComponent<UnitMovementController>();
+        _hc = GetComponent<Health>();
+        _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
+        aiMovement = GetComponent<IAstarAI>();
+    }
 
     [ClientCallback]
     void Update()
@@ -160,17 +165,30 @@ public class PlayerMertController : NetworkBehaviour
     {
         if (hitInfo.collider.TryGetComponent(out Health hc) && !hitInfo.collider.TryGetComponent(out PlayerMertController mc))
         {
-            _tc.Target = hc.gameObject;
+            _tc.SetTarget(hc.gameObject);
         }
         else
         {
-            _tc.Target = null;
-        }
-
-        if (!_tc.HasTarget)
-        {
-            _umc.ClientMove(hitInfo.point);
+            _tc.SetTarget(null);
+            Vector3 newPoint = CheckNavMesh(hitInfo.point);
+            _umc.ClientMove(newPoint);
             clickIndicator.Setup(hitInfo.point, true);
+        }
+    }
+    public Vector3 CheckNavMesh(Vector3 clickPos)
+    {
+        NavMeshHit hit;
+
+        // Check for nearest point on navmesh within a certain range (here 5 units)
+        if (NavMesh.SamplePosition(clickPos, out hit, 15.0f, NavMesh.AllAreas))
+        {
+            // If the point is on the NavMesh, return it
+            return hit.position;
+        }
+        else
+        {
+            // If not on the NavMesh, return the original point
+            return clickPos;
         }
     }
 

@@ -12,6 +12,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
 
     public readonly SyncList<NetworkIdentityReference> Buildings = new SyncList<NetworkIdentityReference>();
 
+
     [Command(requiresAuthority = false)]
     public void RegisterUnit(NetworkIdentityReference unit, UnitType unitType)
     {
@@ -20,17 +21,17 @@ public class UnitManager : NetworkSingleton<UnitManager>
             case UnitType.Player:
                 if (Players.Contains(unit)) return;
                 Players.Add(unit);
+                //
+                var player = unit.Value.GetComponent<PlayerMertController>();
+                player.OnRegister();
                 break;
             case UnitType.WaveEnemy:
                 if (WaveEnemies.Contains(unit)) return;
                 WaveEnemies.Add(unit);
                 break;
             case UnitType.Building:
-                Debug.Log("asilxx2");
                 if (Buildings.Contains(unit)) return;
-                Debug.Log("asilxx3");
                 Buildings.Add(unit);
-                Debug.Log("asilxx4");
                 break;
 
 
@@ -106,6 +107,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
     {
         foreach(var player in Players)
         {
+            Debug.Log(player.networkId);
             if (player.Value.gameObject.GetComponent<PlayerMertController>().hasAuthority) return player.Value.gameObject.GetComponent<PlayerMertController>();
         }
         return null;

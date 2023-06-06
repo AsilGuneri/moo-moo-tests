@@ -1,94 +1,118 @@
-using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
+using System.Collections.Generic;
 using System;
 
-[CreateAssetMenu(fileName = "ObjectPooler", menuName = "Scriptable Objects/Object Pooler", order = 1)]
-public class ObjectPooler : ScriptableSingleton<ObjectPooler>
+public class ObjectPooler : MonoBehaviour
 {
-    [System.Serializable]
-    public class Pool
+    public static ObjectPooler Instance;
+
+    public List<MyPool> pools = new List<MyPool>();
+
+    private Dictionary<Guid, GameObject> assetIdToPrefabMap = new Dictionary<Guid, GameObject>();
+
+
+    void Start()
     {
-        public string tag;
-        public GameObject prefab;
-        public int size;
-    }
-
-    public List<Pool> pools;
-    private Dictionary<string, Queue<GameObject>> poolDictionary;
-
-    public void Initialize()
-    {
-        poolDictionary = new Dictionary<string, Queue<GameObject>>();
-
-        foreach (Pool pool in pools)
+        InitializeAllPools();
+        Instance = this;
+        foreach (var pool in pools)
         {
-            Queue<GameObject> objectPool = new Queue<GameObject>();
-
-            for (int i = 0; i < pool.size; i++)
-            {
-                GameObject obj = Instantiate(pool.prefab);
-                obj.SetActive(false);
-                objectPool.Enqueue(obj);
-            }
-
-            poolDictionary.Add(pool.tag, objectPool);
+            NetworkClient.RegisterPrefab(pool.Prefab, SpawnHandler, UnspawnHandler);
+            assetIdToPrefabMap[pool.Prefab.GetComponent<NetworkIdentity>().assetId] = pool.Prefab;
         }
     }
-
-    public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
+    // used by NetworkClient.RegisterPrefab
+    GameObject SpawnHandler(SpawnMessage msg)
     {
-        if (!poolDictionary.ContainsKey(tag))
+        if (assetIdToPrefabMap.TryGetValue(msg.assetId, out var prefab))
         {
-            Debug.LogError("Pool with tag " + tag + " doesn't exist.");
+            return Get(prefab, msg.position, msg.rotation);
+        }
+        else
+        {
+            Debug.LogError("No registered prefab found for assetId: " + msg.assetId);
             return null;
         }
-
-        if (poolDictionary[tag].Count == 0)
-        {
-            Debug.LogError("No objects remaining in pool with tag " + tag);
-            return null;
-        }
-
-        GameObject objectToSpawn = poolDictionary[tag].Dequeue();
-
-        objectToSpawn.SetActive(true);
-        objectToSpawn.transform.position = position;
-        objectToSpawn.transform.rotation = rotation;
-
-        return objectToSpawn;
     }
 
-    public GameObject SpawnFromPoolWithPrefab(GameObject prefab, Vector3 position, Quaternion rotation)
+    // used by NetworkClient.RegisterPrefab
+    void UnspawnHandler(GameObject spawned) => Return(spawned);
+
+    void OnDestroy()
     {
-        string tag = string.Empty;
-
-        foreach (Pool pool in pools)
+        foreach (var pool in pools)
         {
-            if (pool.prefab == prefab)
-            {
-                tag = pool.tag;
-                break;
-            }
+            NetworkClient.UnregisterPrefab(pool.Prefab);
         }
-
-        if (string.IsNullOrEmpty(tag))
-        {
-            Debug.LogWarning("No pool found containing the given prefab.");
-            return null;
-        }
-
-        return SpawnFromPool(tag, position, rotation);
     }
-    public void ReturnToPool(string tag, GameObject objectToReturn)
+
+    void InitializeAllPools()
     {
-        if (!poolDictionary.ContainsKey(tag))
+        // create pool with generator function
+        foreach(var myPool in pools)
         {
-            Debug.LogError("Pool with tag " + tag + " doesn't exist.");
-            return;
+            myPool.pool = new Pool<GameObject>(() => CreateNew(myPool), myPool.Size);
         }
-
-        objectToReturn.SetActive(false);
-        poolDictionary[tag].Enqueue(objectToReturn);
     }
 
+    GameObject CreateNew(MyPool poolOfObj)
+    {
+        // use this object as parent so that objects dont crowd hierarchy
+        GameObject next = Instantiate(poolOfObj.Prefab, transform);
+        next.name = $"{poolOfObj.Prefab.name}_pooled_{poolOfObj.currentCount}";
+        next.SetActive(false);
+        poolOfObj.currentCount++;
+        return next;
+    }
+
+    // Used to take Object from Pool.
+    // Should be used on server to get the next Object
+    // Used on client by NetworkClient to spawn objects
+    public GameObject Get(GameObject prefab, Vector3 position, Quaternion rotation)
+    {
+        MyPool poolOfObj = GetPool(prefab);
+        GameObject next = poolOfObj.pool.Get();
+
+        // set position/rotation and set active
+        next.transform.position = position;
+        next.transform.rotation = rotation;
+        next.SetActive(true);
+        return next;
+    }
+
+    // Used to put object back into pool so they can b
+    // Should be used on server after unspawning an object
+    // Used on client by NetworkClient to unspawn objects
+    public void Return(GameObject spawned)
+    {
+        MyPool poolOfObj = GetPool(spawned);
+
+        // disable object
+        spawned.SetActive(false);
+
+        // add back to pool
+        poolOfObj.pool.Return(spawned);
+    }
+
+    private MyPool GetPool(GameObject prefab)
+    {
+        foreach (var pool in pools)
+        {
+            if (pool.Key == prefab.GetComponent<PoolObject>().Key)
+                return pool;
+        }
+        Debug.LogError("Pool returned null");
+        return null;
+    }
+}
+
+[System.Serializable]
+public class MyPool
+{
+    public GameObject Prefab;
+    public int Size;
+    public string Key;
+    public Pool<GameObject> pool;
+    public int currentCount;
 }

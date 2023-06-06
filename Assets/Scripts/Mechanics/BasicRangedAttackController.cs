@@ -21,7 +21,7 @@ public class BasicRangedAttackController : ABasicAttackController
     {
         //if (checkAuthority && !hasAuthority) return;
 
-        GameObject projectile = ObjectPooler.Instance.SpawnFromPoolWithPrefab(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+        GameObject projectile = ObjectPooler.Instance.Get(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
         projectile.GetComponent<Projectile>().SetupProjectile(tc.Target, baseStats.Damage, transform);
         NetworkServer.Spawn(projectile, connectionToClient);
     }
@@ -41,7 +41,6 @@ public class BasicRangedAttackController : ABasicAttackController
         if (IsAttacking)
         {
             IsAttacking = false;
-            DelayProjectileSpawn();
             ac.SetAutoAttackStatus(false);
         }
     }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 626658371940113494}
   - component: {fileID: 8489722422623134166}
   - component: {fileID: 817598904071200291}
-  - component: {fileID: 6983154253710124881}
+  - component: {fileID: -161897024165834653}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.2703457, y: 0.9642168, z: 4.3537803}
   m_LocalScale: {x: 1.5, y: 1.5, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3385749275418091404}
   - {fileID: 5220534625915449633}
@@ -53,7 +54,7 @@ MonoBehaviour:
   speed: 25
   onHitParticle: {fileID: 8054803658203624105}
   onHitParticleDestroySecond: 1
-  _target: {fileID: 0}
+  Target: {fileID: 0}
 --- !u!114 &817598904071200291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,7 +72,7 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 7ae88954524b6744ba86919208d68d56
   hasSpawned: 0
---- !u!114 &6983154253710124881
+--- !u!114 &-161897024165834653
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -80,31 +81,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8081231170285242933}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Script: {fileID: 11500000, guid: d4015c930984090469e7d32dbe258a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0
-  clientAuthority: 1
-  sendInterval: 0
-  syncPosition: 1
-  syncRotation: 1
-  syncScale: 0
-  interpolatePosition: 1
-  interpolateRotation: 1
-  interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
-  bufferResetMultiplier: 5
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
-  scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  Key: arrow
 --- !u!1001 &3385749275417953548
 PrefabInstance:
   m_ObjectHideFlags: 0

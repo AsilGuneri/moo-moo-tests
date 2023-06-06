@@ -13,34 +13,34 @@ public class Projectile : NetworkBehaviour
     [SyncVar] private bool _isMoving;
     [SyncVar] private int _damage;
     [SyncVar] private Transform spawnerTransform;
-    [SyncVar] public GameObject _target;
+    [SyncVar] public GameObject Target;
 
 
     #region Server
-    //[Server]
+    [Server]
     private void DestroySelf()
     {
-        //NetworkServer.Destroy(gameObject);
-        ObjectPooler.Instance.ReturnToPool("ArcherArrow", gameObject);
+        NetworkServer.UnSpawn(gameObject);
+        ObjectPooler.Instance.Return(gameObject);
     }
-    private IEnumerator DestroyOnHitParticle()
-    {
-        yield return new WaitForSeconds(onHitParticleDestroySecond);
-        NetworkServer.Destroy(onHitParticle.gameObject);
-    }
+    //private IEnumerator DestroyOnHitParticle()
+    //{
+    //    yield return new WaitForSeconds(onHitParticleDestroySecond);
+    //    NetworkServer.Destroy(onHitParticle.gameObject);
+    //}
     [ServerCallback]
     private void CmdTargetHit()
     {
-        if(_target == null || spawnerTransform == null)
+        if(Target == null || spawnerTransform == null)
         {
             return;
         }
-        _target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
+        Target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
         if (onHitParticle)
         {
             onHitParticle.transform.parent = null;
             onHitParticle.Play();
-            StartCoroutine(nameof(DestroyOnHitParticle));
+            //StartCoroutine(nameof(DestroyOnHitParticle));
         }
        
         DestroySelf();
@@ -50,26 +50,26 @@ public class Projectile : NetworkBehaviour
     {
         base.OnStartAuthority();
     }
+    [Server]
     public void SetupProjectile(GameObject target, int damage, Transform spawnerTransform)
     {
         _isMoving = true;
-        _target = target;
+        Target = target;
         _damage = damage;
         this.spawnerTransform = spawnerTransform;
     }
     [ClientCallback]
     private void Update()
     {
-        if (_isMoving && _target == null) NetworkServer.Destroy(gameObject);
-        if (_target == null || !_isMoving) return;
-
-        if (Vector2.Distance(Extensions.To2D(transform.position),Extensions.To2D(_target.transform.position)) > 0.4f)
+        if (_isMoving && Target == null) DestroySelf();
+        if (Target == null || !_isMoving) return;
+        if (Vector2.Distance(Extensions.To2D(transform.position), Extensions.To2D(Target.transform.position)) > 0.4f)
         {
-            transform.position += Extensions.Vector3WithoutY(Direction(_target.transform.position) * Time.deltaTime * speed);
-            Vector3 targetPos = new Vector3( _target.transform.position.x, transform.position.y, _target.transform.position.z ) ;
-            transform.LookAt(targetPos) ;
+            transform.position += Extensions.Vector3WithoutY(Direction(Target.transform.position) * Time.deltaTime * speed);
+            Vector3 targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
+            transform.LookAt(targetPos);
             return;
-            
+
         }
         else
         {

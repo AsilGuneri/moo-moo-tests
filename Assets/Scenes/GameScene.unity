@@ -1437,6 +1437,7 @@ GameObject:
   - component: {fileID: 334110790}
   - component: {fileID: 334110789}
   - component: {fileID: 334110794}
+  - component: {fileID: 334110795}
   m_Layer: 0
   m_Name: = Managers
   m_TagString: Untagged
@@ -1554,6 +1555,23 @@ MonoBehaviour:
   syncInterval: 0.1
   contributionFieldPrefab: {fileID: 1019676739148843741, guid: 11ea5b7ac5ddc324684f5931b3883e13, type: 3}
   contributionFieldParent: {fileID: 175155515}
+--- !u!114 &334110795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334110787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91e11a7c12d4d924296a59fd5c2b0abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pools:
+  - Prefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
+    Size: 10
+    Key: arrow
+    currentCount: 0
 --- !u!1 &350843464
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using Utilities;
 using System;
 using Mirror;
 using UnityEngine.UI;
+using Mirror.Examples;
 
 public class WaveManager : NetworkSingleton<WaveManager>
 {
@@ -111,8 +112,8 @@ public class WaveManager : NetworkSingleton<WaveManager>
 
                     Vector3 position = spawnArea.position + offset;
 
-                    GameObject enemy = ObjectPooler.Instance.SpawnFromPoolWithPrefab(subWave.Prefab, position, Quaternion.identity);
-                    NetworkServer.Spawn(enemy);
+                    //GameObject enemy =  ObjectPooler.Instance.Get(position, Quaternion.identity);
+                    //NetworkServer.Spawn(enemy);
                 }
             }
 

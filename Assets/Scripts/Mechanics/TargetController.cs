@@ -6,11 +6,15 @@ using System;
 
 public class TargetController : NetworkBehaviour
 {
-    [NonSerialized] [SyncVar] public GameObject Target;
-    private bool _hasTarget;
+    [SyncVar] public GameObject Target;
+
     public bool HasTarget
     {
         get => Target != null;
     }
-
+    [Command(requiresAuthority = false)]
+    public void SetTarget(GameObject target)
+    {
+        Target = target;
+    }
 }
