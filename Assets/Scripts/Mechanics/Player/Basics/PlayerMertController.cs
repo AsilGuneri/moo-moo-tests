@@ -170,8 +170,25 @@ public class PlayerMertController : NetworkBehaviour
         else
         {
             _tc.SetTarget(null);
-            _umc.ClientMove(hitInfo.point);
+            Vector3 newPoint = CheckNavMesh(hitInfo.point);
+            _umc.ClientMove(newPoint);
             clickIndicator.Setup(hitInfo.point, true);
+        }
+    }
+    public Vector3 CheckNavMesh(Vector3 clickPos)
+    {
+        NavMeshHit hit;
+
+        // Check for nearest point on navmesh within a certain range (here 5 units)
+        if (NavMesh.SamplePosition(clickPos, out hit, 15.0f, NavMesh.AllAreas))
+        {
+            // If the point is on the NavMesh, return it
+            return hit.position;
+        }
+        else
+        {
+            // If not on the NavMesh, return the original point
+            return clickPos;
         }
     }
 
