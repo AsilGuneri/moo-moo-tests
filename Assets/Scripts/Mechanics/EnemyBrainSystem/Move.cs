@@ -20,21 +20,17 @@ public class Move : EnemyBehaviourData
 public class MoveController : EnemyBehaviourController
 {
     private Move moveData;
-  //  private CharacterMovement movement;
-  //  //private Transform CombatManager;
-  //  private bool isIn;
+    private UnitMovementController movement;
+    private bool isIn;
 
     public override void OnInitialize(EnemyBehaviourData data)
     {
         base.OnInitialize(data);
         moveData = data as Move;
-      //  movement = GetComponent<CharacterMovement>();
-        //CombatManager = global::CombatManager.Instance.PlayerCharacter.transform;
     }
 
     public override bool EnterCondition()
     {
-        Debug.Log("asilxx " + name);
         return IsTargetFarEnough();
     }
 
@@ -45,21 +41,18 @@ public class MoveController : EnemyBehaviourController
 
     public override void OnEnter()
     {
-       // isIn = true;
+        isIn = true;
     }
 
     public override void OnExit()
     {
-       // isIn = false;
+        isIn = false;
     }
 
     private void FollowTarget()
     {
-        // Get the direction towards the player
-        //Vector2 direction = (CombatManager.Instance.PlayerCharacter.transform.position - transform.position).normalized;
-
-        // Move towards the player
-       // movement.Move(direction);
+        //Get the direction towards the player
+        //movement.ClientMove();
     }
 
     private void Update()

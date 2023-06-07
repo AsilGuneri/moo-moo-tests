@@ -5,8 +5,6 @@ using UnityEngine;
 
 public abstract class EnemyBehaviourData : ScriptableObject
 {
-    public Transform Owner;
-    public EnemyBehaviourController Controller;
     public BehaviourState State
     {
         get => state;
@@ -18,7 +16,6 @@ public abstract class EnemyBehaviourData : ScriptableObject
 
     public virtual void Initialize(Transform owner)
     {
-        Owner = owner;
         // Create the appropriate controller
         var controller = CreateBehaviourController(owner.gameObject);
         controller.OnInitialize(this);

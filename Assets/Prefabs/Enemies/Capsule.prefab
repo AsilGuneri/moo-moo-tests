@@ -789,7 +789,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentState: 3
-  Behaviours: []
+  Behaviours:
+  - {fileID: 11400000, guid: a2f05e797ef7d5443a5a91fec270fef8, type: 2}
 --- !u!136 &2655837000801914637
 CapsuleCollider:
   m_ObjectHideFlags: 0

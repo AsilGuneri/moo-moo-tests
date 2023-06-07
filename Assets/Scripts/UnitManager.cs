@@ -71,11 +71,11 @@ public class UnitManager : NetworkSingleton<UnitManager>
         return null;
     }
 
-    public GameObject GetClosestUnit(Vector3 myPosition, bool isEnemy = false)
+    public GameObject GetClosestUnit(Vector3 myPosition, UnitType requestedUnitType)
     {
         float closestDistance = Mathf.Infinity;
         GameObject closestUnit = null;
-        foreach (NetworkIdentityReference unit in isEnemy ? WaveEnemies : Players)
+        foreach (NetworkIdentityReference unit in GetUnitList(requestedUnitType))
         {
             if (!unit.Value) continue;
             if (!unit.Value.gameObject) continue;
@@ -112,12 +112,26 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
         return null;
     }
+    private SyncList<NetworkIdentityReference> GetUnitList(UnitType type)
+    {
+        switch (type)
+        {
+            case UnitType.Player:
+                return Players;
+            case UnitType.WaveEnemy:
+                return WaveEnemies;
+            case UnitType.Building:
+                return Buildings;
+        }
+        Debug.LogError($"Unit list null");
+        return null;
+    }
 }
 public enum UnitType
 {
     Player,
     WaveEnemy,
-    Building
+    Building,
 }
 
 

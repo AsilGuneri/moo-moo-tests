@@ -179,7 +179,7 @@ public class PlayerMertController : NetworkBehaviour
     private void OnAttackModeClick(RaycastHit hitInfo)
     {
         clickIndicator.Setup(hitInfo.point, false);
-        var closestEnemy = UnitManager.Instance.GetClosestUnit(hitInfo.point, true);
+        var closestEnemy = UnitManager.Instance.GetClosestUnit(hitInfo.point, UnitType.WaveEnemy);
         if (!closestEnemy)
         {
             IsAttackClickMode = false;

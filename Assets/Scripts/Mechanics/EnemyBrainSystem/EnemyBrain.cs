@@ -11,35 +11,35 @@ public class EnemyBrain : MonoBehaviour
     public Dictionary<BehaviourState, EnemyBehaviourController> StateControllerDictionary = new();
 
     private EnemyBehaviourData currentBehaviour = null;
-    private bool isStarted;
+    private bool isActive;
 
-    private void Awake()
-    {
-        //CombatUIController.Instance.OnFightStart += OnBrainStart;
-    }
-    private void Start()
+    private void OnEnable()
     {
         OnBrainStart();
     }
-
-    private void OnBrainStart()
+    private void OnDisable()
     {
-        if (isStarted) return;
+        isActive = false;
+    }
+
+    public void OnBrainStart()
+    {
+        if (isActive) return;
         InitializeBrain();
-        isStarted = true;
+        isActive = true;
     }
     private void Update()
     {
-        if (!isStarted) return;
+        if (!isActive) return;
 
-        if(currentBehaviour != null)
+        if (currentBehaviour != null)
         {
             CheckExit();
         }
         else
         {
             CheckEnter();
-        }        
+        }
     }
     private void CheckExit()
     {
