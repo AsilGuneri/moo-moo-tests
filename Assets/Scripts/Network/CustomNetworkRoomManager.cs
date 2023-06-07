@@ -23,9 +23,13 @@ public class CustomNetworkRoomManager : NetworkRoomManager
     protected Callback<GameLobbyJoinRequested_t> gameLobbyJoinRequested;
     protected Callback<LobbyEnter_t> lobbyEntered;
 
+    [Header("Loading Screen")]
+    private LoadingManager loader;
+
     private new void Start()
     {
         base.Start();
+        loader = GetComponent<LoadingManager>();
         if (!UseSteam) return;
         lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
@@ -69,13 +73,18 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         if (useSteam)
         {
             SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, maxConnections);
-            return;
         }
         else
         {
             StartHost();
-            return;
+            loader.Load(loadingSceneAsync);
         }
+    }
+
+    public override void OnRoomServerPlayersReady()
+    {
+        base.OnRoomServerPlayersReady();
+        loader.Load(loadingSceneAsync);
     }
 
     public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)

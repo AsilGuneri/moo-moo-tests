@@ -444,6 +444,7 @@ GameObject:
   - component: {fileID: 702153653}
   - component: {fileID: 702153652}
   - component: {fileID: 702153655}
+  - component: {fileID: 702153656}
   m_Layer: 0
   m_Name: = NetworkRoomManager
   m_TagString: Untagged
@@ -524,6 +525,7 @@ MonoBehaviour:
   GamePlayers: []
   IsGameInProgress: 0
   useSteam: 0
+  loader: {fileID: 0}
 --- !u!4 &702153654
 Transform:
   m_ObjectHideFlags: 0
@@ -553,6 +555,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offsetX: 0
   offsetY: 0
+--- !u!114 &702153656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702153651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63652c540d6ecae46b792d7f4bb64f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingScreen: {fileID: 4096182705476852822, guid: f0e1e92aa9042b5409cc04995a8a9ded, type: 3}
 --- !u!1 &760003851
 GameObject:
   m_ObjectHideFlags: 0
