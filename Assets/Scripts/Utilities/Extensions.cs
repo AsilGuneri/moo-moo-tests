@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Extensions : MonoBehaviour
 {
@@ -28,6 +30,17 @@ public class Extensions : MonoBehaviour
         if (seconds == 0) return 0;
         int miliSeconds = (int)(seconds * 1000);
         return miliSeconds;
+    }
+    public static Vector3 CheckNavMesh(Vector3 clickPos)
+    {
+        NavMeshHit hit;
+
+        // Check for nearest point on navmesh within a certain range (here 5 units)
+        if (NavMesh.SamplePosition(clickPos, out hit, 15.0f, NavMesh.AllAreas))
+            return hit.position;
+        else
+            return clickPos;
+        
     }
     public static Vector3 GetMouseHitPosition()
     {
