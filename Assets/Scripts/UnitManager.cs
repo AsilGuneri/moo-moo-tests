@@ -107,7 +107,6 @@ public class UnitManager : NetworkSingleton<UnitManager>
     {
         foreach(var player in Players)
         {
-            Debug.Log(player.networkId);
             if (player.Value.gameObject.GetComponent<PlayerMertController>().hasAuthority) return player.Value.gameObject.GetComponent<PlayerMertController>();
         }
         return null;

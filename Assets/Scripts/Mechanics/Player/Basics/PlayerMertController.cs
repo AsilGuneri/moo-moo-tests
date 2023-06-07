@@ -73,7 +73,6 @@ public class PlayerMertController : NetworkBehaviour
     [TargetRpc]
     public void OnRegister()
     {
-        Debug.Log("asilxx" + UnitManager.Instance.Players.Count);
         SkillSelectionPanel.Instance.CacheClassSkills();
     }
     private void Awake()
