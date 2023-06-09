@@ -70,7 +70,8 @@ public class Health : NetworkBehaviour
         {
             levelController.GainExperience(ExpToGain);
         }
-        NetworkServer.Destroy(gameObject);
+        NetworkServer.UnSpawn(gameObject);
+        ObjectPooler.Instance.Return(gameObject);
     }
     #endregion
     #region Client
