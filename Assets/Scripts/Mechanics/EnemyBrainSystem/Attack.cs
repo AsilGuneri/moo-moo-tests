@@ -20,7 +20,9 @@ public class AttackController : EnemyBehaviourController
     private TargetController targetController;
     public override void OnInitialize(EnemyBehaviourData data)
     {
+        if (IsInitialized) return;
         base.OnInitialize(data);
+        IsInitialized = true;
         attackData = data as Attack;
         targetController = GetComponent<TargetController>();
     }

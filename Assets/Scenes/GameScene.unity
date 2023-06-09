@@ -1576,6 +1576,10 @@ MonoBehaviour:
     Size: 10
     Key: enemy1
     currentCount: 0
+  - Prefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
+    Size: 10
+    Key: fireball
+    currentCount: 0
 --- !u!1 &350843464
 GameObject:
   m_ObjectHideFlags: 0

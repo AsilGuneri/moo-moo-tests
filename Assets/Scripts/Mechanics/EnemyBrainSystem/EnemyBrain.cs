@@ -11,26 +11,29 @@ public class EnemyBrain : MonoBehaviour
     public Dictionary<BehaviourState, EnemyBehaviourController> StateControllerDictionary = new();
 
     private EnemyBehaviourData currentBehaviour = null;
+    private bool isInitialized;
     private bool isActive;
 
     private void OnEnable()
     {
         OnBrainStart();
+        isActive = true;
     }
     private void OnDisable()
     {
+        //reset if needed
         isActive = false;
     }
 
     public void OnBrainStart()
     {
-        if (isActive) return;
+        if (isInitialized) return;
         InitializeBrain();
-        isActive = true;
+        isInitialized = true;
     }
     private void Update()
     {
-        if (!isActive) return;
+        if (!isInitialized || !isActive) return;
 
         if (currentBehaviour != null)
         {

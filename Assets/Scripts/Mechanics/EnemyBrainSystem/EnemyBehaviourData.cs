@@ -24,6 +24,7 @@ public abstract class EnemyBehaviourData : ScriptableObject
 
 public abstract class EnemyBehaviourController : MonoBehaviour
 {
+    public bool IsInitialized = false;
     protected EnemyBehaviourData behaviourData;
 
     public abstract bool EnterCondition();

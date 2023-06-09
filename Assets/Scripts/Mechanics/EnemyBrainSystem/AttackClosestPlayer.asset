@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ddb641f55494dcc46b92fb6c5bc5d06d, type: 3}
-  m_Name: AttackBehaviour
+  m_Name: AttackClosestPlayer
   m_EditorClassIdentifier: 
   state: 2
