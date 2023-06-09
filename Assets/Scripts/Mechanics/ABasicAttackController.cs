@@ -122,9 +122,8 @@ public abstract class ABasicAttackController : NetworkBehaviour
             if (tc.Target != null)
             {
                 Vector3 currentTargetPosition = tc.Target.transform.position;
-                float distanceToTarget = Vector2.Distance(Extensions.To2D(currentTargetPosition), Extensions.To2D(transform.position));
 
-                if (distanceToTarget > baseStats.Range)
+                if (Extensions.CheckRange(currentTargetPosition, lastTargetPosition, baseStats.Range))
                 {
                     umc.ClientMove(currentTargetPosition, true, baseStats.Range);
                     lastTargetPosition = currentTargetPosition;

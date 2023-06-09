@@ -164,15 +164,29 @@ public class PlayerMertController : NetworkBehaviour
     {
         if (hitInfo.collider.TryGetComponent(out Health hc) && !hitInfo.collider.TryGetComponent(out PlayerMertController mc))
         {
-            _tc.SetTarget(hc.gameObject);
+            OnClickEnemy(hc);
         }
         else
         {
-            _tc.SetTarget(null);
-            Vector3 newPoint = Extensions.CheckNavMesh(hitInfo.point);
-            _umc.ClientMove(newPoint);
-            clickIndicator.Setup(hitInfo.point, true);
+            MoveToPoint(hitInfo);
         }
+    }
+
+    private void OnClickEnemy(Health hc)
+    {
+        //Check if the enemy is in range
+            //if not, move to the enemy
+            //if yes, attack the enemy
+
+        _tc.SetTarget(hc.gameObject);
+    }
+
+    private void MoveToPoint(RaycastHit hitInfo)
+    {
+        _tc.SetTarget(null);
+        Vector3 newPoint = Extensions.CheckNavMesh(hitInfo.point);
+        _umc.ClientMove(newPoint);
+        clickIndicator.Setup(hitInfo.point, true);
     }
 
     private void OnAttackModeClick(RaycastHit hitInfo)

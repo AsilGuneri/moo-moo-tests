@@ -54,4 +54,12 @@ public class Extensions : MonoBehaviour
         }
         return Vector3.zero;
     }
+
+    public static bool CheckRange(Vector3 currentTargetPosition, Vector3 currentUnitPosition, float range){
+        return GetDistance(currentTargetPosition, currentUnitPosition) <= range;
+    }
+
+    public static float GetDistance(Vector3 currentTargetPosition, Vector3 currentUnitPosition){
+        return Vector2.Distance(Extensions.To2D(currentTargetPosition), Extensions.To2D(currentUnitPosition));
+    }
 }
