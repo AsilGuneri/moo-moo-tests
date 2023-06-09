@@ -110,7 +110,6 @@ public abstract class ABasicAttackController : NetworkBehaviour
     {
         if (isChasing)
         {
-            umc.ClientStop();
             isChasing = false;
             cancellationTokenSource.Cancel();
         }
@@ -125,7 +124,7 @@ public abstract class ABasicAttackController : NetworkBehaviour
                 Vector3 currentTargetPosition = tc.Target.transform.position;
                 float distanceToTarget = Vector2.Distance(Extensions.To2D(currentTargetPosition), Extensions.To2D(transform.position));
 
-                if (distanceToTarget > baseStats.Range && (lastTargetPosition == Vector3.zero || Vector3.Distance(lastTargetPosition, currentTargetPosition) > baseStats.Range * 0.1f))
+                if (distanceToTarget > baseStats.Range)
                 {
                     umc.ClientMove(currentTargetPosition, true, baseStats.Range);
                     lastTargetPosition = currentTargetPosition;
@@ -135,7 +134,14 @@ public abstract class ABasicAttackController : NetworkBehaviour
             {
                 StopChasing();
             }
-            await Task.Delay(TimeSpan.FromSeconds(pathUpdateInterval), cancellationToken);
+            try
+            {
+                await Task.Delay(TimeSpan.FromSeconds(pathUpdateInterval), cancellationToken);
+            }
+            catch (TaskCanceledException)
+            {
+                return;
+            }
         }
     }
 
