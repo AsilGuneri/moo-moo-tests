@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994426446483293027}
   m_LocalRotation: {x: -0.7071058, y: -0, z: -0, w: 0.70710784}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -69852,7 +69852,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8305d2c59507ab47886a2e69dd71bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 2814538736174975143}
 --- !u!114 &5196469712631140113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69942,7 +69941,7 @@ MonoBehaviour:
   syncInterval: 0.1
   agent: {fileID: 0}
   checkAuthority: 1
-  isStable: 0
+  pathUpdateInterval: 1
   projectilePrefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
   projectileSpawnPoint: {fileID: 3792548669549166751}
 --- !u!114 &4334566937998049036
@@ -69992,6 +69991,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 1
   syncInterval: 0
+  Target: {fileID: 0}
 --- !u!114 &3652992798137029967
 MonoBehaviour:
   m_ObjectHideFlags: 0
