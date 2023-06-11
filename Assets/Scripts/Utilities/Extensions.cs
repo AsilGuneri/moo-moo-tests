@@ -62,4 +62,16 @@ public class Extensions : MonoBehaviour
     public static float GetDistance(Vector3 currentTargetPosition, Vector3 currentUnitPosition){
         return Vector2.Distance(Extensions.To2D(currentTargetPosition), Extensions.To2D(currentUnitPosition));
     }
+    /// <summary>
+    /// Time in miliseconds.
+    /// </summary>
+    /// <param name="attackSpeed"></param>
+    /// <param name="triggerPointOfAnim"></param>
+    /// <returns></returns>
+    public static void GetAttackTimes(float attackSpeed, float triggerPointOfAnim, out int msBeforeAttack, out int msAfterAttack)
+    {
+         msBeforeAttack = Extensions.ToMiliSeconds(((1 / attackSpeed) * triggerPointOfAnim));
+         msAfterAttack = Extensions.ToMiliSeconds((1 / attackSpeed) * (1 - triggerPointOfAnim));
+
+    }
 }

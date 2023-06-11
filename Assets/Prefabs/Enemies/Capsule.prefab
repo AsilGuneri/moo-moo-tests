@@ -734,8 +734,6 @@ GameObject:
   - component: {fileID: 2655837000801914637}
   - component: {fileID: 2552249028951478317}
   - component: {fileID: 5995625915929954317}
-  - component: {fileID: 8443345307397196155}
-  - component: {fileID: 818599698009061425}
   - component: {fileID: 8685464816181952525}
   - component: {fileID: 6590457882644671169}
   - component: {fileID: 700732724531390349}
@@ -753,6 +751,7 @@ GameObject:
   - component: {fileID: 6714525313842687756}
   - component: {fileID: 5124271025845029258}
   - component: {fileID: 5956842592629035594}
+  - component: {fileID: 7996684703937931216}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -857,42 +856,6 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!114 &8443345307397196155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7498676492825279152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b49709240f5e4a48b3c6a5cc476bbb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
---- !u!195 &818599698009061425
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7498676492825279152}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 0
-  m_Acceleration: 0
-  avoidancePriority: 50
-  m_AngularSpeed: 0
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &8685464816181952525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1003,7 +966,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  agent: {fileID: 818599698009061425}
+  agent: {fileID: 0}
   checkAuthority: 0
   pathUpdateInterval: 0.5
   projectilePrefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
@@ -1214,6 +1177,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Key: enemy1
+--- !u!114 &7996684703937931216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498676492825279152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e46086283b079844aeae9cbd9f33562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  attackRange: 5
+  attackSpeed: 1
+  speed: 0
+  unitType: 1
+  enemyList: 00000000
+  animAttackPoint: 0.485
 --- !u!1001 &4584912764243608144
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -37,13 +37,13 @@ public class ContributionPanel : NetworkSingleton<ContributionPanel>
     }
     private void UpdateAllContributions()
     {
-        foreach (PlayerMertController player in CustomManager.GamePlayers)
-        {
-            var contributionField = GetPlayersContributionField(player);
-            float totalScore = CalculateTotalContributionScore(CustomManager.GamePlayers);
-            float newPercentage = CalculateContributionPercentage(contributionField.PlayerController.Stats, totalScore);
-            contributionField.RpcUpdateContributionPercentText(newPercentage);
-        }
+        //foreach (PlayerMertController player in CustomManager.GamePlayers)
+        //{
+        //    var contributionField = GetPlayersContributionField(player);
+        //    float totalScore = CalculateTotalContributionScore(CustomManager.GamePlayers);
+        //    float newPercentage = CalculateContributionPercentage(contributionField.PlayerController.Stats, totalScore);
+        //    contributionField.RpcUpdateContributionPercentText(newPercentage);
+        //}
     }
     private PlayerContribution GetPlayersContributionField(PlayerMertController playerController)
     {

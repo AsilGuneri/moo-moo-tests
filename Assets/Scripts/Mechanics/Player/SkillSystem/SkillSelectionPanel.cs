@@ -52,9 +52,9 @@ public class SkillSelectionPanel : Singleton<SkillSelectionPanel>
     }
     public void CacheClassSkills()
     {
-        characterClass = UnitManager.Instance.GetPlayerController().CharacterClass;
-        classSkills = PlayerSkillsDatabase.Instance.GetClassData(characterClass);
-        SetClassSkills();
+        //characterClass = UnitManager.Instance.GetPlayerController().CharacterClass;
+        //classSkills = PlayerSkillsDatabase.Instance.GetClassData(characterClass);
+        //SetClassSkills();
     }
     private void CacheGradeSelectableSkills(SelectableUISkill skill, int grade)
     {

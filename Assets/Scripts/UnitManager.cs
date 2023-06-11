@@ -21,8 +21,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
             case UnitType.Player:
                 if (Players.Contains(unit)) return;
                 Players.Add(unit);
-                //
-                var player = unit.Value.GetComponent<PlayerMertController>();
+                var player = unit.Value.GetComponent<PlayerController>();
                 player.OnRegister();
                 break;
             case UnitType.WaveEnemy:
@@ -103,11 +102,11 @@ public class UnitManager : NetworkSingleton<UnitManager>
         if (Vector3.Distance(firstUnit.position, secondUnit.position) > range) return false;
         else return true;
     }
-    public PlayerMertController GetPlayerController()
+    public UnitController GetPlayerController()
     {
         foreach(var player in Players)
         {
-            if (player.Value.gameObject.GetComponent<PlayerMertController>().hasAuthority) return player.Value.gameObject.GetComponent<PlayerMertController>();
+            if (player.Value.gameObject.GetComponent<UnitController>().hasAuthority) return player.Value.gameObject.GetComponent<UnitController>();
         }
         return null;
     }
