@@ -3,8 +3,7 @@ using Pathfinding;
 
 public class Movement : MonoBehaviour
 {
-    private TargetController targetController;
-    private AnimationControllerBase animationController;
+    private UnitController controller;
     private RichAI aiMovement;
     private bool isMoving = false;
 
@@ -14,8 +13,7 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-        targetController = GetComponent<TargetController>();
-        animationController = GetComponent<AnimationControllerBase>();
+        controller = GetComponent<UnitController>();
         aiMovement = GetComponent<RichAI>();
     }
     private void Update()
@@ -25,7 +23,7 @@ public class Movement : MonoBehaviour
             RotateTowardsSteeringTarget();
 
             // Only call ClientStop if the character reached the end of the path and has no target
-            if (ReachedDestination(0.5f) && !targetController.HasTarget)
+            if (ReachedDestination(0.5f) && !controller.TargetController.HasTarget)
             {
                 ClientStop();
             }
@@ -66,38 +64,18 @@ public class Movement : MonoBehaviour
             transform.rotation = Quaternion.Euler(updatedRotation);
         }
     }
-
-    public void ClientMove(Vector3 pos, bool movingToTarget = false, float stoppingDistance = 2f)
+    public void ClientMove(Vector3 pos)
     {
-        //mechanic
-
         //dont forget the stopping distance part
         aiMovement.destination = pos;
-        if (!movingToTarget) targetController.Target = null;
         isMoving = true;
         aiMovement.isStopped = false;
-
-        //anim
-        if (TryGetComponent(out ABasicAttackController attackController)
-            && attackController.IsAttacking)
-        {
-            animationController.OnAttackToMove();
-        }
-        else
-        {
-            animationController.OnMove();
-        }
     }
-
-
-
     public void ClientStop()
     {
         //mechanic
         isMoving = false;
         aiMovement.isStopped = true;
-        //anim
-        animationController.OnStop();
     }
 
 }
