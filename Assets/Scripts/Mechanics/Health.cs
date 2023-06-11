@@ -25,8 +25,9 @@ public class Health : NetworkBehaviour
 
     private void Awake()
     {
-        _heroStats = GetComponent<PlayerDataHolder>().HeroStatsData;
-        baseHp = _heroStats.Hp;
+        //_heroStats = GetComponent<PlayerDataHolder>().HeroStatsData;
+        //baseHp = _heroStats.Hp;
+        baseHp = 10000000;
     }
     #region Server
     public override void OnStartServer()

@@ -19,16 +19,16 @@ public class GoldManager : NetworkSingleton<GoldManager>
     public void DistributeGold(float totalGold)
     {
 
-        float totalScore = ContributionPanel.Instance.CalculateTotalContributionScore(CustomManager.GamePlayers);
+        //float totalScore = ContributionPanel.Instance.CalculateTotalContributionScore(CustomManager.GamePlayers);
 
-        foreach (PlayerMertController player in CustomManager.GamePlayers)
-        {
-            float percentage = ContributionPanel.Instance.CalculateContributionPercentage(player.Stats, totalScore);
-            int goldReward = Mathf.CeilToInt(totalGold * percentage);
-            GameBank.GiveGold(goldReward, player);
-            player.Stats.ResetStats();
-            ContributionPanel.Instance.CmdUpdateContribution();
-        }
+        //foreach (PlayerMertController player in CustomManager.GamePlayers)
+        //{
+        //    float percentage = ContributionPanel.Instance.CalculateContributionPercentage(player.Stats, totalScore);
+        //    int goldReward = Mathf.CeilToInt(totalGold * percentage);
+        //    GameBank.GiveGold(goldReward, player);
+        //    player.Stats.ResetStats();
+        //    ContributionPanel.Instance.CmdUpdateContribution();
+        //}
     }
 }
 [Serializable]

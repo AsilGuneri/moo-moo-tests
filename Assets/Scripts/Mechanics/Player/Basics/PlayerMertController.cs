@@ -12,6 +12,17 @@ using Pathfinding;
 
 public class PlayerMertController : NetworkBehaviour
 {
+    public IAstarAI AiMovement { get; private set; }
+    public TargetController TargetController { get; private set; }
+    public BasicRangedAttackController AttackController { get; private set; }
+    public AnimationControllerBase _pac { get; private set; }
+    public UnitMovementController Movement { get; private set; }
+    public PlayerDataHolder _dataHolder { get; private set; }
+    public InputKeysData _inputKeys { get; private set; }
+
+
+
+
     public PlayerStats Stats;
     public Class CharacterClass;
 
@@ -26,13 +37,7 @@ public class PlayerMertController : NetworkBehaviour
     private Health _hc;
     private bool _isAttackClickMode;
 
-    private IAstarAI aiMovement;
-    private TargetController _tc;
-    private BasicRangedAttackController _bac;
-    private AnimationControllerBase _pac;
-    private UnitMovementController _umc;
-    private PlayerDataHolder _dataHolder;
-    private InputKeysData _inputKeys;
+
 
     [NonSerialized] public PlayerSkill[] PlayerSkills = new PlayerSkill[4];
 
@@ -77,13 +82,13 @@ public class PlayerMertController : NetworkBehaviour
     }
     private void Awake()
     {
-        _tc = GetComponent<TargetController>();
-        _bac = GetComponent<BasicRangedAttackController>();
+        TargetController = GetComponent<TargetController>();
+        AttackController = GetComponent<BasicRangedAttackController>();
         _pac = GetComponent<AnimationControllerBase>();
-        _umc = GetComponent<UnitMovementController>();
+        Movement = GetComponent<UnitMovementController>();
         _hc = GetComponent<Health>();
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
-        aiMovement = GetComponent<IAstarAI>();
+        AiMovement = GetComponent<IAstarAI>();
     }
 
     [ClientCallback]
@@ -96,12 +101,12 @@ public class PlayerMertController : NetworkBehaviour
 
         if (Input.GetKeyDown(_inputKeys.AttackKey)) IsAttackClickMode = true;
 
-        if (Input.GetKeyDown(_inputKeys.SelectKey)) OnPointerInput();
-        if (Input.GetKeyDown(_inputKeys.MoveKey)) OnPointerInput();
+        if (Input.GetKeyDown(_inputKeys.SelectKey) || Input.GetKeyDown(_inputKeys.MoveKey)) 
+            OnPointerInput();
         if (Input.GetKeyDown(_inputKeys.StopKey))
         {
-            _umc.ClientStop();
-            _tc.Target = null;
+            Movement.ClientStop();
+            TargetController.Target = null;
             _pac.OnAttackEnd();
         }
         if (Input.GetKeyDown(_inputKeys.SpawnWaveKey))
@@ -178,14 +183,14 @@ public class PlayerMertController : NetworkBehaviour
             //if not, move to the enemy
             //if yes, attack the enemy
 
-        _tc.SetTarget(hc.gameObject);
+        TargetController.SetTarget(hc.gameObject);
     }
 
     private void MoveToPoint(RaycastHit hitInfo)
     {
-        _tc.SetTarget(null);
+        TargetController.SetTarget(null);
         Vector3 newPoint = Extensions.CheckNavMesh(hitInfo.point);
-        _umc.ClientMove(newPoint);
+        Movement.ClientMove(newPoint);
         clickIndicator.Setup(hitInfo.point, true);
     }
 
@@ -206,7 +211,7 @@ public class PlayerMertController : NetworkBehaviour
             return;
         }
 
-        _tc.Target = closestEnemy;
+        TargetController.Target = closestEnemy;
         IsAttackClickMode = false;
 
         return;
@@ -214,7 +219,7 @@ public class PlayerMertController : NetworkBehaviour
     private void SetRangeIndicator(bool isOn)
     {
         rangeIndicator.gameObject.SetActive(isOn);
-        if(rangeIndicator.localScale != Vector3.one * _bac.Range) rangeIndicator.localScale = Vector3.one * _bac.Range;
+        if(rangeIndicator.localScale != Vector3.one * AttackController.Range) rangeIndicator.localScale = Vector3.one * AttackController.Range;
     }
 
     // Add methods for updating PlayerStats

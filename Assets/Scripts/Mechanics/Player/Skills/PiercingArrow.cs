@@ -21,7 +21,7 @@ public class PiercingArrow : SkillData
 }
 public class PiercingArrowController : SkillController
 {
-    PlayerMertController playerController;
+    UnitController playerController;
     UnitMovementController unitMovementController;
     PiercingArrow piercingArrowData;
     Vector3 arrowPos;
@@ -44,8 +44,8 @@ public class PiercingArrowController : SkillController
         CachePiercingArrowRotation();
         CachePiercingArrowPosition();
         transform.rotation = arrowRot;
-        playerController.Animator.Play("PiercingArrow");
-        playerController.IsCastingSkill = true;
+        //playerController.Animator.Play("PiercingArrow");
+        //playerController.IsCastingSkill = true;
         unitMovementController.ClientStop();
         
     }
@@ -60,7 +60,7 @@ public class PiercingArrowController : SkillController
         projectile.SetupProjectile(50, transform);
         arrow.transform.rotation = arrowRot;
         arrow.transform.position = arrowPos;
-        playerController.IsCastingSkill = false;
+        //playerController.IsCastingSkill = false;
     }
     public override void OnSkillStay()
     {
