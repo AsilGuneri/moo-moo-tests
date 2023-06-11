@@ -8,18 +8,18 @@ using UnityEngine.EventSystems;
 public abstract class UnitController : NetworkBehaviour
 {
     //others
-
+    public Movement Movement { get => movement; }
 
     //temp variables
     public TargetController TargetController { get => targetController; }
     public float attackRange;
     public float attackSpeed;
-    public float speed;
     public UnitType unitType;
     public List<UnitType> enemyList;
 
     protected TargetController targetController;
     protected BasicAttackController attackController;
+    protected Movement movement;
     [Range(0, 1f)] public float animAttackPoint;
 
 
@@ -27,6 +27,7 @@ public abstract class UnitController : NetworkBehaviour
     {
         attackController = GetComponent<BasicAttackController>();
         targetController = GetComponent<TargetController>();
+        movement = GetComponent<Movement>();
     }
 
     // Update is called once per frame

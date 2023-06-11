@@ -25,6 +25,7 @@ public abstract class BasicAttackController : NetworkBehaviour
 
     public async void StartAutoAttack(GameObject target, float attackSpeed, float animAttackPoint)
     {
+        if (currentTarget == target) return;
         currentTarget = target;
         while (IsAttackingAvailable())
         {

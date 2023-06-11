@@ -69774,6 +69774,7 @@ GameObject:
   - component: {fileID: 7291038196165993128}
   - component: {fileID: 9067681001629958667}
   - component: {fileID: 2710746016826199023}
+  - component: {fileID: 7084772985198974418}
   m_Layer: 0
   m_Name: Player Parent
   m_TagString: Untagged
@@ -70070,7 +70071,6 @@ MonoBehaviour:
   syncInterval: 0.1
   attackRange: 50
   attackSpeed: 2
-  speed: 10
   unitType: 0
   enemyList: 01000000
   animAttackPoint: 0.5
@@ -70106,6 +70106,19 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   Target: {fileID: 0}
+--- !u!114 &7084772985198974418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8938534602783702256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d00e39d3135bd9d4d94d40a8b485e3b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 5
 --- !u!1 &8946106163135306598
 GameObject:
   m_ObjectHideFlags: 0

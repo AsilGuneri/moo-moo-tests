@@ -93,6 +93,7 @@ public class PlayerController : UnitController
         bool isInRange = Extensions.CheckRange(enemyTransform.position, transform.position, attackRange);
         if (isInRange) //if yes, attack the enemy
         {
+            movement.ClientStop();
             attackController.StartAutoAttack(hitInfo.transform.gameObject, attackSpeed, animAttackPoint);
         }
         else //if not, follow the enemy
@@ -103,7 +104,7 @@ public class PlayerController : UnitController
     {
         targetController.SetTarget(null);
         Vector3 newPoint = Extensions.CheckNavMesh(hitInfo.point);
-        //Movement.ClientMove(newPoint);
+        Movement.ClientMove(newPoint);
         //clickIndicator.Setup(hitInfo.point, true);
     }
 }
