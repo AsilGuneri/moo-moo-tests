@@ -46,7 +46,6 @@ public abstract class BasicAttackController : NetworkBehaviour
         Extensions.GetAttackTimes(attackSpeed, animAttackPoint
             , out int msBeforeAttack, out int msAfterAttack);
 
-        Debug.Log($"asilxx {msBeforeAttack} /{msAfterAttack}");
         OnAttackStart();
         await Task.Delay(msBeforeAttack);
         OnAttackImpact();
