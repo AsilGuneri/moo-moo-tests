@@ -5,7 +5,6 @@ using Utilities;
 using System;
 using Mirror;
 using UnityEngine.UI;
-using Mirror.Examples;
 
 public class WaveManager : NetworkSingleton<WaveManager>
 {

@@ -88,22 +88,20 @@ public class PlayerController : UnitController
     private void OnClickEnemy(RaycastHit hitInfo)
     {
         Transform enemyTransform = hitInfo.transform;
+        targetController.SetTarget(enemyTransform.gameObject);
         //Check if the enemy is in range
         bool isInRange = Extensions.CheckRange(enemyTransform.position, transform.position, attackRange);
         if (isInRange) //if yes, attack the enemy
         {
-            attackController.StartAutoAttack(hitInfo.transform, attackSpeed, animAttackPoint);
+            attackController.StartAutoAttack(hitInfo.transform.gameObject, attackSpeed, animAttackPoint);
         }
         else //if not, follow the enemy
         {
         }
-
-
-        //TargetController.SetTarget(hc.gameObject);
     }
     private void MoveToPoint(RaycastHit hitInfo)
     {
-        //TargetController.SetTarget(null);
+        targetController.SetTarget(null);
         Vector3 newPoint = Extensions.CheckNavMesh(hitInfo.point);
         //Movement.ClientMove(newPoint);
         //clickIndicator.Setup(hitInfo.point, true);

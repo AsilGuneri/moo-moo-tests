@@ -1,50 +1,67 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class BasicAttackController : NetworkBehaviour
+public abstract class BasicAttackController : NetworkBehaviour
 {
-    //temp
     [SerializeField] protected GameObject projectilePrefab;
-    [SerializeField] private Transform projectileSpawnPoint;
-    public int Damage;
-    Transform currentTarget = null;
+    [SerializeField] protected Transform projectileSpawnPoint;
 
-    public async void StartAutoAttack(Transform target, float attackSpeed, float animAttackPoint)
+    protected UnitController controller;
+
+    protected GameObject currentTarget = null;
+
+
+    //temp
+    public int Damage;
+
+    protected virtual void Awake()
     {
+        controller = GetComponent<UnitController>();
+    }
+
+    public async void StartAutoAttack(GameObject target, float attackSpeed, float animAttackPoint)
+    {
+        currentTarget = target;
         while (IsAttackingAvailable())
         {
             await AttackOnce(target, attackSpeed, animAttackPoint);
         }
     }
-    private async Task AttackOnce(Transform target, float attackSpeed, float animAttackPoint)
+
+    private async Task AttackOnce(GameObject target, float attackSpeed, float animAttackPoint)
     {
-        Vector3 lookPos = new Vector3(target.position.x, transform.position.y, target.position.z);
+        Task attackTask = Attack(attackSpeed, animAttackPoint);
+        if (attackTask.Status == TaskStatus.Running) return;
+        Transform targetTransform = target.transform;
+        Vector3 lookPos = new Vector3(targetTransform.position.x, transform.position.y, targetTransform.position.z);
         transform.LookAt(lookPos);
-        currentTarget = target;
-        await DelayProjectileSpawn(attackSpeed, animAttackPoint);
+        await attackTask;
     }
-    private async Task DelayProjectileSpawn(float attackSpeed,float animAttackPoint)
+    private async Task Attack(float attackSpeed, float animAttackPoint)
     {
         Extensions.GetAttackTimes(attackSpeed, animAttackPoint
             , out int msBeforeAttack, out int msAfterAttack);
 
+        Debug.Log($"asilxx {msBeforeAttack} /{msAfterAttack}");
+        OnAttackStart();
         await Task.Delay(msBeforeAttack);
-        CmdSpawnProjectile();
+        OnAttackImpact();
         await Task.Delay(msAfterAttack);
+        OnAttackEnd();
     }
-    [Command(requiresAuthority = false)]
-    private void CmdSpawnProjectile()
+
+    protected bool IsAttackingAvailable()
     {
-        //if (checkAuthority && !hasAuthority) return;
-        GameObject projectile = ObjectPooler.Instance.Get(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-        projectile.GetComponent<Projectile>().SetupProjectile(currentTarget.gameObject, Damage, transform);
-        NetworkServer.Spawn(projectile, connectionToClient);
+        bool isAvailable = controller.TargetController.Target == currentTarget 
+            && controller.TargetController.Target != null;
+        if (!isAvailable) currentTarget = controller.TargetController.Target;
+        return isAvailable;
     }
-    private bool IsAttackingAvailable()
-    {
-        return true;
-    }
+    protected abstract void OnAttackStart();
+    protected abstract void OnAttackImpact();
+    protected abstract void OnAttackEnd();
 }

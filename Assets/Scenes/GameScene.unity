@@ -5364,7 +5364,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2552249028951478317, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
       propertyPath: sceneId
-      value: 3147202393
+      value: 345437839
       objectReference: {fileID: 0}
     - target: {fileID: 7498676492825279152, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
       propertyPath: m_Name
@@ -5376,6 +5376,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8750132923998612407, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8755146607505593207, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
+      propertyPath: Behaviours.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8969317831566524571, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}

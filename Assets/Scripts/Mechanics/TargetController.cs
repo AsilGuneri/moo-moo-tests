@@ -6,7 +6,7 @@ using System;
 
 public class TargetController : NetworkBehaviour
 {
-    [SyncVar] public GameObject Target;
+    [HideInInspector][SyncVar] public GameObject Target;
 
     public bool HasTarget
     {

@@ -11,12 +11,14 @@ public abstract class UnitController : NetworkBehaviour
 
 
     //temp variables
+    public TargetController TargetController { get => targetController; }
     public float attackRange;
     public float attackSpeed;
     public float speed;
     public UnitType unitType;
     public List<UnitType> enemyList;
-    
+
+    protected TargetController targetController;
     protected BasicAttackController attackController;
     [Range(0, 1f)] public float animAttackPoint;
 
@@ -24,6 +26,7 @@ public abstract class UnitController : NetworkBehaviour
     protected virtual void Awake()
     {
         attackController = GetComponent<BasicAttackController>();
+        targetController = GetComponent<TargetController>();
     }
 
     // Update is called once per frame
