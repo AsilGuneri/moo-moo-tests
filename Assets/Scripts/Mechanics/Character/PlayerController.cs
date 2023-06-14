@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,10 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : UnitController
 {
+    public string PlayerName { get; set; }
+    public PlayerStats Stats { get; private set; } = new();
+    [NonSerialized] public PlayerSkill[] PlayerSkills = new PlayerSkill[4];
+    public Class playerClass;
     public InputKeysData _inputKeys { get; private set; }
     private Camera mainCamera;
 
@@ -123,5 +128,23 @@ public class PlayerController : UnitController
         movement.OnMoveStart += (() => { animationController.SetMoveStatus(true); });
         movement.OnMoveStop += (() => { animationController.SetMoveStatus(false); });
     }
-  
+    #region Stats
+    public void AddDamageDealt(int damage)
+    {
+        Stats.TotalDamageDealt += damage;
+        ContributionPanel.Instance.CmdUpdateContribution();
+    }
+
+    public void AddHealAmount(int heal)
+    {
+        Stats.TotalHealAmount += heal;
+        //ContributionPanel.Instance.UpdateContribution();
+    }
+
+    public void AddDamageTanked(int damage)
+    {
+        Stats.TotalDamageTanked += damage;
+        //ContributionPanel.Instance.UpdateContribution();
+    }
+    #endregion
 }

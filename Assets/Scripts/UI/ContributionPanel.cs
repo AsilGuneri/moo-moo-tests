@@ -21,7 +21,7 @@ public class ContributionPanel : NetworkSingleton<ContributionPanel>
     }
 
     [ServerCallback]
-    public void AddPlayerContributionField(PlayerMertController playerController)
+    public void AddPlayerContributionField(PlayerController playerController)
     {
         var field = Instantiate(contributionFieldPrefab);
         field.PlayerController = playerController;
@@ -45,7 +45,7 @@ public class ContributionPanel : NetworkSingleton<ContributionPanel>
         //    contributionField.RpcUpdateContributionPercentText(newPercentage);
         //}
     }
-    private PlayerContribution GetPlayersContributionField(PlayerMertController playerController)
+    private PlayerContribution GetPlayersContributionField(PlayerController playerController)
     {
         foreach(var contribution in Contributions)
         {
@@ -65,10 +65,10 @@ public class ContributionPanel : NetworkSingleton<ContributionPanel>
 
         return (stats.TotalDamageDealt * damageWeight) + (stats.TotalHealAmount * healWeight) + (stats.TotalDamageTanked * tankWeight);
     }
-    public float CalculateTotalContributionScore(List<PlayerMertController> players)
+    public float CalculateTotalContributionScore(List<PlayerController> players)
     {
         float totalScore = 0;
-        foreach (PlayerMertController player in players)
+        foreach (PlayerController player in players)
         {
             totalScore += CalculateContributionScore(player.Stats);
         }

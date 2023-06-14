@@ -7,7 +7,7 @@ public class PlayerContribution : NetworkBehaviour
 {
     [SerializeField] private TextMeshProUGUI PlayerNameText;
     [SerializeField] TextMeshProUGUI ContributionPercentageText;
-    public PlayerMertController PlayerController { get; set; }
+    public PlayerController PlayerController { get; set; }
 
     private void OnEnable()
     {

@@ -51,11 +51,11 @@ public class Health : NetworkBehaviour
 
     private void AddDamageStats(int dmg, Transform dealerTransform)
     {
-        if (dealerTransform.TryGetComponent(out PlayerMertController playerController))
+        if (dealerTransform.TryGetComponent(out PlayerController playerController))
         {
             playerController.AddDamageDealt(dmg);
         }
-        if (TryGetComponent(out PlayerMertController myPlayerController))
+        if (TryGetComponent(out PlayerController myPlayerController))
         {
             {
                 myPlayerController.AddDamageTanked(dmg);

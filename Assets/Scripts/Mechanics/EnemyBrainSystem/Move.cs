@@ -20,13 +20,14 @@ public class Move : EnemyBehaviourData
 public class MoveController : EnemyBehaviourController
 {
     private Move moveData;
-    private UnitMovementController movement;
+    private Movement movement;
     private bool isIn;
 
     public override void OnInitialize(EnemyBehaviourData data)
     {
         base.OnInitialize(data);
         moveData = data as Move;
+        movement = GetComponent<Movement>();
     }
 
     public override bool EnterCondition()

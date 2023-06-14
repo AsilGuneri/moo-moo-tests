@@ -5,18 +5,18 @@ using System;
 
 public class PlayerSkillController : MonoBehaviour
 {
-    private PlayerMertController PlayerController;
+    private PlayerController playerController;
     private Dictionary<Class, List<PlayerSkill>> skillDictionary = new Dictionary<Class, List<PlayerSkill>>();
     private SkillBar SkillBarInstance; //Remember to check skillbarinstance after the merge of the scenes.
 
     private void Awake()
     {
-        PlayerController = GetComponent<PlayerMertController>();
+        playerController = GetComponent<PlayerController>();
         InitializeDictionary();
 
         foreach (var skillList in PlayerSkillsDatabase.Instance.ClassList)
         {
-            if (skillList.Class == PlayerController.CharacterClass)
+            if (skillList.Class == playerController.playerClass)
             {
                 SetClassSkills(skillList);
             }
@@ -25,13 +25,13 @@ public class PlayerSkillController : MonoBehaviour
    
     public void SetSkill(string skillName)
     {
-        var possibleSkills = skillDictionary[PlayerController.CharacterClass];
+        var possibleSkills = skillDictionary[playerController.playerClass];
         foreach (var skill in possibleSkills)
         {
             if (skillName == skill.SkillData.Name) 
             {
                 skill.SkillData.SetController(gameObject);
-                PlayerController.PlayerSkills[skill.SkillData.Grade] = skill;
+                playerController.PlayerSkills[skill.SkillData.Grade] = skill;
                 SkillBar.Instance.OnSkillSet(skill.SkillData.Grade, skill.SkillData);
             }
         }
@@ -40,14 +40,14 @@ public class PlayerSkillController : MonoBehaviour
     {
         foreach (var skill in classSkills.AllClassSkills)
         {
-            var currentSkills = skillDictionary[PlayerController.CharacterClass];
+            var currentSkills = skillDictionary[playerController.playerClass];
             currentSkills.Add(skill);
         }
     }
     private void InitializeDictionary()
     {
         List<PlayerSkill> playerSkills = new List<PlayerSkill>();
-        skillDictionary.Add(PlayerController.CharacterClass, playerSkills);
+        skillDictionary.Add(playerController.playerClass, playerSkills);
     }
 } 
 [Serializable]
