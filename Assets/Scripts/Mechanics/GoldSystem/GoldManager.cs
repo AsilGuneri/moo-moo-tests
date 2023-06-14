@@ -36,25 +36,25 @@ public class Bank
 {
     public List<BankAccount> BankAccounts = new List<BankAccount>();
 
-    public void AddBankAccount(PlayerMertController player)
+    public void AddBankAccount(PlayerController player)
     {
         BankAccount newAccount = new BankAccount();
         newAccount.PlayerController = player;
         newAccount.SetGold(0);
         BankAccounts.Add(newAccount);
     }
-    public void GiveGold(int amount, PlayerMertController player)
+    public void GiveGold(int amount, PlayerController player)
     {
         var account = GetAccountHolder(player);
         account.AddGold(amount);
         Debug.Log($"{amount} golds given to player {player}");
     }
-    public int GetGoldAmount(PlayerMertController player)
+    public int GetGoldAmount(PlayerController player)
     {
         var account = GetAccountHolder(player);
         return account.Gold;
     }
-    private BankAccount GetAccountHolder(PlayerMertController player)
+    private BankAccount GetAccountHolder(PlayerController player)
     {
         foreach (BankAccount account in BankAccounts)
         {
@@ -79,7 +79,7 @@ public class BankAccount
             gold = value;
         }
     }
-    public PlayerMertController PlayerController;
+    public PlayerController PlayerController;
 
     public void SetGold(int newGoldAmount)
     {

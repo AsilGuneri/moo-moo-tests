@@ -7,13 +7,19 @@ using UnityEngine;
 
 public abstract class BasicAttackController : NetworkBehaviour
 {
+    public bool IsAttacking { get => isAttacking; }
+
     [SerializeField] protected GameObject projectilePrefab;
     [SerializeField] protected Transform projectileSpawnPoint;
 
     protected UnitController controller;
+    protected bool isAttacking;
 
     protected GameObject currentTarget = null;
 
+    public Action OnStartAttack;
+    public Action OnEndAttack;
+    public Action OnAttackCancelled;
 
     //temp
     public int Damage;
@@ -27,10 +33,12 @@ public abstract class BasicAttackController : NetworkBehaviour
     {
         if (currentTarget == target) return;
         currentTarget = target;
-        while (IsAttackingAvailable())
+        isAttacking = true;
+        while (IsAutoAttackingAvailable())
         {
             await AttackOnce(target, attackSpeed, animAttackPoint);
         }
+        isAttacking = false;
     }
 
     private async Task AttackOnce(GameObject target, float attackSpeed, float animAttackPoint)
@@ -40,21 +48,25 @@ public abstract class BasicAttackController : NetworkBehaviour
         Transform targetTransform = target.transform;
         Vector3 lookPos = new Vector3(targetTransform.position.x, transform.position.y, targetTransform.position.z);
         transform.LookAt(lookPos);
+
         await attackTask;
     }
     private async Task Attack(float attackSpeed, float animAttackPoint)
     {
-        Extensions.GetAttackTimes(attackSpeed, animAttackPoint
+        Extensions.GetAttackTimes(1, attackSpeed, animAttackPoint
             , out int msBeforeAttack, out int msAfterAttack);
 
+        OnStartAttack?.Invoke();
         OnAttackStart();
         await Task.Delay(msBeforeAttack);
+        if (!IsAutoAttackingAvailable()) OnAttackCancelled?.Invoke();
         OnAttackImpact();
         await Task.Delay(msAfterAttack);
+        OnEndAttack?.Invoke();
         OnAttackEnd();
     }
 
-    protected bool IsAttackingAvailable()
+    protected bool IsAutoAttackingAvailable()
     {
         bool isAvailable = controller.TargetController.Target == currentTarget 
             && controller.TargetController.Target != null;

@@ -22,7 +22,7 @@ public class PiercingArrow : SkillData
 public class PiercingArrowController : SkillController
 {
     UnitController playerController;
-    UnitMovementController unitMovementController;
+    Movement movement;
     PiercingArrow piercingArrowData;
     Vector3 arrowPos;
     Quaternion arrowRot;
@@ -37,7 +37,7 @@ public class PiercingArrowController : SkillController
         piercingArrowData = (PiercingArrow) skillData;
         GetComponent<SkillSpawner>().RegisterPrefab(piercingArrowData.Name, piercingArrowData.Prefab);
         playerController = UnitManager.Instance.GetPlayerController();
-        unitMovementController = GetComponent<UnitMovementController>();
+        movement = GetComponent<Movement>();
     }
     public override void OnSkillStart()
     {
@@ -46,7 +46,7 @@ public class PiercingArrowController : SkillController
         transform.rotation = arrowRot;
         //playerController.Animator.Play("PiercingArrow");
         //playerController.IsCastingSkill = true;
-        unitMovementController.ClientStop();
+        movement.ClientStop();
         
     }
     public override void OnSkillInterrupt()

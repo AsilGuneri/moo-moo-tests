@@ -1,11 +1,16 @@
 using UnityEngine;
 using Pathfinding;
+using System;
 
 public class Movement : MonoBehaviour
 {
     private UnitController controller;
     private RichAI aiMovement;
     private bool isMoving = false;
+
+    public Action OnMoveStart;
+    public Action OnMoveStop;
+
 
     public bool IsMoving { get { return isMoving; } }
 
@@ -70,12 +75,14 @@ public class Movement : MonoBehaviour
         aiMovement.destination = pos;
         isMoving = true;
         aiMovement.isStopped = false;
+        OnMoveStart?.Invoke();
     }
     public void ClientStop()
     {
         //mechanic
         isMoving = false;
         aiMovement.isStopped = true;
+        OnMoveStop?.Invoke();
     }
 
 }

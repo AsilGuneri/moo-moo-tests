@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,10 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : UnitController
 {
+    public string PlayerName { get; set; }
+    public PlayerStats Stats { get; private set; } = new();
+    [NonSerialized] public PlayerSkill[] PlayerSkills = new PlayerSkill[4];
+    public Class playerClass;
     public InputKeysData _inputKeys { get; private set; }
     private Camera mainCamera;
 
@@ -15,10 +20,12 @@ public class PlayerController : UnitController
     {
         base.Awake();
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
+
     }
     private void Start()
     {
         Activate();
+        animationController.SetAttackSpeed(attackSpeed);
     }
 
     void Update()
@@ -39,6 +46,7 @@ public class PlayerController : UnitController
         {
             mainCamera = Camera.main;
             mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
+            SubscribeAnimEvents();
             UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
         }
     }
@@ -95,6 +103,7 @@ public class PlayerController : UnitController
         {
             movement.ClientStop();
             attackController.StartAutoAttack(hitInfo.transform.gameObject, attackSpeed, animAttackPoint);
+            
         }
         else //if not, follow the enemy
         {
@@ -107,4 +116,35 @@ public class PlayerController : UnitController
         Movement.ClientMove(newPoint);
         //clickIndicator.Setup(hitInfo.point, true);
     }
+    private void SubscribeAnimEvents()
+    {
+        attackController.OnStartAttack += (() => { animationController.SetAttackStatus(true); });
+        attackController.OnEndAttack += (() => { animationController.SetAttackStatus(false); });
+        attackController.OnAttackCancelled += (() => 
+        { 
+            animationController.SetAttackStatus(false);
+            animationController.SetAttackCancelled(); 
+        });
+        movement.OnMoveStart += (() => { animationController.SetMoveStatus(true); });
+        movement.OnMoveStop += (() => { animationController.SetMoveStatus(false); });
+    }
+    #region Stats
+    public void AddDamageDealt(int damage)
+    {
+        Stats.TotalDamageDealt += damage;
+        ContributionPanel.Instance.CmdUpdateContribution();
+    }
+
+    public void AddHealAmount(int heal)
+    {
+        Stats.TotalHealAmount += heal;
+        //ContributionPanel.Instance.UpdateContribution();
+    }
+
+    public void AddDamageTanked(int damage)
+    {
+        Stats.TotalDamageTanked += damage;
+        //ContributionPanel.Instance.UpdateContribution();
+    }
+    #endregion
 }
