@@ -15,10 +15,12 @@ public class PlayerController : UnitController
     {
         base.Awake();
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
+
     }
     private void Start()
     {
         Activate();
+        animationController.SetAttackSpeed(attackSpeed);
     }
 
     void Update()
@@ -39,6 +41,7 @@ public class PlayerController : UnitController
         {
             mainCamera = Camera.main;
             mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
+            SubscribeAnimEvents();
             UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
         }
     }
@@ -95,6 +98,7 @@ public class PlayerController : UnitController
         {
             movement.ClientStop();
             attackController.StartAutoAttack(hitInfo.transform.gameObject, attackSpeed, animAttackPoint);
+            
         }
         else //if not, follow the enemy
         {
@@ -107,4 +111,17 @@ public class PlayerController : UnitController
         Movement.ClientMove(newPoint);
         //clickIndicator.Setup(hitInfo.point, true);
     }
+    private void SubscribeAnimEvents()
+    {
+        attackController.OnStartAttack += (() => { animationController.SetAttackStatus(true); });
+        attackController.OnEndAttack += (() => { animationController.SetAttackStatus(false); });
+        attackController.OnAttackCancelled += (() => 
+        { 
+            animationController.SetAttackStatus(false);
+            animationController.SetAttackCancelled(); 
+        });
+        movement.OnMoveStart += (() => { animationController.SetMoveStatus(true); });
+        movement.OnMoveStop += (() => { animationController.SetMoveStatus(false); });
+    }
+  
 }

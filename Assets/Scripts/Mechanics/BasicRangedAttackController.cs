@@ -29,7 +29,7 @@ public class BasicRangedAttackController : ABasicAttackController
     {
         ac.SetAutoAttackStatus(true);
 
-        Extensions.GetAttackTimes(baseStats.AttackSpeed, baseStats.AnimAttackMoment
+        Extensions.GetAttackTimes(1,baseStats.AttackSpeed, baseStats.AnimAttackMoment
             , out int msBeforeAttack, out int msAfterAttack);
 
 
