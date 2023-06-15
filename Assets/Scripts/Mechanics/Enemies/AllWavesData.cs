@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "WaveData", menuName = "Scriptable Objects/Wave Data", order = 1)]
+[CreateAssetMenu(fileName = "WaveData", menuName = "Scriptable Objects/Managers/Wave Data", order = 1)]
 
 public class AllWavesData : ScriptableSingleton<AllWavesData>
 {

@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : UnitController
 {
+    [SerializeField] private Indicator moveIndicator;
+    [SerializeField] private Indicator attackModeIndicator;
     public string PlayerName { get; set; }
     public PlayerStats Stats { get; private set; } = new();
     [NonSerialized] public PlayerSkill[] PlayerSkills = new PlayerSkill[4];
@@ -99,6 +101,7 @@ public class PlayerController : UnitController
     }
     private void OnAttackModeClick(RaycastHit hitInfo)
     {
+        IndicatorManager.Instance.StartIndicator(attackModeIndicator.gameObject, Extensions.To2D(hitInfo.point), Quaternion.identity);
         var closestEnemy = UnitManager.Instance.GetClosestUnit(hitInfo.point, UnitType.WaveEnemy);
         if (closestEnemy == null)
         {
@@ -122,6 +125,7 @@ public class PlayerController : UnitController
         targetController.SetTarget(null);
         Vector3 newPoint = Extensions.CheckNavMesh(hitInfo.point);
         Movement.ClientMove(newPoint);
+        IndicatorManager.Instance.StartIndicator(moveIndicator.gameObject, Extensions.To2D(newPoint), Quaternion.identity);
         //clickIndicator.Setup(hitInfo.point, true);
     }
     private void SubscribeAnimEvents()
