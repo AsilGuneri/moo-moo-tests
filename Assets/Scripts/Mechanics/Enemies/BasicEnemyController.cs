@@ -20,13 +20,13 @@ public class BasicEnemyController : NetworkBehaviour
     }
     private void FixedUpdate()
     {
-        if (_tc.Target == null) PickTarget();
+      //  if (_tc.Target == null) PickTarget();
     }
-    protected void PickTarget()
-    {
-        if (!_tc.Target)
-        {
-            _tc.Target = UnitManager.Instance.GetBaseBuilding();
-        }
-    }
+    //protected void PickTarget()
+    //{
+    //    if (!_tc.Target)
+    //    {
+    //        _tc.Target = UnitManager.Instance.GetBaseBuilding();
+    //    }
+    //}
 }

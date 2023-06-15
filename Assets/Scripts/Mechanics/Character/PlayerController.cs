@@ -2,8 +2,10 @@ using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class PlayerController : UnitController
 {
@@ -13,6 +15,7 @@ public class PlayerController : UnitController
     public Class playerClass;
     public InputKeysData _inputKeys { get; private set; }
     private Camera mainCamera;
+    private bool isAttackClickMode;
 
     // Start is called before the first frame update
 
@@ -30,8 +33,8 @@ public class PlayerController : UnitController
 
     void Update()
     {
-        if (Input.GetKeyDown(_inputKeys.SelectKey) || Input.GetKeyDown(_inputKeys.MoveKey))
-            OnPointerInput();
+        //if (Input.GetKeyDown(_inputKeys.SelectKey) || Input.GetKeyDown(_inputKeys.MoveKey))
+        //    OnPointerInput();
         if (Input.GetKeyDown(_inputKeys.SpawnWaveKey))
             WaveManager.Instance.SpawnTestWave();
     }
@@ -55,31 +58,48 @@ public class PlayerController : UnitController
     {
         //SkillSelectionPanel.Instance.CacheClassSkills();
     }
-    private void OnPointerInput()
+    private void OnLeftClick()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
-        if (!mainCamera) return;
+        if (!CanClick()) return;
+        Ray ray;
+        bool isRayHit;
+        RaycastHit hitInfo;
+        GetMousePositionRaycastInfo(out ray, out isRayHit, out hitInfo);
+        if (isAttackClickMode) //will handle that part later
+        {
+            OnAttackModeClick(hitInfo);
+            return;
+        }
+
+    }
+    private void OnRightClick()
+    {
+        if(!CanClick()) return;
 
         Ray ray;
         bool isRayHit;
         RaycastHit hitInfo;
         GetMousePositionRaycastInfo(out ray, out isRayHit, out hitInfo);
 
-        //if (IsAttackClickMode) //will handle that part later
-        //{
-        //    OnAttackModeClick(hitInfo);
-        //    return;
-        //}
-        //IsAttackClickMode = false;
+        if (isAttackClickMode) //will handle that part later
+        {
+            OnAttackModeClick(hitInfo);
+            return;
+        }
         if (isRayHit)
         {
             OnRayHit(hitInfo);
         }
 
     }
+    private void OnSetAutoAttackMode()
+    {
+        isAttackClickMode = true;
+    }
     private void GetMousePositionRaycastInfo(out Ray ray, out bool isRayHit, out RaycastHit hitInfo)
     {
-        ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        ray = mainCamera.ScreenPointToRay(mousePos);
         isRayHit = Physics.Raycast(ray, out hitInfo, 100);
     }
     private void OnRayHit(RaycastHit hitInfo)
@@ -96,18 +116,42 @@ public class PlayerController : UnitController
     private void OnClickEnemy(RaycastHit hitInfo)
     {
         Transform enemyTransform = hitInfo.transform;
+        StartAttack(enemyTransform);
+    }
+    private void StartAttack(Transform enemyTransform)
+    {
         targetController.SetTarget(enemyTransform.gameObject);
         //Check if the enemy is in range
         bool isInRange = Extensions.CheckRange(enemyTransform.position, transform.position, attackRange);
         if (isInRange) //if yes, attack the enemy
         {
             movement.ClientStop();
-            attackController.StartAutoAttack(hitInfo.transform.gameObject, attackSpeed, animAttackPoint);
-            
+            attackController.StartAutoAttack(enemyTransform.transform.gameObject, attackSpeed, animAttackPoint);
+
         }
         else //if not, follow the enemy
         {
         }
+    }
+    private void OnAttackModeClick(RaycastHit hitInfo)
+    {
+        var closestEnemy = UnitManager.Instance.GetClosestUnit(hitInfo.point, UnitType.WaveEnemy);
+        if (closestEnemy == null)
+        {
+            isAttackClickMode = false;
+            return;
+        }
+        float maxDistanceBetweenPointAndUnit = 20; /*distance between the click and monster change that*/
+        if (!Extensions.IsInRange(closestEnemy.transform.position, hitInfo.point, maxDistanceBetweenPointAndUnit))
+        {
+
+            isAttackClickMode = false;
+            return;
+        }
+        StartAttack(closestEnemy.transform);
+        isAttackClickMode = false;
+
+        return;
     }
     private void MoveToPoint(RaycastHit hitInfo)
     {
@@ -120,13 +164,19 @@ public class PlayerController : UnitController
     {
         attackController.OnStartAttack += (() => { animationController.SetAttackStatus(true); });
         attackController.OnEndAttack += (() => { animationController.SetAttackStatus(false); });
-        attackController.OnAttackCancelled += (() => 
-        { 
+        attackController.OnAttackCancelled += (() =>
+        {
             animationController.SetAttackStatus(false);
-            animationController.SetAttackCancelled(); 
+            animationController.SetAttackCancelled();
         });
         movement.OnMoveStart += (() => { animationController.SetMoveStatus(true); });
         movement.OnMoveStop += (() => { animationController.SetMoveStatus(false); });
+    }
+    private bool CanClick()
+    {
+        if (EventSystem.current.IsPointerOverGameObject()) return false;
+        if(!mainCamera) return false;
+        return true;
     }
     #region Stats
     public void AddDamageDealt(int damage)
