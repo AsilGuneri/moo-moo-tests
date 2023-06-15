@@ -53,49 +53,13 @@ public class PlayerController : UnitController
             UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
         }
     }
+
     [TargetRpc]
     public void OnRegister()
     {
         //SkillSelectionPanel.Instance.CacheClassSkills();
     }
-    private void OnLeftClick()
-    {
-        if (!CanClick()) return;
-        Ray ray;
-        bool isRayHit;
-        RaycastHit hitInfo;
-        GetMousePositionRaycastInfo(out ray, out isRayHit, out hitInfo);
-        if (isAttackClickMode) //will handle that part later
-        {
-            OnAttackModeClick(hitInfo);
-            return;
-        }
-
-    }
-    private void OnRightClick()
-    {
-        if(!CanClick()) return;
-
-        Ray ray;
-        bool isRayHit;
-        RaycastHit hitInfo;
-        GetMousePositionRaycastInfo(out ray, out isRayHit, out hitInfo);
-
-        if (isAttackClickMode) //will handle that part later
-        {
-            OnAttackModeClick(hitInfo);
-            return;
-        }
-        if (isRayHit)
-        {
-            OnRayHit(hitInfo);
-        }
-
-    }
-    private void OnSetAutoAttackMode()
-    {
-        isAttackClickMode = true;
-    }
+    
     private void GetMousePositionRaycastInfo(out Ray ray, out bool isRayHit, out RaycastHit hitInfo)
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
@@ -178,6 +142,7 @@ public class PlayerController : UnitController
         if(!mainCamera) return false;
         return true;
     }
+
     #region Stats
     public void AddDamageDealt(int damage)
     {
@@ -195,6 +160,47 @@ public class PlayerController : UnitController
     {
         Stats.TotalDamageTanked += damage;
         //ContributionPanel.Instance.UpdateContribution();
+    }
+    #endregion
+
+    #region Input Events
+    private void OnLeftClick() //used by input component
+    {
+        if (!CanClick()) return;
+        Ray ray;
+        bool isRayHit;
+        RaycastHit hitInfo;
+        GetMousePositionRaycastInfo(out ray, out isRayHit, out hitInfo);
+        if (isAttackClickMode) //will handle that part later
+        {
+            OnAttackModeClick(hitInfo);
+            return;
+        }
+
+    }
+    private void OnRightClick()//used by input component
+    {
+        if (!CanClick()) return;
+
+        Ray ray;
+        bool isRayHit;
+        RaycastHit hitInfo;
+        GetMousePositionRaycastInfo(out ray, out isRayHit, out hitInfo);
+
+        if (isAttackClickMode) //will handle that part later
+        {
+            OnAttackModeClick(hitInfo);
+            return;
+        }
+        if (isRayHit)
+        {
+            OnRayHit(hitInfo);
+        }
+
+    }
+    private void OnSetAutoAttackMode()//used by input component
+    {
+        isAttackClickMode = true;
     }
     #endregion
 }
