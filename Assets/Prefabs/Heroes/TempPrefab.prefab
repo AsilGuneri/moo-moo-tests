@@ -69840,7 +69840,7 @@ GameObject:
   - component: {fileID: 8735856486146096566}
   - component: {fileID: 1626028696452287395}
   m_Layer: 0
-  m_Name: Player Parent
+  m_Name: TempPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

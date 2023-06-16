@@ -503,14 +503,13 @@ MonoBehaviour:
   networkAddress: localhost
   maxConnections: 4
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 8938534602783702256, guid: 1d4ef9df86a487949bb862566cb3654a, type: 3}
+  playerPrefab: {fileID: 8938534602783702256, guid: ca7f54308dc206e4b9994d38b58c6e25, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 8081231170285242933, guid: 10dc0758f302e994e8df7287548a25b4, type: 3}
-  - {fileID: 8938534602783702256, guid: 07f25eb048b773949a9ea2aeb2b5fb05, type: 3}
-  - {fileID: 8938534602783702256, guid: 3b9942192ad793c4a93fcbfb1c0ac5ce, type: 3}
   - {fileID: 182491089992915758, guid: 11ea5b7ac5ddc324684f5931b3883e13, type: 3}
+  - {fileID: 8938534602783702256, guid: 07f25eb048b773949a9ea2aeb2b5fb05, type: 3}
   showRoomGUI: 1
   minPlayers: 1
   roomPlayerPrefab: {fileID: 6223884984302570534, guid: 06b8331bf05c9fa408481d217ce8c941, type: 3}
