@@ -16,7 +16,7 @@ public abstract class BasicAttackController : NetworkBehaviour
     protected bool isAttacking;
     protected GameObject lastAttackTarget = null;
 
-    private bool isAttackStopped;
+    private bool isAttackStopped; //just don't set to false anywhere else, you can set to true if needed
 
     public Action OnStartAttack;
     public Action OnEndAttack;
