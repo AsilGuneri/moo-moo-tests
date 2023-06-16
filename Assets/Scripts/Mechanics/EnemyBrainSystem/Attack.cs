@@ -16,33 +16,34 @@ public class Attack : EnemyBehaviourData
 public class AttackController : EnemyBehaviourController
 {
     private Attack attackData;
-    private TargetController targetController;
+    private EnemyController enemyController;
     public override void OnInitialize(EnemyBehaviourData data)
     {
         if (IsInitialized) return;
         base.OnInitialize(data);
         IsInitialized = true;
         attackData = data as Attack;
-        targetController = GetComponent<TargetController>();
+        enemyController = GetComponent<EnemyController>();
     }
     public override bool EnterCondition()
-    {
-        return true;
+    {    
+        return enemyController.HasEnemyInAttackRange(UnitType.Player);
     }
 
     public override bool ExitCondition()
     {
-        return false;
+        return !enemyController.HasEnemyInAttackRange(UnitType.Player);
     }
 
     public override void OnEnter()
     {
-        var target = UnitManager.Instance.GetClosestUnit(transform.position, UnitType.Player);
-        targetController.SetTarget(target);
+        GameObject target = UnitManager.Instance.GetClosestUnit(transform.position, UnitType.Player);
+        enemyController.StartAttacking(target);
+
     }
 
     public override void OnExit()
     {
-        targetController.SetTarget(null);
+        enemyController.StopAttacking();
     }
 }

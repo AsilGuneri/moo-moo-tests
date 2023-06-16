@@ -12,7 +12,7 @@ public class RangeAttackController : BasicAttackController
     protected override void OnAttackImpact()
     {
         if (!IsAutoAttackingAvailable()) return;
-        CmdSpawnProjectile(currentTarget);
+        CmdSpawnProjectile(lastAttackTarget);
     }
     protected override void OnAttackEnd()
     {
