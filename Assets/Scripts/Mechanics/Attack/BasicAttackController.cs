@@ -30,17 +30,26 @@ public abstract class BasicAttackController : NetworkBehaviour
         controller = GetComponent<UnitController>();
     }
 
-    public async void StartAutoAttack(GameObject target, float attackSpeed, float animAttackPoint)
+    public async Task StartAutoAttack(GameObject target, float attackSpeed, float animAttackPoint)
     {
+        if (isAttacking)
+        {
+            isAttackStopped = true;
+            return;
+        }
+
         lastAttackTarget = target;
         isAttacking = true;
+
         while (IsAutoAttackingAvailable())
         {
             await AttackOnce(target, attackSpeed, animAttackPoint);
         }
+
         isAttacking = false;
         isAttackStopped = false;
     }
+
 
     public void StopAttack()
     {
