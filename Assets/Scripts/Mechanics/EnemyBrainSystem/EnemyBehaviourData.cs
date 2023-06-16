@@ -43,8 +43,7 @@ public abstract class EnemyBehaviourController : MonoBehaviour
 
 public enum BehaviourState
 {
-    Idle,
-    Move,
     Attack,
+    Empty,
     None
 }
