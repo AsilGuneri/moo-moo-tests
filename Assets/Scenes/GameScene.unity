@@ -1438,6 +1438,7 @@ GameObject:
   - component: {fileID: 334110789}
   - component: {fileID: 334110794}
   - component: {fileID: 334110795}
+  - component: {fileID: 334110796}
   m_Layer: 0
   m_Name: = Managers
   m_TagString: Untagged
@@ -1580,6 +1581,31 @@ MonoBehaviour:
     Size: 10
     Key: fireball
     currentCount: 0
+  - Prefab: {fileID: 5432209458267137536, guid: 93bf18897f48e4140b9a368c27bd919b, type: 3}
+    Size: 20
+    Key: attackIndicator
+    currentCount: 0
+  - Prefab: {fileID: 811260699408436622, guid: 299615328751d224781d31e0fe65de66, type: 3}
+    Size: 20
+    Key: moveIndicator
+    currentCount: 0
+--- !u!114 &334110796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334110787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7dce90483ef07b4cb72fdca81b918e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  Indicators:
+  - {fileID: 5360633475863498575, guid: 299615328751d224781d31e0fe65de66, type: 3}
+  - {fileID: 3295424368705041057, guid: 93bf18897f48e4140b9a368c27bd919b, type: 3}
 --- !u!1 &350843464
 GameObject:
   m_ObjectHideFlags: 0
