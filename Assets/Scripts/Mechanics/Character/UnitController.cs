@@ -31,9 +31,9 @@ public abstract class UnitController : NetworkBehaviour
     {
         CacheReferences();
     }
-    private void Start()
+    protected virtual void Start()
     {
-       // animationController.SetAttackSpeed(attackSpeed);
+        animationController.SetAttackSpeed(attackSpeed);
     }
     protected bool IsEnemy(RaycastHit hitInfo)
     {

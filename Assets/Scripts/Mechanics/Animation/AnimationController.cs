@@ -6,6 +6,7 @@ using UnityEngine;
 public class AnimationController : NetworkBehaviour
 {
     public Animator Animator { get => animator; }
+    [SerializeField] private bool hasCancelAttackAnim;
     protected UnitController controller;
     protected Animator animator;
 
@@ -31,6 +32,7 @@ public class AnimationController : NetworkBehaviour
     //make that class abstract and move that method to player
     public void SetAttackCancelled()
     {
+        if (!hasCancelAttackAnim) return;
         animator.Play("CancelAttack");
     }
 }

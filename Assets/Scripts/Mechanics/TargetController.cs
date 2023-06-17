@@ -9,10 +9,6 @@ public class TargetController : NetworkBehaviour
 {
     [SyncVar] public GameObject Target;
 
-    public bool HasTarget
-    {
-        get => Target != null;
-    }
     [Command(requiresAuthority = false)]
     public void SetTarget(GameObject target)
     {

@@ -27,10 +27,10 @@ public class PlayerController : UnitController
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
 
     }
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         Activate();
-        animationController.SetAttackSpeed(attackSpeed);
     }
 
     void Update()

@@ -45,5 +45,7 @@ public enum BehaviourState
 {
     Attack,
     Empty,
+    Follow,
+    PickClosestEnemy,
     None
 }

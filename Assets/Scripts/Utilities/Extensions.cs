@@ -55,8 +55,8 @@ public class Extensions : MonoBehaviour
         return Vector3.zero;
     }
 
-    public static bool CheckRange(Vector3 currentTargetPosition, Vector3 currentUnitPosition, float range){
-        return GetDistance(currentTargetPosition, currentUnitPosition) <= range;
+    public static bool CheckRange(Vector3 unitPos, Vector3 targetPos, float range){
+        return GetDistance(unitPos, targetPos) <= range;
     }
 
     public static float GetDistance(Vector3 currentTargetPosition, Vector3 currentUnitPosition){

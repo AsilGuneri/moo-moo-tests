@@ -680,7 +680,8 @@ MonoBehaviour:
   CurrentState: 2
   Behaviours:
   - {fileID: 11400000, guid: a2f05e797ef7d5443a5a91fec270fef8, type: 2}
-  - {fileID: 11400000, guid: 19d0e9cdc82bd2641acd595dbbf2aa6c, type: 2}
+  - {fileID: 11400000, guid: cfc7d6e222bb2fa42965457e919339b4, type: 2}
+  - {fileID: 11400000, guid: 708b4a86f2d84194ba46db84934e3b02, type: 2}
 --- !u!136 &2655837000801914637
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -771,7 +772,7 @@ Animator:
   m_GameObject: {fileID: 7498676492825279152}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: be73df03abf02284486d1afabcf5d4fe, type: 3}
-  m_Controller: {fileID: 9100000, guid: 9644b47f31eb73647be0b0ad583f046e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9a351877d9fa3514ba3df5fe47f5dada, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

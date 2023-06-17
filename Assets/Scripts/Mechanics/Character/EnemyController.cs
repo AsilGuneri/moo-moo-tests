@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class EnemyController : UnitController
 {
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         SubscribeAnimEvents();
     }
     public void StartAttacking(GameObject target)
     {
         movement.ClientStop();
-        attackController.StartAutoAttack(target, attackSpeed, animAttackPoint);
         targetController.SetTarget(target);
+        attackController.StartAutoAttack(target, attackSpeed, animAttackPoint);
     }
     public void StopAttacking()
     {
         attackController.StopAttack();
     }
-    public bool HasEnemyInAttackRange(UnitType enemyType)
+    public void ChangeTarget(GameObject target)
     {
-        var target = UnitManager.Instance.GetClosestUnit(transform.position, enemyType);
-        bool isInRange = Extensions.CheckRange(transform.position, target.transform.position, attackRange);
-        return isInRange;
+        StopAttacking();
+        StartAttacking(target);
     }
 }

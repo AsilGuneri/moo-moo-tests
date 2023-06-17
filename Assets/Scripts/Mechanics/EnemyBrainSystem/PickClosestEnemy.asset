@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6a5b883de9243544aa269d1a40b8544, type: 3}
-  m_Name: MoveBehaviour
+  m_Script: {fileID: 11500000, guid: b616fbe87fe4f384790f8b86f1dbf5e2, type: 3}
+  m_Name: PickClosestEnemy
   m_EditorClassIdentifier: 
-  Owner: {fileID: 0}
-  Controller: {fileID: 0}
-  state: 1
-  ApproachDistance: 2
+  state: 3

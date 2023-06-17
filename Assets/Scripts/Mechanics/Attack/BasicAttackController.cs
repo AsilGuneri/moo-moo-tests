@@ -14,7 +14,6 @@ public abstract class BasicAttackController : NetworkBehaviour
 
     protected UnitController controller;
     protected bool isAttacking;
-    protected GameObject lastAttackTarget = null;
 
     private bool isAttackStopped; //just don't set to false anywhere else, you can set to true if needed
 
@@ -30,24 +29,18 @@ public abstract class BasicAttackController : NetworkBehaviour
         controller = GetComponent<UnitController>();
     }
 
-    public async Task StartAutoAttack(GameObject target, float attackSpeed, float animAttackPoint)
+    public async void StartAutoAttack(GameObject target, float attackSpeed, float animAttackPoint)
     {
-        if (isAttacking)
-        {
-            isAttackStopped = true;
-            return;
-        }
+        if (isAttacking) return;
 
-        lastAttackTarget = target;
         isAttacking = true;
+        OnStartAttack?.Invoke();
 
-        while (IsAutoAttackingAvailable())
-        {
-            await AttackOnce(target, attackSpeed, animAttackPoint);
-        }
+        while (IsAutoAttackingAvailable()) await AttackOnce(target, attackSpeed, animAttackPoint);
 
         isAttacking = false;
         isAttackStopped = false;
+        OnEndAttack?.Invoke();
     }
 
 
@@ -72,21 +65,18 @@ public abstract class BasicAttackController : NetworkBehaviour
         Extensions.GetAttackTimes(1, attackSpeed, animAttackPoint
             , out int msBeforeAttack, out int msAfterAttack);
 
-        OnStartAttack?.Invoke();
         OnAttackStart();
         await Task.Delay(msBeforeAttack);
         if (!IsAutoAttackingAvailable()) OnAttackCancelled?.Invoke();
         OnAttackImpact();
         await Task.Delay(msAfterAttack);
-        OnEndAttack?.Invoke();
         OnAttackEnd();
     }
 
     protected bool IsAutoAttackingAvailable()
     {
         if(isAttackStopped) return false;
-        bool isAvailable = controller.TargetController.Target == lastAttackTarget 
-            && controller.TargetController.Target != null;
+        bool isAvailable = controller.TargetController.Target != null;
         return isAvailable;
     }
     protected abstract void OnAttackStart();

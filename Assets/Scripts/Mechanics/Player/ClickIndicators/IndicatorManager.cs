@@ -19,12 +19,25 @@ public class IndicatorManager : NetworkSingleton<IndicatorManager>
             CmdSpawnIndicator(indicatorObj);
         }
     }
+
     public void DestroyIndicator(GameObject indicator)
     {
         if(!indicator.GetComponent<Indicator>().IsLocal) 
         {
             CmdUnspawnIndicator(indicator);
         }
+        ObjectPooler.Instance.Return(indicator.gameObject);
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdSpawnIndicator(GameObject objToSpawn)
+    {
+        NetworkServer.Spawn(objToSpawn);
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdUnspawnIndicator(GameObject indicator)
+    {
         ObjectPooler.Instance.Return(indicator.gameObject);
     }
 
@@ -37,16 +50,7 @@ public class IndicatorManager : NetworkSingleton<IndicatorManager>
         Debug.Log($"Indicator returned null");
         return null;
     }
-    [Command(requiresAuthority = false)]
-    private void CmdSpawnIndicator(GameObject objToSpawn)
-    {
-        NetworkServer.Spawn(objToSpawn);
-    }
-    [Command(requiresAuthority = false)]
-    private void CmdUnspawnIndicator(GameObject indicator)
-    {
-        ObjectPooler.Instance.Return(indicator.gameObject);
-    }
+  
     private GameObject SpawnIndicatorLocally(GameObject prefab, Vector3 position, Quaternion rotation)
     {
         GameObject obj = ObjectPooler.Instance.Get(prefab, position, rotation);
