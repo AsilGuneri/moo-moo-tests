@@ -27,10 +27,10 @@ public class PlayerController : UnitController
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
 
     }
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         Activate();
-        animationController.SetAttackSpeed(attackSpeed);
     }
 
     void Update()
@@ -128,18 +128,7 @@ public class PlayerController : UnitController
         IndicatorManager.Instance.StartIndicator(moveIndicator.gameObject, Extensions.Vector3WithoutY(newPoint), moveIndicator.transform.rotation);
         //clickIndicator.Setup(hitInfo.point, true);
     }
-    private void SubscribeAnimEvents()
-    {
-        attackController.OnStartAttack += (() => { animationController.SetAttackStatus(true); });
-        attackController.OnEndAttack += (() => { animationController.SetAttackStatus(false); });
-        attackController.OnAttackCancelled += (() =>
-        {
-            animationController.SetAttackStatus(false);
-            animationController.SetAttackCancelled();
-        });
-        movement.OnMoveStart += (() => { animationController.SetMoveStatus(true); });
-        movement.OnMoveStop += (() => { animationController.SetMoveStatus(false); });
-    }
+   
     private bool CanClick()
     {
         if (EventSystem.current.IsPointerOverGameObject()) return false;

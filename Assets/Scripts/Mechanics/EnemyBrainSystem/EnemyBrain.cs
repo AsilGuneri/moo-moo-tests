@@ -62,7 +62,7 @@ public class EnemyBrain : MonoBehaviour
                 CurrentState = behaviour.State;
                 currentBehaviour = behaviour;
                 StateControllerDictionary[CurrentState].OnEnter();
-                break;
+                return;
             }
         }
     }

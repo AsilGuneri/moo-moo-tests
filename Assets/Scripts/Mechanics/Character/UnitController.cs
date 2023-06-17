@@ -31,9 +31,9 @@ public abstract class UnitController : NetworkBehaviour
     {
         CacheReferences();
     }
-    private void Start()
+    protected virtual void Start()
     {
-       // animationController.SetAttackSpeed(attackSpeed);
+        animationController.SetAttackSpeed(attackSpeed);
     }
     protected bool IsEnemy(RaycastHit hitInfo)
     {
@@ -50,5 +50,17 @@ public abstract class UnitController : NetworkBehaviour
         movement = GetComponent<Movement>();
         animationController = GetComponent<AnimationController>();
         networkAnimator = GetComponent<NetworkAnimator>();
+    }
+    protected void SubscribeAnimEvents()
+    {
+        attackController.OnStartAttack += (() => { animationController.SetAttackStatus(true); });
+        attackController.OnEndAttack += (() => { animationController.SetAttackStatus(false); });
+        attackController.OnAttackCancelled += (() =>
+        {
+            animationController.SetAttackStatus(false);
+            animationController.SetAttackCancelled();
+        });
+        movement.OnMoveStart += (() => { animationController.SetMoveStatus(true); });
+        movement.OnMoveStop += (() => { animationController.SetMoveStatus(false); });
     }
 }

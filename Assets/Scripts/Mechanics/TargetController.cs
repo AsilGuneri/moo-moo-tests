@@ -7,12 +7,8 @@ using MyBox;
 
 public class TargetController : NetworkBehaviour
 {
-    [HideInInspector][SyncVar] public GameObject Target;
+    [SyncVar] public GameObject Target;
 
-    public bool HasTarget
-    {
-        get => Target != null;
-    }
     [Command(requiresAuthority = false)]
     public void SetTarget(GameObject target)
     {

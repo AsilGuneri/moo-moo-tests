@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddb641f55494dcc46b92fb6c5bc5d06d, type: 3}
-  m_Name: AttackClosestPlayer
+  m_Script: {fileID: 11500000, guid: b616fbe87fe4f384790f8b86f1dbf5e2, type: 3}
+  m_Name: PickClosestEnemy
   m_EditorClassIdentifier: 
-  state: 2
+  state: 3
