@@ -1,8 +1,6 @@
 using Mirror;
+using ProjectDawn.Navigation;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -18,6 +16,8 @@ public class PlayerController : UnitController
     public InputKeysData _inputKeys { get; private set; }
     private Camera mainCamera;
     private bool isAttackClickMode;
+
+    public AgentBody agent;
 
     // Start is called before the first frame update
 

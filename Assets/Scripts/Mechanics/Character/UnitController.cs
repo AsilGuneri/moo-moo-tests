@@ -60,7 +60,7 @@ public abstract class UnitController : NetworkBehaviour
             animationController.SetAttackStatus(false);
             animationController.SetAttackCancelled();
         });
-        movement.OnMoveStart += (() => { animationController.SetMoveStatus(true); });
-        movement.OnMoveStop += (() => { animationController.SetMoveStatus(false); });
+        //movement.OnMoveStart += (() => { animationController.SetMoveStatus(true); });
+        //movement.OnMoveStop += (() => { animationController.SetMoveStatus(false); });
     }
 }
