@@ -1,92 +1,80 @@
 using UnityEngine;
 using System;
-using ProjectDawn.Navigation;
-using ProjectDawn.Navigation.Sample.Scenarios;
 using ProjectDawn.Navigation.Hybrid;
+using static UnityEditor.PlayerSettings;
+using System.Threading.Tasks;
 
 public class Movement : MonoBehaviour
 {
-    //public Action OnMoveStart;
-    //public Action OnMoveStop;
-    //public bool IsMoving { get { return isMoving; } }
+    public Action OnMoveStart;
+    public Action OnMoveStop;
+
+    public bool IsMoving { get { return isMoving; } }
+
+    private UnitController controller;
+    private bool isMoving = false;
+    private Vector3 currentTargetPos;
+    AgentAuthoring agent;
 
 
-    //[SerializeField] float rotationSpeed = 5f;
-
-    //private UnitController controller;
-    //private bool isMoving = false;
-    private Transform currentTarget;
-    private AgentDestinationAuthoring agent;
 
     private void Awake()
     {
-        //controller = GetComponent<UnitController>();
-        //aiMovement = GetComponent<RichAI>();
-         agent = GetComponent<AgentDestinationAuthoring>();
+        agent = transform.GetComponent<AgentAuthoring>();
+        controller = GetComponent<UnitController>();
+
     }
 
     private void Update()
     {
-        //    if (isMoving)
-        //    {
-        //        //RotateTowardsSteeringTarget();
+        if (Input.GetKeyDown(KeyCode.S)) ClientStop();
+        if (!isMoving) return;
 
-        //        // Only call ClientStop if the character reached the end of the path and has no target
-        //       // if (ReachedDestination(0.5f) && controller.TargetController.Target == null)
-        //       // {
-        //       //     ClientStop();
-        //      //  }
-        //    }
+        if (ReachedDestination(0.5f) && controller.TargetController.Target == null)
+        {
+            ClientStop();
+        }
     }
     public void ClientMove(Vector3 pos)
     {
-        ////aiMovement.destination = pos;
-        //isMoving = true;
-        ////aiMovement.isStopped = false;
-        //OnMoveStart?.Invoke();
         agent.SetDestination(pos);
+        isMoving = true;
+        currentTargetPos = pos;
+        OnMoveStart?.Invoke();
     }
 
     public void ClientStop()
     {
-        //isMoving = false;
-        ////aiMovement.isStopped = true;
-        //OnMoveStop?.Invoke();
-        agent.Stop();
+        agent.SetDestination(transform.position);
+        currentTargetPos = Vector3.zero;
+        isMoving = false;
+        OnMoveStop?.Invoke();
     }
-    public void FollowTarget(Transform target, float followDistance)
+    private bool ReachedDestination(float threshold)
     {
+        Vector3 destination = currentTargetPos;
+        if (destination != Vector3.zero)
+        {
+            bool x = Extensions.CheckRange(destination, transform.position, threshold);
+            return x;
+        }
+        return false;
+    }
+    public async void StartFollow(Transform target, float followDistance)
+    {
+        currentTargetPos = target.position;
 
-        //float distance = Extensions.Distance(transform.position, target.position);
-        //if (distance <= followDistance)
-        //{
-        //    ClientStop();
-        //    return;
-        //}
+        while (!Extensions.CheckRange(target.position, transform.position, followDistance))
+        {
+            ClientMove(target.position);
+            await Task.Delay(100);
+        }
         //Vector3 directionToTarget = target.position - transform.position;
         //directionToTarget.Normalize();
 
         //// Calculate a point followDistance units along the direction vector,
         //// starting from the target's position.
         //Vector3 targetPosition = target.position - directionToTarget * followDistance;
-
-        ////aiMovement.Move(transform.position + directionToTarget * Time.deltaTime * aiMovement.maxSpeed); 
         //ClientMove(targetPosition);
     }
-    private void SetDestination()
-    {
-        var agent = transform.GetComponent<AgentAuthoring>();
-        var body = agent.EntityBody;
-        body.Destination = currentTarget.position;
-        body.IsStopped = false;
-        agent.EntityBody = body;
-    }
-    //private bool ReachedDestination(float threshold)
-    
-        //if (aiMovement.destination != Vector3.zero)
-        //{
-        //    return Extensions.CheckRange(aiMovement.destination, transform.position, threshold);
-        //}
-        //return false;
-    
 }

@@ -22,6 +22,7 @@ public class AnimationController : NetworkBehaviour
     }
     public void SetMoveStatus(bool isMoving)
     {
+        Debug.Log("asilxx " + isMoving + StackTraceUtility.ExtractStackTrace());
         animator.SetBool("isMoving", isMoving);
     }
     public void SetAttackSpeed(float attackSpeed)

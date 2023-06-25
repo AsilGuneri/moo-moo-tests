@@ -69838,7 +69838,6 @@ GameObject:
   - component: {fileID: 1626028696452287395}
   - component: {fileID: 5107863607749531074}
   - component: {fileID: 8064767531322124681}
-  - component: {fileID: 3946950403137685509}
   - component: {fileID: 5904897624730745774}
   - component: {fileID: 2940790932453975993}
   m_Layer: 0
@@ -70142,10 +70141,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MotionType: 2
-  Speed: 3.5
-  Acceleration: 8
-  AngularSpeed: 120
-  StoppingDistance: 0
+  Speed: 7
+  Acceleration: 10
+  AngularSpeed: 250
+  StoppingDistance: 0.1
   AutoBreaking: 1
 --- !u!114 &8064767531322124681
 MonoBehaviour:
@@ -70161,18 +70160,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Radius: 0.22
   Height: 1.91
---- !u!114 &3946950403137685509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8938534602783702256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb1c05fb291f6d0419037cf7859e55f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5904897624730745774
 MonoBehaviour:
   m_ObjectHideFlags: 0

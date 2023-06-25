@@ -1,4 +1,4 @@
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Mathematics;
 
 namespace ProjectDawn.Navigation
@@ -37,7 +37,7 @@ namespace ProjectDawn.Navigation
             Destination = value;
             IsStopped = false;
         }
-
+        //BU İKİ AQ EVLADI İLE BÜTÜN İŞİMİZ.
         /// <summary>
         /// Sets properties for agent to stop.
         /// </summary>

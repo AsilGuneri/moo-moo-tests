@@ -39,7 +39,6 @@ public class FollowTargetController : EnemyBehaviourController
     private void Update()
     {
         if (!isIn) return;
-        controller.Movement.FollowTarget(controller.TargetController.Target.transform, followOffset);
     }
 
     public override bool EnterCondition()
@@ -56,6 +55,8 @@ public class FollowTargetController : EnemyBehaviourController
     {
         target = controller.TargetController.Target.GetComponent<UnitController>();
         isIn = true;
+        controller.Movement.StartFollow(controller.TargetController.Target.transform, followOffset);
+
     }
 
     public override void OnExit()

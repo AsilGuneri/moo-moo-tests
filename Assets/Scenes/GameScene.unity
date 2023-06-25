@@ -1382,7 +1382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
-  spawnArea: {fileID: 0}
+  spawnArea: {fileID: 312674827}
   spacing: 2
   readyButton: {fileID: 693985718}
 --- !u!114 &334110794
