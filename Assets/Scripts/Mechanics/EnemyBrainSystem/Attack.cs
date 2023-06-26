@@ -16,10 +16,12 @@ public class Attack : EnemyBehaviourData
 public class AttackController : EnemyBehaviourController
 {
     private EnemyController controller;
+    private BasicAttackController attackController;
     public override void OnInitialize(EnemyBehaviourData data)
     {
         if (IsInitialized) return;
         base.OnInitialize(data);
+        attackController = GetComponent<BasicAttackController>();
         controller = GetComponent<EnemyController>();
         IsInitialized = true;
     }
@@ -35,12 +37,15 @@ public class AttackController : EnemyBehaviourController
 
     public override void OnEnter()
     {
-        controller.StartAttacking(controller.TargetController.Target);
+        var target = controller.TargetController.Target;
+        controller.Movement.ClientStop();
+        controller.TargetController.SetTarget(target);
+        attackController.StartAutoAttack(target, controller.attackSpeed, controller.animAttackPoint);
     }
 
     public override void OnExit()
     {
-        controller.StopAttacking();
+        attackController.StopAfterCurrentAttack();
     }
     private bool ShouldEnter()
     {

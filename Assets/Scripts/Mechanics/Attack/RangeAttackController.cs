@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class RangeAttackController : BasicAttackController
 {
+    [SerializeField] protected GameObject projectilePrefab;
+    [SerializeField] protected Transform projectileSpawnPoint;
     protected override void OnAttackStart()
     {
 

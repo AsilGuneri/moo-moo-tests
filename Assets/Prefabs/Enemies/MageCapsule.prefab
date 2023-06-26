@@ -622,7 +622,7 @@ GameObject:
   - component: {fileID: 3592067272230806276}
   - component: {fileID: 9074826505844378808}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: MageCapsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

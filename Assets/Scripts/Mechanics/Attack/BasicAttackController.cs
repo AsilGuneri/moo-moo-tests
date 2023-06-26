@@ -7,10 +7,8 @@ using UnityEngine;
 
 public abstract class BasicAttackController : NetworkBehaviour
 {
+    public bool IsSetToStopAfterAttack { get => isSetToStopAfterAttack; }
     public bool IsAttacking { get => isAttacking; }
-
-    [SerializeField] protected GameObject projectilePrefab;
-    [SerializeField] protected Transform projectileSpawnPoint;
 
     protected UnitController controller;
     protected bool isAttacking;
@@ -20,6 +18,9 @@ public abstract class BasicAttackController : NetworkBehaviour
     public Action OnStartAttack;
     public Action OnEndAttack;
     public Action OnAttackCancelled;
+
+    private Task attackTask = null;
+    private bool isSetToStopAfterAttack;
 
     //temp
     public int Damage;
@@ -43,8 +44,34 @@ public abstract class BasicAttackController : NetworkBehaviour
         OnEndAttack?.Invoke();
     }
 
+    /// <summary>
+    /// for enemies
+    /// </summary>
+    public async void StopAfterCurrentAttack()
+    {
+        if (attackTask == null)
+        {
+            Debug.LogError("Attack task is null");
+            return;
+        }
 
-    public void StopAttack()
+        // Set to stop after attack regardless of task status.
+        isSetToStopAfterAttack = true;
+
+        // Await only if the task hasn't already completed.
+        if (attackTask.Status != TaskStatus.RanToCompletion)
+        {
+            await attackTask;
+        }
+
+        isSetToStopAfterAttack = false;
+        StopAttackInstantly();
+    }
+
+    /// <summary>
+    /// for players
+    /// </summary>
+    public void StopAttackInstantly()
     {
         if (!isAttacking) return;
         isAttackStopped = true;
@@ -52,12 +79,10 @@ public abstract class BasicAttackController : NetworkBehaviour
 
     private async Task AttackOnce(GameObject target, float attackSpeed, float animAttackPoint)
     {
-        Task attackTask = Attack(attackSpeed, animAttackPoint);
-        if (attackTask.Status == TaskStatus.Running) return;
+        attackTask = Attack(attackSpeed, animAttackPoint);
         Transform targetTransform = target.transform;
         Vector3 lookPos = new Vector3(targetTransform.position.x, transform.position.y, targetTransform.position.z);
         transform.LookAt(lookPos);
-
         await attackTask;
     }
     private async Task Attack(float attackSpeed, float animAttackPoint)
@@ -67,7 +92,11 @@ public abstract class BasicAttackController : NetworkBehaviour
 
         OnAttackStart();
         await Task.Delay(msBeforeAttack);
-        if (!IsAutoAttackingAvailable()) OnAttackCancelled?.Invoke();
+        if (!IsAutoAttackingAvailable())
+        {
+            OnAttackCancelled?.Invoke();
+            return;
+        }
         OnAttackImpact();
         await Task.Delay(msAfterAttack);
         OnAttackEnd();

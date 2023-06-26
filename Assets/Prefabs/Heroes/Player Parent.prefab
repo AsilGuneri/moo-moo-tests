@@ -69967,7 +69967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keysData: {fileID: 11400000, guid: 4064b8705b06cde43a1fa1c5d790afae, type: 2}
-  heroStatsData: {fileID: 0}
+  heroStatsData: {fileID: 11400000, guid: a6bf7a8ecff814b48a8120fc7dfae65d, type: 2}
 --- !u!114 &8111409415972401907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70021,9 +70021,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  Damage: 50
   projectilePrefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
   projectileSpawnPoint: {fileID: 4968493055219234102}
-  Damage: 50
 --- !u!114 &2710746016826199023
 MonoBehaviour:
   m_ObjectHideFlags: 0

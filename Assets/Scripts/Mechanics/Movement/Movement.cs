@@ -37,6 +37,7 @@ public class Movement : MonoBehaviour
     }
     public void ClientMove(Vector3 pos)
     {
+        if (!CanMove()) return;
         agent.SetDestination(pos);
         isMoving = true;
         currentTargetPos = pos;
@@ -69,12 +70,10 @@ public class Movement : MonoBehaviour
             ClientMove(target.position);
             await Task.Delay(100);
         }
-        //Vector3 directionToTarget = target.position - transform.position;
-        //directionToTarget.Normalize();
+    }
+    private bool CanMove()
+    {
+        return !controller.AttackController.IsSetToStopAfterAttack;
 
-        //// Calculate a point followDistance units along the direction vector,
-        //// starting from the target's position.
-        //Vector3 targetPosition = target.position - directionToTarget * followDistance;
-        //ClientMove(targetPosition);
     }
 }

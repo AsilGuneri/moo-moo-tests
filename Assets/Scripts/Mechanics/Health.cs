@@ -25,9 +25,9 @@ public class Health : NetworkBehaviour
 
     private void Awake()
     {
-        //_heroStats = GetComponent<PlayerDataHolder>().HeroStatsData;
-        //baseHp = _heroStats.Hp;
-        baseHp = 10000000;
+        _heroStats = GetComponent<PlayerDataHolder>().HeroStatsData;
+        baseHp = _heroStats.Hp;
+        //baseHp = 10000000;
     }
     #region Server
     public override void OnStartServer()
@@ -44,7 +44,8 @@ public class Health : NetworkBehaviour
         AddDamageStats(dmg, dealerTransform);
         if (_currentHealth <= 0)
         {
-            Die(dealerTransform);
+            _currentHealth = baseHp;
+           // Die(dealerTransform);
         }
 
     }
