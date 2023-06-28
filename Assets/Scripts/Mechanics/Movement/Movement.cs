@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
 using ProjectDawn.Navigation.Hybrid;
-using static UnityEditor.PlayerSettings;
 using System.Threading.Tasks;
 
 public class Movement : MonoBehaviour
