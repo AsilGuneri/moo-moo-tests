@@ -32,9 +32,7 @@ public class Health : NetworkBehaviour
     #region Server
     public override void OnStartServer()
     {
-        _currentHealth = baseHp;
-        if(unitType != UnitType.Player) UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), unitType);
-
+        StartCoroutine(StartRoutine());
     }
     [Server]
     public void TakeDamage(int dmg, Transform dealerTransform)
@@ -48,6 +46,14 @@ public class Health : NetworkBehaviour
            // Die(dealerTransform);
         }
 
+    }
+
+    private IEnumerator StartRoutine()
+    {
+        yield return new WaitUntil(() => NetworkClient.ready);
+        _currentHealth = baseHp;
+        if (unitType != UnitType.Player)
+            UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), unitType);
     }
 
     private void AddDamageStats(int dmg, Transform dealerTransform)
