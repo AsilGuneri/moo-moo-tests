@@ -69,6 +69,27 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
         return null;
     }
+    public GameObject GetClosestEnemy(Vector3 myPosition, UnitController myUnitController)
+    {
+        float closestDistance = Mathf.Infinity;
+        GameObject closestEnemy = null;
+
+        foreach (var enemyType in myUnitController.enemyList)
+        {
+            GameObject closestUnitOfThisType = GetClosestUnit(myPosition, enemyType);
+            if (closestUnitOfThisType == null) continue; // No units of this type found
+
+            float distance = Extensions.Distance(myPosition, closestUnitOfThisType.transform.position);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestEnemy = closestUnitOfThisType;
+            }
+        }
+
+        return closestEnemy;
+    }
 
     public GameObject GetClosestUnit(Vector3 myPosition, UnitType requestedUnitType)
     {
@@ -78,7 +99,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
         {
             if (!unit.Value) continue;
             if (!unit.Value.gameObject) continue;
-            float distance = Vector3.Distance(myPosition, unit.Value.gameObject.transform.position);
+            float distance = Extensions.Distance(myPosition, unit.Value.gameObject.transform.position);
             if (closestDistance < distance) continue;
             closestDistance = distance;
             closestUnit = unit.Value.gameObject;

@@ -13,20 +13,19 @@ public class Health : NetworkBehaviour
     [SerializeField] private Slider healthBar;*/
 
     [SerializeField] private Image healthBar;
-    [SerializeField] private UnitType unitType;
-    [ConditionalField(nameof(unitType), false, UnitType.WaveEnemy)] public int ExpToGain;
+    public int ExpToGain;
 
     [SyncVar(hook = nameof(UpdateHealthBar))] protected int _currentHealth;
 
     private HeroBaseStatsData _heroStats;
     private int baseHp;
-
-    public UnitType UnitType { get { return unitType; } }
+    private UnitController controller;
 
     private void Awake()
     {
         _heroStats = GetComponent<PlayerDataHolder>().HeroStatsData;
         baseHp = _heroStats.Hp;
+        controller = GetComponent<UnitController>();
         //baseHp = 10000000;
     }
     #region Server
@@ -52,8 +51,8 @@ public class Health : NetworkBehaviour
     {
         yield return new WaitUntil(() => NetworkClient.ready);
         _currentHealth = baseHp;
-        if (unitType != UnitType.Player)
-            UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), unitType);
+        if (controller.unitType != UnitType.Player)
+            UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), controller.unitType);
     }
 
     private void AddDamageStats(int dmg, Transform dealerTransform)
@@ -73,7 +72,7 @@ public class Health : NetworkBehaviour
     [Server]
     private void Die(Transform damageDealerTransform)
     {
-        UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), unitType);
+        UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), controller.unitType);
         if(damageDealerTransform.TryGetComponent(out PlayerLevelController levelController))
         {
             levelController.GainExperience(ExpToGain);

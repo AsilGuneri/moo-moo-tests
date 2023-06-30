@@ -41,7 +41,7 @@ public class PickClosestEnemyController : EnemyBehaviourController
 
     public override void OnEnter()
     {
-        var closestEnemy = UnitManager.Instance.GetClosestUnit(transform.position, UnitType.Player);
+        var closestEnemy = UnitManager.Instance.GetClosestEnemy(transform.position, controller);
         controller.TargetController.SetTarget(closestEnemy);
     }
 

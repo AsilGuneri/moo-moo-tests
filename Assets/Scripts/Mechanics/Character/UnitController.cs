@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public abstract class UnitController : NetworkBehaviour
 {
     //others
+    public Health Health { get => health; }
     public BasicAttackController AttackController { get => attackController; }
     public AnimationController AnimationController { get => animationController; }
     public NetworkAnimator NetworkAnimator { get => networkAnimator; }
@@ -24,6 +25,7 @@ public abstract class UnitController : NetworkBehaviour
     protected TargetController targetController;
     protected BasicAttackController attackController;
     protected Movement movement;
+    protected Health health;
     [Range(0, 1f)] public float animAttackPoint;
 
 
@@ -50,6 +52,7 @@ public abstract class UnitController : NetworkBehaviour
         movement = GetComponent<Movement>();
         animationController = GetComponent<AnimationController>();
         networkAnimator = GetComponent<NetworkAnimator>();
+        health = GetComponent<Health>();
     }
     protected void SubscribeAnimEvents()
     {

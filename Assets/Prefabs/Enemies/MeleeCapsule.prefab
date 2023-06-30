@@ -839,7 +839,7 @@ MonoBehaviour:
   attackRange: 1
   attackSpeed: 1
   unitType: 1
-  enemyList: 00000000
+  enemyList: 0000000002000000
   animAttackPoint: 0.5
 --- !u!114 &3030894593718517605
 MonoBehaviour:

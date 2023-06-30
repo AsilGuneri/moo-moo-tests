@@ -48,9 +48,9 @@ public class SkillProjectile : NetworkBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent(out Health health) && health.UnitType != UnitType.Player)
+        if(other.TryGetComponent(out UnitController controller) && controller.unitType != UnitType.Player)
         {
-            health.TakeDamage(damage, spawnerTransform);
+            controller.Health.TakeDamage(damage, spawnerTransform);
         }
     }
 
