@@ -622,7 +622,7 @@ GameObject:
   - component: {fileID: 3592067272230806276}
   - component: {fileID: 9074826505844378808}
   m_Layer: 0
-  m_Name: MageCapsule 1
+  m_Name: HealerCapsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -660,7 +660,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 290875eb45c82814faf68e9890e9fa83
+  m_AssetId: 005862c229814ed4daaedb294ce591ea
   hasSpawned: 0
 --- !u!114 &8755146607505593207
 MonoBehaviour:
@@ -743,7 +743,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   healthBar: {fileID: 6352234829559373260}
-  unitType: 1
   ExpToGain: 1
 --- !u!95 &700732724531390349
 Animator:
@@ -857,9 +856,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  Damage: 1
   projectilePrefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
   projectileSpawnPoint: {fileID: 2075345842850124488}
-  Damage: 1
 --- !u!114 &5203703413200868718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -996,6 +995,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 137020602886767594, guid: 9984be23625843a48a44d88aae5669f2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 81c8e1307002eed4fb5a9ee62472f1a3, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
