@@ -66,7 +66,7 @@ public abstract class SkillController : MonoBehaviour
         isSkillStayActive = false;
         OnSkillEnd();
     }
-    private async void StartOnSkillStay()
+    private async Task StartOnSkillStay()
     {
         while (isSkillStayActive)
         {

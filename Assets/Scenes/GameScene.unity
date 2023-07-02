@@ -1438,6 +1438,10 @@ MonoBehaviour:
     Size: 20
     Key: enemy2
     currentCount: 0
+  - Prefab: {fileID: 7498676492825279152, guid: 005862c229814ed4daaedb294ce591ea, type: 3}
+    Size: 20
+    Key: healerCapsule
+    currentCount: 0
 --- !u!114 &334110796
 MonoBehaviour:
   m_ObjectHideFlags: 0
