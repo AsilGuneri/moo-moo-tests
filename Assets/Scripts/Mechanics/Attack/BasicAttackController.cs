@@ -21,7 +21,7 @@ public abstract class BasicAttackController : NetworkBehaviour
 
     private Task attackTask = null;
     private bool isSetToStopAfterAttack;
-
+    private int attackBlockCount = 0;
     //temp
     public int Damage;
 
@@ -43,7 +43,14 @@ public abstract class BasicAttackController : NetworkBehaviour
         isAttackStopped = false;
         OnEndAttack?.Invoke();
     }
-
+    public void BlockAttacking()
+    {
+        attackBlockCount++;
+    }
+    public void RemoveAttackingBlock()
+    {
+        attackBlockCount--;
+    }
     /// <summary>
     /// for enemies
     /// </summary>
@@ -51,7 +58,7 @@ public abstract class BasicAttackController : NetworkBehaviour
     {
         if (attackTask == null)
         {
-            Debug.LogError("Attack task is null");
+            Debug.Log("Attack task is null");
             return;
         }
 
@@ -104,6 +111,7 @@ public abstract class BasicAttackController : NetworkBehaviour
 
     protected bool IsAutoAttackingAvailable()
     {
+        if(attackBlockCount > 0) return false;
         if(isAttackStopped) return false;
         bool isAvailable = controller.TargetController.Target != null;
         return isAvailable;

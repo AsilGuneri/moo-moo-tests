@@ -10,7 +10,7 @@ public class EnemyController : UnitController
         base.Start();
         SubscribeAnimEvents();
     }
-    public void UseMainSkill()
+    public void TriggerMainSkill() ///TODO: Remove this method and use the one from UseContinuousSkill
     {
         mainSkill.GetController(gameObject).UseSkill();
     }

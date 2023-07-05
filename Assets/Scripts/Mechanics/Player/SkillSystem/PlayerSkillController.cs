@@ -31,8 +31,8 @@ public class PlayerSkillController : MonoBehaviour
             if (skillName == skill.SkillData.Name) 
             {
                 skill.SkillData.SetController(gameObject);
-                playerController.PlayerSkills[skill.SkillData.Grade] = skill;
-                SkillBar.Instance.OnSkillSet(skill.SkillData.Grade, skill.SkillData);
+                playerController.PlayerSkills[skill.SkillData.Tier] = skill;
+                SkillBar.Instance.OnSkillSet(skill.SkillData.Tier, skill.SkillData);
             }
         }
     }

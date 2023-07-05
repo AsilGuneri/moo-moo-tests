@@ -31,7 +31,7 @@ public class SkillSelectionPanel : Singleton<SkillSelectionPanel>
     }
     public void ResetSelectedGradeSkills(SkillData skillData)
     {
-        int grade = skillData.Grade;
+        int grade = skillData.Tier;
         foreach(var skill in GetGradeSelectableSkills(grade))
         {
             skill.UnSelectSkill();
@@ -43,9 +43,9 @@ public class SkillSelectionPanel : Singleton<SkillSelectionPanel>
         foreach (var skill in classSkills.AllClassSkills)
         {
             var selectableSkill = Instantiate(UISkillPrefab);
-            CacheGradeSelectableSkills(selectableSkill, skill.SkillData.Grade);
+            CacheGradeSelectableSkills(selectableSkill, skill.SkillData.Tier);
             selectableSkill.Setup(skill.SkillData);
-            selectableSkill.transform.SetParent(skillParents[skill.SkillData.Grade]);
+            selectableSkill.transform.SetParent(skillParents[skill.SkillData.Tier]);
         }
 
 

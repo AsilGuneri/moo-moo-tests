@@ -13,6 +13,7 @@ public class Movement : MonoBehaviour
     private UnitController controller;
     private bool isMoving = false;
     private Vector3 currentTargetPos;
+    private int movementBlockCount = 0;
     AgentAuthoring agent;
 
 
@@ -33,6 +34,14 @@ public class Movement : MonoBehaviour
         {
             ClientStop();
         }
+    }
+    public void BlockMovement()
+    {
+        movementBlockCount++;
+    }
+    public void RemoveMovementBlock()
+    {
+        movementBlockCount--;
     }
     public void ClientMove(Vector3 pos)
     {
@@ -72,7 +81,9 @@ public class Movement : MonoBehaviour
     }
     private bool CanMove()
     {
+        if (movementBlockCount > 0) return false;
         return !controller.AttackController.IsSetToStopAfterAttack;
 
     }
+
 }

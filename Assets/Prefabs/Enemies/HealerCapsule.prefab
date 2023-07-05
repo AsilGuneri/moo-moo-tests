@@ -794,6 +794,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentState: 2
   Behaviours:
+  - {fileID: 11400000, guid: 0682c3f0d519c224096b7df0640fc848, type: 2}
   - {fileID: 11400000, guid: 708b4a86f2d84194ba46db84934e3b02, type: 2}
   - {fileID: 11400000, guid: cfc7d6e222bb2fa42965457e919339b4, type: 2}
   - {fileID: 11400000, guid: a2f05e797ef7d5443a5a91fec270fef8, type: 2}
@@ -945,7 +946,7 @@ MonoBehaviour:
   unitType: 1
   enemyList: 00000000
   animAttackPoint: 0.5
-  mainSkill: {fileID: 0}
+  mainSkill: {fileID: 11400000, guid: aa78b8ee756f3054ba925666407b17a3, type: 2}
 --- !u!114 &5640336512563222759
 MonoBehaviour:
   m_ObjectHideFlags: 0
