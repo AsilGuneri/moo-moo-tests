@@ -48,12 +48,12 @@ public class RoomPlayerUI : NetworkBehaviour
     }
     public void ChangeCharacterLinear(bool isNext)
     {
-        int newIndex = isNext ? CurrentClassIndex + 1 : CurrentClassIndex - 1;
-        int maxIndex = PlayerSkillsDatabase.Instance.ClassList.Count - 1;
-        if (newIndex > maxIndex) newIndex = 0;
-        if (newIndex < 0) newIndex = maxIndex;
-        CurrentClassIndex = newIndex;
-        CmdSetCurrentIndex(newIndex);
+        //int newIndex = isNext ? CurrentClassIndex + 1 : CurrentClassIndex - 1;
+        //int maxIndex = PlayerSkillsDatabase.Instance.ClassList.Count - 1;
+        //if (newIndex > maxIndex) newIndex = 0;
+        //if (newIndex < 0) newIndex = maxIndex;
+        //CurrentClassIndex = newIndex;
+        //CmdSetCurrentIndex(newIndex);
     }
     #endregion
 
@@ -148,9 +148,9 @@ public class RoomPlayerUI : NetworkBehaviour
     }
     private void UpdateUI(int index)
     {
-        var classData = PlayerSkillsDatabase.Instance.GetClassData(index);
-        classImage.sprite = classData.ClassLobbySprite;
-        classNameText.text = classData.Class.ToString();
+        //var classData = PlayerSkillsDatabase.Instance.GetClassData(index);
+        //classImage.sprite = classData.ClassLobbySprite;
+        //classNameText.text = classData.Class.ToString();
     }
     #endregion
 }

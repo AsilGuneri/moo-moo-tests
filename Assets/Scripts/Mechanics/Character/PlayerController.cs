@@ -11,8 +11,7 @@ public class PlayerController : UnitController
     [SerializeField] private Indicator attackModeIndicator;
     public string PlayerName { get; set; }
     public PlayerStats Stats { get; private set; } = new();
-    [NonSerialized] public PlayerSkill[] PlayerSkills = new PlayerSkill[4];
-    public Class playerClass;
+
     public InputKeysData _inputKeys { get; private set; }
     private Camera mainCamera;
     private bool isAttackClickMode;
@@ -35,10 +34,18 @@ public class PlayerController : UnitController
 
     void Update()
     {
-        //if (Input.GetKeyDown(_inputKeys.SelectKey) || Input.GetKeyDown(_inputKeys.MoveKey))
-        //    OnPointerInput();
         if (Input.GetKeyDown(_inputKeys.SpawnWaveKey))
             WaveManager.Instance.SpawnTestWave();
+
+        // Check if the Q key is pressed.
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            //if (Skills[0].TargetRequired && targetController.Target != null)
+            //{
+            //    // Use the first skill on a target.
+            //    Skills[0].Use(this, targetController.Target.GetComponent<UnitController>());
+            //}
+        }
     }
     private void Activate()
     {
@@ -61,7 +68,7 @@ public class PlayerController : UnitController
     {
         //SkillSelectionPanel.Instance.CacheClassSkills();
     }
-    
+
     private void GetMousePositionRaycastInfo(out Ray ray, out bool isRayHit, out RaycastHit hitInfo)
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
@@ -128,11 +135,11 @@ public class PlayerController : UnitController
         IndicatorManager.Instance.StartIndicator(moveIndicator.gameObject, Extensions.Vector3WithoutY(newPoint), moveIndicator.transform.rotation);
         //clickIndicator.Setup(hitInfo.point, true);
     }
-   
+
     private bool CanClick()
     {
         if (EventSystem.current.IsPointerOverGameObject()) return false;
-        if(!mainCamera) return false;
+        if (!mainCamera) return false;
         return true;
     }
 

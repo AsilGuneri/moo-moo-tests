@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a5b883de9243544aa269d1a40b8544, type: 3}
   m_Name: FollowTarget
   m_EditorClassIdentifier: 
+  BlockMovement: 0
+  BlockAttacking: 0
   state: 2
   UseAttackRange: 1
-  ApproachDistance: 0
+  FollowOffset: 0
