@@ -1,14 +1,18 @@
 using Mirror;
 using ProjectDawn.Navigation;
 using System;
+using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerController : UnitController
 {
+    [SerializeField] private LayerMask layerMask;
     [SerializeField] private Indicator moveIndicator;
     [SerializeField] private Indicator attackModeIndicator;
+    [SerializeField] private List<Skill> skills = new List<Skill>();
     public string PlayerName { get; set; }
     public PlayerStats Stats { get; private set; } = new();
 
@@ -40,11 +44,20 @@ public class PlayerController : UnitController
         // Check if the Q key is pressed.
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            //if (Skills[0].TargetRequired && targetController.Target != null)
-            //{
-            //    // Use the first skill on a target.
-            //    Skills[0].Use(this, targetController.Target.GetComponent<UnitController>());
-            //}
+            if (skills[0].TargetRequired)
+            {
+                GameObject target = null;
+
+                Ray ray;
+                bool isRayHit;
+                RaycastHit hitInfo;
+                GetMousePositionRaycastInfo(out ray, out isRayHit, out hitInfo);
+                if(IsEnemy(hitInfo)) target = hitInfo.transform.gameObject;
+                else return;
+                
+                // Use the first skill on a target.
+                skills[0].Use(this, target.GetComponent<UnitController>());
+            }
         }
     }
     private void Activate()
@@ -73,7 +86,7 @@ public class PlayerController : UnitController
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
         ray = mainCamera.ScreenPointToRay(mousePos);
-        isRayHit = Physics.Raycast(ray, out hitInfo, 100);
+        isRayHit = Physics.Raycast(ray, out hitInfo, 100, layerMask);
     }
     private void OnRayHit(RaycastHit hitInfo)
     {
