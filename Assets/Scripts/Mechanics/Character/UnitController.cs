@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public abstract class UnitController : NetworkBehaviour
 {
     //others
+    public Transform ProjectileSpawnPoint { get => projectileSpawnPoint; }
     public Health Health { get => health; }
     public BasicAttackController AttackController { get => attackController; }
     public AnimationController AnimationController { get => animationController; }
@@ -19,6 +20,9 @@ public abstract class UnitController : NetworkBehaviour
     public float attackSpeed;
     public UnitType unitType;
     public List<UnitType> enemyList;
+
+    [SerializeField] protected Transform projectileSpawnPoint;
+
 
     protected AnimationController animationController;
     protected NetworkAnimator networkAnimator;

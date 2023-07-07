@@ -827,6 +827,7 @@ MonoBehaviour:
   attackSpeed: 1
   unitType: 1
   enemyList: 00000000
+  projectileSpawnPoint: {fileID: 5510830196393226273}
   animAttackPoint: 0.5
 --- !u!114 &5640336512563222759
 MonoBehaviour:
@@ -859,7 +860,6 @@ MonoBehaviour:
   syncInterval: 0.1
   Damage: 1
   projectilePrefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
-  projectileSpawnPoint: {fileID: 2075345842850124488}
 --- !u!114 &5203703413200868718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1276,13 +1276,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9984be23625843a48a44d88aae5669f2, type: 3}
---- !u!4 &2075345842850124488 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5816843861989702807, guid: 9984be23625843a48a44d88aae5669f2, type: 3}
-  m_PrefabInstance: {fileID: 5509178465206988383}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5504785251874203243 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4615360315754548, guid: 9984be23625843a48a44d88aae5669f2, type: 3}
+  m_PrefabInstance: {fileID: 5509178465206988383}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5510830196393226273 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4202873523494526, guid: 9984be23625843a48a44d88aae5669f2, type: 3}
   m_PrefabInstance: {fileID: 5509178465206988383}
   m_PrefabAsset: {fileID: 0}

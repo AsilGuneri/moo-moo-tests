@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using System;
 
 public class Projectile : NetworkBehaviour
 {
+    public Action OnHit;
+
     [SerializeField] public float speed = 1;
     [SerializeField] private ParticleSystem onHitParticle;
     [SerializeField] private float onHitParticleDestroySecond;
@@ -51,8 +54,9 @@ public class Projectile : NetworkBehaviour
         base.OnStartAuthority();
     }
     [Server]
-    public void SetupProjectile(GameObject target, int damage, Transform spawnerTransform)
+    public void SetupProjectile(GameObject target, int damage, Transform spawnerTransform,Action action = null)
     {
+        OnHit = action;
         _isMoving = true;
         Target = target;
         _damage = damage;
@@ -73,6 +77,7 @@ public class Projectile : NetworkBehaviour
         }
         else
         {
+            OnHit?.Invoke();
             CmdTargetHit();
             return;
         }

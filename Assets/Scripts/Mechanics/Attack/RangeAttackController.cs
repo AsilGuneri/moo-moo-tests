@@ -6,7 +6,6 @@ using UnityEngine;
 public class RangeAttackController : BasicAttackController
 {
     [SerializeField] protected GameObject projectilePrefab;
-    [SerializeField] protected Transform projectileSpawnPoint;
     protected override void OnAttackStart()
     {
 
@@ -24,7 +23,7 @@ public class RangeAttackController : BasicAttackController
     private void CmdSpawnProjectile(GameObject target)
     {
         //if (checkAuthority && !hasAuthority) return;
-        GameObject projectile = ObjectPooler.Instance.Get(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+        GameObject projectile = ObjectPooler.Instance.Get(projectilePrefab, controller.ProjectileSpawnPoint.position, Quaternion.identity);
         projectile.GetComponent<Projectile>().SetupProjectile(target, Damage, transform);
         NetworkServer.Spawn(projectile, connectionToClient);
     }
