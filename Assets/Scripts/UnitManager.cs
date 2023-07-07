@@ -152,34 +152,3 @@ public enum UnitType
     WaveEnemy,
     Building,
 }
-
-
-
-
-
-
-//its probably working but not needed.
-//[ServerCallback]
-//public void UnregisterUnits(uint netId, UnitType unitType)
-//{
-//    switch (unitType)
-//    {
-//        case UnitType.Player:
-
-//            foreach(var player in Players)
-//            {
-//                if (player.networkId == netId) { Players.Remove(player); Debug.Log("Player Removed From UnitList");}
-//            }
-//            break;
-//        case UnitType.WaveEnemy:
-//            foreach (var enemy in WaveEnemies)
-//            {
-//                if (enemy.networkId == netId) 
-//                { 
-//                    WaveEnemies.Remove(enemy);
-//                    if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd();
-//                }
-//            }
-//            break;
-//    }
-//}

@@ -15,7 +15,7 @@ public class Health : NetworkBehaviour
     [SerializeField] private Image healthBar;
     public int ExpToGain;
 
-    [SyncVar(hook = nameof(UpdateHealthBar))] protected int _currentHealth;
+    [SyncVar(hook = nameof(UpdateHealthBar))] protected int currentHealth;
 
     private HeroBaseStatsData _heroStats;
     private int baseHp;
@@ -36,21 +36,27 @@ public class Health : NetworkBehaviour
     [Server]
     public void TakeDamage(int dmg, Transform dealerTransform)
     {
-        if (_currentHealth <= 0) return;
-        _currentHealth -= dmg;
+        if (currentHealth <= 0) return;
+        currentHealth -= dmg;
         AddDamageStats(dmg, dealerTransform);
-        if (_currentHealth <= 0)
+        if (currentHealth <= 0)
         {
-            _currentHealth = baseHp;
+            currentHealth = baseHp;
            // Die(dealerTransform);
         }
 
+    }
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        // Prevent overhealing
+        currentHealth = Mathf.Min(currentHealth, baseHp);
     }
 
     private IEnumerator StartRoutine()
     {
         yield return new WaitUntil(() => NetworkClient.ready);
-        _currentHealth = baseHp;
+        currentHealth = baseHp;
         if (controller.unitType != UnitType.Player)
             UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), controller.unitType);
     }

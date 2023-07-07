@@ -69855,7 +69855,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8938534602783702256}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.822691, y: 0, z: -10.090719}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -69983,7 +69983,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   healthBar: {fileID: 8853805720119880122}
-  unitType: 0
   ExpToGain: 0
 --- !u!114 &7291038196165993128
 MonoBehaviour:
@@ -70003,10 +70002,11 @@ MonoBehaviour:
   attackSpeed: 2
   unitType: 0
   enemyList: 01000000
+  Skills:
+  - {fileID: 7491889479564405898, guid: 9591dd6e00c3c11439bbf7d751e1ac34, type: 3}
   animAttackPoint: 0.5
   moveIndicator: {fileID: 5360633475863498575, guid: 299615328751d224781d31e0fe65de66, type: 3}
   attackModeIndicator: {fileID: 3295424368705041057, guid: 93bf18897f48e4140b9a368c27bd919b, type: 3}
-  playerClass: 0
 --- !u!114 &9067681001629958667
 MonoBehaviour:
   m_ObjectHideFlags: 0
