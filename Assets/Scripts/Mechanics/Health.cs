@@ -44,13 +44,16 @@ public class Health : NetworkBehaviour
             currentHealth = baseHp;
            // Die(dealerTransform);
         }
-
     }
+    [Server]
     public void Heal(int amount)
     {
+        Debug.Log("asilxx " + name);
         currentHealth += amount;
-        // Prevent overhealing
-        currentHealth = Mathf.Min(currentHealth, baseHp);
+        if(currentHealth > baseHp)
+        {
+            currentHealth = baseHp;
+        }
     }
 
     private IEnumerator StartRoutine()

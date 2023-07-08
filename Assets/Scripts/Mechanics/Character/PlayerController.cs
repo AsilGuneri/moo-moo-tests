@@ -12,7 +12,6 @@ public class PlayerController : UnitController
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Indicator moveIndicator;
     [SerializeField] private Indicator attackModeIndicator;
-    [SerializeField] private List<Skill> skills = new List<Skill>();
     public string PlayerName { get; set; }
     public PlayerStats Stats { get; private set; } = new();
 

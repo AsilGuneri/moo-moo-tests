@@ -37,6 +37,7 @@ public class EnemyBrain : MonoBehaviour
 
         if (currentBehaviour != null)
         {
+            Debug.Log("asilxx1" + currentBehaviour.name);
             CheckExit();
         }
         else
@@ -59,6 +60,8 @@ public class EnemyBrain : MonoBehaviour
         {
             if (StateControllerDictionary[behaviour.State].EnterCondition())
             {
+                Debug.Log("asilxx2 accepted is : " + behaviour.name );
+
                 CurrentState = behaviour.State;
                 currentBehaviour = behaviour;
                 StateControllerDictionary[CurrentState].OnEnter();

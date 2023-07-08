@@ -1442,6 +1442,10 @@ MonoBehaviour:
     Size: 20
     Key: healerCapsule
     currentCount: 0
+  - Prefab: {fileID: 4374398029017722189, guid: 6ef503d3d6c053e469c2f272e1f32f6d, type: 3}
+    Size: 20
+    Key: healPrefab
+    currentCount: 0
 --- !u!114 &334110796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9213,7 +9217,8 @@ MonoBehaviour:
   attackSpeed: 0.5
   unitType: 2
   enemyList: 01000000
-  Skills: []
+  projectileSpawnPoint: {fileID: 0}
+  skills: []
   animAttackPoint: 0
 --- !u!137 &8198282573734734258
 SkinnedMeshRenderer:
