@@ -72,7 +72,7 @@ public class Projectile : NetworkBehaviour, IProjectile
 
     public void DestroySelf()
     {
-        ObjectPooler.Instance.CmdReturnToPool(gameObject);
+        ObjectPooler.Instance.CmdReturnToPool(gameObject.GetComponent<NetworkIdentity>().netId);
     }
 
     [ServerCallback]
@@ -87,7 +87,7 @@ public class Projectile : NetworkBehaviour, IProjectile
 
         if (onHitParticlePrefab)
         {
-            ObjectPooler.Instance.CmdSpawnFromPool(onHitParticlePrefab, transform.position, Quaternion.identity);
+            ObjectPooler.Instance.CmdSpawnFromPool(onHitParticlePrefab.name, transform.position, Quaternion.identity);
         }
 
         DestroySelf();

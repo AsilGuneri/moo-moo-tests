@@ -111,7 +111,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
 
                     Vector3 position = spawnArea.position + offset;
 
-                    ObjectPooler.Instance.CmdSpawnFromPool(subWave.Prefab, position, Quaternion.identity);
+                    ObjectPooler.Instance.CmdSpawnFromPool(subWave.Prefab.name, position, Quaternion.identity);
                 }
             }
 

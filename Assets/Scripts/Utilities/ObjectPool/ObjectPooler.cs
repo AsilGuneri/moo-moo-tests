@@ -10,9 +10,8 @@ public class ObjectPooler : NetworkBehaviour
 
     private Dictionary<GameObject, Pool> poolDictionary;
 
-    public override void OnStartClient()
+    private void Start()
     {
-        base.OnStartClient();
 
         Instance = this;
 
@@ -32,14 +31,32 @@ public class ObjectPooler : NetworkBehaviour
             }
         }
     }
-    
 
-    [Command]
-    public void CmdSpawnFromPool(GameObject prefab, Vector3 position, Quaternion rotation)
+
+    [Command(requiresAuthority = false)]
+    public void CmdSpawnFromPool(string prefabName, Vector3 position, Quaternion rotation)
     {
+        // Look up the prefab in the pool dictionary based on its name
+        GameObject prefab = null;
+        foreach (var key in poolDictionary.Keys)
+        {
+            if (key.name == prefabName)
+            {
+                prefab = key;
+                break;
+            }
+        }
+
+        if (prefab == null)
+        {
+            Debug.LogError("Prefab not found: " + prefabName);
+            return;
+        }
+
         GameObject spawnedObject = SpawnFromPool(prefab, position, rotation);
         NetworkServer.Spawn(spawnedObject);
     }
+
 
     public GameObject SpawnFromPool(GameObject prefab, Vector3 position, Quaternion rotation)
     {
@@ -52,12 +69,21 @@ public class ObjectPooler : NetworkBehaviour
         return null;
     }
 
-    [Command]
-    public void CmdReturnToPool(GameObject instance)
+    [Command(requiresAuthority = false)]
+    public void CmdReturnToPool(uint instanceNetId)
     {
-        NetworkServer.UnSpawn(instance);
-        ReturnToPool(instance);
+        // Look up the instance by its netId
+        NetworkIdentity networkIdentity;
+        if (NetworkServer.spawned.TryGetValue(instanceNetId, out networkIdentity))
+        {
+            ReturnToPool(networkIdentity.gameObject);
+        }
+        else
+        {
+            Debug.LogError("Instance not found for netId: " + instanceNetId);
+        }
     }
+
 
     public void ReturnToPool(GameObject instance)
     {

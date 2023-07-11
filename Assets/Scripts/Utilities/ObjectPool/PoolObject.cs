@@ -37,7 +37,7 @@ public class PoolObject : MonoBehaviour
     {
         yield return Extensions.GetWait(lifeTime);
         if (gameObject.TryGetComponent(out NetworkIdentity netId))
-            ObjectPooler.Instance.CmdReturnToPool(gameObject);
+            ObjectPooler.Instance.CmdReturnToPool(gameObject.GetComponent<NetworkIdentity>().netId);
         else
             ObjectPooler.Instance.ReturnToPool(gameObject);
     }
