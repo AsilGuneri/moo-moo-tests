@@ -3119,7 +3119,6 @@ GameObject:
   - component: {fileID: 334110789}
   - component: {fileID: 334110794}
   - component: {fileID: 334110795}
-  - component: {fileID: 334110796}
   - component: {fileID: 334110797}
   m_Layer: 0
   m_Name: = Managers
@@ -3250,56 +3249,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e11a7c12d4d924296a59fd5c2b0abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   pools:
   - Prefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
     Size: 10
-    Key: arrow
-    currentCount: 0
   - Prefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
     Size: 10
-    Key: fireball
-    currentCount: 0
   - Prefab: {fileID: 5432209458267137536, guid: 93bf18897f48e4140b9a368c27bd919b, type: 3}
     Size: 20
-    Key: attackIndicator
-    currentCount: 0
   - Prefab: {fileID: 811260699408436622, guid: 299615328751d224781d31e0fe65de66, type: 3}
     Size: 20
-    Key: moveIndicator
-    currentCount: 0
   - Prefab: {fileID: 7498676492825279152, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
     Size: 10
-    Key: enemy1
-    currentCount: 0
   - Prefab: {fileID: 2462893064303745991, guid: 736be56d32648c548a0becfa8a517805, type: 3}
     Size: 20
-    Key: enemy2
-    currentCount: 0
   - Prefab: {fileID: 7498676492825279152, guid: 005862c229814ed4daaedb294ce591ea, type: 3}
     Size: 20
-    Key: healerCapsule
-    currentCount: 0
   - Prefab: {fileID: 4374398029017722189, guid: 6ef503d3d6c053e469c2f272e1f32f6d, type: 3}
     Size: 20
-    Key: healPrefab
-    currentCount: 0
---- !u!114 &334110796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 334110787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7dce90483ef07b4cb72fdca81b918e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  Indicators:
-  - {fileID: 5360633475863498575, guid: 299615328751d224781d31e0fe65de66, type: 3}
-  - {fileID: 3295424368705041057, guid: 93bf18897f48e4140b9a368c27bd919b, type: 3}
+  - Prefab: {fileID: 1231636063597364, guid: be1a08daa8a036c459b2c544709f1969, type: 3}
+    Size: 20
 --- !u!114 &334110797
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class Attack : EnemyBehaviourData
     public override EnemyBehaviourController CreateBehaviourController(GameObject gameObject)
     {
         var controller = gameObject.AddComponent<AttackController>();
-        gameObject.GetComponent<EnemyBrain>().StateControllerDictionary.Add(State, controller);
+        gameObject.GetComponent<EnemyBrain>().StateControllerDictionary.Add(this.name, controller);
         return controller;
     }
 }

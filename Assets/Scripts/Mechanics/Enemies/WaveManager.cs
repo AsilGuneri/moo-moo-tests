@@ -111,8 +111,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
 
                     Vector3 position = spawnArea.position + offset;
 
-                    GameObject enemy = ObjectPooler.Instance.Get(subWave.Prefab, position, Quaternion.identity);
-                    NetworkServer.Spawn(enemy);
+                    ObjectPooler.Instance.CmdSpawnFromPool(subWave.Prefab.name, position, Quaternion.identity);
                 }
             }
 

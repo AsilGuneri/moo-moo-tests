@@ -15,7 +15,7 @@ public class FollowTarget : EnemyBehaviourData
     public override EnemyBehaviourController CreateBehaviourController(GameObject gameObject)
     {
         var controller = gameObject.AddComponent<FollowTargetController>();
-        gameObject.GetComponent<EnemyBrain>().StateControllerDictionary.Add(State, controller);
+        gameObject.GetComponent<EnemyBrain>().StateControllerDictionary.Add(this.name, controller);
         return controller;
     }
 

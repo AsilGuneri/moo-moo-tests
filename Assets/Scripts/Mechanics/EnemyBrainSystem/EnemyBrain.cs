@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
 {
-    public BehaviourState CurrentState = BehaviourState.None; //for debug
     public List<EnemyBehaviourData> Behaviours = new List<EnemyBehaviourData>();
 
-    public Dictionary<BehaviourState, EnemyBehaviourController> StateControllerDictionary = new();
+    public Dictionary<string, EnemyBehaviourController> StateControllerDictionary = new();
 
     private EnemyBehaviourData currentBehaviour = null;
     private bool isInitialized;
@@ -37,7 +36,6 @@ public class EnemyBrain : MonoBehaviour
 
         if (currentBehaviour != null)
         {
-            Debug.Log("asilxx1" + currentBehaviour.name);
             CheckExit();
         }
         else
@@ -47,10 +45,9 @@ public class EnemyBrain : MonoBehaviour
     }
     private void CheckExit()
     {
-        if (StateControllerDictionary[CurrentState].ExitCondition())
+        if (StateControllerDictionary[currentBehaviour.name].ExitCondition())
         {
-            StateControllerDictionary[CurrentState].OnExit();
-            CurrentState = BehaviourState.None;
+            StateControllerDictionary[currentBehaviour.name].OnExit();
             currentBehaviour = null;
         }
     }
@@ -58,13 +55,10 @@ public class EnemyBrain : MonoBehaviour
     {
         foreach (var behaviour in Behaviours)
         {
-            if (StateControllerDictionary[behaviour.State].EnterCondition())
+            if (StateControllerDictionary[behaviour.name].EnterCondition())
             {
-                Debug.Log("asilxx2 accepted is : " + behaviour.name );
-
-                CurrentState = behaviour.State;
                 currentBehaviour = behaviour;
-                StateControllerDictionary[CurrentState].OnEnter();
+                StateControllerDictionary[behaviour.name].OnEnter();
                 return;
             }
         }

@@ -2,7 +2,6 @@ using Mirror;
 using ProjectDawn.Navigation;
 using System;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -10,8 +9,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : UnitController
 {
     [SerializeField] private LayerMask layerMask;
-    [SerializeField] private Indicator moveIndicator;
-    [SerializeField] private Indicator attackModeIndicator;
+    [SerializeField] private GameObject moveIndicator;
+    [SerializeField] private GameObject attackModeIndicator;
     public string PlayerName { get; set; }
     public PlayerStats Stats { get; private set; } = new();
 
@@ -66,7 +65,7 @@ public class PlayerController : UnitController
             //GoldManager.Instance.GameBank.AddBankAccount(this);
             //ContributionPanel.Instance.AddPlayerContributionField(this);
         }
-        if (isLocalPlayer) //owner
+        if (hasAuthority) //owner
         {
             mainCamera = Camera.main;
             mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
@@ -120,7 +119,7 @@ public class PlayerController : UnitController
     }
     private void OnAttackModeClick(RaycastHit hitInfo)
     {
-        IndicatorManager.Instance.StartIndicator(attackModeIndicator.gameObject, Extensions.Vector3WithoutY(hitInfo.point), attackModeIndicator.transform.rotation);
+        ObjectPooler.Instance.SpawnFromPool(attackModeIndicator.gameObject, Extensions.Vector3WithoutY(hitInfo.point), attackModeIndicator.transform.rotation);
         var closestEnemy = UnitManager.Instance.GetClosestUnit(hitInfo.point, UnitType.WaveEnemy);
         if (closestEnemy == null)
         {
@@ -144,8 +143,7 @@ public class PlayerController : UnitController
         targetController.SetTarget(null);
         Vector3 newPoint = Extensions.CheckNavMesh(hitInfo.point);
         Movement.ClientMove(newPoint);
-        IndicatorManager.Instance.StartIndicator(moveIndicator.gameObject, Extensions.Vector3WithoutY(newPoint), moveIndicator.transform.rotation);
-        //clickIndicator.Setup(hitInfo.point, true);
+        ObjectPooler.Instance.SpawnFromPool(moveIndicator.gameObject, Extensions.Vector3WithoutY(newPoint), moveIndicator.transform.rotation);
     }
 
     private bool CanClick()

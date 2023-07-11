@@ -55,7 +55,7 @@ public class GroupHeal : Skill
     }
     private void StartHeal(UnitController user, UnitController target)
     {
-        SpawnHealObject(user, target);
+        ObjectPooler.Instance.CmdSpawnFromPool(healPrefab.name, user.transform.position + user.transform.forward * 3, Quaternion.identity);
         isHealing = true;
         durationTimer = 0;
         healIntervalTimer = 0;
@@ -65,22 +65,7 @@ public class GroupHeal : Skill
         isHealing = false;
         durationTimer = 0;
         healIntervalTimer = 0;
-        DestroySelf();
+        ObjectPooler.Instance.CmdReturnToPool(currentHealObject.GetComponent<NetworkIdentity>().netId);
     }
 
-    [Command(requiresAuthority = false)]
-    private void SpawnHealObject(UnitController user, UnitController target)
-    {
-        var spawnPoint = transform.position + Vector3.forward * 3;
-        currentHealObject = ObjectPooler.Instance.Get(healPrefab, spawnPoint, Quaternion.identity);
-        
-
-        NetworkServer.Spawn(currentHealObject);
-    }
-    [Server]
-    private void DestroySelf()
-    {
-        NetworkServer.UnSpawn(currentHealObject);
-        ObjectPooler.Instance.Return(currentHealObject);
-    }
 }
