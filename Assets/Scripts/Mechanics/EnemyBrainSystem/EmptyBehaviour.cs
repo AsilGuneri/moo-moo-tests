@@ -9,7 +9,7 @@ public class EmptyBehaviour : EnemyBehaviourData
     public override EnemyBehaviourController CreateBehaviourController(GameObject gameObject)
     {
         var controller = gameObject.AddComponent<EmptyBehaviourController>();
-        gameObject.GetComponent<EnemyBrain>().StateControllerDictionary.Add(State, controller);
+        gameObject.GetComponent<EnemyBrain>().StateControllerDictionary.Add(this.name, controller);
         return controller;
     }
 }

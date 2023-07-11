@@ -10,7 +10,7 @@ public class UseFocusSkill : EnemyBehaviourData
     public override EnemyBehaviourController CreateBehaviourController(GameObject gameObject)
     {
         var controller = gameObject.AddComponent<UseFocusSkillController>();
-        gameObject.GetComponent<EnemyBrain>().StateControllerDictionary.Add(State, controller);
+        gameObject.GetComponent<EnemyBrain>().StateControllerDictionary.Add(this.name, controller);
         return controller;
     }
 }

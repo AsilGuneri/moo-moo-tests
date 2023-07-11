@@ -8,11 +8,11 @@ public abstract class EnemyBehaviourData : ScriptableObject
     public bool BlockMovement;
     public bool BlockAttacking;
 
-    public BehaviourState State
+    public string State
     {
         get => state;
     }
-    [SerializeField] private BehaviourState state;
+    private string state;
 
     // Abstract method to create the appropriate controller
     public abstract EnemyBehaviourController CreateBehaviourController(GameObject gameObject);
@@ -63,14 +63,4 @@ public abstract class EnemyBehaviourController : MonoBehaviour
     {
         behaviourData = data;
     }
-}
-
-public enum BehaviourState
-{
-    Attack,
-    Empty,
-    Follow,
-    PickClosestEnemy,
-    UseFocusSkill,
-    None
 }
