@@ -71,6 +71,6 @@ public enum BehaviourState
     Empty,
     Follow,
     PickClosestEnemy,
-    UseContinuousSkill,
+    UseFocusSkill,
     None
 }

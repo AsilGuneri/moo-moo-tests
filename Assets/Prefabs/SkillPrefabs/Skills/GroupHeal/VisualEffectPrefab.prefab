@@ -39285,7 +39285,7 @@ GameObject:
   - component: {fileID: 198149610021991344}
   - component: {fileID: 199162291670959636}
   m_Layer: 0
-  m_Name: Magic circle 1 loop
+  m_Name: VisualEffectPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

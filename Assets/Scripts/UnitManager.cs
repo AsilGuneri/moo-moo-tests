@@ -106,17 +106,22 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
         return closestUnit;
     }
-    public GameObject GetUnitInRange(Vector3 myPosition, float range, bool isEnemy = false)
+    public List<GameObject> GetUnitsInRadius(Vector3 centerPos, float radius, bool isEnemy = false)
     {
-        GameObject closestUnit = null;
+        List<GameObject> units = new List<GameObject>();
         foreach (NetworkIdentityReference unit in isEnemy ? WaveEnemies : Players)
         {
             if (!unit.Value) continue;
             if (!unit.Value.gameObject) continue;
-            float distance = Vector3.Distance(myPosition, unit.Value.gameObject.transform.position);
-            if (range <= distance) return unit.Value.gameObject;
+
+            bool inRange = Extensions.CheckRange(centerPos, unit.Value.gameObject.transform.position, radius);
+            if (!inRange && !units.Contains(unit.Value.gameObject))
+            {
+                units.Add(unit.Value.gameObject);
+            }
+
         }
-        return closestUnit;
+        return units;
     }
     public bool IsInRange(Transform firstUnit, Transform secondUnit, float range)
     {
