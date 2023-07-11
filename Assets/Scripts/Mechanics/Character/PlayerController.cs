@@ -2,7 +2,6 @@ using Mirror;
 using ProjectDawn.Navigation;
 using System;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -66,7 +65,7 @@ public class PlayerController : UnitController
             //GoldManager.Instance.GameBank.AddBankAccount(this);
             //ContributionPanel.Instance.AddPlayerContributionField(this);
         }
-        if (isLocalPlayer) //owner
+        if (hasAuthority) //owner
         {
             mainCamera = Camera.main;
             mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
