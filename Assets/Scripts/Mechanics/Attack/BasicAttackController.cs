@@ -113,8 +113,9 @@ public abstract class BasicAttackController : NetworkBehaviour
     {
         if(attackBlockCount > 0) return false;
         if(isAttackStopped) return false;
-        bool isAvailable = controller.TargetController.Target != null;
-        return isAvailable;
+        if(controller.TargetController.Target == null) return false;
+        if (controller.Health.IsDead) return false;
+        return true;
     }
     protected abstract void OnAttackStart();
     protected abstract void OnAttackImpact();

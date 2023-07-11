@@ -8,10 +8,8 @@ using UnityEngine.UI;
 
 public class Health : NetworkBehaviour
 {
-    /*public UnitType unitType;
-    public int TeamId
-    [SerializeField] private Slider healthBar;*/
-
+    public Action OnDeath;
+    public bool IsDead { get; private set; }
     [SerializeField] private Image healthBar;
     public int ExpToGain;
 
@@ -29,26 +27,24 @@ public class Health : NetworkBehaviour
         //baseHp = 10000000;
     }
     #region Server
-    public override void OnStartServer()
+    public override void OnStartServer()//perfect start for pool object
     {
         StartCoroutine(StartRoutine());
     }
     [Server]
     public void TakeDamage(int dmg, Transform dealerTransform)
     {
-        if (currentHealth <= 0) return;
+        if (IsDead) return;
         currentHealth -= dmg;
         AddDamageStats(dmg, dealerTransform);
         if (currentHealth <= 0)
         {
-            currentHealth = baseHp;
-           // Die(dealerTransform);
+            if(GetComponent<UnitController>().unitType != UnitType.Player) Die(dealerTransform);
         }
     }
     [Server]
     public void Heal(int amount)
     {
-        Debug.Log("asilxx " + name);
         currentHealth += amount;
         if(currentHealth > baseHp)
         {
@@ -59,6 +55,7 @@ public class Health : NetworkBehaviour
     private IEnumerator StartRoutine()
     {
         yield return new WaitUntil(() => NetworkClient.ready);
+        IsDead = false;
         currentHealth = baseHp;
         if (controller.unitType != UnitType.Player)
             UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), controller.unitType);
@@ -81,12 +78,14 @@ public class Health : NetworkBehaviour
     [Server]
     private void Die(Transform damageDealerTransform)
     {
+        IsDead = true;
         UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), controller.unitType);
         if(damageDealerTransform.TryGetComponent(out PlayerLevelController levelController))
         {
             levelController.GainExperience(ExpToGain);
         }
         ObjectPooler.Instance.CmdReturnToPool(gameObject.GetComponent<NetworkIdentity>().netId);
+        OnDeath?.Invoke();
     }
     #endregion
     #region Client

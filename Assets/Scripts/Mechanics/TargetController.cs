@@ -13,5 +13,14 @@ public class TargetController : NetworkBehaviour
     public void SetTarget(GameObject target)
     {
         Target = target;
+        if (target)
+        {
+            target.GetComponent<Health>().OnDeath += SetToNull;
+        }
+    }
+    private void SetToNull()
+    {
+        Target.GetComponent<Health>().OnDeath -= SetToNull;
+        Target = null;
     }
 }
