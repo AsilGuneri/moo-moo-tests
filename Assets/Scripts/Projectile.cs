@@ -4,7 +4,19 @@ using UnityEngine;
 using Mirror;
 using System;
 
-public class Projectile : NetworkBehaviour
+public interface IProjectile
+{
+    // Initialize the projectile.
+    void SetupProjectile(GameObject target, int damage, Transform spawnerTransform, Action action = null);
+
+    // Update the projectile.
+    void UpdateProjectile();
+
+    // Destroy the projectile.
+    void DestroySelf();
+}
+
+public class Projectile : NetworkBehaviour, IProjectile
 {
     public Action OnHit;
 
@@ -12,49 +24,13 @@ public class Projectile : NetworkBehaviour
     [SerializeField] private ParticleSystem onHitParticle;
     [SerializeField] private float onHitParticleDestroySecond;
 
-
     [SyncVar] private bool _isMoving;
     [SyncVar] private int _damage;
     [SyncVar] private Transform spawnerTransform;
     [SyncVar] public GameObject Target;
 
-
-    #region Server
     [Server]
-    private void DestroySelf()
-    {
-        NetworkServer.UnSpawn(gameObject);
-        ObjectPooler.Instance.Return(gameObject);
-    }
-    //private IEnumerator DestroyOnHitParticle()
-    //{
-    //    yield return new WaitForSeconds(onHitParticleDestroySecond);
-    //    NetworkServer.Destroy(onHitParticle.gameObject);
-    //}
-    [ServerCallback]
-    private void CmdTargetHit()
-    {
-        if(Target == null || spawnerTransform == null)
-        {
-            return;
-        }
-        Target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
-        if (onHitParticle)
-        {
-            onHitParticle.transform.parent = null;
-            onHitParticle.Play();
-            //StartCoroutine(nameof(DestroyOnHitParticle));
-        }
-       
-        DestroySelf();
-    }
-    #endregion
-    public override void OnStartAuthority()
-    {
-        base.OnStartAuthority();
-    }
-    [Server]
-    public void SetupProjectile(GameObject target, int damage, Transform spawnerTransform,Action action = null)
+    public void SetupProjectile(GameObject target, int damage, Transform spawnerTransform, Action action = null)
     {
         OnHit = action;
         _isMoving = true;
@@ -62,8 +38,15 @@ public class Projectile : NetworkBehaviour
         _damage = damage;
         this.spawnerTransform = spawnerTransform;
     }
+
     [ClientCallback]
-    private void Update()
+    public void Update()
+    {
+        UpdateProjectile();
+    }
+
+    [ClientCallback]
+    public void UpdateProjectile()
     {
         if (_isMoving && Target == null) DestroySelf();
         if (Target == null || !_isMoving) return;
@@ -73,7 +56,6 @@ public class Projectile : NetworkBehaviour
             Vector3 targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
             transform.LookAt(targetPos);
             return;
-
         }
         else
         {
@@ -81,13 +63,39 @@ public class Projectile : NetworkBehaviour
             CmdTargetHit();
             return;
         }
-
-
     }
+
     private Vector3 Direction(Vector3 target)
     {
         Vector3 direction = (target - transform.position).normalized;
         return direction;
     }
-   
+
+    #region Server
+
+    [Server]
+    public void DestroySelf()
+    {
+        NetworkServer.UnSpawn(gameObject);
+        ObjectPooler.Instance.Return(gameObject);
+    }
+
+    [ServerCallback]
+    private void CmdTargetHit()
+    {
+        if (Target == null || spawnerTransform == null)
+        {
+            return;
+        }
+        Target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
+        if (onHitParticle)
+        {
+            onHitParticle.transform.parent = null;
+            onHitParticle.Play();
+        }
+
+        DestroySelf();
+    }
+
+    #endregion
 }
