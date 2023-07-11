@@ -1,3 +1,4 @@
+using Mirror;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,6 +8,14 @@ using UnityEngine.AI;
 
 public class Extensions : MonoBehaviour
 {
+    private static readonly Dictionary<float, WaitForSeconds> WaitDictionary = new Dictionary<float, WaitForSeconds>();
+    public static WaitForSeconds GetWait(float time)
+    {
+        if (WaitDictionary.TryGetValue(time, out var wait)) return wait;
+
+        WaitDictionary[time] = new WaitForSeconds(time);
+        return WaitDictionary[time];
+    }
     public static Vector2 To2D(Vector3 initialVector)
     {
         Vector2 finalVector = new Vector2(initialVector.x, initialVector.z);

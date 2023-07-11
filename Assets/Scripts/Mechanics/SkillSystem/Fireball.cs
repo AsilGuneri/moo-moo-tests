@@ -21,7 +21,7 @@ public class Fireball : Skill
     private void CmdSpawnProjectile(UnitController user, UnitController target)
     {
         var spawnPoint = user.ProjectileSpawnPoint;
-        var projectileObj = ObjectPooler.Instance.Get(prefab, spawnPoint.position, Quaternion.identity);
+        var projectileObj = ObjectPooler.Instance.SpawnFromPool(prefab, spawnPoint.position, Quaternion.identity);
         var projectile = projectileObj.GetComponent<Projectile>();
         projectile.SetupProjectile(target.gameObject, damage, user.transform
             , () => { Apply(user, target); });

@@ -3283,6 +3283,10 @@ MonoBehaviour:
     Size: 20
     Key: healPrefab
     currentCount: 0
+  - Prefab: {fileID: 1231636063597364, guid: be1a08daa8a036c459b2c544709f1969, type: 3}
+    Size: 20
+    Key: healPrefab
+    currentCount: 0
 --- !u!114 &334110796
 MonoBehaviour:
   m_ObjectHideFlags: 0

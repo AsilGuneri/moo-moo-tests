@@ -21,13 +21,12 @@ public class Projectile : NetworkBehaviour, IProjectile
     public Action OnHit;
 
     [SerializeField] public float speed = 1;
-    [SerializeField] private ParticleSystem onHitParticle;
-    [SerializeField] private float onHitParticleDestroySecond;
+    [SerializeField] private GameObject onHitParticlePrefab;
 
     [SyncVar] private bool _isMoving;
     [SyncVar] private int _damage;
     [SyncVar] private Transform spawnerTransform;
-    [SyncVar] public GameObject Target;
+    [NonSerialized][SyncVar] public GameObject Target;
 
     [Server]
     public void SetupProjectile(GameObject target, int damage, Transform spawnerTransform, Action action = null)
@@ -71,13 +70,9 @@ public class Projectile : NetworkBehaviour, IProjectile
         return direction;
     }
 
-    #region Server
-
-    [Server]
     public void DestroySelf()
     {
-        NetworkServer.UnSpawn(gameObject);
-        ObjectPooler.Instance.Return(gameObject);
+        ObjectPooler.Instance.CmdReturnToPool(gameObject);
     }
 
     [ServerCallback]
@@ -87,15 +82,14 @@ public class Projectile : NetworkBehaviour, IProjectile
         {
             return;
         }
+
         Target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
-        if (onHitParticle)
+
+        if (onHitParticlePrefab)
         {
-            onHitParticle.transform.parent = null;
-            onHitParticle.Play();
+            ObjectPooler.Instance.CmdSpawnFromPool(onHitParticlePrefab, transform.position, Quaternion.identity);
         }
 
         DestroySelf();
     }
-
-    #endregion
 }
