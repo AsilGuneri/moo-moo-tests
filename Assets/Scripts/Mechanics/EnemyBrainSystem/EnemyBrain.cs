@@ -43,6 +43,10 @@ public class EnemyBrain : MonoBehaviour
             CheckEnter();
         }
     }
+    public void SetBrainActive(bool isActive)
+    {
+        this.isActive = isActive;
+    }
     private void CheckExit()
     {
         if (StateControllerDictionary[currentBehaviour.name].ExitCondition())
