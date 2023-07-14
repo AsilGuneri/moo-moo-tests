@@ -26,4 +26,6 @@ public class FormationRenderer : MonoBehaviour {
             Gizmos.DrawCube(transform.position + pos + new Vector3(0, _unitGizmoSize.y * 0.5f, 0), _unitGizmoSize);
         }
     }
+
+   
 }

@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
 {
-    public List<EnemyBehaviourData> Behaviours = new List<EnemyBehaviourData>();
+    public List<BehaviourPack> Packs = new List<BehaviourPack>();
 
     public Dictionary<string, EnemyBehaviourController> StateControllerDictionary = new();
 
     private EnemyBehaviourData currentBehaviour = null;
     private bool isInitialized;
     private bool isActive;
+    private BehaviourPack defaultPack;
+    private BehaviourPack currentPack;
 
     private void OnEnable()
     {
@@ -23,7 +25,33 @@ public class EnemyBrain : MonoBehaviour
         //reset if needed
         isActive = false;
     }
+    private void InitializeBrain()
+    {
+        foreach(var pack in Packs)
+        {
+            foreach(var behaviour in pack.Behaviours)
+            {
+                behaviour.Initialize(transform);
+            }
+        }
 
+        if (Packs.Count > 0) defaultPack = Packs[0];
+    }
+    public void SetPack(string packName)
+    {
+        if(currentBehaviour != null)
+        {
+            ExitState();
+        }
+        foreach(var pack in Packs)
+        {
+            if (pack.PackName == packName)
+            {
+                currentPack = pack;
+                return;
+            }
+        }
+    }
     public void OnBrainStart()
     {
         if (isInitialized) return;
@@ -51,13 +79,20 @@ public class EnemyBrain : MonoBehaviour
     {
         if (StateControllerDictionary[currentBehaviour.name].ExitCondition())
         {
-            StateControllerDictionary[currentBehaviour.name].OnExit();
-            currentBehaviour = null;
+            ExitState();
         }
     }
+
+    private void ExitState()
+    {
+        StateControllerDictionary[currentBehaviour.name].OnExit();
+        currentBehaviour = null;
+    }
+
     private void CheckEnter()
     {
-        foreach (var behaviour in Behaviours)
+        if(currentPack == null) currentPack = defaultPack;
+        foreach (var behaviour in currentPack.Behaviours)
         {
             if (StateControllerDictionary[behaviour.name].EnterCondition())
             {
@@ -67,11 +102,11 @@ public class EnemyBrain : MonoBehaviour
             }
         }
     }
-    private void InitializeBrain()
-    {
-        foreach (var behaviour in Behaviours)
-        {
-            behaviour.Initialize(transform);
-        }
-    }
+    
+}
+[System.Serializable]
+public class BehaviourPack
+{
+    public string PackName;
+    public List<EnemyBehaviourData> Behaviours;
 }

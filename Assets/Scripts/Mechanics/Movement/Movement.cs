@@ -43,9 +43,10 @@ public class Movement : MonoBehaviour
     {
         movementBlockCount--;
     }
-    public void ClientMove(Vector3 pos)
+    public void ClientMove(Vector3 pos, bool cancelTarget = false)
     {
         if (!CanMove()) return;
+        if (cancelTarget) controller.TargetController.SetTarget(null);
         agent.SetDestination(pos);
         isMoving = true;
         currentTargetPos = pos;
