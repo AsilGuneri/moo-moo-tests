@@ -38,7 +38,7 @@ public abstract class FormationBase : MonoBehaviour
         }
     }
 }
-
+[Serializable]
 public class FormationPoint
 {
     public Vector3 position;

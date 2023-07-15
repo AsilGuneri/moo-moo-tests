@@ -24,12 +24,15 @@ public class MoveToPositionController : EnemyBehaviourController
     private MoveToPosition moveData;
     private UnitController controller;
     private Vector3 targetPos;
+    private EnemyBrain brain;
+    private FormationPoint currentPoint;
 
     public override void OnInitialize(EnemyBehaviourData data)
     {
         base.OnInitialize(data);
         moveData = data as MoveToPosition;
         controller = GetComponent<UnitController>();
+        brain = GetComponent<EnemyBrain>();
     }
 
     public override bool EnterCondition()
@@ -44,18 +47,25 @@ public class MoveToPositionController : EnemyBehaviourController
 
     public override void OnEnter()
     {
+        if (!FormationManager.Instance.IsFormationAvailable("basic"))
+        {
+            brain.SetPackRoutine("Default");
+            return;
+        }
+
         //find your position in formation and move to it
         if(targetPos == Vector3.zero)
         {
-            targetPos = FormationManager.Instance.UseAvailablePoint("basic", controller.transform);
-            Debug.Log($"asilxx {targetPos}");
+            var availablePoint = FormationManager.Instance.UseAvailablePoint("basic", controller.transform);
+            targetPos = availablePoint.position;
+            currentPoint = availablePoint;
         }
         controller.Movement.SetDestinationOnAvailable(targetPos, true);
 
     }
     public override void OnExit()
     {
-
+        FormationManager.Instance.LeavePoint(currentPoint);
     }
 
 

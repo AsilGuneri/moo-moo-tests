@@ -21,11 +21,27 @@ public class FormationManager : Singleton<FormationManager>
             formation.InitializeFormation();
         }
     }
-    public Vector3 UseAvailablePoint(string formationName,Transform userTransform)
+    public bool IsFormationAvailable(string formationName)
+    {
+        var formation = GetFormation(formationName);
+        foreach(var point in formation.FormationPoints)
+        {
+            if (point.tenant == null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public FormationPoint UseAvailablePoint(string formationName,Transform userTransform)
     {
         var point = GetFirstAvailablePoint(formationName);
         point.tenant = userTransform;
-        return point.position;
+        return point;
+    }
+    public void LeavePoint(FormationPoint point)
+    {
+        point.tenant = null;
     }
     private FormationPoint GetFirstAvailablePoint(string formationName)
     {

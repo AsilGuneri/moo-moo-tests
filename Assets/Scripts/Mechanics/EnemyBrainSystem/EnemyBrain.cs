@@ -98,7 +98,7 @@ public class EnemyBrain : MonoBehaviour
 
     private void CheckEnter()
     {
-        if(currentPack == null) currentPack = defaultPack;
+        if(currentPack.Behaviours.Count <= 0 ) currentPack = defaultPack;
         foreach (var behaviour in currentPack.Behaviours)
         {
             if (StateControllerDictionary[behaviour.name].EnterCondition())
