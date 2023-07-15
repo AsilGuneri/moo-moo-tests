@@ -6,6 +6,8 @@ using UnityEngine;
 
 public abstract class FormationBase : MonoBehaviour
 {
+    public Color editorColor;
+
     public MinionType MinionType { get => minionType; }
     public List<FormationPoint> FormationPoints { get => formationPoints; }
 
@@ -34,7 +36,7 @@ public abstract class FormationBase : MonoBehaviour
     // New Method
     protected virtual void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
+        Gizmos.color = editorColor;
         foreach (var point in EvaluatePoints())
         {
             Gizmos.DrawSphere(point, 0.5f);
@@ -55,5 +57,6 @@ public class FormationPoint
 public enum MinionType
 {
     Basic,
-    Guardian
+    Guardian,
+    Attacker
 }

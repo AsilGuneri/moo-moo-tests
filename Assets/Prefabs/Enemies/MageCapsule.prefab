@@ -682,7 +682,9 @@ MonoBehaviour:
   unitType: 1
   enemyList: 00000000
   projectileSpawnPoint: {fileID: 5510830196393226273}
+  skills: []
   animAttackPoint: 0.5
+  minionType: 2
 --- !u!114 &8755146607505593207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -695,11 +697,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a473c251a25634a88e45cec322a3fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentState: 0
-  Behaviours:
-  - {fileID: 11400000, guid: 708b4a86f2d84194ba46db84934e3b02, type: 2}
-  - {fileID: 11400000, guid: cfc7d6e222bb2fa42965457e919339b4, type: 2}
-  - {fileID: 11400000, guid: a2f05e797ef7d5443a5a91fec270fef8, type: 2}
+  Packs:
+  - PackName: Default
+    Behaviours:
+    - {fileID: 11400000, guid: 708b4a86f2d84194ba46db84934e3b02, type: 2}
+    - {fileID: 11400000, guid: cfc7d6e222bb2fa42965457e919339b4, type: 2}
+    - {fileID: 11400000, guid: a2f05e797ef7d5443a5a91fec270fef8, type: 2}
+  - PackName: DefenceCall
+    Behaviours:
+    - {fileID: 11400000, guid: 598f68c8e7c9eab4f94b5fcdb118930a, type: 2}
 --- !u!114 &5995625915929954317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -828,7 +834,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4015c930984090469e7d32dbe258a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Key: enemy1
+  useLifeTime: 0
+  lifeTime: 0
 --- !u!114 &5640336512563222759
 MonoBehaviour:
   m_ObjectHideFlags: 0

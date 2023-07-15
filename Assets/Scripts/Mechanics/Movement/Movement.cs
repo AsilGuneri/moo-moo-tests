@@ -52,6 +52,11 @@ public class Movement : MonoBehaviour
             StopFollow();
             OnFollowStop += (() => MoveOnFollowEnd(pos, cancelTarget));
         }
+        if(controller.AttackController.IsAttacking)
+        {
+            controller.AttackController.StopAfterCurrentAttack();
+            controller.AttackController.AfterLastAttack += (() => MoveOnAttackEnd(pos, cancelTarget));
+        }
         else
         {
             ClientMove(pos, cancelTarget);
@@ -115,5 +120,9 @@ public class Movement : MonoBehaviour
         ClientMove(pos, cancelTarget);
         OnFollowStop -= (() => MoveOnFollowEnd(pos,cancelTarget));
     }
-
+    private void MoveOnAttackEnd(Vector3 pos, bool cancelTarget)
+    {
+        ClientMove(pos, cancelTarget);
+        controller.AttackController.AfterLastAttack -= (() => MoveOnAttackEnd(pos, cancelTarget));
+    }
 }

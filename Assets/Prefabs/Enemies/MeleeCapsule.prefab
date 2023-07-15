@@ -620,12 +620,12 @@ GameObject:
   - component: {fileID: 2854127058393607441}
   - component: {fileID: 1929066000756038323}
   - component: {fileID: 7101451635099497366}
+  - component: {fileID: 1127350715254039117}
   - component: {fileID: 2093334184839592437}
   - component: {fileID: 901659194503043128}
   - component: {fileID: 8559049715645283541}
   - component: {fileID: 2163373812530429147}
   - component: {fileID: 8124328148698341545}
-  - component: {fileID: 1127350715254039117}
   - component: {fileID: 3030894593718517605}
   - component: {fileID: 211520756723830630}
   - component: {fileID: 3030335984463891531}
@@ -718,10 +718,28 @@ MonoBehaviour:
   - PackName: DefenceCall
     Behaviours:
     - {fileID: 11400000, guid: 598f68c8e7c9eab4f94b5fcdb118930a, type: 2}
-  Behaviours:
-  - {fileID: 11400000, guid: 708b4a86f2d84194ba46db84934e3b02, type: 2}
-  - {fileID: 11400000, guid: cfc7d6e222bb2fa42965457e919339b4, type: 2}
-  - {fileID: 11400000, guid: a2f05e797ef7d5443a5a91fec270fef8, type: 2}
+--- !u!114 &1127350715254039117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2462893064303745991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d11eb890278d642b6215f2f8b4b459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  attackRange: 1
+  attackSpeed: 1
+  unitType: 1
+  enemyList: 0000000002000000
+  projectileSpawnPoint: {fileID: 0}
+  skills: []
+  animAttackPoint: 0.5
+  minionType: 1
 --- !u!114 &2093334184839592437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,27 +835,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keysData: {fileID: 0}
   heroStatsData: {fileID: 11400000, guid: 4b4b3affc107cff428d6783b91d7298f, type: 2}
---- !u!114 &1127350715254039117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2462893064303745991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d11eb890278d642b6215f2f8b4b459, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  attackRange: 1
-  attackSpeed: 1
-  unitType: 1
-  enemyList: 0000000002000000
-  projectileSpawnPoint: {fileID: 0}
-  skills: []
-  animAttackPoint: 0.5
 --- !u!114 &3030894593718517605
 MonoBehaviour:
   m_ObjectHideFlags: 0

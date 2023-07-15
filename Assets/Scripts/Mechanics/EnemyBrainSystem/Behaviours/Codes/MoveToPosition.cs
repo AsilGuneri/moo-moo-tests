@@ -57,7 +57,9 @@ public class MoveToPositionController : EnemyBehaviourController
         //find your position in formation and move to it
         if(targetPos == Vector3.zero)
         {
-            var availablePoint = FormationManager.Instance.UseAvailablePoint(MinionType.Guardian);
+            var enemyController = controller as EnemyController;
+            var minionType=enemyController.MinionType;
+            var availablePoint = FormationManager.Instance.UseAvailablePoint(minionType);
             targetPos = availablePoint.position;
             currentPoint = availablePoint;
         }
