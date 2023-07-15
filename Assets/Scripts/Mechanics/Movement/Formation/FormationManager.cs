@@ -26,30 +26,31 @@ public class FormationManager : Singleton<FormationManager>
         var formation = GetFormation(formationName);
         foreach(var point in formation.FormationPoints)
         {
-            if (point.tenant == null)
+            if (point.isOccupied == false)
             {
                 return true;
             }
         }
         return false;
     }
-    public FormationPoint UseAvailablePoint(string formationName,Transform userTransform)
+    public FormationPoint UseAvailablePoint(string formationName)
     {
         var point = GetFirstAvailablePoint(formationName);
-        point.tenant = userTransform;
+        point.isOccupied = true;
         return point;
     }
     public void LeavePoint(FormationPoint point)
     {
-        point.tenant = null;
+        point.isOccupied = false;
     }
     private FormationPoint GetFirstAvailablePoint(string formationName)
     {
         var formation = GetFormation(formationName);
         foreach(var point in formation.FormationPoints)
         {
-            if (point.tenant == null)
+            if (!point.isOccupied)
             {
+                Debug.Log("asilxx " + point.isOccupied);
                 return point;
             }
         }

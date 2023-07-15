@@ -42,6 +42,7 @@ public class EnemyBrain : MonoBehaviour
     }
     public void SetPackRoutine(string packName)
     {
+        if(currentPack.PackName == packName) return;
         if(CurrentBehaviour != null)
         {
             ExitState();
@@ -98,7 +99,7 @@ public class EnemyBrain : MonoBehaviour
 
     private void CheckEnter()
     {
-        if(currentPack.Behaviours.Count <= 0 ) currentPack = defaultPack;
+        if(currentPack == null) currentPack = defaultPack;
         foreach (var behaviour in currentPack.Behaviours)
         {
             if (StateControllerDictionary[behaviour.name].EnterCondition())

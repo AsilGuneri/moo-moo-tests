@@ -13,7 +13,7 @@ public abstract class FormationBase : MonoBehaviour
     [SerializeField][Range(0, 1)] protected float _noise = 0;
     [SerializeField] protected float Spread = 1;
 
-    protected List<FormationPoint> formationPoints;
+    protected List<FormationPoint> formationPoints = new List<FormationPoint>();
 
     public abstract IEnumerable<Vector3> EvaluatePoints();
 
@@ -26,7 +26,10 @@ public abstract class FormationBase : MonoBehaviour
     public virtual void InitializeFormation()
     {
         var points = EvaluatePoints().ToList();
-        formationPoints = points.Select(point => new FormationPoint(point, null)).ToList();
+        foreach(var point in points)
+        {
+            formationPoints.Add(new FormationPoint(point, false));
+        }
     }
     // New Method
     protected virtual void OnDrawGizmos()
@@ -42,10 +45,10 @@ public abstract class FormationBase : MonoBehaviour
 public class FormationPoint
 {
     public Vector3 position;
-    public Transform tenant;
-    public FormationPoint(Vector3 position, Transform tenant)
+    public bool isOccupied;
+    public FormationPoint(Vector3 position, bool isOccupied)
     {
         this.position = position;
-        this.tenant = tenant;
+        this.isOccupied = isOccupied;
     }
 }

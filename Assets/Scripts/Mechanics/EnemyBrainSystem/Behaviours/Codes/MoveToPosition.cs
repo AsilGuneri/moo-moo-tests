@@ -56,7 +56,7 @@ public class MoveToPositionController : EnemyBehaviourController
         //find your position in formation and move to it
         if(targetPos == Vector3.zero)
         {
-            var availablePoint = FormationManager.Instance.UseAvailablePoint("basic", controller.transform);
+            var availablePoint = FormationManager.Instance.UseAvailablePoint("basic");
             targetPos = availablePoint.position;
             currentPoint = availablePoint;
         }
@@ -65,7 +65,8 @@ public class MoveToPositionController : EnemyBehaviourController
     }
     public override void OnExit()
     {
-        FormationManager.Instance.LeavePoint(currentPoint);
+        if (currentPoint != null)
+            FormationManager.Instance.LeavePoint(currentPoint);
     }
 
 
