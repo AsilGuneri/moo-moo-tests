@@ -18,7 +18,7 @@ public class AnimationController : NetworkBehaviour
     }
     public void SetAttackStatus(bool isAttacking)
     {
-        animator.SetBool("isAttacking", isAttacking);
+        if (animator) animator.SetBool("isAttacking", isAttacking);
     }
     public void SetMoveStatus(bool isMoving)
     {
