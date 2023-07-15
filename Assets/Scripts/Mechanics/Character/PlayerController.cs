@@ -43,7 +43,7 @@ public class PlayerController : UnitController
         {
             foreach (var enemy in UnitManager.Instance.WaveEnemies)
             {
-                enemy.Value.GetComponent<EnemyBrain>().SetPack("DefenceCall");
+                enemy.Value.GetComponent<EnemyBrain>().SetPackRoutine("DefenceCall");
             }
         }
 
@@ -51,7 +51,7 @@ public class PlayerController : UnitController
         {
             foreach (var enemy in UnitManager.Instance.WaveEnemies)
             {
-                enemy.Value.GetComponent<EnemyBrain>().SetPack("Default");
+                enemy.Value.GetComponent<EnemyBrain>().SetPackRoutine("Default");
             }
         }
 

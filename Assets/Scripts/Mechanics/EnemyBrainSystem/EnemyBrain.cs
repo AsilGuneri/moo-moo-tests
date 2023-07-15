@@ -9,6 +9,22 @@ public class EnemyBrain : MonoBehaviour
 
     public Dictionary<string, EnemyBehaviourController> StateControllerDictionary = new();
 
+    private EnemyBehaviourData CurrentBehaviour 
+    { 
+        get 
+        { 
+            return currentBehaviour; 
+        } 
+        set 
+        {
+            if(value != null)
+            {
+                Debug.Log("asilxx " + value.name + " old " + currentBehaviour?.name);
+            }
+            currentBehaviour = value;
+           
+        }
+    }
     private EnemyBehaviourData currentBehaviour = null;
     private bool isInitialized;
     private bool isActive;
@@ -37,9 +53,9 @@ public class EnemyBrain : MonoBehaviour
 
         if (Packs.Count > 0) defaultPack = Packs[0];
     }
-    public void SetPack(string packName)
+    public void SetPackRoutine(string packName)
     {
-        if(currentBehaviour != null)
+        if(CurrentBehaviour != null)
         {
             ExitState();
         }
@@ -62,7 +78,7 @@ public class EnemyBrain : MonoBehaviour
     {
         if (!isInitialized || !isActive) return;
 
-        if (currentBehaviour != null)
+        if (CurrentBehaviour != null)
         {
             CheckExit();
         }
@@ -77,7 +93,7 @@ public class EnemyBrain : MonoBehaviour
     }
     private void CheckExit()
     {
-        if (StateControllerDictionary[currentBehaviour.name].ExitCondition())
+        if (StateControllerDictionary[CurrentBehaviour.name].ExitCondition())
         {
             ExitState();
         }
@@ -85,8 +101,8 @@ public class EnemyBrain : MonoBehaviour
 
     private void ExitState()
     {
-        StateControllerDictionary[currentBehaviour.name].OnExit();
-        currentBehaviour = null;
+        StateControllerDictionary[CurrentBehaviour.name].OnExit();
+        CurrentBehaviour = null;
     }
 
     private void CheckEnter()
@@ -96,7 +112,7 @@ public class EnemyBrain : MonoBehaviour
         {
             if (StateControllerDictionary[behaviour.name].EnterCondition())
             {
-                currentBehaviour = behaviour;
+                CurrentBehaviour = behaviour;
                 StateControllerDictionary[behaviour.name].OnEnter();
                 return;
             }

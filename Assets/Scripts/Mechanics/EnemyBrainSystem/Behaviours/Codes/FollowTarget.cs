@@ -62,6 +62,7 @@ public class FollowTargetController : EnemyBehaviourController
     public override void OnExit()
     {
         isIn = false;
+        controller.Movement.StopFollow();
     }
 
     private bool ShouldEnter()

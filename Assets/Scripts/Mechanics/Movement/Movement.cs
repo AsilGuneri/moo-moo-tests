@@ -14,6 +14,7 @@ public class Movement : MonoBehaviour
     private bool isMoving = false;
     private Vector3 currentTargetPos;
     private int movementBlockCount = 0;
+    private bool isFollowing = false;
     AgentAuthoring agent;
 
 
@@ -73,12 +74,18 @@ public class Movement : MonoBehaviour
     public async void StartFollow(Transform target, float followDistance)
     {
         currentTargetPos = target.position;
-
+        isFollowing = true;
         while (!Extensions.CheckRange(target.position, transform.position, followDistance))
         {
             ClientMove(target.position);
+            if (!isFollowing) break;
             await Task.Delay(100);
         }
+        ClientStop();
+    }
+    public void StopFollow()
+    {
+        isFollowing = false;
     }
     private bool CanMove()
     {
