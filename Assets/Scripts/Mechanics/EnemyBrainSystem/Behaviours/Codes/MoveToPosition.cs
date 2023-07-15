@@ -49,13 +49,15 @@ public class MoveToPositionController : EnemyBehaviourController
         {
             targetPos = FormationManager.Instance.UseAvailablePoint("basic", controller.transform);
         }
-        controller.Movement.ClientMove(targetPos, true);
+        controller.Movement.SetDestinationOnAvailable(targetPos, true);
 
     }
-
     public override void OnExit()
     {
+
     }
+
+
 
     private bool ShouldEnter()
     {

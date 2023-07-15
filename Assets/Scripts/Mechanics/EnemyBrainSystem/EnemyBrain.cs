@@ -33,14 +33,14 @@ public class EnemyBrain : MonoBehaviour
 
     private void OnEnable()
     {
-        OnBrainStart();
-        isActive = true;
+        StartBrain();
     }
-    private void OnDisable()
+    public void KillBrain()
     {
-        //reset if needed
-        isActive = false;
+        ExitState();
+        SetBrainActive(false);
     }
+
     private void InitializeBrain()
     {
         foreach(var pack in Packs)
@@ -68,11 +68,14 @@ public class EnemyBrain : MonoBehaviour
             }
         }
     }
-    public void OnBrainStart()
+    public void StartBrain()
     {
-        if (isInitialized) return;
-        InitializeBrain();
-        isInitialized = true;
+        if (!isInitialized)
+        {
+            InitializeBrain();
+            isInitialized = true;
+        }
+        isActive = true;
     }
     private void Update()
     {
@@ -91,6 +94,7 @@ public class EnemyBrain : MonoBehaviour
     {
         this.isActive = isActive;
     }
+  
     private void CheckExit()
     {
         if (StateControllerDictionary[CurrentBehaviour.name].ExitCondition())

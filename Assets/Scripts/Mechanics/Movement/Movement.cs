@@ -2,11 +2,13 @@ using UnityEngine;
 using System;
 using ProjectDawn.Navigation.Hybrid;
 using System.Threading.Tasks;
+using static UnityEditor.PlayerSettings;
 
 public class Movement : MonoBehaviour
 {
     public Action OnMoveStart;
     public Action OnMoveStop;
+    public Action OnFollowStop;
 
     public bool IsMoving { get { return isMoving; } }
 
@@ -44,8 +46,21 @@ public class Movement : MonoBehaviour
     {
         movementBlockCount--;
     }
+    public void SetDestinationOnAvailable(Vector3 pos, bool cancelTarget = false)
+    {
+        if (isFollowing)
+        {
+            StopFollow();
+            OnFollowStop += (() => MoveOnFollowEnd(pos, cancelTarget));
+        }
+        else
+        {
+            ClientMove(pos, cancelTarget);
+        }
+    }
     public void ClientMove(Vector3 pos, bool cancelTarget = false)
     {
+        Debug.Log($"asilxx move {name}  {StackTraceUtility.ExtractStackTrace()}");
         if (!CanMove()) return;
         if (cancelTarget) controller.TargetController.SetTarget(null);
         agent.SetDestination(pos);
@@ -56,6 +71,7 @@ public class Movement : MonoBehaviour
 
     public void ClientStop()
     {
+        Debug.Log($"asilxx stop {name}  {StackTraceUtility.ExtractStackTrace()}");
         agent.SetDestination(transform.position);
         currentTargetPos = Vector3.zero;
         isMoving = false;
@@ -77,21 +93,30 @@ public class Movement : MonoBehaviour
         isFollowing = true;
         while (!Extensions.CheckRange(target.position, transform.position, followDistance))
         {
+            if (!isFollowing) return;
             ClientMove(target.position);
-            if (!isFollowing) break;
             await Task.Delay(100);
         }
-        ClientStop();
+        StopFollow();
+
     }
     public void StopFollow()
     {
         isFollowing = false;
+        ClientStop();
+        OnFollowStop?.Invoke();
     }
+
     private bool CanMove()
     {
         if (movementBlockCount > 0) return false;
         return !controller.AttackController.IsSetToStopAfterAttack;
 
+    }
+    private void MoveOnFollowEnd(Vector3 pos, bool cancelTarget)
+    {
+        ClientMove(pos, cancelTarget);
+        OnFollowStop -= (() => MoveOnFollowEnd(pos,cancelTarget));
     }
 
 }

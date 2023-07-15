@@ -136,6 +136,7 @@ public class Pool
 
     public void Return(GameObject obj)
     {
+        obj.GetComponent<PoolObject>().OnReturn();
         obj.SetActive(false);
         obj.transform.parent = parentTransform;
         objects.Enqueue(obj);
