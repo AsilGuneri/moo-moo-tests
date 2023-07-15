@@ -21,9 +21,9 @@ public class FormationManager : Singleton<FormationManager>
             formation.InitializeFormation();
         }
     }
-    public bool IsFormationAvailable(string formationName)
+    public bool IsFormationAvailable(MinionType minionType)
     {
-        var formation = GetFormation(formationName);
+        var formation = GetFormation(minionType);
         foreach(var point in formation.FormationPoints)
         {
             if (point.isOccupied == false)
@@ -33,9 +33,9 @@ public class FormationManager : Singleton<FormationManager>
         }
         return false;
     }
-    public FormationPoint UseAvailablePoint(string formationName)
-    {
-        var point = GetFirstAvailablePoint(formationName);
+    public FormationPoint UseAvailablePoint(MinionType type)
+    { 
+        var point = GetFirstAvailablePoint(type);
         point.isOccupied = true;
         return point;
     }
@@ -43,25 +43,24 @@ public class FormationManager : Singleton<FormationManager>
     {
         point.isOccupied = false;
     }
-    private FormationPoint GetFirstAvailablePoint(string formationName)
+    private FormationPoint GetFirstAvailablePoint(MinionType type)
     {
-        var formation = GetFormation(formationName);
+        var formation = GetFormation(type);
         foreach(var point in formation.FormationPoints)
         {
             if (!point.isOccupied)
             {
-                Debug.Log("asilxx " + point.isOccupied);
                 return point;
             }
         }
         Debug.LogError("Formation point returned null");
         return null;
     }
-    private FormationBase GetFormation(string name)
+    private FormationBase GetFormation(MinionType type)
     {
         foreach (var formation in Formations)
         {
-            if (formation.FormationName == name)
+            if (formation.MinionType == type)
             {
                 return formation;
             }

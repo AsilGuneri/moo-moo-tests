@@ -26,6 +26,7 @@ public class MoveToPositionController : EnemyBehaviourController
     private Vector3 targetPos;
     private EnemyBrain brain;
     private FormationPoint currentPoint;
+    //private MinionType minionType;
 
     public override void OnInitialize(EnemyBehaviourData data)
     {
@@ -47,7 +48,7 @@ public class MoveToPositionController : EnemyBehaviourController
 
     public override void OnEnter()
     {
-        if (!FormationManager.Instance.IsFormationAvailable("basic"))
+        if (!FormationManager.Instance.IsFormationAvailable(MinionType.Guardian))
         {
             brain.SetPackRoutine("Default");
             return;
@@ -56,7 +57,7 @@ public class MoveToPositionController : EnemyBehaviourController
         //find your position in formation and move to it
         if(targetPos == Vector3.zero)
         {
-            var availablePoint = FormationManager.Instance.UseAvailablePoint("basic");
+            var availablePoint = FormationManager.Instance.UseAvailablePoint(MinionType.Guardian);
             targetPos = availablePoint.position;
             currentPoint = availablePoint;
         }

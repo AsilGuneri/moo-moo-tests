@@ -6273,6 +6273,7 @@ MonoBehaviour:
   formationName: basic
   _noise: 0
   Spread: 3.25
+  minionType: 1
   _unitWidth: 1
   _unitDepth: 5
   _hollow: 0

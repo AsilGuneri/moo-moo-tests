@@ -6,13 +6,13 @@ using UnityEngine;
 
 public abstract class FormationBase : MonoBehaviour
 {
+    public MinionType MinionType { get => minionType; }
     public List<FormationPoint> FormationPoints { get => formationPoints; }
-    public string FormationName { get => formationName; }
 
-    [SerializeField] protected string formationName;
     [SerializeField][Range(0, 1)] protected float _noise = 0;
     [SerializeField] protected float Spread = 1;
 
+    [SerializeField] protected MinionType minionType;
     protected List<FormationPoint> formationPoints = new List<FormationPoint>();
 
     public abstract IEnumerable<Vector3> EvaluatePoints();
@@ -51,4 +51,9 @@ public class FormationPoint
         this.position = position;
         this.isOccupied = isOccupied;
     }
+}
+public enum MinionType
+{
+    Basic,
+    Guardian
 }
