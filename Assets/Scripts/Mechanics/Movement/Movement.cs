@@ -2,7 +2,6 @@ using UnityEngine;
 using System;
 using ProjectDawn.Navigation.Hybrid;
 using System.Threading.Tasks;
-using static UnityEditor.PlayerSettings;
 
 public class Movement : MonoBehaviour
 {
@@ -60,7 +59,6 @@ public class Movement : MonoBehaviour
     }
     public void ClientMove(Vector3 pos, bool cancelTarget = false)
     {
-        Debug.Log($"asilxx move {name}  {StackTraceUtility.ExtractStackTrace()}");
         if (!CanMove()) return;
         if (cancelTarget) controller.TargetController.SetTarget(null);
         agent.SetDestination(pos);
@@ -71,7 +69,6 @@ public class Movement : MonoBehaviour
 
     public void ClientStop()
     {
-        Debug.Log($"asilxx stop {name}  {StackTraceUtility.ExtractStackTrace()}");
         agent.SetDestination(transform.position);
         currentTargetPos = Vector3.zero;
         isMoving = false;

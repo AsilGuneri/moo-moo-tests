@@ -9,22 +9,9 @@ public class EnemyBrain : MonoBehaviour
 
     public Dictionary<string, EnemyBehaviourController> StateControllerDictionary = new();
 
-    private EnemyBehaviourData CurrentBehaviour 
-    { 
-        get 
-        { 
-            return currentBehaviour; 
-        } 
-        set 
-        {
-            if(value != null)
-            {
-                Debug.Log("asilxx " + value.name + " old " + currentBehaviour?.name);
-            }
-            currentBehaviour = value;
-           
-        }
-    }
+    public EnemyBehaviourData CurrentBehaviour { get => currentBehaviour; }     
+
+    
     private EnemyBehaviourData currentBehaviour = null;
     private bool isInitialized;
     private bool isActive;
@@ -106,7 +93,7 @@ public class EnemyBrain : MonoBehaviour
     private void ExitState()
     {
         StateControllerDictionary[CurrentBehaviour.name].OnExit();
-        CurrentBehaviour = null;
+        currentBehaviour = null;
     }
 
     private void CheckEnter()
@@ -116,7 +103,7 @@ public class EnemyBrain : MonoBehaviour
         {
             if (StateControllerDictionary[behaviour.name].EnterCondition())
             {
-                CurrentBehaviour = behaviour;
+                currentBehaviour = behaviour;
                 StateControllerDictionary[behaviour.name].OnEnter();
                 return;
             }

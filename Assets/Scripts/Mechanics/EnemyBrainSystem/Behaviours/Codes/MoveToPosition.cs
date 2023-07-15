@@ -48,6 +48,7 @@ public class MoveToPositionController : EnemyBehaviourController
         if(targetPos == Vector3.zero)
         {
             targetPos = FormationManager.Instance.UseAvailablePoint("basic", controller.transform);
+            Debug.Log($"asilxx {targetPos}");
         }
         controller.Movement.SetDestinationOnAvailable(targetPos, true);
 
