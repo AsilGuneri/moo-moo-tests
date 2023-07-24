@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public abstract class FormationBase : MonoBehaviour
@@ -25,12 +26,27 @@ public abstract class FormationBase : MonoBehaviour
 
         return new Vector3(noise, 0, noise);
     }
-    public virtual void InitializeFormation()
+    public virtual void ResetFormationPoints()
     {
+        formationPoints.Clear();
         var points = EvaluatePoints().ToList();
         foreach(var point in points)
         {
             formationPoints.Add(new FormationPoint(point, false));
+        }
+    }
+    public async void MoveFormation(Vector3 position, float speed = 5)
+    {
+        var distance = Extensions.GetDistance(transform.position, position);
+        var time = distance / speed;
+        float counter = 0;
+        int delay = 500;
+        while (counter < time)
+        {
+            counter += delay;
+            transform.position = Vector3.Lerp(transform.position, position, counter / time);
+            ResetFormationPoints();
+            await Task.Delay(delay);
         }
     }
     // New Method
@@ -58,5 +74,6 @@ public enum MinionType
 {
     Basic,
     Guardian,
-    Attacker
+    Attacker,
+    Commander
 }

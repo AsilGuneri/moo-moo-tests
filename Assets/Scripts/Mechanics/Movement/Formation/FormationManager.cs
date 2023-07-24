@@ -18,7 +18,7 @@ public class FormationManager : Singleton<FormationManager>
     {
         foreach (var formation in Formations)
         {
-            formation.InitializeFormation();
+            formation.ResetFormationPoints();
         }
     }
     public bool IsFormationAvailable(MinionType minionType)
@@ -32,6 +32,14 @@ public class FormationManager : Singleton<FormationManager>
             }
         }
         return false;
+    }
+    public void MoveFormationToMousePos(MinionType minionType)
+    {
+        var formation = GetFormation(minionType);
+        
+
+
+
     }
     public FormationPoint UseAvailablePoint(MinionType type)
     { 

@@ -28,7 +28,7 @@ public class EmptyBehaviourController : EnemyBehaviourController
 
     public override bool ExitCondition()
     {
-        return true;
+        return false;
     }
 
     public override void OnEnter()

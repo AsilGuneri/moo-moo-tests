@@ -6,6 +6,8 @@ using UnityEngine;
 public class EnemyBrain : MonoBehaviour
 {
     public List<BehaviourPack> Packs = new List<BehaviourPack>();
+    public List<BehaviourPack> CommanderPacks = new List<BehaviourPack>();
+
 
     public Dictionary<string, EnemyBehaviourController> StateControllerDictionary = new();
 
@@ -37,7 +39,13 @@ public class EnemyBrain : MonoBehaviour
                 behaviour.Initialize(transform);
             }
         }
-
+        foreach(var pack in CommanderPacks)
+        {
+            foreach(var behaviour in pack.Behaviours)
+            {
+                behaviour.Initialize(transform);
+            }
+        }
         if (Packs.Count > 0) defaultPack = Packs[0];
     }
     public void SetPackRoutine(string packName)

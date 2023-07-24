@@ -623,7 +623,7 @@ GameObject:
   - component: {fileID: 9074826505844378808}
   - component: {fileID: -6499057204789187075}
   m_Layer: 9
-  m_Name: MageCapsule
+  m_Name: 11MageCapsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -706,6 +706,9 @@ MonoBehaviour:
   - PackName: DefenceCall
     Behaviours:
     - {fileID: 11400000, guid: 598f68c8e7c9eab4f94b5fcdb118930a, type: 2}
+  - PackName: CommanderCalls
+    Behaviours:
+    - {fileID: 11400000, guid: 36847b82e85f1194c84d235a3446756c, type: 2}
 --- !u!114 &5995625915929954317
 MonoBehaviour:
   m_ObjectHideFlags: 0

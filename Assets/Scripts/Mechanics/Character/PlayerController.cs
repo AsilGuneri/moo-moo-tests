@@ -39,22 +39,7 @@ public class PlayerController : UnitController
         if (Input.GetKeyDown(_inputKeys.SpawnWaveKey))
             WaveManager.Instance.SpawnTestWave();
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            foreach (var enemy in UnitManager.Instance.WaveEnemies)
-            {
-                enemy.Value.GetComponent<EnemyBrain>().SetPackRoutine("DefenceCall");
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            foreach (var enemy in UnitManager.Instance.WaveEnemies)
-            {
-                enemy.Value.GetComponent<EnemyBrain>().SetPackRoutine("Default");
-            }
-        }
-
+       
 
         // Check if the Q key is pressed.
         if (Input.GetKeyDown(KeyCode.Q))

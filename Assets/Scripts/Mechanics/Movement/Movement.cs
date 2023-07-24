@@ -9,8 +9,10 @@ public class Movement : MonoBehaviour
     public Action OnMoveStop;
     public Action OnFollowStop;
 
+    public Transform OverrideTarget { get => overrideTarget; }
     public bool IsMoving { get { return isMoving; } }
 
+    private Transform overrideTarget;
     private UnitController controller;
     private bool isMoving = false;
     private Vector3 currentTargetPos;
