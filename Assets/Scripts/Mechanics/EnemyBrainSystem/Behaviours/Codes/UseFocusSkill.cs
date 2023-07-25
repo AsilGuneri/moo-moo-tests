@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "UseFocusSkill", menuName = "ScriptableObjects/EnemyBehaviours/UseFocusSkill")]
+[CreateAssetMenu(fileName = "UseFocusSkill", menuName = "Scriptable Objects/EnemyBehaviours/UseFocusSkill")]
 public class UseFocusSkill : EnemyBehaviourData
 {
     public float Time;

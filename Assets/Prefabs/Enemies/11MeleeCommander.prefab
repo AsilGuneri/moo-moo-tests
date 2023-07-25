@@ -716,9 +716,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: afef50a1f55b7ab49a6b8da953be2fc2, type: 2}
     - {fileID: 11400000, guid: 19d0e9cdc82bd2641acd595dbbf2aa6c, type: 2}
   CommanderPacks:
-  - PackName: Defend
+  - PackName: DefenceCall
     Behaviours:
-    - {fileID: 0}
+    - {fileID: 11400000, guid: f418aefa471cf2044a1dd3e28e7d7337, type: 2}
 --- !u!114 &1127350715254039117
 MonoBehaviour:
   m_ObjectHideFlags: 0
