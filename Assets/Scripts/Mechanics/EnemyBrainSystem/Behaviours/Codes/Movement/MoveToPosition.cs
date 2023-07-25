@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MoveToPosition", menuName = "ScriptableObjects/EnemyBehaviours/MoveToPosition")]
+[CreateAssetMenu(fileName = "MoveToPosition", menuName = "Scriptable Objects/EnemyBehaviours/MoveToPosition")]
 
 
 public class MoveToPosition : EnemyBehaviourData

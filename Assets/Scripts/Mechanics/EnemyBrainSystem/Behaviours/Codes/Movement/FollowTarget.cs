@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "FollowTarget", menuName = "ScriptableObjects/EnemyBehaviours/FollowTarget")]
+[CreateAssetMenu(fileName = "FollowTarget", menuName = "Scriptable Objects/EnemyBehaviours/FollowTarget")]
 
 public class FollowTarget : EnemyBehaviourData
 {

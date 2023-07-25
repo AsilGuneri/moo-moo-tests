@@ -2,25 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EmptyBehaviour", menuName = "Scriptable Objects/EnemyBehaviours/EmptyBehaviour")]
-
-public class EmptyBehaviour : EnemyBehaviourData
+[CreateAssetMenu(fileName = "HoldShield", menuName = "ScriptableObjects/EnemyBehaviours/HoldShield")]
+public class HoldShield : EnemyBehaviourData
 {
+    public float Time;
+    public float Cooldown;
     public override EnemyBehaviourController CreateBehaviourController(GameObject gameObject)
     {
-        var controller = gameObject.AddComponent<EmptyBehaviourController>();
+        var controller = gameObject.AddComponent<UseFocusSkillController>();
         gameObject.GetComponent<EnemyBrain>().StateControllerDictionary.Add(this.name, controller);
         return controller;
     }
 }
-public class EmptyBehaviourController : EnemyBehaviourController
+public class HoldShieldController : EnemyBehaviourController
 {
+    private HoldShield defendData;
+    private UnitController controller;
+
+
     public override void OnInitialize(EnemyBehaviourData data)
     {
-        if (IsInitialized) return;
         base.OnInitialize(data);
-        IsInitialized = true;
+        defendData = data as HoldShield;
+        controller = GetComponent<UnitController>();
     }
+
+    private void Update()
+    {
+     
+    }
+
     public override bool EnterCondition()
     {
         return true;
@@ -33,11 +44,11 @@ public class EmptyBehaviourController : EnemyBehaviourController
 
     public override void OnEnter()
     {
-       
-    }
 
+    }
     public override void OnExit()
     {
 
     }
+
 }

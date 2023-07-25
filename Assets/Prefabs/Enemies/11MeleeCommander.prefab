@@ -715,7 +715,10 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 708b4a86f2d84194ba46db84934e3b02, type: 2}
     - {fileID: 11400000, guid: afef50a1f55b7ab49a6b8da953be2fc2, type: 2}
     - {fileID: 11400000, guid: 19d0e9cdc82bd2641acd595dbbf2aa6c, type: 2}
-  CommanderPacks: []
+  CommanderPacks:
+  - PackName: Defend
+    Behaviours:
+    - {fileID: 0}
 --- !u!114 &1127350715254039117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1881,7 +1884,7 @@ Transform:
   m_GameObject: {fileID: 6377873246424865770}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 298299142100808928}
@@ -2023,7 +2026,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -120, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2.541}
+  m_AnchoredPosition: {x: 0, y: 3.041}
   m_SizeDelta: {x: 30, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5233835498124086933

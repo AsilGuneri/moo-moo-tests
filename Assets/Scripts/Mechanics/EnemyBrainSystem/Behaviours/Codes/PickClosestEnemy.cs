@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PickClosestEnemy", menuName = "ScriptableObjects/EnemyBehaviours/PickClosestEnemy")]
+[CreateAssetMenu(fileName = "PickClosestEnemy", menuName = "Scriptable Objects/EnemyBehaviours/PickClosestEnemy")]
 
 public class PickClosestEnemy : EnemyBehaviourData
 {

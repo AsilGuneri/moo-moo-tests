@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AttackBehaviour", menuName = "ScriptableObjects/EnemyBehaviours/Attack")]
+[CreateAssetMenu(fileName = "AttackBehaviour", menuName = "Scriptable Objects/EnemyBehaviours/Attack")]
 
 public class Attack : EnemyBehaviourData
 {
