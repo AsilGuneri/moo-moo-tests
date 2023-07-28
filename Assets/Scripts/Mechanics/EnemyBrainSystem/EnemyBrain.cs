@@ -1,19 +1,17 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Collections;
 using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
 {
     public List<BehaviourPack> Packs = new List<BehaviourPack>();
-
-
     public Dictionary<string, EnemyBehaviourController> StateControllerDictionary = new();
 
-    public EnemyBehaviourData CurrentBehaviour { get => currentBehaviour; }     
+    public EnemyBehaviourData CurrentBehaviour => currentBehaviour;
 
-    
     private EnemyBehaviourData currentBehaviour = null;
+    private int currentBehaviourIndex = -1; // -1 means no behaviour is active
     private bool isInitialized;
     private bool isActive;
     private BehaviourPack defaultPack;
@@ -27,26 +25,25 @@ public class EnemyBrain : MonoBehaviour
 
     private void InitializeBrain()
     {
-        foreach(var pack in Packs)
+        foreach (var pack in Packs)
         {
-            foreach(var behaviour in pack.Behaviours)
+            foreach (var behaviour in pack.Behaviours)
             {
                 behaviour.Initialize(transform);
             }
         }
         if (Packs.Count > 0) defaultPack = Packs[0];
     }
+
     public void SetPackRoutine(string packName)
     {
-        if(currentPack.PackName == packName) return;
-        if(CurrentBehaviour != null)
+        if (currentPack.PackName == packName) return;
+        if (currentBehaviour != null)
         {
             ExitBehaviour();
         }
-        foreach(var pack in Packs)
+        foreach (var pack in Packs)
         {
-            Debug.Log("asilxx " + currentPack.PackName + " " + packName);
-
             if (pack.PackName == packName)
             {
                 currentPack = pack;
@@ -54,6 +51,7 @@ public class EnemyBrain : MonoBehaviour
             }
         }
     }
+
     public void StartBrain()
     {
         if (!isInitialized)
@@ -63,24 +61,32 @@ public class EnemyBrain : MonoBehaviour
         }
         isActive = true;
     }
+
     private void Update()
     {
         if (!isInitialized || !isActive) return;
 
-        if (CurrentBehaviour != null)
+        int nextBehaviourIndex = FindNextBehaviour();
+        if (nextBehaviourIndex != -1 && (currentBehaviourIndex == -1 || nextBehaviourIndex < currentBehaviourIndex))
+        {
+            if (currentBehaviourIndex != -1)
+            {
+                ExitBehaviour();
+            }
+            currentBehaviourIndex = nextBehaviourIndex;
+            CheckEnter(currentPack.Behaviours[currentBehaviourIndex]);
+        }
+        else if (currentBehaviourIndex != -1)
         {
             CheckExit();
         }
-        else
-        {
-            CheckEnter();
-        }
     }
+
     public void SetBrainActive(bool isActive)
     {
         this.isActive = isActive;
     }
-  
+
     private void CheckExit()
     {
         if (StateControllerDictionary[CurrentBehaviour.name].ExitCondition())
@@ -93,23 +99,34 @@ public class EnemyBrain : MonoBehaviour
     {
         StateControllerDictionary[CurrentBehaviour.name].OnExit();
         currentBehaviour = null;
+        currentBehaviourIndex = -1;
     }
 
-    private void CheckEnter()
+    private int FindNextBehaviour()
     {
-        if(currentPack == null) currentPack = defaultPack;
-        foreach (var behaviour in currentPack.Behaviours)
+        if (currentPack == null) currentPack = defaultPack;
+
+        for (int i = 0; i < currentPack.Behaviours.Count; i++)
         {
-            if (StateControllerDictionary[behaviour.name].EnterCondition())
+            if (StateControllerDictionary[currentPack.Behaviours[i].name].EnterCondition())
             {
-                currentBehaviour = behaviour;
-                StateControllerDictionary[behaviour.name].OnEnter();
-                return;
+                return i;
             }
         }
+        return -1; // In case no suitable behaviour is found
     }
-    
+
+    private void CheckEnter(EnemyBehaviourData behaviour)
+    {
+        if (!StateControllerDictionary[behaviour.name].EnterCondition())
+        {
+            throw new Exception("Behaviour " + behaviour.name + " cannot enter as it does not meet the condition.");
+        }
+        currentBehaviour = behaviour;
+        StateControllerDictionary[behaviour.name].OnEnter();
+    }
 }
+
 [System.Serializable]
 public class BehaviourPack
 {
