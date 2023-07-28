@@ -116,7 +116,6 @@ public class CustomNetworkRoomManager : NetworkRoomManager
     //public override void OnClientSceneChanged()
     //{
     //    base.OnClientSceneChanged();
-    //    Debug.Log("asilxx name : " + SceneManager.GetActiveScene().name);
     //    if (SceneManager.GetActiveScene().name == "GameScene")
     //    {
     //        ObjectPooler.Instance.Initialize();

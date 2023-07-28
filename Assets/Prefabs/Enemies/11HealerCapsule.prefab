@@ -742,7 +742,7 @@ GameObject:
   - component: {fileID: 1746889571149247470}
   - component: {fileID: 5058768261518575500}
   m_Layer: 9
-  m_Name: HealerCapsule
+  m_Name: 11HealerCapsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

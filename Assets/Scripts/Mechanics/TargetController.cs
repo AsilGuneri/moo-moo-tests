@@ -20,7 +20,8 @@ public class TargetController : NetworkBehaviour
     }
     private void SetToNull()
     {
-        Target.GetComponent<Health>().OnDeath -= SetToNull;
+        if (Target == null) return;
+        if(Target.TryGetComponent(out Health health)) health.OnDeath -= SetToNull;
         Target = null;
     }
 }

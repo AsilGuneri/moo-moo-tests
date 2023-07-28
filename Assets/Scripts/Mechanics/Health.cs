@@ -10,6 +10,8 @@ public class Health : NetworkBehaviour
 {
     public Action OnDeath;
     public bool IsDead { get; private set; }
+    public int CurrentHealthPercentage { get { return (currentHealth / baseHp) * 100; } }
+
     [SerializeField] private Image healthBar;
     public int ExpToGain;
 
@@ -78,6 +80,7 @@ public class Health : NetworkBehaviour
     [Server]
     private void Die(Transform damageDealerTransform)
     {
+        OnDeath?.Invoke();
         IsDead = true;
         UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), controller.unitType);
         if(damageDealerTransform.TryGetComponent(out PlayerLevelController levelController))
@@ -85,7 +88,6 @@ public class Health : NetworkBehaviour
             levelController.GainExperience(ExpToGain);
         }
         ObjectPooler.Instance.CmdReturnToPool(gameObject.GetComponent<NetworkIdentity>().netId);
-        OnDeath?.Invoke();
     }
     #endregion
     #region Client

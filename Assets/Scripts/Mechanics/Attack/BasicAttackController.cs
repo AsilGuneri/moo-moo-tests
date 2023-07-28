@@ -7,6 +7,7 @@ using UnityEngine;
 
 public abstract class BasicAttackController : NetworkBehaviour
 {
+    public Action AfterLastAttack;
     public bool IsSetToStopAfterAttack { get => isSetToStopAfterAttack; }
     public bool IsAttacking { get => isAttacking; }
 
@@ -73,6 +74,7 @@ public abstract class BasicAttackController : NetworkBehaviour
 
         isSetToStopAfterAttack = false;
         StopAttackInstantly();
+        AfterLastAttack?.Invoke();
     }
 
     /// <summary>

@@ -7,13 +7,17 @@ public class Movement : MonoBehaviour
 {
     public Action OnMoveStart;
     public Action OnMoveStop;
+    public Action OnFollowStop;
 
+    public Transform OverrideTarget { get => overrideTarget; }
     public bool IsMoving { get { return isMoving; } }
 
+    private Transform overrideTarget;
     private UnitController controller;
     private bool isMoving = false;
     private Vector3 currentTargetPos;
     private int movementBlockCount = 0;
+    private bool isFollowing = false;
     AgentAuthoring agent;
 
 
@@ -43,9 +47,27 @@ public class Movement : MonoBehaviour
     {
         movementBlockCount--;
     }
-    public void ClientMove(Vector3 pos)
+    public void SetDestinationOnAvailable(Vector3 pos, bool cancelTarget = false)
+    {
+        if (isFollowing)
+        {
+            StopFollow();
+            OnFollowStop += (() => MoveOnFollowEnd(pos, cancelTarget));
+        }
+        if(controller.AttackController.IsAttacking)
+        {
+            controller.AttackController.StopAfterCurrentAttack();
+            controller.AttackController.AfterLastAttack += (() => MoveOnAttackEnd(pos, cancelTarget));
+        }
+        else
+        {
+            ClientMove(pos, cancelTarget);
+        }
+    }
+    public void ClientMove(Vector3 pos, bool cancelTarget = false)
     {
         if (!CanMove()) return;
+        if (cancelTarget) controller.TargetController.SetTarget(null);
         agent.SetDestination(pos);
         isMoving = true;
         currentTargetPos = pos;
@@ -72,18 +94,37 @@ public class Movement : MonoBehaviour
     public async void StartFollow(Transform target, float followDistance)
     {
         currentTargetPos = target.position;
-
+        isFollowing = true;
         while (!Extensions.CheckRange(target.position, transform.position, followDistance))
         {
+            if (!isFollowing) return;
             ClientMove(target.position);
             await Task.Delay(100);
         }
+        StopFollow();
+
     }
+    public void StopFollow()
+    {
+        isFollowing = false;
+        ClientStop();
+        OnFollowStop?.Invoke();
+    }
+
     private bool CanMove()
     {
         if (movementBlockCount > 0) return false;
         return !controller.AttackController.IsSetToStopAfterAttack;
 
     }
-
+    private void MoveOnFollowEnd(Vector3 pos, bool cancelTarget)
+    {
+        ClientMove(pos, cancelTarget);
+        OnFollowStop -= (() => MoveOnFollowEnd(pos,cancelTarget));
+    }
+    private void MoveOnAttackEnd(Vector3 pos, bool cancelTarget)
+    {
+        ClientMove(pos, cancelTarget);
+        controller.AttackController.AfterLastAttack -= (() => MoveOnAttackEnd(pos, cancelTarget));
+    }
 }

@@ -41,6 +41,13 @@ public class PoolObject : MonoBehaviour
         else
             ObjectPooler.Instance.ReturnToPool(gameObject);
     }
+    public virtual void OnReturn()
+    {
+        if(TryGetComponent(out EnemyBrain brain))
+        {
+            brain.KillBrain();
+        }
+    }
  
 }
 

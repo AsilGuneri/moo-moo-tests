@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "UseFocusSkill", menuName = "ScriptableObjects/EnemyBehaviours/UseFocusSkill")]
+[CreateAssetMenu(fileName = "UseFocusSkill", menuName = "Scriptable Objects/EnemyBehaviours/UseFocusSkill")]
 public class UseFocusSkill : EnemyBehaviourData
 {
     public float Time;
@@ -87,7 +87,7 @@ public class UseFocusSkillController : EnemyBehaviourController
                 return skill;
             }
         }
-        Debug.LogError("No focus skill found");
+        Debug.LogError("No focus skill found " + gameObject.name);
         return null;
     }
     private void StartCooldown()

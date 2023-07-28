@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EmptyBehaviour", menuName = "ScriptableObjects/EnemyBehaviours/EmptyBehaviour")]
+[CreateAssetMenu(fileName = "EmptyBehaviour", menuName = "Scriptable Objects/EnemyBehaviours/EmptyBehaviour")]
 
 public class EmptyBehaviour : EnemyBehaviourData
 {
@@ -28,7 +28,7 @@ public class EmptyBehaviourController : EnemyBehaviourController
 
     public override bool ExitCondition()
     {
-        return true;
+        return false;
     }
 
     public override void OnEnter()

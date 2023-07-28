@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "FollowTarget", menuName = "ScriptableObjects/EnemyBehaviours/FollowTarget")]
+[CreateAssetMenu(fileName = "FollowTarget", menuName = "Scriptable Objects/EnemyBehaviours/FollowTarget")]
 
 public class FollowTarget : EnemyBehaviourData
 {
     public bool UseAttackRange;
     [ConditionalField(nameof(UseAttackRange),true)] public float FollowOffset;
+    public bool UseOverrideTarget;
 
     // Create the MoveController and add it to the given game object
     public override EnemyBehaviourController CreateBehaviourController(GameObject gameObject)
@@ -26,7 +27,6 @@ public class FollowTargetController : EnemyBehaviourController
     private bool isIn;
     private UnitController controller;
     private float followOffset;
-    private UnitController target;
 
     public override void OnInitialize(EnemyBehaviourData data)
     {
@@ -53,15 +53,16 @@ public class FollowTargetController : EnemyBehaviourController
 
     public override void OnEnter()
     {
-        target = controller.TargetController.Target.GetComponent<UnitController>();
         isIn = true;
-        controller.Movement.StartFollow(controller.TargetController.Target.transform, followOffset);
+        var target = followData.UseOverrideTarget? controller.Movement.OverrideTarget : controller.TargetController.Target.transform;
+        controller.Movement.StartFollow(target, followOffset);
 
     }
 
     public override void OnExit()
     {
         isIn = false;
+        controller.Movement.StopFollow();
     }
 
     private bool ShouldEnter()
