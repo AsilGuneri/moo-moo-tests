@@ -17,7 +17,7 @@ public class CommandArmy : EnemyBehaviourData
 public class CommandArmyController : EnemyBehaviourController
 {
     private CommandArmy commandData;
-    private EnemyController controller;
+    private CommanderController controller;
     private bool hasEntered;
 
 
@@ -25,7 +25,7 @@ public class CommandArmyController : EnemyBehaviourController
     {
         base.OnInitialize(data);
         commandData = data as CommandArmy;
-        controller = GetComponent<EnemyController>();
+        controller = GetComponent<CommanderController>();
     }
 
     private void Update()

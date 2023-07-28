@@ -621,6 +621,7 @@ GameObject:
   - component: {fileID: 1929066000756038323}
   - component: {fileID: 7101451635099497366}
   - component: {fileID: 1127350715254039117}
+  - component: {fileID: 3004930868394129945}
   - component: {fileID: 2093334184839592437}
   - component: {fileID: 901659194503043128}
   - component: {fileID: 8559049715645283541}
@@ -635,6 +636,7 @@ GameObject:
   - component: {fileID: 2649789469614115756}
   - component: {fileID: 4493909082151338282}
   - component: {fileID: 1306364402251745579}
+  - component: {fileID: 4501161636558167215}
   m_Layer: 9
   m_Name: 11MeleeCommander
   m_TagString: Untagged
@@ -726,6 +728,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75d11eb890278d642b6215f2f8b4b459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  attackRange: 1
+  attackSpeed: 1
+  unitType: 1
+  enemyList: 0000000002000000
+  projectileSpawnPoint: {fileID: 0}
+  skills: []
+  animAttackPoint: 0.5
+  minionType: 3
+--- !u!114 &3004930868394129945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2462893064303745991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f0257c19b12d4449b0badd930838765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
@@ -980,6 +1004,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useLifeTime: 0
   lifeTime: 0
+--- !u!114 &4501161636558167215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2462893064303745991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d11eb890278d642b6215f2f8b4b459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  attackRange: 1
+  attackSpeed: 1
+  unitType: 1
+  enemyList: 0000000002000000
+  projectileSpawnPoint: {fileID: 0}
+  skills: []
+  animAttackPoint: 0.5
+  minionType: 3
 --- !u!1 &2821640562202802715
 GameObject:
   m_ObjectHideFlags: 0
