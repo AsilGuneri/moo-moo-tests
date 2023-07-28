@@ -27,6 +27,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
             case UnitType.WaveEnemy:
                 if (WaveEnemies.Contains(unit)) return;
                 WaveEnemies.Add(unit);
+                unit.Value.GetComponent<EnemyBrain>().StartBrain();
                 break;
             case UnitType.Building:
                 if (Buildings.Contains(unit)) return;
@@ -58,6 +59,16 @@ public class UnitManager : NetworkSingleton<UnitManager>
                     }
                 }
                 break;
+        }
+    }
+    public void GiveCommand(string commandPackName, MinionType minionType)
+    {
+        foreach (var enemy in WaveEnemies)
+        {
+            if (enemy.Value.TryGetComponent(out EnemyController enemyController) && enemyController.MinionType == minionType)
+            {
+                enemy.Value.GetComponent<EnemyBrain>().SetPackRoutine(commandPackName);    
+            }
         }
     }
 

@@ -712,13 +712,10 @@ MonoBehaviour:
   Packs:
   - PackName: Default
     Behaviours:
-    - {fileID: 11400000, guid: 708b4a86f2d84194ba46db84934e3b02, type: 2}
-    - {fileID: 11400000, guid: afef50a1f55b7ab49a6b8da953be2fc2, type: 2}
-    - {fileID: 11400000, guid: 19d0e9cdc82bd2641acd595dbbf2aa6c, type: 2}
-  CommanderPacks:
-  - PackName: DefenceCall
-    Behaviours:
     - {fileID: 11400000, guid: f418aefa471cf2044a1dd3e28e7d7337, type: 2}
+    - {fileID: 11400000, guid: 708b4a86f2d84194ba46db84934e3b02, type: 2}
+    - {fileID: 11400000, guid: cfc7d6e222bb2fa42965457e919339b4, type: 2}
+    - {fileID: 11400000, guid: a2f05e797ef7d5443a5a91fec270fef8, type: 2}
 --- !u!114 &1127350715254039117
 MonoBehaviour:
   m_ObjectHideFlags: 0

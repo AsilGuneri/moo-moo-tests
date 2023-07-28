@@ -9,7 +9,7 @@ public class HoldShield : EnemyBehaviourData
     public float Cooldown;
     public override EnemyBehaviourController CreateBehaviourController(GameObject gameObject)
     {
-        var controller = gameObject.AddComponent<UseFocusSkillController>();
+        var controller = gameObject.AddComponent<HoldShieldController>();
         gameObject.GetComponent<EnemyBrain>().StateControllerDictionary.Add(this.name, controller);
         return controller;
     }

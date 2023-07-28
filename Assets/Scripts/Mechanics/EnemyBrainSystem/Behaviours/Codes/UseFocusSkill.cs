@@ -87,7 +87,7 @@ public class UseFocusSkillController : EnemyBehaviourController
                 return skill;
             }
         }
-        Debug.LogError("No focus skill found");
+        Debug.LogError("No focus skill found " + gameObject.name);
         return null;
     }
     private void StartCooldown()

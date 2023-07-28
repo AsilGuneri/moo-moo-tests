@@ -6,7 +6,6 @@ using UnityEngine;
 public class EnemyBrain : MonoBehaviour
 {
     public List<BehaviourPack> Packs = new List<BehaviourPack>();
-    public List<BehaviourPack> CommanderPacks = new List<BehaviourPack>();
 
 
     public Dictionary<string, EnemyBehaviourController> StateControllerDictionary = new();
@@ -20,26 +19,15 @@ public class EnemyBrain : MonoBehaviour
     private BehaviourPack defaultPack;
     private BehaviourPack currentPack;
 
-    private void OnEnable()
-    {
-        StartBrain();
-    }
     public void KillBrain()
     {
-        ExitState();
+        ExitBehaviour();
         SetBrainActive(false);
     }
 
     private void InitializeBrain()
     {
         foreach(var pack in Packs)
-        {
-            foreach(var behaviour in pack.Behaviours)
-            {
-                behaviour.Initialize(transform);
-            }
-        }
-        foreach(var pack in CommanderPacks)
         {
             foreach(var behaviour in pack.Behaviours)
             {
@@ -53,10 +41,12 @@ public class EnemyBrain : MonoBehaviour
         if(currentPack.PackName == packName) return;
         if(CurrentBehaviour != null)
         {
-            ExitState();
+            ExitBehaviour();
         }
         foreach(var pack in Packs)
         {
+            Debug.Log("asilxx " + currentPack.PackName + " " + packName);
+
             if (pack.PackName == packName)
             {
                 currentPack = pack;
@@ -95,11 +85,11 @@ public class EnemyBrain : MonoBehaviour
     {
         if (StateControllerDictionary[CurrentBehaviour.name].ExitCondition())
         {
-            ExitState();
+            ExitBehaviour();
         }
     }
 
-    private void ExitState()
+    private void ExitBehaviour()
     {
         StateControllerDictionary[CurrentBehaviour.name].OnExit();
         currentBehaviour = null;

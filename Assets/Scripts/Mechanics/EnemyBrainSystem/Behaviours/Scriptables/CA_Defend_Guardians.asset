@@ -10,7 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2e7d6a07b014f94e94227152ae1133d, type: 3}
-  m_Name: CommandArmy
+  m_Name: CA_Defend_Guardians
   m_EditorClassIdentifier: 
   BlockMovement: 0
   BlockAttacking: 0
+  CommandPackName: Defend
+  TargetMinionType: 1
