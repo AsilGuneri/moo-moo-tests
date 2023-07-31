@@ -635,6 +635,7 @@ GameObject:
   - component: {fileID: 2649789469614115756}
   - component: {fileID: 4493909082151338282}
   - component: {fileID: 1306364402251745579}
+  - component: {fileID: 4823242003201854211}
   m_Layer: 9
   m_Name: 11MeleeCapsule
   m_TagString: Untagged
@@ -656,6 +657,7 @@ Transform:
   m_Children:
   - {fileID: 3441533508713811106}
   - {fileID: 1169811332568716993}
+  - {fileID: 1928936259698625956}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -719,7 +721,6 @@ MonoBehaviour:
     Behaviours:
     - {fileID: 11400000, guid: 598f68c8e7c9eab4f94b5fcdb118930a, type: 2}
     - {fileID: 11400000, guid: 5146e65e0c7579348aa52fee95bb7894, type: 2}
-  CommanderPacks: []
 --- !u!114 &1127350715254039117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -738,7 +739,7 @@ MonoBehaviour:
   attackSpeed: 1
   unitType: 1
   enemyList: 0000000002000000
-  projectileSpawnPoint: {fileID: 0}
+  projectileSpawnPoint: {fileID: 1928936259698625956}
   skills: []
   animAttackPoint: 0.5
   minionType: 1
@@ -984,6 +985,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useLifeTime: 0
   lifeTime: 0
+--- !u!114 &4823242003201854211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2462893064303745991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb1daaaaa1d3e60448a0fadc757f9d2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  Name: HoldShieldSkill
+  CooldownTime: 0
+  TargetRequired: 0
+  IsFocusingSkill: 0
+  Effect: {fileID: 0}
+  shieldPrefab: {fileID: 7333777408438456969, guid: bcc885a124bc01241838dcfe3abffeb3, type: 3}
 --- !u!1 &2821640562202802715
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,6 +1415,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3374267798527688878}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4986314707648265162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1928936259698625956}
+  m_Layer: 9
+  m_Name: ShieldPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1928936259698625956
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4986314707648265162}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.319, z: 0.648}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5843045748780198311}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5232330847340476224

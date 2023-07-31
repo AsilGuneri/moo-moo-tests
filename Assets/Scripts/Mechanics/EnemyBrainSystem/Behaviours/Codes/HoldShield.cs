@@ -44,7 +44,6 @@ public class HoldShieldController : EnemyBehaviourController
 
     public override void OnEnter()
     {
-
     }
     public override void OnExit()
     {

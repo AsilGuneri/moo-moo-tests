@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 
 public abstract class UnitController : NetworkBehaviour
 {
+    public Dictionary<string,SkillController> SkillControllerDictionary = new Dictionary<string, SkillController>();
     //others
-    public List<Skill> Skills { get => skills; }
     public Transform ProjectileSpawnPoint { get => projectileSpawnPoint; }
     public Health Health { get => health; }
     public BasicAttackController AttackController { get => attackController; }

@@ -16,3 +16,4 @@ MonoBehaviour:
   BlockAttacking: 1
   Time: 0
   Cooldown: 0
+  ShieldSkillName: HoldShieldSkill
