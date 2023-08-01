@@ -6,12 +6,11 @@ using UnityEngine;
 
 public abstract class Skill : ScriptableObject
 {
-    public string Name;
     public bool HasCastTime;
-    [ConditionalField(nameof(HasCastTime), true)] public float CastTime;
+    [ConditionalField(nameof(HasCastTime), false)] public float CastTime;
 
     public bool HasSkillTime;
-    [ConditionalField(nameof(HasSkillTime), true)] public float SkillTime;
+    [ConditionalField(nameof(HasSkillTime), false)] public float SkillTime;
 
     public float CooldownTime;
 
@@ -23,12 +22,15 @@ public abstract class Skill : ScriptableObject
     {
         // Create the appropriate controller
         var controller = CreateBehaviourController(owner.gameObject);
+        owner.GetComponent<UnitController>().SkillControllerDictionary.Add(this.name, controller);
+        Debug.Log("asilxx1 skill name" + this.name);
+
         controller.OnInitialize(this);
     }
 }
 public abstract class SkillController : MonoBehaviour
 {
-    private Skill skill;
+    protected Skill skill;
     protected bool isCasting;
     protected bool isSkillActive;
     /// <summary>
@@ -40,27 +42,44 @@ public abstract class SkillController : MonoBehaviour
         this.skill = skill;
     }
 
-    protected virtual void StartCast()
+    public void Use()
+    {
+        StartCast();
+    }
+
+    private void StartCast()
     {
         isCasting = true;
         StartCoroutine(EndCastRoutine());
+        OnCastStart();
     }
-    protected virtual void EndCast()
+    private void EndCast()
     {
         isCasting = false;
         StartSkill();
+        OnCastEnd();
     }
 
-    protected virtual void StartSkill()
+    private void StartSkill()
     {
         isSkillActive = false;
         StartCoroutine(EndSkillRoutine());
+        OnSkillStart();
 
     }
-    protected virtual void EndSkill()
+    private void EndSkill()
     {
         isSkillActive = false;
+        OnSkillEnd();
     }
+
+    protected abstract void OnCastStart();
+
+    protected abstract void OnCastEnd();
+
+    protected abstract void OnSkillStart();
+
+    protected abstract void OnSkillEnd();
 
     private IEnumerator EndCastRoutine()
     {

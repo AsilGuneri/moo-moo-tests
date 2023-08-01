@@ -40,7 +40,9 @@ public abstract class UnitController : NetworkBehaviour
     protected virtual void Awake()
     {
         CacheReferences();
+        InitializeSkills();
     }
+    
     protected virtual void Start()
     {
         animationController.SetAttackSpeed(attackSpeed);
@@ -52,6 +54,15 @@ public abstract class UnitController : NetworkBehaviour
             return enemyList.Contains(unit.unitType);
         }
         return false;
+    }
+    public bool IsEnemyTo(UnitType unit)
+    {
+        return enemyList.Contains(unit);
+    }
+    public void UseSkill(Skill skill)
+    {
+        Debug.Log("asilxx2 skill name" + skill.name);
+        SkillControllerDictionary[skill.name].Use();
     }
     private void CacheReferences()
     {
@@ -73,5 +84,12 @@ public abstract class UnitController : NetworkBehaviour
         });
         movement.OnMoveStart += (() => { animationController.SetMoveStatus(true); });
         movement.OnMoveStop += (() => { animationController.SetMoveStatus(false); });
+    }
+    private void InitializeSkills()
+    {
+        foreach (var skill in skills)
+        {
+            skill.Initialize(transform);
+        }
     }
 }

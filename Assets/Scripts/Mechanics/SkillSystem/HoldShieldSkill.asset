@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9a10c039e8fae24491da18b9befcdbf, type: 3}
-  m_Name: HoldShield
+  m_Script: {fileID: 11500000, guid: 6065db9a201115443a66d06926c75083, type: 3}
+  m_Name: HoldShieldSkill
   m_EditorClassIdentifier: 
-  BlockMovement: 0
-  BlockAttacking: 1
-  Time: 0
-  Cooldown: 0
-  shieldSkill: {fileID: 11400000, guid: 06a19e14a02ad8a48a22a2fc0e6ae555, type: 2}
+  HasCastTime: 1
+  CastTime: 0
+  HasSkillTime: 1
+  SkillTime: 30
+  CooldownTime: 0
+  ShieldPrefab: {fileID: 7333777408438456969, guid: bcc885a124bc01241838dcfe3abffeb3, type: 3}

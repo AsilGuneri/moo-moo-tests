@@ -69729,8 +69729,6 @@ GameObject:
   - component: {fileID: 8064767531322124681}
   - component: {fileID: 5904897624730745774}
   - component: {fileID: 2940790932453975993}
-  - component: {fileID: 8246983779994464483}
-  - component: {fileID: 2484155755899729020}
   m_Layer: 0
   m_Name: Player Parentxx
   m_TagString: Untagged
@@ -69894,8 +69892,7 @@ MonoBehaviour:
   unitType: 0
   enemyList: 01000000
   projectileSpawnPoint: {fileID: 3792548669549166751}
-  skills:
-  - {fileID: 2484155755899729020}
+  skills: []
   animAttackPoint: 0.5
   layerMask:
     serializedVersion: 2
@@ -70090,42 +70087,6 @@ MonoBehaviour:
   Mode: 3
   BlockedStop: 0
   UseWalls: 0
---- !u!114 &8246983779994464483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8938534602783702256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1db792e046dc164ba9200f53509036b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Duration: 5
-  DamagePerSecond: 10
-  DamageInterval: 0
---- !u!114 &2484155755899729020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8938534602783702256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee40034b12f0ea843a42d4fdf2d2c595, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  Name: Fireball
-  CooldownTime: 1
-  TargetRequired: 1
-  IsFocusingSkill: 0
-  Effect: {fileID: 8246983779994464483}
-  prefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
-  damage: 0
 --- !u!1 &8946106163135306598
 GameObject:
   m_ObjectHideFlags: 0
