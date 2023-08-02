@@ -29,9 +29,9 @@ public class Projectile : NetworkBehaviour, IProjectile
     [NonSerialized][SyncVar] public GameObject Target;
 
 
-    public bool BelongsToEnemy()
+    public bool BelongsToEnemy(UnitType enemyTo)
     {
-        return spawnerTransform.GetComponent<UnitController>().IsEnemyTo(UnitType.Player);
+        return spawnerTransform.GetComponent<UnitController>().IsEnemyTo(enemyTo);
     }
 
     [Server]

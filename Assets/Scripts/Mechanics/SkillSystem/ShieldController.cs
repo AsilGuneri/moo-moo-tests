@@ -1,23 +1,47 @@
 ﻿using UnityEngine;
 using Mirror;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
+using System;
 
 public class ShieldController : NetworkBehaviour
 {
-    public float shieldDistance = 5.0f;
-    public float yOffset = 1.0f; // Y-axis offset to ensure the shield is above the ground
+    [SerializeField] private int shieldMaxHitPoint;
+    [SerializeField] private float shieldDistance = 5.0f;
+    [SerializeField] private float yOffset = 1.0f; // Y-axis offset to ensure the shield is above the ground
+
 
     private Transform protectedTarget;
     private Transform shieldedUnit;
+    private int hitCounter;
+
+    private UnitController unitController;
 
     public void SetupShield(Transform protectedTarget, Transform shieldedUnit)
     {
+        unitController = shieldedUnit.GetComponent<UnitController>();
         this.protectedTarget = protectedTarget;
         this.shieldedUnit = shieldedUnit;
-        this.shieldedUnit.GetComponent<UnitController>().Health.OnDeath += DestroySelf;
+        unitController.Health.OnDeath += DestroySelf;
         UpdateShieldPosition();
+        hitCounter = 0;
         NetworkServer.Spawn(gameObject, connectionToClient);
 
     }
+    private void OnTriggerStay(Collider other)
+    {
+        Projectile projectile = other.GetComponent<Projectile>();
+
+        if (projectile != null && projectile.BelongsToEnemy(unitController.unitType))
+        {
+            projectile.DestroySelf();
+            hitCounter++;
+            if(hitCounter >= shieldMaxHitPoint)
+            {
+                DestroySelf();
+            }
+        }
+    }
+
     private void DestroySelf()
     {
         shieldedUnit.GetComponent<UnitController>().Health.OnDeath -= DestroySelf;
