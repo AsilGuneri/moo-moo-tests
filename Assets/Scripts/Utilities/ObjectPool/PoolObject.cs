@@ -36,11 +36,17 @@ public class PoolObject : MonoBehaviour
     private IEnumerator ReturnToPool()
     {
         yield return Extensions.GetWait(lifeTime);
+        BackToPool();
+    }
+
+    public void BackToPool()
+    {
         if (gameObject.TryGetComponent(out NetworkIdentity netId))
             ObjectPooler.Instance.CmdReturnToPool(gameObject.GetComponent<NetworkIdentity>().netId);
         else
             ObjectPooler.Instance.ReturnToPool(gameObject);
     }
+
     public virtual void OnReturn()
     {
         if(TryGetComponent(out EnemyBrain brain))

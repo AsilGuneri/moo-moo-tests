@@ -61,7 +61,6 @@ public abstract class UnitController : NetworkBehaviour
     }
     public void UseSkill(Skill skill)
     {
-        Debug.Log("asilxx2 skill name" + skill.name);
         SkillControllerDictionary[skill.name].Use();
     }
     private void CacheReferences()
