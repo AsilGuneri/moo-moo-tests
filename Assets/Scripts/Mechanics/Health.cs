@@ -12,7 +12,7 @@ public class Health : NetworkBehaviour
     public bool IsDead { get; private set; }
     public int CurrentHealthPercentage { get { return (currentHealth / baseHp) * 100; } }
 
-    [SerializeField] private Image healthBar;
+    [SerializeField] private Slider healthBar;
     public int ExpToGain;
 
     [SyncVar(hook = nameof(UpdateHealthBar))] protected int currentHealth;
@@ -93,7 +93,7 @@ public class Health : NetworkBehaviour
     #region Client
     private void UpdateHealthBar(int oldHealth, int newHeatlh)
     {
-        healthBar.fillAmount = (float)((float)newHeatlh / (float)baseHp);
+        healthBar.value = (float)((float)newHeatlh / (float)baseHp);
     }
     #endregion
 
