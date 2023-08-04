@@ -69523,7 +69523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  healthBar: {fileID: 5392881077852431337}
+  healthBar: {fileID: 1508059408740813576}
   ExpToGain: 0
 --- !u!114 &7291038196165993128
 MonoBehaviour:
@@ -69955,20 +69955,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6350921416085077436, guid: c661ba664229e414dbc829792b0b6cb0, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c661ba664229e414dbc829792b0b6cb0, type: 3}
---- !u!114 &5392881077852431337 stripped
+--- !u!114 &1508059408740813576 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3411778304062409471, guid: c661ba664229e414dbc829792b0b6cb0, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8170649597135888926, guid: c661ba664229e414dbc829792b0b6cb0, type: 3}
   m_PrefabInstance: {fileID: 7317872816506251542}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 95c090c813dc3724187906693b7a29d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &8594809990432258433 stripped

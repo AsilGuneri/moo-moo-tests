@@ -12,7 +12,7 @@ public class Health : NetworkBehaviour
     public bool IsDead { get; private set; }
     public int CurrentHealthPercentage { get { return (currentHealth / baseHp) * 100; } }
 
-    [SerializeField] private Slider healthBar;
+    [SerializeField] private HealthBar healthBar;
     public int ExpToGain;
 
     [SyncVar(hook = nameof(UpdateHealthBar))] protected int currentHealth;
@@ -20,6 +20,7 @@ public class Health : NetworkBehaviour
     private HeroBaseStatsData _heroStats;
     private int baseHp;
     private UnitController controller;
+    private bool isActive = false;
 
     private void Awake()
     {
@@ -59,8 +60,10 @@ public class Health : NetworkBehaviour
         yield return new WaitUntil(() => NetworkClient.ready);
         IsDead = false;
         currentHealth = baseHp;
+        healthBar.SetupHealthBar(currentHealth);
         if (controller.unitType != UnitType.Player)
             UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), controller.unitType);
+        isActive = true;
     }
 
     private void AddDamageStats(int dmg, Transform dealerTransform)
@@ -80,6 +83,7 @@ public class Health : NetworkBehaviour
     [Server]
     private void Die(Transform damageDealerTransform)
     {
+        isActive = false;
         OnDeath?.Invoke();
         IsDead = true;
         UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), controller.unitType);
@@ -93,7 +97,8 @@ public class Health : NetworkBehaviour
     #region Client
     private void UpdateHealthBar(int oldHealth, int newHeatlh)
     {
-        healthBar.value = (float)((float)newHeatlh / (float)baseHp);
+        if (!isActive) return;
+        healthBar.UpdateHealthBar(newHeatlh);
     }
     #endregion
 

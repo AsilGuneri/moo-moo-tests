@@ -806,7 +806,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  healthBar: {fileID: 3037451898832644821}
+  healthBar: {fileID: 8367084093036167732}
   ExpToGain: 1
 --- !u!114 &2163373812530429147
 MonoBehaviour:
@@ -2445,14 +2445,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1353517128286130327, guid: c661ba664229e414dbc829792b0b6cb0, type: 3}
   m_PrefabInstance: {fileID: 395789148298354730}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3037451898832644821 stripped
+--- !u!114 &8367084093036167732 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3411778304062409471, guid: c661ba664229e414dbc829792b0b6cb0, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8170649597135888926, guid: c661ba664229e414dbc829792b0b6cb0, type: 3}
   m_PrefabInstance: {fileID: 395789148298354730}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 95c090c813dc3724187906693b7a29d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
