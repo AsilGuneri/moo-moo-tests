@@ -28,6 +28,12 @@ public class Projectile : NetworkBehaviour, IProjectile
     [SyncVar] private Transform spawnerTransform;
     [NonSerialized][SyncVar] public GameObject Target;
 
+
+    public bool BelongsToEnemy(UnitType enemyTo)
+    {
+        return spawnerTransform.GetComponent<UnitController>().IsEnemyTo(enemyTo);
+    }
+
     [Server]
     public void SetupProjectile(GameObject target, int damage, Transform spawnerTransform, Action action = null)
     {

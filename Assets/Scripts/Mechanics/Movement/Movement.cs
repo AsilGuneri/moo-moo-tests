@@ -34,7 +34,7 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S)) ClientStop();
         if (!isMoving) return;
 
-        if (ReachedDestination(0.5f) && controller.TargetController.Target == null)
+        if (ReachedDestination(0.1f) && controller.TargetController.Target == null)
         {
             ClientStop();
         }
@@ -93,6 +93,7 @@ public class Movement : MonoBehaviour
     }
     public async void StartFollow(Transform target, float followDistance)
     {
+        if (target.position == Vector3.zero) Debug.Log("asilxx954 " +StackTraceUtility.ExtractStackTrace());
         currentTargetPos = target.position;
         isFollowing = true;
         while (!Extensions.CheckRange(target.position, transform.position, followDistance))

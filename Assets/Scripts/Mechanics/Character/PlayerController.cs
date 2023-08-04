@@ -42,23 +42,23 @@ public class PlayerController : UnitController
        
 
         // Check if the Q key is pressed.
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (skills[0].TargetRequired)
-            {
-                GameObject target = null;
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    if (skills[0].TargetRequired)
+        //    {
+        //        GameObject target = null;
 
-                Ray ray;
-                bool isRayHit;
-                RaycastHit hitInfo;
-                GetMousePositionRaycastInfo(out ray, out isRayHit, out hitInfo);
-                if(IsEnemy(hitInfo)) target = hitInfo.transform.gameObject;
-                else return;
+        //        Ray ray;
+        //        bool isRayHit;
+        //        RaycastHit hitInfo;
+        //        GetMousePositionRaycastInfo(out ray, out isRayHit, out hitInfo);
+        //        if(IsEnemy(hitInfo)) target = hitInfo.transform.gameObject;
+        //        else return;
                 
-                // Use the first skill on a target.
-                skills[0].Use(this, target.GetComponent<UnitController>());
-            }
-        }
+        //        // Use the first skill on a target.
+        //       // skills[0].Use(this, target.GetComponent<UnitController>());
+        //    }
+        //}
     }
     private void Activate()
     {

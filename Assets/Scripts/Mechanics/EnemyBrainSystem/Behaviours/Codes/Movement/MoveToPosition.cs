@@ -76,8 +76,7 @@ public class MoveToPositionController : EnemyBehaviourController
 
     private bool ShouldEnter()
     {
-
-        if (Extensions.CheckRange(transform.position,targetPos,moveData.Offset)) return false;
+        if (Extensions.CheckRange(transform.position, targetPos, moveData.Offset)) return false;
         return true;
     }
 }

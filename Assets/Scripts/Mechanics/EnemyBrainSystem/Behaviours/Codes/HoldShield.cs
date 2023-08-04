@@ -7,6 +7,7 @@ public class HoldShield : EnemyBehaviourData
 {
     public float Time;
     public float Cooldown;
+    public Skill shieldSkill;
     public override EnemyBehaviourController CreateBehaviourController(GameObject gameObject)
     {
         var controller = gameObject.AddComponent<HoldShieldController>();
@@ -44,7 +45,7 @@ public class HoldShieldController : EnemyBehaviourController
 
     public override void OnEnter()
     {
-
+        controller.UseSkill(defendData.shieldSkill);
     }
     public override void OnExit()
     {

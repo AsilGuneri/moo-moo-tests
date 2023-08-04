@@ -16,3 +16,4 @@ MonoBehaviour:
   BlockAttacking: 1
   Time: 0
   Cooldown: 0
+  shieldSkill: {fileID: 11400000, guid: 06a19e14a02ad8a48a22a2fc0e6ae555, type: 2}
