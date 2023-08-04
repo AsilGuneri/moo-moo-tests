@@ -6972,8 +6972,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fed5c6dd07c7d6e4f857b420fa8f559a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Radius: 0.42
-  Height: 5.09
+  Radius: 1.68
+  Height: 5.03
 --- !u!114 &1893436850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7004,6 +7004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00e39d3135bd9d4d94d40a8b485e3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AgentRadius: 1.68
 --- !u!95 &1893436852
 Animator:
   serializedVersion: 5

@@ -67,6 +67,15 @@ public class Extensions : MonoBehaviour
     public static bool CheckRange(Vector3 unitPos, Vector3 targetPos, float range){
         return GetDistance(unitPos, targetPos) <= range;
     }
+    public static bool CheckRangeBetweenUnits(Transform unit, Transform target, float range)
+    {
+        float distanceBetweenCenters = GetDistance(unit.position, target.position);
+        var unitRadius = unit.GetComponent<UnitController>().Movement.AgentRadius;
+        var targetRadius = target.GetComponent<UnitController>().Movement.AgentRadius;
+
+        float distanceBetweenEdges = distanceBetweenCenters - (unitRadius + targetRadius);
+        return distanceBetweenEdges <= range;
+    }
 
     public static float GetDistance(Vector3 currentTargetPosition, Vector3 currentUnitPosition){
         return Vector2.Distance(Extensions.To2D(currentTargetPosition), Extensions.To2D(currentUnitPosition));

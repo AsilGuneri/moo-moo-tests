@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
     public Action OnMoveStop;
     public Action OnFollowStop;
 
+    public float AgentRadius;
     public Transform OverrideTarget { get => overrideTarget; }
     public bool IsMoving { get { return isMoving; } }
 
@@ -96,7 +97,8 @@ public class Movement : MonoBehaviour
         if (target.position == Vector3.zero) Debug.Log("asilxx954 " +StackTraceUtility.ExtractStackTrace());
         currentTargetPos = target.position;
         isFollowing = true;
-        while (!Extensions.CheckRange(target.position, transform.position, followDistance))
+
+        while (!Extensions.CheckRangeBetweenUnits(transform, target, followDistance))
         {
             if (!isFollowing) return;
             ClientMove(target.position);

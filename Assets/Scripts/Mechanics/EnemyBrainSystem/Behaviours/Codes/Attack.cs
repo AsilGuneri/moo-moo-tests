@@ -50,9 +50,11 @@ public class AttackController : EnemyBehaviourController
     private bool ShouldEnter()
     {
         if (controller.TargetController.Target == null) return false;
-        if (!Extensions.CheckRange(controller.TargetController.Target.transform.position, 
-            transform.position, controller.attackRange)) return false;
+        if (!Extensions.CheckRangeBetweenUnits(controller.transform,controller.TargetController.Target.transform, controller.attackRange))
+            return false;
 
         return true;
+        //controller.TargetController.Target.GetComponent<UnitController>().Movement.AgentRadius),
+        //    controller.attackRange,controller.Movement.AgentRadius
     }
 }

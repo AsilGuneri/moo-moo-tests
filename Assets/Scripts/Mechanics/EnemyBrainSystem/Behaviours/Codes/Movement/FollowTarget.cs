@@ -68,7 +68,7 @@ public class FollowTargetController : EnemyBehaviourController
     private bool ShouldEnter()
     {
         if (controller.TargetController.Target == null) return false;
-        if (Extensions.CheckRange(controller.TargetController.Target.transform.position, transform.position, followOffset)) return false;
+        if (Extensions.CheckRangeBetweenUnits(transform, controller.TargetController.Target.transform, followOffset)) return false;
         return true;
     }
 }
