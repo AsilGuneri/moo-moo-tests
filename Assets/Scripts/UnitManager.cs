@@ -124,20 +124,22 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
         return closestUnit;
     }
-    public List<GameObject> GetUnitsInRadius(Vector3 centerPos, float radius, bool isEnemy = false)
+    public List<GameObject> GetEnemiesInRadius(UnitController controller, float radius)
     {
         List<GameObject> units = new List<GameObject>();
-        foreach (NetworkIdentityReference unit in isEnemy ? WaveEnemies : Players)
+        foreach(var enemyType in controller.enemyList)
         {
-            if (!unit.Value) continue;
-            if (!unit.Value.gameObject) continue;
-
-            bool inRange = Extensions.CheckRange(centerPos, unit.Value.gameObject.transform.position, radius);
-            if (!inRange && !units.Contains(unit.Value.gameObject))
+            foreach (NetworkIdentityReference unit in GetUnitList(enemyType))
             {
-                units.Add(unit.Value.gameObject);
-            }
+                if (!unit.Value) continue;
+                if (!unit.Value.gameObject) continue;
 
+                bool inRange = Extensions.CheckRange(controller.transform.position, unit.Value.gameObject.transform.position, radius);
+                if (inRange && !units.Contains(unit.Value.gameObject))
+                {
+                    units.Add(unit.Value.gameObject);
+                }
+            }
         }
         return units;
     }

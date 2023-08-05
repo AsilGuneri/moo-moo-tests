@@ -94,7 +94,6 @@ public class Movement : MonoBehaviour
     }
     public async void StartFollow(Transform target, float followDistance)
     {
-        if (target.position == Vector3.zero) Debug.Log("asilxx954 " +StackTraceUtility.ExtractStackTrace());
         currentTargetPos = target.position;
         isFollowing = true;
 

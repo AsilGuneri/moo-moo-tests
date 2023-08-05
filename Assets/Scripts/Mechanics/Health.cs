@@ -10,6 +10,7 @@ public class Health : NetworkBehaviour
 {
     public Action OnDeath;
     public bool IsDead { get; private set; }
+    public int CurrentHealth { get => currentHealth; }
     public int CurrentHealthPercentage { get { return (currentHealth / baseHp) * 100; } }
 
     [SerializeField] private HealthBar healthBar;
