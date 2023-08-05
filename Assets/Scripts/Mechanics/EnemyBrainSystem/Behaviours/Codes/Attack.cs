@@ -15,14 +15,14 @@ public class Attack : EnemyBehaviourData
 }
 public class AttackController : EnemyBehaviourController
 {
-    private EnemyController controller;
+    private UnitController controller;
     private BasicAttackController attackController;
     public override void OnInitialize(EnemyBehaviourData data)
     {
         if (IsInitialized) return;
         base.OnInitialize(data);
         attackController = GetComponent<BasicAttackController>();
-        controller = GetComponent<EnemyController>();
+        controller = GetComponent<UnitController>();
         IsInitialized = true;
     }
     public override bool EnterCondition()

@@ -95,7 +95,7 @@ public class EnemyBrain : MonoBehaviour
         }
     }
 
-    private void ExitBehaviour()
+    public void ExitBehaviour()
     {
         StateControllerDictionary[CurrentBehaviour.name].OnExit();
         currentBehaviour = null;

@@ -30,10 +30,7 @@ public class Health : NetworkBehaviour
         //baseHp = 10000000;
     }
     #region Server
-    public override void OnStartServer()//perfect start for pool object
-    {
-        StartCoroutine(StartRoutine());
-    }
+    
     [Server]
     public void TakeDamage(int dmg, Transform dealerTransform)
     {
@@ -55,9 +52,12 @@ public class Health : NetworkBehaviour
         }
     }
 
-    private IEnumerator StartRoutine()
+    public void ResetHealth()
     {
-        yield return new WaitUntil(() => NetworkClient.ready);
+        SetupHealth();
+    }
+    private void SetupHealth()
+    {
         IsDead = false;
         currentHealth = baseHp;
         healthBar.SetupHealthBar(currentHealth);

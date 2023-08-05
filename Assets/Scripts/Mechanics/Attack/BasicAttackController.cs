@@ -91,7 +91,10 @@ public abstract class BasicAttackController : NetworkBehaviour
         attackTask = Attack(attackSpeed, animAttackPoint);
         Transform targetTransform = target.transform;
         Vector3 lookPos = new Vector3(targetTransform.position.x, transform.position.y, targetTransform.position.z);
-        transform.LookAt(lookPos);
+        if(controller.unitType != UnitType.Building)
+        {
+            transform.LookAt(lookPos);
+        }
         await attackTask;
     }
     private async Task Attack(float attackSpeed, float animAttackPoint)

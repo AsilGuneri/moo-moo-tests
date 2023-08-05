@@ -43,6 +43,7 @@ public class PickClosestEnemyController : EnemyBehaviourController
     {
         var closestEnemy = UnitManager.Instance.GetClosestEnemy(transform.position, controller);
         controller.TargetController.SetTarget(closestEnemy);
+        controller.GetComponent<EnemyBrain>().ExitBehaviour();
     }
 
     public override void OnExit()
@@ -52,7 +53,6 @@ public class PickClosestEnemyController : EnemyBehaviourController
 
     private bool ShouldEnter()
     {
-        if (controller.TargetController.Target != null) return false;
-        return true;
+        return (controller.TargetController.Target == null) ;
     }
 }

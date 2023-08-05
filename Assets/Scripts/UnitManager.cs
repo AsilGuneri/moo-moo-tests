@@ -32,6 +32,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
             case UnitType.Building:
                 if (Buildings.Contains(unit)) return;
                 Buildings.Add(unit);
+                unit.Value.GetComponent<EnemyBrain>().StartBrain();
                 break;
 
 
