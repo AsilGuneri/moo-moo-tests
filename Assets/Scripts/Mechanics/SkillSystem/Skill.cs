@@ -23,8 +23,6 @@ public abstract class Skill : ScriptableObject
         // Create the appropriate controller
         var controller = CreateBehaviourController(owner.gameObject);
         owner.GetComponent<UnitController>().SkillControllerDictionary.Add(this.name, controller);
-        Debug.Log("asilxx1 skill name" + this.name);
-
         controller.OnInitialize(this);
     }
 }
