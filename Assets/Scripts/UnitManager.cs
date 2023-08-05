@@ -60,6 +60,12 @@ public class UnitManager : NetworkSingleton<UnitManager>
                     }
                 }
                 break;
+            case UnitType.Building:
+                foreach(var building in Buildings)
+                {
+                    Buildings.Remove(building);
+                }
+                break;
         }
     }
     public void GiveCommand(string commandPackName, MinionType minionType)

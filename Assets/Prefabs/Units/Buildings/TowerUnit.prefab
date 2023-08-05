@@ -325,7 +325,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  attackRange: 5
+  attackRange: 10
   attackSpeed: 1
   unitType: 2
   enemyList: 01000000
