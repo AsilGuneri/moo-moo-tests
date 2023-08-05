@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
 {
-    [SerializeField] private float tickTime = 0.1f;
+   // [SerializeField] private float tickTime = 0.1f;
 
     public List<BehaviourPack> Packs = new List<BehaviourPack>();
     public Dictionary<string, EnemyBehaviourController> StateControllerDictionary = new();
@@ -63,50 +63,50 @@ public class EnemyBrain : MonoBehaviour
             isInitialized = true;
         }
         isActive = true;
-        StartCoroutine(BrainCycle());
+        //StartCoroutine(BrainCycle());
     }
 
-    private IEnumerator BrainCycle()
-    {
-        while(isInitialized && isActive) 
-        {
-            int nextBehaviourIndex = FindNextBehaviour();
-            if (nextBehaviourIndex != -1 && (currentBehaviourIndex == -1 || nextBehaviourIndex < currentBehaviourIndex))
-            {
-                if (currentBehaviourIndex != -1)
-                {
-                    ExitBehaviour();
-                }
-                currentBehaviourIndex = nextBehaviourIndex;
-                EnterBehaviour(currentPack.Behaviours[currentBehaviourIndex]);
-            }
-            else if (currentBehaviourIndex != -1)
-            {
-                CheckExit();
-            }
-            yield return Extensions.GetWait(tickTime);
-        }
+    //private IEnumerator BrainCycle()
+    //{
+    //    while(isInitialized && isActive) 
+    //    {
+    //        int nextBehaviourIndex = FindNextBehaviour();
+    //        if (nextBehaviourIndex != -1 && (currentBehaviourIndex == -1 || nextBehaviourIndex < currentBehaviourIndex))
+    //        {
+    //            if (currentBehaviourIndex != -1)
+    //            {
+    //                ExitBehaviour();
+    //            }
+    //            currentBehaviourIndex = nextBehaviourIndex;
+    //            EnterBehaviour(currentPack.Behaviours[currentBehaviourIndex]);
+    //        }
+    //        else if (currentBehaviourIndex != -1)
+    //        {
+    //            CheckExit();
+    //        }
+    //        //yield return Extensions.GetWait(tickTime);
+    //    }
         
-    }
+    //}
 
     private void Update()
     {
-        //if (!isInitialized || !isActive) return;
+        if (!isInitialized || !isActive) return;
 
-        //int nextBehaviourIndex = FindNextBehaviour();
-        //if (nextBehaviourIndex != -1 && (currentBehaviourIndex == -1 || nextBehaviourIndex < currentBehaviourIndex))
-        //{
-        //    if (currentBehaviourIndex != -1)
-        //    {
-        //        ExitBehaviour();
-        //    }
-        //    currentBehaviourIndex = nextBehaviourIndex;
-        //    EnterBehaviour(currentPack.Behaviours[currentBehaviourIndex]);
-        //}
-        //else if (currentBehaviourIndex != -1)
-        //{
-        //    CheckExit();
-        //}
+        int nextBehaviourIndex = FindNextBehaviour();
+        if (nextBehaviourIndex != -1 && (currentBehaviourIndex == -1 || nextBehaviourIndex < currentBehaviourIndex))
+        {
+            if (currentBehaviourIndex != -1)
+            {
+                ExitBehaviour();
+            }
+            currentBehaviourIndex = nextBehaviourIndex;
+            EnterBehaviour(currentPack.Behaviours[currentBehaviourIndex]);
+        }
+        else if (currentBehaviourIndex != -1)
+        {
+            CheckExit();
+        }
     }
 
     private void SetBrainActive(bool isActive)

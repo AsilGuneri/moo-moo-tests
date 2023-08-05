@@ -10,7 +10,6 @@ public class FollowTarget : EnemyBehaviourData
 {
     public bool UseAttackRange;
     [ConditionalField(nameof(UseAttackRange),true)] public float FollowOffset;
-    public bool UseOverrideTarget;
 
     // Create the MoveController and add it to the given game object
     public override EnemyBehaviourController CreateBehaviourController(GameObject gameObject)
@@ -54,7 +53,7 @@ public class FollowTargetController : EnemyBehaviourController
     public override void OnEnter()
     {
         isIn = true;
-        var target = followData.UseOverrideTarget? controller.Movement.OverrideTarget : controller.TargetController.Target.transform;
+        var target = controller.TargetController.Target.transform;
         controller.Movement.StartFollow(target, followOffset);
 
     }

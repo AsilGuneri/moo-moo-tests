@@ -10,10 +10,8 @@ public class Movement : MonoBehaviour
     public Action OnFollowStop;
 
     public float AgentRadius;
-    public Transform OverrideTarget { get => overrideTarget; }
     public bool IsMoving { get { return isMoving; } }
 
-    private Transform overrideTarget;
     private UnitController controller;
     private bool isMoving = false;
     private Vector3 currentTargetPos;
@@ -102,6 +100,7 @@ public class Movement : MonoBehaviour
             if (!isFollowing) return;
             ClientMove(target.position);
             await Task.Delay(100);
+            if (!transform || !target) return;
         }
         StopFollow();
 

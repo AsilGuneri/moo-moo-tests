@@ -79,13 +79,20 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
     }
 
-    public GameObject GetBaseBuilding()
+    public GameObject GetClosestBuilding(Vector3 myPos)
     {
-        foreach(var x in Buildings)
+        float minDistance = float.MaxValue;
+        GameObject closestBuilding = null;
+        foreach(var building in Buildings)
         {
-            return x.Value.gameObject;
+            var distance = Extensions.GetDistance(building.Value.transform.position, myPos);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestBuilding = building.Value.gameObject;
+            }
         }
-        return null;
+        return closestBuilding;
     }
     public GameObject GetClosestEnemy(Vector3 myPosition, UnitController myUnitController)
     {

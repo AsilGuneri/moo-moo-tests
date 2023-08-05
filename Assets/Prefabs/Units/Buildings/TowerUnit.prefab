@@ -344,6 +344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a473c251a25634a88e45cec322a3fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tickTime: 0.1
   Packs:
   - PackName: Default
     Behaviours:
@@ -407,7 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  Damage: 5
+  Damage: 0
   projectilePrefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
 --- !u!95 &8572392696976709192
 Animator:

@@ -1,13 +1,18 @@
+using Mono.Cecil;
 using MyBox;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build.Pipeline;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PickClosestEnemy", menuName = "Scriptable Objects/EnemyBehaviours/PickClosestEnemy")]
 
 public class PickClosestEnemy : EnemyBehaviourData
 {
-  
+    public float AggroRange;
+    [Range(0f, 100f)]
+    public float PercentageDivision = 10;
+    public int HealthPercentScoreMultiplier = 1;
     // Create the MoveController and add it to the given game object
     public override EnemyBehaviourController CreateBehaviourController(GameObject gameObject)
     {
@@ -21,6 +26,7 @@ public class PickClosestEnemyController : EnemyBehaviourController
 {
     private PickClosestEnemy pickEnemyData;
     private UnitController controller;
+    private GameObject bestTarget;
 
     public override void OnInitialize(EnemyBehaviourData data)
     {
@@ -41,9 +47,9 @@ public class PickClosestEnemyController : EnemyBehaviourController
 
     public override void OnEnter()
     {
-        var closestEnemy = UnitManager.Instance.GetClosestEnemy(transform.position, controller);
-        controller.TargetController.SetTarget(closestEnemy);
-        controller.GetComponent<EnemyBrain>().ExitBehaviour();
+        AssignTargetAndExitBehavior(bestTarget);
+        
+        
     }
 
     public override void OnExit()
@@ -53,6 +59,44 @@ public class PickClosestEnemyController : EnemyBehaviourController
 
     private bool ShouldEnter()
     {
-        return (controller.TargetController.Target == null) ;
+        if (controller.TargetController.Target == null) return true;
+        var bestTarget = GetBestTarget();
+        if (bestTarget != null && bestTarget != controller.TargetController.Target)
+        {
+            this.bestTarget = bestTarget;
+            return true;
+        }
+        return false;
     }
+
+    private GameObject GetBestTarget()
+    {
+        var possibleTargets = UnitManager.Instance.GetEnemiesInRadius(controller, pickEnemyData.AggroRange);
+        float bestScore = float.MinValue;
+        GameObject bestTarget = null;
+        foreach (var possibleTarget in possibleTargets)
+        {
+            var unitController = possibleTarget.GetComponent<UnitController>();
+            float score = 0;
+
+            score -= (unitController.Health.CurrentHealthPercentage % pickEnemyData.PercentageDivision);
+            score -= Extensions.GetDistance(possibleTarget.transform.position, controller.transform.position);
+
+            if (score > bestScore)
+            {
+                bestScore = score;
+                bestTarget = possibleTarget;
+            }
+        }
+        return bestTarget;
+    }
+
+    private void AssignTargetAndExitBehavior(GameObject closestEnemy)
+    {
+        if (closestEnemy == null) closestEnemy = UnitManager.Instance.GetClosestBuilding(transform.position);
+        controller.TargetController.SetTarget(closestEnemy);
+        controller.GetComponent<EnemyBrain>().ExitBehaviour();
+    }
+
+
 }
