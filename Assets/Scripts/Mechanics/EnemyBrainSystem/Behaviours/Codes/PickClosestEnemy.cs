@@ -93,7 +93,7 @@ public class PickClosestEnemyController : EnemyBehaviourController
 
     private void AssignTargetAndExitBehavior(GameObject closestEnemy)
     {
-        if (closestEnemy == null) closestEnemy = UnitManager.Instance.GetClosestBuilding(transform.position);
+        if (closestEnemy == null) closestEnemy = UnitManager.Instance.GetClosestEnemy(transform.position, controller);
         controller.TargetController.SetTarget(closestEnemy);
         controller.GetComponent<EnemyBrain>().ExitBehaviour();
     }

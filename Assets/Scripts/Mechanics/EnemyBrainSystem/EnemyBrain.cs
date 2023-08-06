@@ -22,7 +22,7 @@ public class EnemyBrain : MonoBehaviour
 
     public void KillBrain()
     {
-        ExitBehaviour();
+        if(currentBehaviour != null) ExitBehaviour();
         SetBrainActive(false);
     }
 

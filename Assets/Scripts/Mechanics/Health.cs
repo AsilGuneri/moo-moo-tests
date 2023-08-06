@@ -84,9 +84,10 @@ public class Health : NetworkBehaviour
     [Server]
     private void Die(Transform damageDealerTransform)
     {
+        if (IsDead) return;
+        IsDead = true;
         isActive = false;
         OnDeath?.Invoke();
-        IsDead = true;
         UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), controller.unitType);
         if(damageDealerTransform.TryGetComponent(out PlayerLevelController levelController))
         {
