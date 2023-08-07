@@ -69549,9 +69549,6 @@ MonoBehaviour:
   clickableLayerMask:
     serializedVersion: 2
     m_Bits: 576
-  groundLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
   moveIndicator: {fileID: 811260699408436622, guid: 299615328751d224781d31e0fe65de66, type: 3}
   attackModeIndicator: {fileID: 5432209458267137536, guid: 93bf18897f48e4140b9a368c27bd919b, type: 3}
 --- !u!114 &9067681001629958667
@@ -69690,7 +69687,7 @@ MonoBehaviour:
   MotionType: 2
   Speed: 7
   Acceleration: 10
-  AngularSpeed: 250
+  AngularSpeed: 750
   StoppingDistance: 0.1
   AutoBreaking: 1
 --- !u!114 &8064767531322124681
