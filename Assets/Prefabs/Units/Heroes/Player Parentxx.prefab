@@ -69546,9 +69546,12 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 3792548669549166751}
   skills: []
   animAttackPoint: 0.5
-  layerMask:
+  clickableLayerMask:
     serializedVersion: 2
     m_Bits: 576
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   moveIndicator: {fileID: 811260699408436622, guid: 299615328751d224781d31e0fe65de66, type: 3}
   attackModeIndicator: {fileID: 5432209458267137536, guid: 93bf18897f48e4140b9a368c27bd919b, type: 3}
 --- !u!114 &9067681001629958667
@@ -69594,6 +69597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00e39d3135bd9d4d94d40a8b485e3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AgentRadius: 0
 --- !u!114 &8735856486146096566
 MonoBehaviour:
   m_ObjectHideFlags: 0

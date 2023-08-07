@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : UnitController
 {
-    [SerializeField] private LayerMask layerMask;
+    [SerializeField] private LayerMask clickableLayerMask;
     [SerializeField] private GameObject moveIndicator;
     [SerializeField] private GameObject attackModeIndicator;
     public string PlayerName { get; set; }
@@ -82,27 +82,62 @@ public class PlayerController : UnitController
         //SkillSelectionPanel.Instance.CacheClassSkills();
     }
 
-    private void GetMousePositionRaycastInfo(out Ray ray, out bool isRayHit, out RaycastHit hitInfo)
+    private void GetMousePositionRaycastInfo(out Ray ray, out RaycastHit[] hits)
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
         ray = mainCamera.ScreenPointToRay(mousePos);
-        isRayHit = Physics.Raycast(ray, out hitInfo, 100, layerMask);
+        hits = Physics.RaycastAll(ray, 100, clickableLayerMask);
     }
-    private void OnRayHit(RaycastHit hitInfo)
+
+    private void OnRayHit(RaycastHit[] hits)
     {
-        if (IsEnemy(hitInfo))
+        float minDistance = float.MaxValue;
+        ClickableArea closestClickableArea = null;
+        Vector3 groundHitPos = default;
+
+        foreach (var hitInfo in hits)
         {
-            OnClickEnemy(hitInfo);
+            if(hitInfo.collider.gameObject.layer ==  6) // ground
+            {
+                groundHitPos = hitInfo.point;
+                continue;
+            }
+
+            var clickableArea = hitInfo.collider.GetComponent<ClickableArea>();
+            if (clickableArea)
+            {
+                float distance = Vector3.Distance(hitInfo.point, clickableArea.ClickableCollider.bounds.center);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closestClickableArea = clickableArea;
+                }
+            }
+        }
+
+        if (closestClickableArea)
+        {
+            var clickedUnitType = closestClickableArea.gameObject.GetComponent<UnitController>().unitType;
+            if (IsEnemyTo(clickedUnitType))
+            {
+                OnClickEnemy(closestClickableArea.transform);
+                Debug.Log("Clicked on enemy: " + closestClickableArea.gameObject.name);
+            }
+            // Use the closest clickable area.
+            // Replace this with your own logic.
         }
         else
         {
-            MoveToPoint(hitInfo);
+            MoveToPoint(groundHitPos);
+            // Perform move logic
+            // MoveToPoint(hitInfo);
         }
     }
-    private void OnClickEnemy(RaycastHit hitInfo)
+
+    private void OnClickEnemy(Transform enemyTransform)
     {
-        Transform enemyTransform = hitInfo.transform;
         StartAttack(enemyTransform);
+
     }
     private void StartAttack(Transform enemyTransform)
     {
@@ -140,10 +175,11 @@ public class PlayerController : UnitController
 
         return;
     }
-    private void MoveToPoint(RaycastHit hitInfo)
+    private void MoveToPoint(Vector3 point)
     {
         targetController.SetTarget(null);
-        Vector3 newPoint = Extensions.CheckNavMesh(hitInfo.point);
+
+        Vector3 newPoint = Extensions.CheckNavMesh(point);
         Movement.ClientMove(newPoint);
         ObjectPooler.Instance.SpawnFromPool(moveIndicator.gameObject, Extensions.Vector3WithoutY(newPoint), moveIndicator.transform.rotation);
     }
@@ -180,35 +216,38 @@ public class PlayerController : UnitController
     {
         if (!CanClick()) return;
         Ray ray;
-        bool isRayHit;
-        RaycastHit hitInfo;
-        GetMousePositionRaycastInfo(out ray, out isRayHit, out hitInfo);
+        RaycastHit[] hits;
+        GetMousePositionRaycastInfo(out ray, out hits);
+
         if (isAttackClickMode) //will handle that part later
         {
-            OnAttackModeClick(hitInfo);
+            // OnAttackModeClick(hitInfo);
             return;
+        }
+        else if (hits.Length > 0)
+        {
+            OnRayHit(hits);
         }
 
     }
+
     private void OnRightClick()//used by input component
     {
         if (!CanClick()) return;
 
         Ray ray;
-        bool isRayHit;
-        RaycastHit hitInfo;
-        GetMousePositionRaycastInfo(out ray, out isRayHit, out hitInfo);
+        RaycastHit[] hits;
+        GetMousePositionRaycastInfo(out ray, out hits);
 
         if (isAttackClickMode) //will handle that part later
         {
-            OnAttackModeClick(hitInfo);
+            // OnAttackModeClick(hitInfo);
             return;
         }
-        if (isRayHit)
+        else if (hits.Length > 0)
         {
-            OnRayHit(hitInfo);
+            OnRayHit(hits);
         }
-
     }
     private void OnSetAutoAttackMode()//used by input component
     {

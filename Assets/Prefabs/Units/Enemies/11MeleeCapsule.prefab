@@ -635,6 +635,7 @@ GameObject:
   - component: {fileID: 2649789469614115756}
   - component: {fileID: 4493909082151338282}
   - component: {fileID: 1306364402251745579}
+  - component: {fileID: 566745377156777818}
   m_Layer: 9
   m_Name: 11MeleeCapsule
   m_TagString: Untagged
@@ -710,7 +711,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a473c251a25634a88e45cec322a3fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tickTime: 0.05
   Packs:
   - PackName: Default
     Behaviours:
@@ -969,7 +969,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6
+  m_Radius: 0.75
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -987,6 +987,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useLifeTime: 0
   lifeTime: 0
+--- !u!114 &566745377156777818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2462893064303745991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25ea706f53ff5748ab48314e3c7dbe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2821640562202802715
 GameObject:
   m_ObjectHideFlags: 0

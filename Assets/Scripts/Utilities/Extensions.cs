@@ -43,13 +43,21 @@ public class Extensions : MonoBehaviour
     public static Vector3 CheckNavMesh(Vector3 clickPos)
     {
         NavMeshHit hit;
-
+        Debug.Log($"asilxx0 {NavMesh.GetAreaFromName("Walkable")} {NavMesh.GetAreaFromName("Unwalkable")}");
         // Check for nearest point on navmesh within a certain range (here 5 units)
         if (NavMesh.SamplePosition(clickPos, out hit, 15.0f, NavMesh.AllAreas))
+        {
+            Debug.Log($"asilxx1");
             return hit.position;
+
+        }
         else
+        {
+            Debug.Log("asilxx2");
             return clickPos;
-        
+
+        }
+
     }
     public static Vector3 GetMouseHitPosition()
     {
