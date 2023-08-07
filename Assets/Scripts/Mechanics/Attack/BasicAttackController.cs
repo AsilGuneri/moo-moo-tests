@@ -89,19 +89,25 @@ public abstract class BasicAttackController : NetworkBehaviour
     private async Task AttackOnce(GameObject target, float attackSpeed, float animAttackPoint)
     {
         attackTask = Attack(attackSpeed, animAttackPoint);
+        await attackTask;
+    }
+
+    private void RotateToTarget(GameObject target)
+    {
         Transform targetTransform = target.transform;
         Vector3 lookPos = new Vector3(targetTransform.position.x, transform.position.y, targetTransform.position.z);
-        if(controller.unitType != UnitType.Building)
+        if (controller.unitType != UnitType.Building)
         {
             transform.LookAt(lookPos);
         }
-        await attackTask;
     }
+
     private async Task Attack(float attackSpeed, float animAttackPoint)
     {
         Extensions.GetAttackTimes(1, attackSpeed, animAttackPoint
             , out int msBeforeAttack, out int msAfterAttack);
-
+        GameObject target = controller.TargetController.Target;
+        RotateToTarget(target);
         OnAttackStart();
         await Task.Delay(msBeforeAttack);
         if (!IsAutoAttackingAvailable())
@@ -109,6 +115,7 @@ public abstract class BasicAttackController : NetworkBehaviour
             OnAttackCancelled?.Invoke();
             return;
         }
+        RotateToTarget(target);
         OnAttackImpact();
         await Task.Delay(msAfterAttack);
         OnAttackEnd();
