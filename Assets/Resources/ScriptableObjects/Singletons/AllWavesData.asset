@@ -16,6 +16,6 @@ MonoBehaviour:
   - WaveGoldReward: 100
     SubWaves:
     - Prefab: {fileID: 2462893064303745991, guid: 736be56d32648c548a0becfa8a517805, type: 3}
-      Count: 1
+      Count: 10
       Spacing: 2
-      Columns: 3
+      Columns: 5

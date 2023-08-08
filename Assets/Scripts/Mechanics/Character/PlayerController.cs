@@ -2,6 +2,7 @@ using Mirror;
 using ProjectDawn.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -154,17 +155,17 @@ public class PlayerController : UnitController
         {
         }
     }
-    private void OnAttackModeClick(RaycastHit hitInfo)
+    private void OnAttackModeClick(Vector3 clickPos)
     {
-        ObjectPooler.Instance.SpawnFromPool(attackModeIndicator.gameObject, Extensions.Vector3WithoutY(hitInfo.point), attackModeIndicator.transform.rotation);
-        var closestEnemy = UnitManager.Instance.GetClosestUnit(hitInfo.point, UnitType.WaveEnemy);
+        ObjectPooler.Instance.SpawnFromPool(attackModeIndicator.gameObject, Extensions.Vector3WithoutY(clickPos), attackModeIndicator.transform.rotation);
+        var closestEnemy = UnitManager.Instance.GetClosestUnit(clickPos, UnitType.WaveEnemy);
         if (closestEnemy == null)
         {
             isAttackClickMode = false;
             return;
         }
         float maxDistanceBetweenPointAndUnit = 20; /*distance between the click and monster change that*/
-        if (!Extensions.IsInRange(closestEnemy.transform.position, hitInfo.point, maxDistanceBetweenPointAndUnit))
+        if (!Extensions.IsInRange(closestEnemy.transform.position, clickPos, maxDistanceBetweenPointAndUnit))
         {
 
             isAttackClickMode = false;
@@ -218,11 +219,15 @@ public class PlayerController : UnitController
         Ray ray;
         RaycastHit[] hits;
         GetMousePositionRaycastInfo(out ray, out hits);
+        RaycastHit ? groundHit = hits.FirstOrDefault(hit => hit.collider.gameObject.layer == 6);
 
         if (isAttackClickMode) //will handle that part later
         {
-            // OnAttackModeClick(hitInfo);
-            return;
+            if (groundHit.HasValue)
+            {
+                OnAttackModeClick(groundHit.Value.point);
+                return;
+            }
         }
         else if (hits.Length > 0)
         {
@@ -238,11 +243,15 @@ public class PlayerController : UnitController
         Ray ray;
         RaycastHit[] hits;
         GetMousePositionRaycastInfo(out ray, out hits);
+        RaycastHit? groundHit = hits.FirstOrDefault(hit => hit.collider.gameObject.layer == 6);
 
         if (isAttackClickMode) //will handle that part later
         {
-            // OnAttackModeClick(hitInfo);
-            return;
+            if (groundHit.HasValue)
+            {
+                OnAttackModeClick(groundHit.Value.point);
+                return;
+            }
         }
         else if (hits.Length > 0)
         {
