@@ -24,4 +24,6 @@ public class TargetController : NetworkBehaviour
         if(Target.TryGetComponent(out Health health)) health.OnDeath -= SetToNull;
         Target = null;
     }
+
+
 }

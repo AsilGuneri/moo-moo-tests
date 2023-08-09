@@ -10,6 +10,7 @@ public class Health : NetworkBehaviour
 {
     public Action OnDeath;
     public bool IsDead { get; private set; }
+    public int CurrentHealth { get => currentHealth; }
     public int CurrentHealthPercentage { get { return (currentHealth / baseHp) * 100; } }
 
     [SerializeField] private HealthBar healthBar;
@@ -30,10 +31,7 @@ public class Health : NetworkBehaviour
         //baseHp = 10000000;
     }
     #region Server
-    public override void OnStartServer()//perfect start for pool object
-    {
-        StartCoroutine(StartRoutine());
-    }
+    
     [Server]
     public void TakeDamage(int dmg, Transform dealerTransform)
     {
@@ -55,9 +53,12 @@ public class Health : NetworkBehaviour
         }
     }
 
-    private IEnumerator StartRoutine()
+    public void ResetHealth()
     {
-        yield return new WaitUntil(() => NetworkClient.ready);
+        SetupHealth();
+    }
+    private void SetupHealth()
+    {
         IsDead = false;
         currentHealth = baseHp;
         healthBar.SetupHealthBar(currentHealth);
@@ -83,9 +84,10 @@ public class Health : NetworkBehaviour
     [Server]
     private void Die(Transform damageDealerTransform)
     {
+        if (IsDead) return;
+        IsDead = true;
         isActive = false;
         OnDeath?.Invoke();
-        IsDead = true;
         UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), controller.unitType);
         if(damageDealerTransform.TryGetComponent(out PlayerLevelController levelController))
         {

@@ -69546,7 +69546,7 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 3792548669549166751}
   skills: []
   animAttackPoint: 0.5
-  layerMask:
+  clickableLayerMask:
     serializedVersion: 2
     m_Bits: 576
   moveIndicator: {fileID: 811260699408436622, guid: 299615328751d224781d31e0fe65de66, type: 3}
@@ -69594,6 +69594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00e39d3135bd9d4d94d40a8b485e3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AgentRadius: 0
 --- !u!114 &8735856486146096566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69686,7 +69687,7 @@ MonoBehaviour:
   MotionType: 2
   Speed: 7
   Acceleration: 10
-  AngularSpeed: 250
+  AngularSpeed: 750
   StoppingDistance: 0.1
   AutoBreaking: 1
 --- !u!114 &8064767531322124681
@@ -69954,10 +69955,6 @@ PrefabInstance:
     - target: {fileID: 1353517128286130327, guid: c661ba664229e414dbc829792b0b6cb0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6350921416085077436, guid: c661ba664229e414dbc829792b0b6cb0, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
 {
+   // [SerializeField] private float tickTime = 0.1f;
+
     public List<BehaviourPack> Packs = new List<BehaviourPack>();
     public Dictionary<string, EnemyBehaviourController> StateControllerDictionary = new();
 
@@ -19,7 +22,7 @@ public class EnemyBrain : MonoBehaviour
 
     public void KillBrain()
     {
-        ExitBehaviour();
+        if(currentBehaviour != null) ExitBehaviour();
         SetBrainActive(false);
     }
 
@@ -60,7 +63,31 @@ public class EnemyBrain : MonoBehaviour
             isInitialized = true;
         }
         isActive = true;
+        //StartCoroutine(BrainCycle());
     }
+
+    //private IEnumerator BrainCycle()
+    //{
+    //    while(isInitialized && isActive) 
+    //    {
+    //        int nextBehaviourIndex = FindNextBehaviour();
+    //        if (nextBehaviourIndex != -1 && (currentBehaviourIndex == -1 || nextBehaviourIndex < currentBehaviourIndex))
+    //        {
+    //            if (currentBehaviourIndex != -1)
+    //            {
+    //                ExitBehaviour();
+    //            }
+    //            currentBehaviourIndex = nextBehaviourIndex;
+    //            EnterBehaviour(currentPack.Behaviours[currentBehaviourIndex]);
+    //        }
+    //        else if (currentBehaviourIndex != -1)
+    //        {
+    //            CheckExit();
+    //        }
+    //        //yield return Extensions.GetWait(tickTime);
+    //    }
+        
+    //}
 
     private void Update()
     {
@@ -74,7 +101,7 @@ public class EnemyBrain : MonoBehaviour
                 ExitBehaviour();
             }
             currentBehaviourIndex = nextBehaviourIndex;
-            CheckEnter(currentPack.Behaviours[currentBehaviourIndex]);
+            EnterBehaviour(currentPack.Behaviours[currentBehaviourIndex]);
         }
         else if (currentBehaviourIndex != -1)
         {
@@ -82,7 +109,7 @@ public class EnemyBrain : MonoBehaviour
         }
     }
 
-    public void SetBrainActive(bool isActive)
+    private void SetBrainActive(bool isActive)
     {
         this.isActive = isActive;
     }
@@ -95,7 +122,7 @@ public class EnemyBrain : MonoBehaviour
         }
     }
 
-    private void ExitBehaviour()
+    public void ExitBehaviour()
     {
         StateControllerDictionary[CurrentBehaviour.name].OnExit();
         currentBehaviour = null;
@@ -116,12 +143,8 @@ public class EnemyBrain : MonoBehaviour
         return -1; // In case no suitable behaviour is found
     }
 
-    private void CheckEnter(EnemyBehaviourData behaviour)
+    private void EnterBehaviour(EnemyBehaviourData behaviour)
     {
-        if (!StateControllerDictionary[behaviour.name].EnterCondition())
-        {
-            throw new Exception("Behaviour " + behaviour.name + " cannot enter as it does not meet the condition.");
-        }
         currentBehaviour = behaviour;
         StateControllerDictionary[behaviour.name].OnEnter();
     }

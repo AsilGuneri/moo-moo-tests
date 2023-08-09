@@ -46,6 +46,7 @@ public abstract class UnitController : NetworkBehaviour
     protected virtual void Start()
     {
         animationController.SetAttackSpeed(attackSpeed);
+        health.OnDeath += () => { targetController.SetTarget(null); };
     }
     protected bool IsEnemy(RaycastHit hitInfo)
     {

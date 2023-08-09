@@ -9,10 +9,9 @@ public class Movement : MonoBehaviour
     public Action OnMoveStop;
     public Action OnFollowStop;
 
-    public Transform OverrideTarget { get => overrideTarget; }
+    public float AgentRadius;
     public bool IsMoving { get { return isMoving; } }
 
-    private Transform overrideTarget;
     private UnitController controller;
     private bool isMoving = false;
     private Vector3 currentTargetPos;
@@ -93,14 +92,15 @@ public class Movement : MonoBehaviour
     }
     public async void StartFollow(Transform target, float followDistance)
     {
-        if (target.position == Vector3.zero) Debug.Log("asilxx954 " +StackTraceUtility.ExtractStackTrace());
         currentTargetPos = target.position;
         isFollowing = true;
-        while (!Extensions.CheckRange(target.position, transform.position, followDistance))
+
+        while (!Extensions.CheckRangeBetweenUnits(transform, target, followDistance))
         {
             if (!isFollowing) return;
             ClientMove(target.position);
             await Task.Delay(100);
+            if (!transform || !target) return;
         }
         StopFollow();
 

@@ -32,6 +32,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
             case UnitType.Building:
                 if (Buildings.Contains(unit)) return;
                 Buildings.Add(unit);
+                unit.Value.GetComponent<EnemyBrain>().StartBrain();
                 break;
 
 
@@ -59,6 +60,12 @@ public class UnitManager : NetworkSingleton<UnitManager>
                     }
                 }
                 break;
+            case UnitType.Building:
+                foreach(var building in Buildings)
+                {
+                    Buildings.Remove(building);
+                }
+                break;
         }
     }
     public void GiveCommand(string commandPackName, MinionType minionType)
@@ -72,13 +79,20 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
     }
 
-    public GameObject GetBaseBuilding()
+    public GameObject GetClosestBuilding(Vector3 myPos)
     {
-        foreach(var x in Buildings)
+        float minDistance = float.MaxValue;
+        GameObject closestBuilding = null;
+        foreach(var building in Buildings)
         {
-            return x.Value.gameObject;
+            var distance = Extensions.GetDistance(building.Value.transform.position, myPos);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestBuilding = building.Value.gameObject;
+            }
         }
-        return null;
+        return closestBuilding;
     }
     public GameObject GetClosestEnemy(Vector3 myPosition, UnitController myUnitController)
     {
@@ -117,20 +131,22 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
         return closestUnit;
     }
-    public List<GameObject> GetUnitsInRadius(Vector3 centerPos, float radius, bool isEnemy = false)
+    public List<GameObject> GetEnemiesInRadius(UnitController controller, float radius)
     {
         List<GameObject> units = new List<GameObject>();
-        foreach (NetworkIdentityReference unit in isEnemy ? WaveEnemies : Players)
+        foreach(var enemyType in controller.enemyList)
         {
-            if (!unit.Value) continue;
-            if (!unit.Value.gameObject) continue;
-
-            bool inRange = Extensions.CheckRange(centerPos, unit.Value.gameObject.transform.position, radius);
-            if (!inRange && !units.Contains(unit.Value.gameObject))
+            foreach (NetworkIdentityReference unit in GetUnitList(enemyType))
             {
-                units.Add(unit.Value.gameObject);
-            }
+                if (!unit.Value) continue;
+                if (!unit.Value.gameObject) continue;
 
+                bool inRange = Extensions.CheckRange(controller.transform.position, unit.Value.gameObject.transform.position, radius);
+                if (inRange && !units.Contains(unit.Value.gameObject))
+                {
+                    units.Add(unit.Value.gameObject);
+                }
+            }
         }
         return units;
     }

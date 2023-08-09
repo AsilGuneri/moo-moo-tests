@@ -8,11 +8,6 @@ public abstract class EnemyBehaviourData : ScriptableObject
     public bool BlockMovement;
     public bool BlockAttacking;
 
-    public string State
-    {
-        get => state;
-    }
-    private string state;
 
     // Abstract method to create the appropriate controller
     public abstract EnemyBehaviourController CreateBehaviourController(GameObject gameObject);

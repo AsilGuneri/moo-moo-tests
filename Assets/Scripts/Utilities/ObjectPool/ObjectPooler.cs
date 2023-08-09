@@ -1,6 +1,7 @@
 using UnityEngine;
 using Mirror;
 using System.Collections.Generic;
+using System;
 
 public class ObjectPooler : NetworkBehaviour
 {
@@ -10,11 +11,16 @@ public class ObjectPooler : NetworkBehaviour
 
     private Dictionary<GameObject, Pool> poolDictionary;
 
+    public Action OnPoolStart;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
-
         Instance = this;
-
         poolDictionary = new Dictionary<GameObject, Pool>();
 
         foreach (Pool pool in pools)
@@ -30,6 +36,8 @@ public class ObjectPooler : NetworkBehaviour
                 //Debug.LogError("Prefab " + pool.Prefab.name + " does not have a NetworkIdentity and cannot be registered.");
             }
         }
+        OnPoolStart?.Invoke();
+        TowerManager.Instance.SetTowers();
     }
 
 
@@ -55,6 +63,7 @@ public class ObjectPooler : NetworkBehaviour
 
         GameObject spawnedObject = SpawnFromPool(prefab, position, rotation);
         NetworkServer.Spawn(spawnedObject);
+        spawnedObject.GetComponent<PoolObject>().OnSpawn();
     }
 
 
@@ -130,7 +139,6 @@ public class Pool
         objToSpawn.SetActive(true);
         objToSpawn.transform.position = position;
         objToSpawn.transform.rotation = rotation;
-
         return objToSpawn;
     }
 

@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b616fbe87fe4f384790f8b86f1dbf5e2, type: 3}
   m_Name: PickClosestEnemy
   m_EditorClassIdentifier: 
-  state: 3
+  BlockMovement: 0
+  BlockAttacking: 0
+  BetterOptionCooldown: 10
+  AggroRange: 20
+  PercentageDivision: 10
+  HealthPercentScoreMultiplier: 1

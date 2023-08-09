@@ -53,7 +53,19 @@ public class PoolObject : MonoBehaviour
         {
             brain.KillBrain();
         }
+       
     }
- 
+    public virtual void OnSpawn()
+    {
+        if (TryGetComponent(out UnitController controller))
+        {
+            controller.Health.ResetHealth();
+        }
+        if (TryGetComponent(out EnemyBrain brain))
+        {
+            brain.StartBrain();
+        }
+    }
+
 }
 
