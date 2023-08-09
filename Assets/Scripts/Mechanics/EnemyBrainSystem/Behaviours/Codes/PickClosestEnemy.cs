@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class PickClosestEnemy : EnemyBehaviourData
 {
+    public float BetterOptionCooldown;
     public float AggroRange;
     [Range(0f, 100f)]
     public float PercentageDivision = 10;
@@ -27,6 +28,10 @@ public class PickClosestEnemyController : EnemyBehaviourController
     private PickClosestEnemy pickEnemyData;
     private UnitController controller;
     private GameObject bestTarget;
+
+    private float timer = 0;
+    private bool onCooldown = false;
+
 
     public override void OnInitialize(EnemyBehaviourData data)
     {
@@ -48,21 +53,33 @@ public class PickClosestEnemyController : EnemyBehaviourController
     public override void OnEnter()
     {
         AssignTargetAndExitBehavior(bestTarget);
-        
-        
     }
 
     public override void OnExit()
     {
+        onCooldown = false;
+    }
 
+    private void Update() 
+    {
+        if (onCooldown)
+        {
+            timer += Time.deltaTime;
+            if(timer >= pickEnemyData.BetterOptionCooldown)
+            {
+                onCooldown = false;
+            }
+        }
     }
 
     private bool ShouldEnter()
     {
         if (controller.TargetController.Target == null) return true;
+        if (onCooldown) return false;
         var bestTarget = GetBestTarget();
         if (bestTarget != null && bestTarget != controller.TargetController.Target)
         {
+            onCooldown = true;
             this.bestTarget = bestTarget;
             return true;
         }
@@ -97,6 +114,4 @@ public class PickClosestEnemyController : EnemyBehaviourController
         controller.TargetController.SetTarget(closestEnemy);
         controller.GetComponent<EnemyBrain>().ExitBehaviour();
     }
-
-
 }
