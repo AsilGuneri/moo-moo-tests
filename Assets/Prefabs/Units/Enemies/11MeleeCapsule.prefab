@@ -130,7 +130,6 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 1928936259698625956}
   skills:
   - {fileID: 11400000, guid: 06a19e14a02ad8a48a22a2fc0e6ae555, type: 2}
-  animAttackPoint: 0.5
   minionType: 1
 --- !u!114 &2093334184839592437
 MonoBehaviour:
@@ -242,6 +241,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   hasCancelAttackAnim: 0
+  AttackAnimTime: 0
+  attackAnimName: Combat_Unarmed_Attack
 --- !u!114 &211520756723830630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  animAttackPoint: 0.55
   Damage: 10
 --- !u!114 &3030335984463891531
 MonoBehaviour:
@@ -476,6 +478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2639533419950208751, guid: 6ce9683ad666e9648b3a44eca765add0, type: 3}
+    - {fileID: 4721975872036428720, guid: 6ce9683ad666e9648b3a44eca765add0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -148,7 +148,7 @@ public class PlayerController : UnitController
         if (isInRange) //if yes, attack the enemy
         {
             movement.ClientStop();
-            attackController.StartAutoAttack(enemyTransform.transform.gameObject, attackSpeed, animAttackPoint);
+            attackController.StartAutoAttack(enemyTransform.transform.gameObject, attackSpeed);
 
         }
         else //if not, follow the enemy

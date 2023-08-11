@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,10 +23,12 @@ public class RangeAttackController : BasicAttackController
     [Command(requiresAuthority = false)]
     private void CmdSpawnProjectile(GameObject target)
     {
-        //if (checkAuthority && !hasAuthority) return;
-        GameObject projectile = ObjectPooler.Instance.SpawnFromPool(projectilePrefab, controller.ProjectileSpawnPoint.position, Quaternion.identity);
-        projectile.GetComponent<Projectile>().SetupProjectile(target, Damage, transform);
-        NetworkServer.Spawn(projectile, connectionToClient);
+       
+            //if (checkAuthority && !hasAuthority) return;
+            GameObject projectile = ObjectPooler.Instance.SpawnFromPool(projectilePrefab, controller.ProjectileSpawnPoint.position, Quaternion.identity);
+            projectile.GetComponent<Projectile>().SetupProjectile(target, Damage, transform);
+            NetworkServer.Spawn(projectile, connectionToClient);
+
     }
 
 }

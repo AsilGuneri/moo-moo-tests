@@ -1,8 +1,5 @@
-using Mono.Cecil;
 using MyBox;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Build.Pipeline;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PickClosestEnemy", menuName = "Scriptable Objects/EnemyBehaviours/PickClosestEnemy")]

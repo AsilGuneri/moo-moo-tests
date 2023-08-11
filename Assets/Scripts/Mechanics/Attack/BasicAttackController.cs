@@ -7,6 +7,9 @@ using UnityEngine;
 
 public abstract class BasicAttackController : NetworkBehaviour
 {
+    [Range(0f,1f)]
+    [SerializeField] protected float animAttackPoint;
+
     public Action AfterLastAttack;
     public bool IsSetToStopAfterAttack { get => isSetToStopAfterAttack; }
     public bool IsAttacking { get => isAttacking; }
@@ -25,13 +28,15 @@ public abstract class BasicAttackController : NetworkBehaviour
     private int attackBlockCount = 0;
     //temp
     public int Damage;
+    private bool isCurrentlyAttacking = false;
+
 
     protected virtual void Awake()
     {
         controller = GetComponent<UnitController>();
     }
 
-    public async void StartAutoAttack(GameObject target, float attackSpeed, float animAttackPoint)
+    public async void StartAutoAttack(GameObject target, float attackSpeed)
     {
         if (isAttacking) return;
 
@@ -101,24 +106,36 @@ public abstract class BasicAttackController : NetworkBehaviour
             transform.LookAt(lookPos);
         }
     }
-
     private async Task Attack(float attackSpeed, float animAttackPoint)
     {
-        Extensions.GetAttackTimes(1, attackSpeed, animAttackPoint
+        // Return immediately if already attacking
+        if (isCurrentlyAttacking) return;
+
+        isCurrentlyAttacking = true;
+        Debug.Log("asilxx1 " + controller.AnimationController.AttackAnimTime + " " + name);
+        float attackAnimTime = controller.AnimationController.AttackAnimTime == 0 ? 
+            1 : controller.AnimationController.AttackAnimTime;
+
+        Extensions.GetAttackTimes(attackAnimTime, attackSpeed, animAttackPoint
             , out int msBeforeAttack, out int msAfterAttack);
         GameObject target = controller.TargetController.Target;
+        Debug.Log("asilxx2 " + msBeforeAttack +" after " + msAfterAttack);
+
         RotateToTarget(target);
         OnAttackStart();
         await Task.Delay(msBeforeAttack);
         if (!IsAutoAttackingAvailable())
         {
             OnAttackCancelled?.Invoke();
+            isCurrentlyAttacking = false; // Ensure this is set to false here too
             return;
         }
         RotateToTarget(target);
         OnAttackImpact();
         await Task.Delay(msAfterAttack);
         OnAttackEnd();
+
+        isCurrentlyAttacking = false;
     }
 
     protected bool IsAutoAttackingAvailable()
