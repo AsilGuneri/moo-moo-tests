@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4920862555473792}
   - component: {fileID: 198253395183028752}
-  - component: {fileID: 114832899995496788}
   - component: {fileID: 199121495299923210}
   m_Layer: 0
   m_Name: SubStars
@@ -29,7 +28,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4943425964895198}
   m_Father: {fileID: 4612927467912564}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
@@ -4751,18 +4751,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &114832899995496788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1071474767691284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199e3c49ebcb3fe46997b10cf6a8eb52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!199 &199121495299923210
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -4862,7 +4850,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4920862555473792}
-  - {fileID: 4943425964895198}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9671,7 +9658,6 @@ MonoBehaviour:
   flash: {fileID: 1117997381529862, guid: 0254f8e683e300c4eb1b598011e9b7c8, type: 3}
   Detached:
   - {fileID: 1071474767691284}
-  - {fileID: 1228953972368122}
 --- !u!199 &199290412375127048
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -9772,7 +9758,7 @@ Rigidbody2D:
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -9786,7 +9772,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4943425964895198}
   - component: {fileID: 198672018410886540}
-  - component: {fileID: 114975871939070754}
   - component: {fileID: 199276916704681358}
   m_Layer: 0
   m_Name: SubStars2
@@ -9806,8 +9791,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4612927467912564}
-  m_RootOrder: 1
+  m_Father: {fileID: 4920862555473792}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &198672018410886540
 ParticleSystem:
@@ -14527,18 +14512,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &114975871939070754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1228953972368122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199e3c49ebcb3fe46997b10cf6a8eb52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!199 &199276916704681358
 ParticleSystemRenderer:
   serializedVersion: 6

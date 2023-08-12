@@ -28,7 +28,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4928152590134744}
+  - {fileID: 4356259679726644}
   m_Father: {fileID: 4219202711483130}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4841,12 +4843,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223484445938544}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4219202711483130}
-  m_RootOrder: 2
+  m_Father: {fileID: 4587943912328828}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &198598355560077112
 ParticleSystem:
@@ -9675,8 +9677,6 @@ Transform:
   m_Children:
   - {fileID: 4847197780967490}
   - {fileID: 4587943912328828}
-  - {fileID: 4928152590134744}
-  - {fileID: 4356259679726644}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14542,7 +14542,7 @@ MonoBehaviour:
   hit: {fileID: 1402743518298044, guid: 6220b0bbd4630c24a9d0fd570b53d326, type: 3}
   flash: {fileID: 1292704331029830, guid: 28538e5931854494fbe4d98d2d4cd548, type: 3}
   Detached:
-  - {fileID: 0}
+  - {fileID: 1090975002139566}
 --- !u!58 &-3561741900268802107
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -14576,7 +14576,7 @@ Rigidbody2D:
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -19484,8 +19484,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4219202711483130}
-  m_RootOrder: 3
+  m_Father: {fileID: 4587943912328828}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &198082910738639804
 ParticleSystem:

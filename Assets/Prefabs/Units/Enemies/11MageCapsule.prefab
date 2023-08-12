@@ -1455,7 +1455,7 @@ GameObject:
   - component: {fileID: 3681833499136793706}
   - component: {fileID: 3592067272230806276}
   - component: {fileID: 9074826505844378808}
-  - component: {fileID: -6499057204789187075}
+  - component: {fileID: 8554989338656548550}
   m_Layer: 9
   m_Name: 11MageCapsule
   m_TagString: Untagged
@@ -1681,6 +1681,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   hasCancelAttackAnim: 0
+  AttackAnimTime: 0
+  attackAnimName: 
 --- !u!114 &667331285345826098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1779,8 +1781,8 @@ MonoBehaviour:
   Mode: 3
   BlockedStop: 0
   UseWalls: 0
---- !u!136 &-6499057204789187075
-CapsuleCollider:
+--- !u!65 &8554989338656548550
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1797,10 +1799,8 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.6
-  m_Height: 2
-  m_Direction: 1
+  serializedVersion: 3
+  m_Size: {x: 1.73, y: 1, z: 1.04}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &7744416249070185144
 GameObject:
