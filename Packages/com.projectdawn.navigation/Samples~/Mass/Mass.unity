@@ -522,6 +522,7 @@ MonoBehaviour:
   Count: 0
   MaxCount: 1000
   Destination: {fileID: 344910265}
+  DestinationDeferred: 1
 --- !u!4 &412512744
 Transform:
   m_ObjectHideFlags: 0
@@ -1332,6 +1333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 879673781}
   - component: {fileID: 879673780}
+  - component: {fileID: 879673782}
   m_Layer: 0
   m_Name: Spatial Partitioning
   m_TagString: Untagged
@@ -1351,11 +1353,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aa93905a8868aa40b380ce9af238f33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AgentCapacity: 4000
   CellSize:
     x: 3
     y: 3
     z: 3
+  QueryCapacity: 0
 --- !u!4 &879673781
 Transform:
   m_ObjectHideFlags: 0
@@ -1364,13 +1366,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 879673779}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.268127, y: 5.4328465, z: 12.383055}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &879673782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879673779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cde3d898bad230644a773f2be55d91e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MaxIterations: 1024
+  m_MaxPath: 1024
 --- !u!1 &886738131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1940,6 +1956,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -3718,6 +3735,7 @@ MonoBehaviour:
   Count: 0
   MaxCount: 1000
   Destination: {fileID: 813317464}
+  DestinationDeferred: 1
 --- !u!4 &2041513758
 Transform:
   m_ObjectHideFlags: 0
@@ -3852,6 +3870,7 @@ MonoBehaviour:
   Count: 0
   MaxCount: 1000
   Destination: {fileID: 44443155}
+  DestinationDeferred: 1
 --- !u!4 &2075079637
 Transform:
   m_ObjectHideFlags: 0

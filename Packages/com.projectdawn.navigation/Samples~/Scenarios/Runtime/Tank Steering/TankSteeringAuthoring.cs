@@ -58,7 +58,7 @@ namespace ProjectDawn.Navigation.Sample.Scenarios
     {
         public override void Bake(TankSteeringAuthoring authoring)
         {
-            AddComponent(authoring.DefaultSteering);
+            AddComponent(GetEntity(TransformUsageFlags.Dynamic), authoring.DefaultSteering);
         }
     }
 }

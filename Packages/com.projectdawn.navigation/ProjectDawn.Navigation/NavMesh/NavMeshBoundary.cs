@@ -46,5 +46,4 @@ namespace ProjectDawn.Navigation
             End = to;
         }
     }
-
 }

@@ -7,5 +7,9 @@ namespace ProjectDawn.Navigation
     /// </summary>
     public struct AgentCollider : IComponentData
     {
+        /// <summary>
+        /// Returns default configuration.
+        /// </summary>
+        public static AgentCollider Default => new();
     }
 }

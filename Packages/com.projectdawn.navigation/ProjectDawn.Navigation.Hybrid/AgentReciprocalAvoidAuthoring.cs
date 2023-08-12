@@ -53,6 +53,10 @@ namespace ProjectDawn.Navigation.Hybrid
 
     internal class AgentReciprocalAvoidBaker : Baker<AgentReciprocalAvoidAuthoring>
     {
+#if UNITY_ENTITIES_VERSION_65
+        public override void Bake(AgentReciprocalAvoidAuthoring authoring) => AddComponent(GetEntity(TransformUsageFlags.Dynamic), authoring.DefaultAvoid);
+#else
         public override void Bake(AgentReciprocalAvoidAuthoring authoring) => AddComponent(authoring.DefaultAvoid);
+#endif
     }
 }

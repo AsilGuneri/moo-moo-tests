@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 513424071289889313}
   - component: {fileID: 6553801289369831104}
   - component: {fileID: 2798813026907106316}
+  - component: {fileID: 2390781535320516379}
   - component: {fileID: 4320699607801596022}
   - component: {fileID: 8407110155488367604}
-  - component: {fileID: -2540451623526791530}
   m_Layer: 0
   m_Name: Zergling
   m_TagString: Untagged
@@ -38,7 +38,7 @@ Transform:
   m_Children:
   - {fileID: 387837092866242009}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2139686395256335543
 MonoBehaviour:
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Radius: 2
-  Angle: 135
+  Angle: {x: 230, y: 300}
   Mode: 3
   BlockedStop: 0
   UseWalls: 1
@@ -120,6 +120,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d72058503702eb42aca97d680e69de1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2390781535320516379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6010206441563009151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42a4cd4cbf6cf044887ce5ff1955fa9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Radius: 1
 --- !u!114 &4320699607801596022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,19 +163,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: 5
   AttackRange: 0.3
---- !u!114 &-2540451623526791530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6010206441563009151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74f1141745348f547a3d1f6495ad3e37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Radius: 1
 --- !u!1001 &210374758963761714
 PrefabInstance:
   m_ObjectHideFlags: 0

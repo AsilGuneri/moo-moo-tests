@@ -10,18 +10,20 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
         static class Styles
         {
             public static readonly GUIContent Radius = EditorGUIUtility.TrTextContent("Radius", "The radius of the separation.");
+            public static readonly GUIContent Weight = EditorGUIUtility.TrTextContent("Weight", "The weight of the separation force.");
             public static readonly Color32 Color = new Color32(255, 0, 0, 255);
         }
 
         SerializedProperty m_Radius;
+        SerializedProperty m_Weight;
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
 
-            EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(m_Radius, Styles.Radius);
-            if (EditorGUI.EndChangeCheck())
+            EditorGUILayout.PropertyField(m_Weight, Styles.Weight);
+            if (serializedObject.ApplyModifiedProperties())
             {
                 // Update all agents entities shape
                 foreach (var target in targets)
@@ -31,8 +33,6 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
                         authoring.EntitySeparation = authoring.DefaulSeparation;
                 }
             }
-
-            serializedObject.ApplyModifiedProperties();
         }
 
         void OnSceneGUI()
@@ -47,6 +47,7 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
         void OnEnable()
         {
             m_Radius = serializedObject.FindProperty("Radius");
+            m_Weight = serializedObject.FindProperty("Weight");
         }
     }
 }

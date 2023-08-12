@@ -2,6 +2,9 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 using UnityEngine;
+using System.Collections.Generic;
+using Unity.Jobs;
+using Unity.Burst.Intrinsics;
 
 namespace ProjectDawn.Navigation.Hybrid
 {
@@ -42,7 +45,7 @@ namespace ProjectDawn.Navigation.Hybrid
         protected float AngularSpeed = 120;
 
         [SerializeField]
-        protected float StoppingDistance = 0;
+        protected float StoppingDistance = 0.1f;
 
         [SerializeField]
         protected bool AutoBreaking = true;
@@ -110,6 +113,35 @@ namespace ProjectDawn.Navigation.Hybrid
             EntityBody = body;
         }
 
+        /// <summary>
+        /// Sets or updates the destination thus triggering the calculation for a new path.
+        /// This call is deferred and destination will only changed later in the frame.
+        /// </summary>
+        public void SetDestinationDeferred(float3 destination)
+        {
+            var world = World.DefaultGameObjectInjectionWorld;
+            if (world == null)
+                return;
+
+            var system = world.GetOrCreateSystem<AgentSetDestinationDeferredSystem>();
+
+            var manager = world.EntityManager;
+            var ecb = manager.GetComponentData<AgentSetDestinationDeferredSystem.Singleton>(system);
+            ecb.SetDestinationDeferred(m_Entity, destination);
+        }
+
+        /// <summary>
+        /// Stop agent movement.
+        /// Calling this method is potentially heavy operation as it will require wait for agent jobs to finish.
+        /// </summary>
+        public void Stop()
+        {
+            var body = EntityBody;
+            body.IsStopped = true;
+            body.Velocity = 0;
+            EntityBody = body;
+        }
+
         void Awake()
         {
             m_Entity = GetOrCreateEntity();
@@ -120,6 +152,7 @@ namespace ProjectDawn.Navigation.Hybrid
             {
                 Position = transform.position,
                 Rotation = transform.rotation,
+                Scale = 1,
             });
 
             // Transform access requires this
@@ -137,11 +170,20 @@ namespace ProjectDawn.Navigation.Hybrid
     {
         public override void Bake(AgentAuthoring authoring)
         {
+#if UNITY_ENTITIES_VERSION_65
+            var entity = GetEntity(TransformUsageFlags.Dynamic);
+            AddComponent<Agent>(entity);
+            if (authoring.MotionType != AgentMotionType.Static)
+                AddComponent(entity, authoring.DefaultBody);
+            if (authoring.MotionType == AgentMotionType.Steering)
+                AddComponent(entity, authoring.DefaultSteering);
+#else
             AddComponent<Agent>();
             if (authoring.MotionType != AgentMotionType.Static)
                 AddComponent(authoring.DefaultBody);
             if (authoring.MotionType == AgentMotionType.Steering)
                 AddComponent(authoring.DefaultSteering);
+#endif
         }
     }
 }

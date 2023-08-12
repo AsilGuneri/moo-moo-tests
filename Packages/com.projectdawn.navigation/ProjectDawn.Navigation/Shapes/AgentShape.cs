@@ -29,6 +29,16 @@ namespace ProjectDawn.Navigation
         public ShapeType Type;
 
         /// <summary>
+        /// Returns default configuration.
+        /// </summary>
+        public static AgentShape Default => new()
+        {
+            Radius = 0.5f,
+            Height = 2,
+            Type = ShapeType.Cylinder,
+        };
+
+        /// <summary>
         /// Returns up vector of shape.
         /// </summary>
         /// <returns>Returns up vector of shape.</returns>

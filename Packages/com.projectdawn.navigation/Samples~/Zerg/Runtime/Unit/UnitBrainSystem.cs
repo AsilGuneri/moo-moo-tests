@@ -85,6 +85,10 @@ namespace ProjectDawn.Navigation.Sample.Zerg
                 UnitLookup = m_UnitLooukup,
                 Spatial = spatial,
             }.Schedule();
+
+            new UnitBrainHiveMindStopJob
+            {
+            }.Schedule();
         }
 
         [BurstCompile]
@@ -99,6 +103,24 @@ namespace ProjectDawn.Navigation.Sample.Zerg
                     return;
 
                 brain.State = UnitBrainState.Idle;
+            }
+        }
+
+        [BurstCompile]
+        partial struct UnitBrainHiveMindStopJob : IJobEntity
+        {
+            public void Execute(ref AgentSmartStop smartStop, in UnitBrain brain, in AgentBody body)
+            {
+                if (brain.State == UnitBrainState.Attack || brain.State == UnitBrainState.Follow)
+                {
+                    if (smartStop.HiveMindStop.Enabled)
+                        smartStop.HiveMindStop.Enabled = false;
+                }
+                else
+                {
+                    if (!smartStop.HiveMindStop.Enabled)
+                        smartStop.HiveMindStop.Enabled = true;
+                }
             }
         }
 

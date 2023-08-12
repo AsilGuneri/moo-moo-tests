@@ -9,10 +9,11 @@ using Unity.Transforms;
 using static Unity.Mathematics.math;
 using UnityEngine;
 
-namespace ProjectDawn.Navigation
+namespace ProjectDawn.Navigation.Editor
 {
     [BurstCompile]
     [RequireMatchingQueriesForUpdate]
+    [UpdateInGroup(typeof(AgentGizmosSystemGroup))]
     public partial struct NavMeshBoundaryGizmosSystem : ISystem
     {
         public void OnCreate(ref SystemState state) { }

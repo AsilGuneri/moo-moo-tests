@@ -34,7 +34,7 @@ namespace ProjectDawn.Navigation
     /// <summary>
     /// Agent NavMesh path.
     /// </summary>
-    public struct NavMeshPath : IComponentData
+    public struct NavMeshPath : IComponentData, IEnableableComponent
     {
         /// <summary>
         /// State of the path.
@@ -69,6 +69,17 @@ namespace ProjectDawn.Navigation
         /// End location of the agent on NavMesh.
         /// </summary>
         public NavMeshLocation EndLocation;
+
+        /// <summary>
+        /// Returns default configuration.
+        /// </summary>
+        public static NavMeshPath Default => new()
+        {
+            State = NavMeshPathState.Finished,
+            AreaMask = -1,
+            AutoRepath = true,
+            MappingExtent = 10,
+        };
     }
 
     /// <summary>

@@ -33,7 +33,11 @@ namespace ProjectDawn.Navigation.Hybrid
     {
         public override void Bake(AgentColliderAuthoring authoring)
         {
+#if UNITY_ENTITIES_VERSION_65
+            AddComponent(GetEntity(TransformUsageFlags.Dynamic), new AgentCollider { });
+#else
             AddComponent(new AgentCollider { });
+#endif
         }
     }
 }

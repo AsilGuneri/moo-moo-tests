@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.Mathematics;
 
 namespace ProjectDawn.Navigation
 {
@@ -27,5 +28,17 @@ namespace ProjectDawn.Navigation
         /// Should the agent brake automatically to avoid overshooting the destination point?
         /// </summary>
         public bool AutoBreaking;
+
+        /// <summary>
+        /// Returns default configuration.
+        /// </summary>
+        public static AgentSteering Default => new()
+        {
+            Speed = 3.5f,
+            Acceleration = 8,
+            AngularSpeed = math.radians(120),
+            StoppingDistance = 0.1f,
+            AutoBreaking = true,
+        };
     }
 }

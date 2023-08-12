@@ -1,10 +1,54 @@
 # Changelog
 All notable changes to this package will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
-## [3.1.1] - 2023-2-07
+## [3.2.0] - 2023-07-16
+- Added NavMeshSettings singleton
+- Added settings component mirroring in the project settings under new tab Agents Navigation
+- Added new component Agent Smart Stop from Zerg Samples
+- Added default configurations for AgentBody/AgentSteering/AgentCollider/AgentShape/AgentSeparation/NavMeshPath
+- Added EntityNodes to AgentNavMeshAuthoring
+- Added warning for agent authoring in case no shape is added
+- Added error then NavMeshQuerySystem is attempted to be created in edit mode
+- Changed velocity to account collision with agents and navmesh
+- Changed SonarAvoidance radius scale with velocity
+- Changed SonarAvoidance  to be float2 now. First value represents angle of velocity obstacle and second one maximum allowed angle
+- Changed AgentCylindreShapeAuthoring icon (I hope you will enjoy new one)
+- Fixed SonarAvoidance Walls no longer produces extremely small paths
+- Fixed hybrid mode have correct LocalTransform scale 1
+- Fixed spatial partitioning to use same same query to avoid inconsistencies
+- Fixed component UI updating previous frames values
+
+## [3.1.6] - 2023-04-11
+- Changed seperation algorithm
+- Added weight property to seperation
+- Fixed NavMesh Area Mask correctly work with no sequential layers
+
+## [3.1.5] - 2023-03-29
+- Added NavMeshSurface surface baker and now it can be baked in subscene
+- Added sample scene low level sonar avoidance to show its usage
+- Added enable/disable to AgentNavMeshAuthoring and AgentAvoidAuthoring
+- Chanded AgentSonarAvoid and NavMeshPath is now IEnableableComponent
+- Fixed support for entities 1.0.0-preview.65
+- Fixed acceleration correctling working with huge values
+- Fixed sonar avoidance quality regression from 3.1
+
+## [3.1.4] - 2023-02-22
+- Changed com.unity.entities package version from 1.0.0-pre.15 to 1.0.0-pre.44
+- Fixed AgenAuthroing.Stop to correctly set velocity to zero
+
+## [3.1.3] - 2023-02-16
+- Added support for RectTransform
+
+## [3.1.2] - 2023-02-10
+- Added SetDestinationDeferred to agent
+- Fixed navmesh area mask editor property work correctly
+- Changed agent capacity automatically resizing, removed AgentCapacity property for SpatialPartitioningSettings
+- Changed gizmos system to be in the same group AgentGizmosSystemGroup
+
+## [3.1.1] - 2023-02-07
 - Fixed compilation issue as one of the assembly was not set to Editor
 
-## [3.1.0] - 2023-1-31
+## [3.1.0] - 2023-01-31
 - Added new feature to local avoidance `Walls` that accounts for navmesh.
 - Added new property to AgentNavMeshAuthoring UseWalls.
 - Changed standing agents now puch each other.
@@ -12,7 +56,7 @@ All notable changes to this package will be documented in this file. The format 
 - Fixed then desination either above or below agent would result in error.
 - Fixed path failure case then it is out of nodes and path is in progress.
 
-## [3.0.6] - 2023-1-11
+## [3.0.6] - 2023-01-11
 - Fixed NavMesh path sometimes discarding destination
 - Fixed error drop when selecting agent in subscene "The targets array should not be used inside OnSceneGUI or OnPreviewGUI. Use the single target property instead.
 UnityEngine.GUIUtility:ProcessEvent (int,intptr,bool&)"
@@ -50,7 +94,7 @@ UnityEngine.GUIUtility:ProcessEvent (int,intptr,bool&)"
 ## [3.0.0] - 2022-11-30
 - Release as Agents Navigation
 
-## [2.0.0] - 2022-06-9
+## [2.0.0] - 2022-06-09
 - Changing velocity avoidance with new smart algorithm
 - Changing package to use new Package Manager workflow
 - Updating documentation to be more clear and reflect new API changes

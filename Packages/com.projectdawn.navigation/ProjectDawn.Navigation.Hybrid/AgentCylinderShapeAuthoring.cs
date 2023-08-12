@@ -15,7 +15,7 @@ namespace ProjectDawn.Navigation.Hybrid
         [SerializeField]
         protected float Radius = 0.5f;
         [SerializeField]
-        protected float Height = 1f;
+        protected float Height = 2f;
 
         Entity m_Entity;
 
@@ -61,6 +61,11 @@ namespace ProjectDawn.Navigation.Hybrid
 
     internal class AgentCapsuleShapeBaker : Baker<AgentCylinderShapeAuthoring>
     {
+#if UNITY_ENTITIES_VERSION_65
+
+        public override void Bake(AgentCylinderShapeAuthoring authoring) => AddComponent(GetEntity(TransformUsageFlags.Dynamic), authoring.DefaultShape);
+#else
         public override void Bake(AgentCylinderShapeAuthoring authoring) => AddComponent(authoring.DefaultShape);
+#endif
     }
 }

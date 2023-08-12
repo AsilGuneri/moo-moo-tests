@@ -50,6 +50,15 @@ namespace ProjectDawn.Navigation.Hybrid
         }
 
         /// <summary>
+        /// <see cref="NavMeshNode"/> component of this <see cref="AgentAuthoring"/> Entity.
+        /// Accessing this property is potentially heavy operation as it will require wait for agent jobs to finish.
+        /// </summary>
+        public DynamicBuffer<NavMeshNode> EntityNodes
+        {
+            get => World.DefaultGameObjectInjectionWorld.EntityManager.GetBuffer<NavMeshNode>(m_Entity);
+        }
+
+        /// <summary>
         /// Returns true if <see cref="AgentAuthoring"/> entity has <see cref="NavMeshPath"/>.
         /// </summary>
         public bool HasEntityPath => World.DefaultGameObjectInjectionWorld != null && World.DefaultGameObjectInjectionWorld.EntityManager.HasComponent<NavMeshPath>(m_Entity);
@@ -71,14 +80,36 @@ namespace ProjectDawn.Navigation.Hybrid
                 world.EntityManager.RemoveComponent<NavMeshNode>(m_Entity);
             }
         }
+
+        void OnEnable()
+        {
+            var world = World.DefaultGameObjectInjectionWorld;
+            if (world == null)
+                return;
+            world.EntityManager.SetComponentEnabled<NavMeshPath>(m_Entity, true);
+        }
+
+        void OnDisable()
+        {
+            var world = World.DefaultGameObjectInjectionWorld;
+            if (world == null)
+                return;
+            world.EntityManager.SetComponentEnabled<NavMeshPath>(m_Entity, false);
+        }
     }
 
     internal class AgentNavMeshBaker : Baker<AgentNavMeshAuthoring>
     {
         public override void Bake(AgentNavMeshAuthoring authoring)
         {
+#if UNITY_ENTITIES_VERSION_65
+            var entity = GetEntity(TransformUsageFlags.Dynamic);
+            AddComponent(entity, authoring.DefaulPath);
+            AddBuffer<NavMeshNode>(entity);
+#else
             AddComponent(authoring.DefaulPath);
             AddBuffer<NavMeshNode>();
+#endif
         }
     }
 }

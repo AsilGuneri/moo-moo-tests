@@ -3,39 +3,26 @@ using UnityEditor;
 
 namespace ProjectDawn.Navigation.Hybrid.Editor
 {
-    [CustomEditor(typeof(SpatialPartitioningSettingsAuthoring))]
-    class AgentPartitioningSettingsEditor : UnityEditor.Editor
+    [CustomEditor(typeof(SettingsBehaviour), true)]
+    internal class AgentPartitioningSettingsEditor : UnityEditor.Editor
     {
-        static class Styles
-        {
-            public static readonly GUIContent AgentCapacity = EditorGUIUtility.TrTextContent("Agent Capacity", "Maximum number of agents spatial partitioning can contain.");
-            public static readonly GUIContent CellSize = EditorGUIUtility.TrTextContent("Cell Size", "The size of single partition.");
-        }
-
-        SerializedProperty m_AgentCapacity;
-        SerializedProperty m_CellSize;
-
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
 
-            EditorGUI.BeginChangeCheck();
-            EditorGUILayout.PropertyField(m_AgentCapacity, Styles.AgentCapacity);
-            EditorGUILayout.PropertyField(m_CellSize, Styles.CellSize);
-            if (EditorGUI.EndChangeCheck())
+            SerializedProperty iterator = serializedObject.GetIterator();
+            bool enterChildren = true;
+
+            while (iterator.NextVisible(enterChildren))
             {
-                var authoring = target as SpatialPartitioningSettingsAuthoring;
-                if (authoring.HasEntitySettings)
-                    authoring.EntitySettings = authoring.DefaultSettings;
+                if (iterator.name == "m_Script")
+                    continue;
+
+                EditorGUILayout.PropertyField(iterator, true);
+                enterChildren = false;
             }
 
             serializedObject.ApplyModifiedProperties();
-        }
-
-        void OnEnable()
-        {
-            m_AgentCapacity = serializedObject.FindProperty("AgentCapacity");
-            m_CellSize = serializedObject.FindProperty("CellSize");
         }
     }
 }

@@ -45,7 +45,9 @@ namespace ProjectDawn.LocalAvoidance
             // Testing showed that using tangent to circle produces nice good step size
             float startStepSize = 2 * Circle.TangentLineToCircleAngle(circleA.Radius, math.max(speedB * startTime, circleA.Radius));
 
-            float maxTime = maxDistance / speedB;
+            float maxTime = speedB > 0 ? maxDistance / speedB : 0;
+
+            UnityEngine.Assertions.Assert.IsTrue(math.isfinite(maxTime));
 
             // Find min angle
             {
@@ -501,7 +503,6 @@ namespace ProjectDawn.LocalAvoidance
 
             intersectionStart = d * tt.x + segmentStart;
             intersectionEnd = d * tt.y + segmentStart;
-            UnityEngine.Debug.DrawLine(new float3(intersectionStart.x, 0, intersectionStart.y), new float3(intersectionEnd.x, 0, intersectionEnd.y), UnityEngine.Color.black);
             return true;
         }
     }

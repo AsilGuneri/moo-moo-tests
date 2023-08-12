@@ -19,9 +19,9 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
         {
             serializedObject.Update();
 
-            EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(m_Radius, Styles.Radius);
-            if (EditorGUI.EndChangeCheck())
+
+            if (serializedObject.ApplyModifiedProperties())
             {
                 // Update all agents entities shape
                 foreach (var target in targets)
@@ -31,8 +31,6 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
                         authoring.EntityShape = authoring.DefaultShape;
                 }
             }
-
-            serializedObject.ApplyModifiedProperties();
         }
 
         void OnSceneGUI()

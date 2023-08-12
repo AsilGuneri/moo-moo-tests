@@ -44,8 +44,8 @@ namespace ProjectDawn.Navigation
                         if (NavMesh.Exist(path.QueryHandle))
                             NavMesh.DestroyQuery(path.QueryHandle);
 
-                        path.Location = NavMesh.MapLocation(transform.Position, path.MappingExtent, path.AgentTypeId);
-                        path.EndLocation = NavMesh.MapLocation(body.Destination, path.MappingExtent, path.AgentTypeId);
+                        path.Location = NavMesh.MapLocation(transform.Position, path.MappingExtent, path.AgentTypeId, path.AreaMask);
+                        path.EndLocation = NavMesh.MapLocation(body.Destination, path.MappingExtent, path.AgentTypeId, path.AreaMask);
                         path.QueryHandle = NavMesh.CreateQuery(path.Location, path.EndLocation, path.AgentTypeId, path.AreaMask);
                         path.State = NavMeshPathState.InProgress;
                         break;

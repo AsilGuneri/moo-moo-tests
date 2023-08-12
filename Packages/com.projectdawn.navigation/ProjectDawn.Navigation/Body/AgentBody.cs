@@ -1,4 +1,4 @@
-﻿using Unity.Entities;
+using Unity.Entities;
 using Unity.Mathematics;
 
 namespace ProjectDawn.Navigation
@@ -22,12 +22,21 @@ namespace ProjectDawn.Navigation
         public float3 Destination;
         /// <summary>
         /// The distance between the agent's position and the destination.
+        /// With NavMesh this value will return partial remaining distance not full path.
         /// </summary>
         public float RemainingDistance;
         /// <summary>
         /// This property holds the stop or resume condition of the agent.
         /// </summary>
         public bool IsStopped;
+
+        /// <summary>
+        /// Returns default configuration.
+        /// </summary>
+        public static AgentBody Default => new()
+        {
+            IsStopped = true,
+        };
 
         /// <summary>
         /// Sets properties for new agent destination.
@@ -37,7 +46,7 @@ namespace ProjectDawn.Navigation
             Destination = value;
             IsStopped = false;
         }
-        //BU İKİ AQ EVLADI İLE BÜTÜN İŞİMİZ.
+
         /// <summary>
         /// Sets properties for agent to stop.
         /// </summary>

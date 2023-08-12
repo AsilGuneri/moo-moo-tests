@@ -37,6 +37,8 @@ namespace ProjectDawn.Navigation
 
             public void Execute(Entity entity, ref AgentBody body, in AgentSeparation separation, in AgentShape shape, in LocalTransform transform)
             {
+                float radius = math.max(shape.Radius, separation.Radius);
+
                 var action = new Action
                 {
                     Entity = entity,
@@ -44,13 +46,14 @@ namespace ProjectDawn.Navigation
                     Shape = shape,
                     Separation = separation,
                     Transform = transform,
+                    Radius = radius,
                 };
 
-                Spatial.QuerySphere(transform.Position, shape.Radius, ref action);
+                Spatial.QuerySphere(transform.Position, radius, ref action);
 
                 if (action.Weight > 0)
                 {
-                    body.Force += action.Force / action.Weight;
+                    body.Force += action.Force * separation.Weight;
                 }
             }
 
@@ -61,6 +64,7 @@ namespace ProjectDawn.Navigation
                 public AgentShape Shape;
                 public AgentSeparation Separation;
                 public LocalTransform Transform;
+                public float Radius;
 
                 public float3 Force;
                 public float Weight; 
@@ -69,11 +73,11 @@ namespace ProjectDawn.Navigation
                 {
                     float3 towards = Transform.Position - otherTransform.Position;
                     float distance = math.length(towards);
-                    float radiusSum = Shape.Radius + otherShape.Radius;
+                    float radiusSum = Radius + otherShape.Radius;
                     if (distance > radiusSum || Entity == otherEntity)
                         return;
 
-                    Force += towards * (1f - ((distance - radiusSum) / (Separation.Radius - radiusSum)));
+                    Force += math.normalizesafe(towards) * ((radiusSum - distance) / radiusSum);
                     Weight++;
                 }
             }

@@ -11,5 +11,18 @@ namespace ProjectDawn.Navigation
         /// Radius at which agent will attempt separate from each other.
         /// </summary>
         public float Radius;
+        /// <summary>
+        /// The weight of the separation force.
+        /// </summary>
+        public float Weight;
+
+        /// <summary>
+        /// Returns default configuration.
+        /// </summary>
+        public static AgentSeparation Default => new()
+        {
+            Radius = 2,
+            Weight = 1,
+        };
     }
 }

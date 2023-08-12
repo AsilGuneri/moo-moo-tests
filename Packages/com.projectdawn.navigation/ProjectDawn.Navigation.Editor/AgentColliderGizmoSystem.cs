@@ -8,11 +8,12 @@ using Unity.Burst;
 using Unity.Burst.Intrinsics;
 using static Unity.Entities.SystemAPI;
 
-namespace ProjectDawn.Navigation
+namespace ProjectDawn.Navigation.Editor
 {
     [DisableAutoCreation]
     [BurstCompile]
     [RequireMatchingQueriesForUpdate]
+    [UpdateInGroup(typeof(AgentGizmosSystemGroup))]
     public partial struct AgentColliderGizmosSystem : ISystem
     {
         public void OnCreate(ref SystemState state) { }
@@ -40,8 +41,8 @@ namespace ProjectDawn.Navigation
 
             public void Execute(Entity entity, in AgentShape shape, in LocalTransform transform, in DrawGizmos drawGizmos)
             {
-                //var action = new DrawSpatialEntities { Gizmos = Gizmos, Position = transform.Position };
-                //Spatial.QueryCylinder(transform.Position, shape.Radius, shape.Height, ref action);
+                var action = new DrawSpatialEntities { Gizmos = Gizmos, Position = transform.Position };
+                Spatial.QueryCylinder(transform.Position, shape.Radius, shape.Height, ref action);
                 Spatial.QueryCylindreBoxes(transform.Position, shape.Radius, shape.Height, new DrawSpatialBoxes { Gizmos = Gizmos });
             }
         }
@@ -51,7 +52,7 @@ namespace ProjectDawn.Navigation
             public GizmosCommandBuffer.ParallelWriter Gizmos;
             public void Execute(float3 position, float3 size)
             {
-                Gizmos.DrawWireBox(position, size, new UnityEngine.Color(0, 0, 1, 0.2f));
+                Gizmos.DrawWireBox(position, size, new UnityEngine.Color(0, 0, 1, 0.4f));
             }
         }
 

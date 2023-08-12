@@ -13,6 +13,7 @@ namespace ProjectDawn.Navigation.Sample.Mass
         public int Count;
         public int MaxCount = 1000;
         public Transform Destination;
+        public bool DestinationDeferred = true;
 
         float m_Elapsed;
         Random m_Random = new Random(1);
@@ -31,10 +32,14 @@ namespace ProjectDawn.Navigation.Sample.Mass
                 if (Destination != null)
                 {
                     var agent = unit.GetComponent<AgentAuthoring>();
-                    var body = agent.EntityBody;
-                    body.Destination = Destination.position;
-                    body.IsStopped = false;
-                    agent.EntityBody = body;
+                    if (DestinationDeferred)
+                    {
+                        agent.SetDestinationDeferred(Destination.position);
+                    }
+                    else
+                    {
+                        agent.SetDestination(Destination.position);
+                    }
                 }
                 m_Elapsed -= Interval;
                 Count++;
