@@ -10,6 +10,4 @@ public class HeroBaseStatsData : ScriptableObject
     public float Range;
     public int Hp;
     public int Damage;
-    [Range(0f, 1f)]
-    public float AnimAttackMoment;
 }

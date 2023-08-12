@@ -38,56 +38,55 @@ namespace ProjectDawn.Navigation
                 {
                     body.Velocity = 0;
                     body.IsStopped = true;
+                    return;
                 }
-                else
+
+                float maxSpeed = steering.Speed;
+
+                // Start breaking if close to destination
+                if (steering.AutoBreaking)
                 {
-                    float maxSpeed = steering.Speed;
-
-                    // Start breaking if close to destination
-                    if (steering.AutoBreaking)
+                    float breakDistance = shape.Radius * 2 + steering.StoppingDistance;
+                    if (remainingDistance <= breakDistance)
                     {
-                        float breakDistance = shape.Radius * 2 + steering.StoppingDistance;
-                        if (remainingDistance <= breakDistance)
-                        {
-                            maxSpeed = math.lerp(steering.Speed * 0.25f, steering.Speed, remainingDistance / breakDistance);
-                        }
+                        maxSpeed = math.lerp(steering.Speed * 0.25f, steering.Speed, remainingDistance / breakDistance);
                     }
+                }
 
-                    // Force force to be maximum of unit length, but can be less
-                    float forceLength = math.length(body.Force);
-                    if (forceLength > 1)
-                        body.Force = body.Force / forceLength;
+                // Force force to be maximum of unit length, but can be less
+                float forceLength = math.length(body.Force);
+                if (forceLength > 1)
+                    body.Force = body.Force / forceLength;
 
-                    // Interpolate velocity
-                    body.Velocity = math.lerp(body.Velocity, body.Force * maxSpeed, DeltaTime * steering.Acceleration);
+                // Interpolate velocity
+                body.Velocity = math.lerp(body.Velocity, body.Force * maxSpeed, math.saturate(DeltaTime * steering.Acceleration));
 
-                    float speed = math.length(body.Velocity);
+                float speed = math.length(body.Velocity);
 
-                    // Early out if steps is going to be very small
-                    if (speed < 1e-3f)
-                        return;
+                // Early out if steps is going to be very small
+                if (speed < 1e-3f)
+                    return;
 
-                    // Avoid over-stepping the destination
-                    if (speed * DeltaTime > remainingDistance)
-                    {
-                        transform.Position += (body.Velocity / speed) * remainingDistance;
-                        return;
-                    }
+                // Avoid over-stepping the destination
+                if (speed * DeltaTime > remainingDistance)
+                {
+                    transform.Position += (body.Velocity / speed) * remainingDistance;
+                    return;
+                }
 
-                    // Update position
-                    transform.Position += DeltaTime * body.Velocity;
+                // Update position
+                transform.Position += DeltaTime * body.Velocity;
 
-                    // Update rotation
-                    if (shape.Type == ShapeType.Circle)
-                    {
-                        float angle = math.atan2(body.Velocity.x, body.Velocity.y);
-                        transform.Rotation = math.slerp(transform.Rotation, quaternion.RotateZ(-angle), DeltaTime * steering.AngularSpeed);
-                    }
-                    else if (shape.Type == ShapeType.Cylinder)
-                    {
-                        float angle = math.atan2(body.Velocity.x, body.Velocity.z);
-                        transform.Rotation = math.slerp(transform.Rotation, quaternion.RotateY(angle), DeltaTime * steering.AngularSpeed);
-                    }
+                // Update rotation
+                if (shape.Type == ShapeType.Circle)
+                {
+                    float angle = math.atan2(body.Velocity.x, body.Velocity.y);
+                    transform.Rotation = math.slerp(transform.Rotation, quaternion.RotateZ(-angle), DeltaTime * steering.AngularSpeed);
+                }
+                else if (shape.Type == ShapeType.Cylinder)
+                {
+                    float angle = math.atan2(body.Velocity.x, body.Velocity.z);
+                    transform.Rotation = math.slerp(transform.Rotation, quaternion.RotateY(angle), DeltaTime * steering.AngularSpeed);
                 }
             }
         }

@@ -72,11 +72,19 @@ namespace ProjectDawn.Navigation
                 if (!SonarAvoidance.TryDirectionToRotation(desiredDirection, shape.GetUp(), out var rotation))
                     return;
 
-                // Sonar should not extend pass the destination
-                var sonarRadius = min(avoid.Radius, distance(body.Destination, transform.Position));
+#if EXPERIMENTAL_SONAR_TIME
+                float sonarRadius = clamp(length(body.Velocity) * 0.9f, 0.1f, min(distance(body.Destination, transform.Position), avoid.Radius));
+#else
+                float sonarRadius = min(distance(body.Destination, transform.Position), avoid.Radius);
+#endif
 
                 // Recreate avoidance structure
-                Sonar.Set(transform.Position, body.Velocity, rotation, shape.Radius, sonarRadius, radians(180));
+                Sonar.Set(transform.Position, body.Velocity, rotation, shape.Radius, sonarRadius, avoid.MaxAngle * 0.5f);
+
+                // Add blocker behind the velocity
+                // This will prevent situations where agent has on right and left equally good paths
+                if (length(body.Velocity) > 1e-3f)
+                    Sonar.InsertObstacle(normalizesafe(-body.Velocity), avoid.Angle);
 
                 // Add nearby agents as obstacles
                 var action = new Action
@@ -91,7 +99,7 @@ namespace ProjectDawn.Navigation
                 };
                 if (shape.Type == ShapeType.Cylinder)
                 {
-                    Spatial.QueryCylinder(transform.Position, avoid.Radius, shape.Height, ref action);
+                    Spatial.QueryCylinder(transform.Position, shape.Radius + sonarRadius, shape.Height, ref action);
 
                     if (HasNavMeshWall)
                     {
@@ -114,13 +122,8 @@ namespace ProjectDawn.Navigation
                 }
                 else
                 {
-                    Spatial.QuerySphere(transform.Position, avoid.Radius, ref action);
+                    Spatial.QuerySphere(transform.Position, shape.Radius + sonarRadius, ref action);
                 }
-
-                // Add blocker behind the velocity
-                // This will prevent situations where agent has on right and left equally good paths
-                if (length(body.Velocity) > 1e-3f)
-                    Sonar.InsertObstacle(normalizesafe(-body.Velocity), avoid.Angle);
 
                 bool success = Sonar.FindClosestDirection(out float3 newDirection);
 
@@ -177,7 +180,7 @@ namespace ProjectDawn.Navigation
                             return;
                     }
 
-                    Sonar.InsertObstacle(otherTransform.Position, otherBody.Velocity, otherShape.Radius);
+                    Sonar.InsertObstacleCircle(otherTransform.Position, otherBody.Velocity, otherShape.Radius);
                 }
             }
         }

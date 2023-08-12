@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4032396095020486}
   - component: {fileID: 198141485587256510}
-  - component: {fileID: 114912595221560138}
   - component: {fileID: 199229295184012456}
   m_Layer: 0
   m_Name: Smoke
@@ -26,12 +25,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271313977751560}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4390807112950584}
-  m_RootOrder: 1
+  m_Father: {fileID: 4188172798495772}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &198141485587256510
 ParticleSystem:
@@ -4751,18 +4750,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &114912595221560138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1271313977751560}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199e3c49ebcb3fe46997b10cf6a8eb52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!199 &199229295184012456
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -4862,8 +4849,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4188172798495772}
-  - {fileID: 4032396095020486}
-  - {fileID: 4715873012433674}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9681,8 +9666,6 @@ MonoBehaviour:
   flash: {fileID: 1766868900565162, guid: f82a1a892a042c1438f8f4704a37e11b, type: 3}
   Detached:
   - {fileID: 1620116646029536}
-  - {fileID: 1271313977751560}
-  - {fileID: 1752385679068124}
 --- !u!199 &199541557569965598
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -9783,7 +9766,7 @@ Rigidbody2D:
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -9797,7 +9780,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4188172798495772}
   - component: {fileID: 198856659907629688}
-  - component: {fileID: 114843954193654708}
   - component: {fileID: 199500892221993244}
   m_Layer: 0
   m_Name: Circles
@@ -9816,7 +9798,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4032396095020486}
+  - {fileID: 4715873012433674}
   m_Father: {fileID: 4390807112950584}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14556,18 +14540,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &114843954193654708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1620116646029536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199e3c49ebcb3fe46997b10cf6a8eb52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!199 &199500892221993244
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -14644,7 +14616,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4715873012433674}
   - component: {fileID: 198147676333123090}
-  - component: {fileID: 114352751645136584}
   - component: {fileID: 199657416626372474}
   m_Layer: 0
   m_Name: Glow
@@ -14660,12 +14631,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752385679068124}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4390807112950584}
-  m_RootOrder: 2
+  m_Father: {fileID: 4188172798495772}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &198147676333123090
 ParticleSystem:
@@ -19385,18 +19356,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &114352751645136584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1752385679068124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199e3c49ebcb3fe46997b10cf6a8eb52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!199 &199657416626372474
 ParticleSystemRenderer:
   serializedVersion: 6

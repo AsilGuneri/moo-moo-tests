@@ -4959,7 +4959,7 @@ Rigidbody2D:
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -4973,7 +4973,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4651312433719434}
   - component: {fileID: 198535202477826224}
-  - component: {fileID: 114165144893945426}
   - component: {fileID: 199507863963710848}
   m_Layer: 0
   m_Name: SubRombs
@@ -9714,18 +9713,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &114165144893945426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1608430684871792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199e3c49ebcb3fe46997b10cf6a8eb52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!199 &199507863963710848
 ParticleSystemRenderer:
   serializedVersion: 6

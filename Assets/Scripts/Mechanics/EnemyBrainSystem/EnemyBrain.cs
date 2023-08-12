@@ -22,8 +22,8 @@ public class EnemyBrain : MonoBehaviour
 
     public void KillBrain()
     {
-        if(currentBehaviour != null) ExitBehaviour();
         SetBrainActive(false);
+        if (currentBehaviour != null) ExitBehaviour();
     }
 
     private void InitializeBrain()

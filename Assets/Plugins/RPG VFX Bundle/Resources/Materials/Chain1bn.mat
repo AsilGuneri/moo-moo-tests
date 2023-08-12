@@ -12,7 +12,8 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _USEDEPTH_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -85,7 +86,7 @@ Material:
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpeedMainTexUVNoiseZW: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &7991368228816746727
+--- !u!114 &6781534173894589626
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

@@ -26,13 +26,15 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
         SerializedProperty m_StoppingDistance;
         SerializedProperty m_AutoBreaking;
 
+        AgentAuthoring Agent => target as AgentAuthoring;
+
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
 
-            EditorGUI.BeginChangeCheck();
             using (new EditorGUI.DisabledScope(Application.isPlaying))
                 EditorGUILayout.PropertyField(m_MotionType, Styles.MotionType);
+
             if (m_MotionType.enumValueIndex == (int)AgentMotionType.Steering)
             {
                 EditorGUI.indentLevel++;
@@ -43,11 +45,21 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
                 EditorGUILayout.PropertyField(m_AutoBreaking, Styles.AutoBreaking);
                 EditorGUI.indentLevel--;
             }
+
             if (m_MotionType.enumValueIndex == (int) AgentMotionType.Static)
             {
                 EditorGUILayout.HelpBox("Static is currently not supported use dynamic!", MessageType.Error);
             }
-            if (EditorGUI.EndChangeCheck())
+
+            if (!serializedObject.isEditingMultipleObjects)
+            {
+                if (target is AgentAuthoring auth && auth.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>() != null)
+                    EditorGUILayout.HelpBox("This component does not work with NavMeshAgent!", MessageType.Error);
+                if (Agent.GetComponent<AgentCylinderShapeAuthoring>() == null && Agent.GetComponent<AgentCircleShapeAuthoring>() == null)
+                    EditorGUILayout.HelpBox("It is expected that agent will have Cylinder or Circle shape!", MessageType.Warning);
+            }
+
+            if (serializedObject.ApplyModifiedProperties())
             {
                 // Update all agents entities steering
                 foreach (var target in targets)
@@ -57,14 +69,6 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
                         authoring.EntitySteering = authoring.DefaultSteering;
                 }
             }
-
-            if (!serializedObject.isEditingMultipleObjects)
-            {
-                if (target is AgentAuthoring auth && auth.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>() != null)
-                    EditorGUILayout.HelpBox("This component does not work with NavMeshAgent!", MessageType.Error);
-            }
-
-            serializedObject.ApplyModifiedProperties();
         }
         
         void OnEnable()
@@ -75,6 +79,33 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
             m_AngularSpeed = serializedObject.FindProperty("AngularSpeed");
             m_StoppingDistance = serializedObject.FindProperty("StoppingDistance");
             m_AutoBreaking = serializedObject.FindProperty("AutoBreaking");
+
+            if (Application.isPlaying)
+            {
+                var world = World.DefaultGameObjectInjectionWorld;
+                if (world == null)
+                    return;
+                var manager = world.EntityManager;
+                if (!manager.HasComponent<DrawGizmos>(Agent.GetOrCreateEntity()))
+                {
+                    manager.AddComponent<DrawGizmos>(Agent.GetOrCreateEntity());
+                }
+            }
+        }
+
+        void OnDisable()
+        {
+            if (Application.isPlaying)
+            {
+                var world = World.DefaultGameObjectInjectionWorld;
+                if (world == null)
+                    return;
+                var manager = world.EntityManager;
+                if (manager.HasComponent<DrawGizmos>(Agent.GetOrCreateEntity()))
+                {
+                    manager.RemoveComponent<DrawGizmos>(Agent.GetOrCreateEntity());
+                }
+            }
         }
 
         void OnSceneGUI()

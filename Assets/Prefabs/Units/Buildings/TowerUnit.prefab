@@ -331,7 +331,6 @@ MonoBehaviour:
   enemyList: 01000000
   projectileSpawnPoint: {fileID: 1458180271714197942}
   skills: []
-  animAttackPoint: 0
 --- !u!114 &2156721126573737330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +343,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a473c251a25634a88e45cec322a3fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tickTime: 0.1
   Packs:
   - PackName: Default
     Behaviours:
@@ -378,7 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keysData: {fileID: 0}
-  heroStatsData: {fileID: 11400000, guid: 8836df1bab8dd034bbafbbde66117d08, type: 2}
+  heroStatsData: {fileID: 11400000, guid: fd329804bebc9674683332e37882a7cc, type: 2}
 --- !u!114 &3300772957013834530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,6 +406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  animAttackPoint: 0
   Damage: 0
   projectilePrefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
 --- !u!95 &8572392696976709192

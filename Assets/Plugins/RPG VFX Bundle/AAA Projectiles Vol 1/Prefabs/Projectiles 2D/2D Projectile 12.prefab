@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4416643958488934}
   - component: {fileID: 198138707551317364}
-  - component: {fileID: 114392953459827446}
   - component: {fileID: 199515075448832936}
   m_Layer: 0
   m_Name: SlimeSparks
@@ -41,7 +40,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209571939782874}
   serializedVersion: 7
-  lengthInSec: 1
+  lengthInSec: 1.5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 3
@@ -4751,18 +4750,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &114392953459827446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1209571939782874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199e3c49ebcb3fe46997b10cf6a8eb52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!199 &199515075448832936
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -4784,7 +4771,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 540c41a60cf49424091b0262d3b77fd2, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9601,7 +9587,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 906522bf32691f9408c7e24cc0ee30a3, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14580,7 +14565,7 @@ Rigidbody2D:
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0

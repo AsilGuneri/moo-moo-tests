@@ -6,10 +6,11 @@ using UnityEngine.Experimental.AI;
 using static Unity.Entities.SystemAPI;
 using UnityEditor.AI;
 
-namespace ProjectDawn.Navigation
+namespace ProjectDawn.Navigation.Editor
 {
     [BurstCompile]
     [RequireMatchingQueriesForUpdate]
+    [UpdateInGroup(typeof(AgentGizmosSystemGroup))]
     public partial struct NavMeshNodesGizmosSystem : ISystem
     {
         public void OnCreate(ref SystemState state) { }

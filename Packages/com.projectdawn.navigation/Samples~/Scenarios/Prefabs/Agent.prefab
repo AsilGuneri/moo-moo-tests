@@ -113,6 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825ee44755f2e4846a6229365ed8d44c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MotionType: 2
   Speed: 3.5
   Acceleration: 8
   AngularSpeed: 120
@@ -131,9 +132,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Radius: 6
-  Angle: 135
+  Angle: {x: 230, y: 300}
   Mode: 3
   BlockedStop: 1
+  UseWalls: 0
 --- !u!114 &141211120325722359
 MonoBehaviour:
   m_ObjectHideFlags: 0

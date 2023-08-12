@@ -55,7 +55,7 @@ namespace ProjectDawn.Navigation
                     // Handle case if failde to map location
                     if (location.polygon.IsNull())
                     {
-                        UnityEngine.Debug.LogWarning("Failed to find NavMesh close to the agent");
+                        UnityEngine.Debug.LogWarning("Failed to map agent position to nav mesh location. This can happen either if nav mesh is not present or property MappingExtent value is too low.");
                         return;
                     }
 
@@ -75,7 +75,7 @@ namespace ProjectDawn.Navigation
                     return;
                 }
 
-                // Updare end location if changed
+                // Update end location if changed
                 if (!NavMesh.IsValid(path.EndLocation.polygon) || math.distancesq(body.Destination, (float3) path.EndLocation.position) > 0.01f)
                 {
                     NavMeshLocation location = NavMesh.MapLocation(body.Destination, path.MappingExtent, path.AgentTypeId, path.AreaMask);
@@ -83,7 +83,7 @@ namespace ProjectDawn.Navigation
                     // Handle case if failde to map location
                     if (location.polygon.IsNull())
                     {
-                        UnityEngine.Debug.LogWarning("Failed to find NavMesh close to the agent");
+                        UnityEngine.Debug.LogWarning("Failed to map agent destination to nav mesh location. This can happen either if nav mesh is not present or property MappingExtent value is too low.");
                     }
 
                     // Update destination to avoid mapping location again

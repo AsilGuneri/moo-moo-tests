@@ -34,9 +34,6 @@ public abstract class UnitController : NetworkBehaviour
     protected Movement movement;
     protected Health health;
 
-    [Range(0, 1f)] public float animAttackPoint;
-
-
     protected virtual void Awake()
     {
         CacheReferences();

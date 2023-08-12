@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEditor;
-using Unity.Entities;
-using ProjectDawn.Navigation;
 using Unity.AI.Navigation.Editor;
 
 namespace ProjectDawn.Navigation.Hybrid.Editor
@@ -27,12 +25,11 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
         {
             serializedObject.Update();
 
-            EditorGUI.BeginChangeCheck();
             NavMeshComponentsGUIUtility.AgentTypePopup("Agent Type", m_AgentTypeId);
-            AreaMaskField("Area Mask", m_AreaMask);
+            AreaMaskField(m_AreaMask, Styles.AreaMask);
             EditorGUILayout.PropertyField(m_AutoRepath, Styles.AutoRepath);
             EditorGUILayout.PropertyField(m_MappingExtent, Styles.MappingExtent);
-            if (EditorGUI.EndChangeCheck())
+            if (serializedObject.ApplyModifiedProperties())
             {
                 // Update entities
                 foreach (var target in targets)
@@ -48,8 +45,6 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
                 if (target is AgentNavMeshAuthoring navMesh && navMesh.gameObject.GetComponent<UnityEngine.AI.NavMeshObstacle>() != null)
                     EditorGUILayout.HelpBox("This component does not work with NavMeshObstacle!", MessageType.Error);
             }
-
-            serializedObject.ApplyModifiedProperties();
         }
 
         void OnEnable()
@@ -60,26 +55,35 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
             m_MappingExtent = serializedObject.FindProperty("MappingExtent");
         }
 
-        public static void AreaMaskField(string labelName, SerializedProperty property)
+        void AreaMaskField(SerializedProperty property, GUIContent label)
         {
-            var areaIndex = -1;
+            var rect = EditorGUILayout.GetControlRect(true, EditorGUIUtility.singleLineHeight);
+            EditorGUI.BeginProperty(rect, label, property);
+
+            var areaIndex = 0;
             var areaNames = GameObjectUtility.GetNavMeshAreaNames();
             for (var i = 0; i < areaNames.Length; i++)
             {
-                var areaValue = GameObjectUtility.GetNavMeshAreaFromName(areaNames[i]);
-                if (areaValue == property.intValue)
-                    areaIndex = i;
+                var areaValue = 1 << GameObjectUtility.GetNavMeshAreaFromName(areaNames[i]);
+                if ((areaValue & property.intValue) != 0)
+                    areaIndex |= 1 << i;
             }
-
-            var rect = EditorGUILayout.GetControlRect(true, EditorGUIUtility.singleLineHeight);
-            EditorGUI.BeginProperty(rect, GUIContent.none, property);
 
             EditorGUI.BeginChangeCheck();
-            areaIndex = EditorGUI.MaskField(rect, labelName, areaIndex, areaNames);
+            int value = EditorGUI.MaskField(rect, label, areaIndex, areaNames);
             if (EditorGUI.EndChangeCheck())
             {
+                areaIndex = 0;
+                for (var i = 0; i < areaNames.Length; i++)
+                {
+                    var areaValue = 1 << GameObjectUtility.GetNavMeshAreaFromName(areaNames[i]);
+                    if ((value & 1 << i) != 0)
+                        areaIndex |= areaValue;
+                }
+
                 property.intValue = areaIndex;
             }
+
             EditorGUI.EndProperty();
         }
     }

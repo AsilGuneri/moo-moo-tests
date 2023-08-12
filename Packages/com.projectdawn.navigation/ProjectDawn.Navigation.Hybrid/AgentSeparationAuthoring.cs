@@ -14,6 +14,8 @@ namespace ProjectDawn.Navigation.Hybrid
     {
         [SerializeField]
         protected float Radius = 3;
+        [SerializeField, Range(0f, 1f)]
+        protected float Weight = 1;
 
         Entity m_Entity;
 
@@ -23,6 +25,7 @@ namespace ProjectDawn.Navigation.Hybrid
         public AgentSeparation DefaulSeparation => new AgentSeparation
         {
             Radius = Radius,
+            Weight = Weight,
         };
 
         /// <summary>
@@ -57,6 +60,10 @@ namespace ProjectDawn.Navigation.Hybrid
 
     internal class AgentSeparationBaker : Baker<AgentSeparationAuthoring>
     {
+#if UNITY_ENTITIES_VERSION_65
+        public override void Bake(AgentSeparationAuthoring authoring) => AddComponent(GetEntity(TransformUsageFlags.Dynamic), authoring.DefaulSeparation);
+#else
         public override void Bake(AgentSeparationAuthoring authoring) => AddComponent(authoring.DefaulSeparation);
+#endif
     }
 }

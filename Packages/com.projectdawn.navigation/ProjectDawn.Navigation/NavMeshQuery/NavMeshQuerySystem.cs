@@ -45,8 +45,8 @@ namespace ProjectDawn.Navigation
     [UpdateInGroup(typeof(InitializationSystemGroup))]
     public unsafe partial struct NavMeshQuerySystem : ISystem
     {
-        const int MaxIterations = 1024;
-        const int MaxPathSize = 1024;
+        int MaxIterations;
+        int MaxPathSize;
 
         NativeQueue<NavMeshQueryHandle> m_Free;
 
@@ -62,6 +62,20 @@ namespace ProjectDawn.Navigation
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
+            if (!Application.isPlaying)
+                throw new InvalidOperationException("NavMeshQuerySystem does not support lifetime in edit time as unity navmesh does not support it too.");
+
+            if (TryGetSingleton(out Settings settings))
+            {
+                MaxIterations = settings.MaxIterations;
+                MaxPathSize = settings.MaxPathSize;
+            }
+            else
+            {
+                MaxIterations = 1024;
+                MaxPathSize = 1024;
+            }
+
             m_World = NavMeshWorld.GetDefaultWorld();
             m_Free = new NativeQueue<NavMeshQueryHandle>(Allocator.Persistent);
             m_Queries = UnsafeList<NavMeshQuery>.Create(1, Allocator.Persistent);
@@ -92,6 +106,7 @@ namespace ProjectDawn.Navigation
                 m_JobHandles = m_JobHandles,
                 m_QueryForOtherOperations = m_QueryForOtherOperations,
                 m_World = m_World,
+                MaxPathSize = MaxPathSize,
             });
         }
 
@@ -156,6 +171,12 @@ namespace ProjectDawn.Navigation
             m_World.AddDependency(state.Dependency);
         }
 
+        public struct Settings : IComponentData
+        {
+            public int MaxIterations;
+            public int MaxPathSize;
+        }
+
         public unsafe struct Singleton : IComponentData
         {
             internal NativeQueue<NavMeshQueryHandle> m_Free;
@@ -171,6 +192,7 @@ namespace ProjectDawn.Navigation
             internal NavMeshQuery m_QueryForOtherOperations;
             [NativeDisableUnsafePtrRestriction]
             internal NavMeshWorld m_World;
+            internal int MaxPathSize;
 
             public NavMeshWorld World => m_World;
 
@@ -206,55 +228,6 @@ namespace ProjectDawn.Navigation
                     {
                         From = from,
                         To = to,
-                        Hash = hash,
-                        AgentTypeId = agentTypeId,
-                        AreaMask = areaMask,
-                    };
-                    handle = new NavMeshQueryHandle { Index = m_Queries->Length };
-
-                    m_Queries->Add(new NavMeshQuery());
-                    m_Paths.Length += MaxPathSize;
-                    m_Data.Add(data);
-                    m_Status.Add(NavMeshQueryStatus.None);
-                    m_JobHandles.Add(new JobHandle());
-                    m_PathLength.Add(0);
-
-                    return handle;
-                }
-            }
-
-            /// <summary>
-            /// Creates new navmesh query to construct optimal path.
-            /// </summary>
-            [Obsolete("This method is depracated from 3.0.4, please use other overload")]
-            public NavMeshQueryHandle CreateQuery(float3 from, float3 to, int agentTypeId = 0, int areaMask = -1)
-            {
-                var fromLocation = m_QueryForOtherOperations.MapLocation(from, Vector3.one * 10, agentTypeId);
-                var toLocation = m_QueryForOtherOperations.MapLocation(to, Vector3.one * 10, agentTypeId);
-                var hash = GetHash(fromLocation, toLocation, agentTypeId);
-
-                // Try to find unused query in pool
-                if (m_Free.TryDequeue(out NavMeshQueryHandle handle))
-                {
-                    m_Data[handle] = new NavMeshQueryData
-                    {
-                        From = fromLocation,
-                        To = toLocation,
-                        Hash = hash,
-                        AgentTypeId = agentTypeId,
-                        AreaMask = areaMask,
-                    };
-                    m_Status[handle] = NavMeshQueryStatus.Allocated;
-                    m_JobHandles[handle] = new JobHandle();
-                    m_PathLength[handle] = 0;
-                    return handle;
-                }
-                else
-                {
-                    var data = new NavMeshQueryData
-                    {
-                        From = fromLocation,
-                        To = toLocation,
                         Hash = hash,
                         AgentTypeId = agentTypeId,
                         AreaMask = areaMask,

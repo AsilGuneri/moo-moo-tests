@@ -18,9 +18,8 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
         {
             serializedObject.Update();
 
-            EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(m_Radius, Styles.Radius);
-            if (EditorGUI.EndChangeCheck())
+            if (serializedObject.ApplyModifiedProperties())
             {
                 // Update entities
                 foreach (var target in targets)
@@ -32,8 +31,6 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
             }
 
             EditorGUILayout.HelpBox("This is experimental feature. Not everything is set to work and will change in the future. Use at your own risk.", MessageType.Warning);
-
-            serializedObject.ApplyModifiedProperties();
         }
 
         void OnEnable()

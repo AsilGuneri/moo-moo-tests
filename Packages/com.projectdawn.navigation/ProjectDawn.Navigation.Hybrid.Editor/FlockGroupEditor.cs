@@ -17,13 +17,12 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
         {
             serializedObject.Update();
 
-            EditorGUI.BeginChangeCheck();
             EditorGUILayout.PropertyField(m_Leader);
             EditorGUILayout.PropertyField(m_Radius);
             EditorGUILayout.PropertyField(m_Cohesion);
             EditorGUILayout.PropertyField(m_Alignment);
             EditorGUILayout.PropertyField(m_Agents);
-            if (EditorGUI.EndChangeCheck())
+            if (serializedObject.ApplyModifiedProperties())
             {
                 // Update all agents entities shape
                 foreach (var target in targets)
@@ -33,8 +32,6 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
             }
 
             EditorGUILayout.HelpBox("This is experimental feature. Not everything is set to work and will change in the future. Use at your own risk.", MessageType.Warning);
-
-            serializedObject.ApplyModifiedProperties();
         }
 
         void OnEnable()

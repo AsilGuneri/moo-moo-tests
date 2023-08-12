@@ -58,6 +58,10 @@ namespace ProjectDawn.Navigation.Hybrid
 
     internal class AgentCircleShapeBaker : Baker<AgentCircleShapeAuthoring>
     {
+#if UNITY_ENTITIES_VERSION_65
+        public override void Bake(AgentCircleShapeAuthoring authoring) => AddComponent(GetEntity(TransformUsageFlags.Dynamic), authoring.DefaultShape);
+#else
         public override void Bake(AgentCircleShapeAuthoring authoring) => AddComponent(authoring.DefaultShape);
+#endif
     }
 }

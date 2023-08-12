@@ -1,8 +1,5 @@
-using Mono.Cecil;
 using MyBox;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Build.Pipeline;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PickClosestEnemy", menuName = "Scriptable Objects/EnemyBehaviours/PickClosestEnemy")]
@@ -57,7 +54,7 @@ public class PickClosestEnemyController : EnemyBehaviourController
 
     public override void OnExit()
     {
-        onCooldown = false;
+        //onCooldown = false;
     }
 
     private void Update() 
@@ -67,6 +64,7 @@ public class PickClosestEnemyController : EnemyBehaviourController
             timer += Time.deltaTime;
             if(timer >= pickEnemyData.BetterOptionCooldown)
             {
+                timer = 0;
                 onCooldown = false;
             }
         }

@@ -40,7 +40,7 @@ public class AttackController : EnemyBehaviourController
         var target = controller.TargetController.Target;
         controller.Movement.ClientStop();
         controller.TargetController.SetTarget(target);
-        attackController.StartAutoAttack(target, controller.attackSpeed, controller.animAttackPoint);
+        attackController.StartAutoAttack(target, controller.attackSpeed);
     }
 
     public override void OnExit()

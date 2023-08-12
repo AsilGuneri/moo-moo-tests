@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4617574666699530}
   - component: {fileID: 198892729897997728}
-  - component: {fileID: 114857665921894134}
   - component: {fileID: 199138449149840834}
   m_Layer: 0
   m_Name: SubSparks
@@ -29,7 +28,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4022559578858668}
   m_Father: {fileID: 4430283953656380}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4751,18 +4751,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &114857665921894134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1143056303235178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199e3c49ebcb3fe46997b10cf6a8eb52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!199 &199138449149840834
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -4862,7 +4850,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4617574666699530}
-  - {fileID: 4022559578858668}
   - {fileID: 4181983501846708}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -9663,7 +9650,6 @@ MonoBehaviour:
   flash: {fileID: 1437680763721510, guid: a311f5de96916bf44bcb1dae61840939, type: 3}
   Detached:
   - {fileID: 1143056303235178}
-  - {fileID: 1677860970428578}
 --- !u!199 &199255407689944526
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -9747,7 +9733,7 @@ Rigidbody2D:
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -9797,7 +9783,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4430283953656380}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!198 &198054767724686588
 ParticleSystem:
@@ -14651,7 +14637,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4022559578858668}
   - component: {fileID: 198545261294117716}
-  - component: {fileID: 114425360155686886}
   - component: {fileID: 199030743555694118}
   m_Layer: 0
   m_Name: Glow
@@ -14671,8 +14656,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4430283953656380}
-  m_RootOrder: 1
+  m_Father: {fileID: 4617574666699530}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &198545261294117716
 ParticleSystem:
@@ -19392,18 +19377,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!114 &114425360155686886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1677860970428578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199e3c49ebcb3fe46997b10cf6a8eb52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!199 &199030743555694118
 ParticleSystemRenderer:
   serializedVersion: 6

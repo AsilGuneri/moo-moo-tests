@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlockMovement: 0
   BlockAttacking: 0
-  BetterOptionCooldown: 10
+  BetterOptionCooldown: 3
   AggroRange: 20
   PercentageDivision: 10
   HealthPercentScoreMultiplier: 1

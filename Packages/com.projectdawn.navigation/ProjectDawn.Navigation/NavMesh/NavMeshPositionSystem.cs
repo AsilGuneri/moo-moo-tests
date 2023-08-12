@@ -27,7 +27,8 @@ namespace ProjectDawn.Navigation
             var navmesh = GetSingleton<NavMeshQuerySystem.Singleton>();
             new NavMeshPositionJob
             {
-                NavMesh = navmesh
+                NavMesh = navmesh,
+                DeltaTime = Time.DeltaTime,
             }.ScheduleParallel();
             navmesh.World.AddDependency(state.Dependency);
         }
@@ -37,8 +38,9 @@ namespace ProjectDawn.Navigation
         {
             [ReadOnly]
             public NavMeshQuerySystem.Singleton NavMesh;
+            public float DeltaTime;
 
-            public void Execute(ref DynamicBuffer<NavMeshNode> nodes, ref NavMeshPath path, ref LocalTransform transform)
+            public void Execute(ref DynamicBuffer<NavMeshNode> nodes, ref NavMeshPath path, ref LocalTransform transform, ref AgentBody body)
             {
                 var location = path.Location;
 
@@ -47,6 +49,12 @@ namespace ProjectDawn.Navigation
                     return;
 
                 var newLocation = NavMesh.MoveLocation(location, transform.Position, path.AreaMask);
+
+#if EXPERIMENTAL_SONAR_TIME
+                // Update velocity based on movement
+                // This is needed that if agent hits obstacle it actually would lose velocity
+                body.Velocity = (newLocation.position -location.position) / DeltaTime;
+#endif
 
                 ProgressPath(ref nodes, location.polygon, newLocation.polygon);
 

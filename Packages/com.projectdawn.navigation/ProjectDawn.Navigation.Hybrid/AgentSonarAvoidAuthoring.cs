@@ -14,10 +14,15 @@ namespace ProjectDawn.Navigation.Hybrid
     public class AgentAvoidAuthoring : MonoBehaviour
     {
         [SerializeField]
-        protected float Radius = 6;
+        protected float Radius = 2;
 
-        [SerializeField, Range(0, 180)]
-        protected float Angle = 135;
+        [SerializeField]
+        [Range(0, 360)]
+        protected float Angle = 230;
+
+        [SerializeField]
+        [Range(0, 360)]
+        protected float MaxAngle = 300;
 
         [SerializeField]
         protected SonarAvoidMode Mode = SonarAvoidMode.IgnoreBehindAgents;
@@ -37,6 +42,7 @@ namespace ProjectDawn.Navigation.Hybrid
         {
             Radius = Radius,
             Angle = math.radians(Angle),
+            MaxAngle = math.radians(MaxAngle),
             Mode = Mode,
             BlockedStop = BlockedStop,
         };
@@ -85,10 +91,30 @@ namespace ProjectDawn.Navigation.Hybrid
                 world.EntityManager.RemoveComponent<NavMeshWall>(m_Entity);
             }
         }
+
+        void OnEnable()
+        {
+            var world = World.DefaultGameObjectInjectionWorld;
+            if (world == null)
+                return;
+            world.EntityManager.SetComponentEnabled<AgentSonarAvoid>(m_Entity, true);
+        }
+
+        void OnDisable()
+        {
+            var world = World.DefaultGameObjectInjectionWorld;
+            if (world == null)
+                return;
+            world.EntityManager.SetComponentEnabled<AgentSonarAvoid>(m_Entity, false);
+        }
     }
 
     internal class AgentSonarAvoidBaker : Baker<AgentAvoidAuthoring>
     {
+#if UNITY_ENTITIES_VERSION_65
+        public override void Bake(AgentAvoidAuthoring authoring) => AddComponent(GetEntity(TransformUsageFlags.Dynamic), authoring.DefaultAvoid);
+#else
         public override void Bake(AgentAvoidAuthoring authoring) => AddComponent(authoring.DefaultAvoid);
+#endif
     }
 }

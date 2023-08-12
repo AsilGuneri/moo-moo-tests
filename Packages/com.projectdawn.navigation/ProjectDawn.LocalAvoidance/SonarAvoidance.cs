@@ -157,6 +157,9 @@ namespace ProjectDawn.LocalAvoidance
             return true;
         }
 
+        [Obsolete("This method is obsolete, please use InsertObstacleCircle")]
+        public bool InsertObstacle(float3 obstaclePosition, float3 obstacleVelocity, float obstacleRadius) => InsertObstacleCircle(obstaclePosition, obstacleVelocity, obstacleRadius);
+
         /// <summary>
         /// Inserts sphere obstacle into sonar.
         /// </summary>
@@ -164,12 +167,12 @@ namespace ProjectDawn.LocalAvoidance
         /// <param name="obstacleVelocity">Velocity of obstacle (Zero can be used for non moving obstacle)</param>
         /// <param name="obstacleRadius">Radius of obstacle</param>
         /// <returns> True if obstacle was added successfully</returns>
-        public bool InsertObstacle(float3 obstaclePosition, float3 obstacleVelocity, float obstacleRadius)
+        public bool InsertObstacleCircle(float3 obstaclePosition, float3 obstacleVelocity, float obstacleRadius)
         {
             CheckIsCreated();
 
-            if (math.all(obstacleVelocity == 0))
-                return InsertObstacleCircle(obstaclePosition, obstacleRadius);
+            //if (math.all(obstacleVelocity == 0))
+            //    return InsertObstacleCircle(obstaclePosition, obstacleRadius);
 
             var obstaclePositionLS = ToLocalSpace(obstaclePosition - m_Position);
             var obstacleVelocityLS = ToLocalSpace(obstacleVelocity);
@@ -231,7 +234,7 @@ namespace ProjectDawn.LocalAvoidance
             var angleRight = angle - tangentLineAngle;
             var angleLeft = angle + tangentLineAngle;
 
-            InsertObstacle(new Line(angleRight, angleLeft));
+            InsertObstacle2(new Line(angleRight, angleLeft));
 
             return false;
         }
@@ -475,6 +478,17 @@ namespace ProjectDawn.LocalAvoidance
             }
         }
 
+        bool InsertObstacle2(Line rangeLS)
+        {
+            CheckIsCreated();
+
+            var angleRight = rangeLS.From;
+            var angleLeft = rangeLS.To;
+
+            InsertObstacle(Root, new Line(angleRight, angleLeft));
+            return true;
+        }
+
         void InsertObstacle(SonarNodeHandle handle, Line line)
         {
             CheckHandle(handle);
@@ -520,7 +534,7 @@ namespace ProjectDawn.LocalAvoidance
             var node = m_Nodes[handle];
             var line = node.Line;
 
-            if (line.Length <= 0)
+            if (line.Length <= 0.01f)
                 return;
 
             if (node.IsLeaf)
@@ -604,6 +618,21 @@ namespace ProjectDawn.LocalAvoidance
             Circle current = new Circle(0, m_InnerRadius);
             Circle obstacle = new Circle(obstaclePositionLS, radius);
 
+            var circleA = obstacle;
+            var circleB = current;
+
+            // Force circles not to be overlapping
+            float2 towards = circleA.Point - circleB.Point;
+            float length = math.length(towards);
+            float r = circleA.Radius + circleB.Radius + 1e-3f;
+            if (length < r)
+            {
+                circleA.Point = circleB.Point + (towards / length) * r;
+                length = r;
+            }
+
+            obstacle = circleA;
+
             float3 up = Vector3.up;
             up = math.mul(m_Rotation, up);
 
@@ -616,13 +645,25 @@ namespace ProjectDawn.LocalAvoidance
                     float2 direction = new float2(math.cos(angle), math.sin(angle));
                     float2 testVelocity = direction * m_Speed;
 
-                    if (Intersection.IntersectionOfTwoMovingCircles(obstacle, obstacleVelocityLS, current, testVelocity, out float t0, out float t1) && t0 >= 0 && math.isfinite(t0))
+                    if (Intersection.IntersectionOfTwoMovingCircles(obstacle, obstacleVelocityLS, current, testVelocity, out float t0, out float t1))
                     {
-                        float3 p0 = ToWorldSpace(current.Point + t0 * testVelocity) + m_Position;
-                        action.DrawCircle(p0, up, radius, new Color32(255, 166, 89, 25));
+                        if (t0 >= 0 && math.isfinite(t0))
+                        {
+                            float3 p0 = ToWorldSpace(current.Point + t0 * testVelocity) + m_Position;
+                            action.DrawCircle(p0, up, radius, new Color32(255, 166, 89, 25));
 
-                        float3 p1 = ToWorldSpace(obstacle.Point + t0 * obstacleVelocityLS) + m_Position;
-                        action.DrawCircle(p1, up, m_InnerRadius, new Color32(255, 0, 0, 50));
+                            float3 p1 = ToWorldSpace(obstacle.Point + t0 * obstacleVelocityLS) + m_Position;
+                            action.DrawCircle(p1, up, m_InnerRadius, new Color32(255, 0, 0, 50));
+                        }
+
+                        /*if (t1 >= 0 && math.isfinite(t1))
+                        {
+                            float3 p0 = ToWorldSpace(current.Point + t1 * testVelocity) + m_Position;
+                            action.DrawCircle(p0, up, radius, new Color32(255, 166, 89, 25));
+
+                            float3 p1 = ToWorldSpace(obstacle.Point + t1 * obstacleVelocityLS) + m_Position;
+                            action.DrawCircle(p1, up, m_InnerRadius, new Color32(255, 0, 0, 50));
+                        }*/
                     }
                 }
             }
@@ -774,7 +815,7 @@ namespace ProjectDawn.LocalAvoidance
             {
 #if UNITY_EDITOR
                 UnityEditor.Handles.color = color;
-                UnityEditor.Handles.DrawSolidArc(new Vector3(position.x, 0, position.y), up, Vector3.right, 360, radius);
+                UnityEditor.Handles.DrawSolidArc(position, up, Vector3.right, 360, radius);
 #endif
             }
         }

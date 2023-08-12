@@ -69545,7 +69545,6 @@ MonoBehaviour:
   enemyList: 01000000
   projectileSpawnPoint: {fileID: 3792548669549166751}
   skills: []
-  animAttackPoint: 0.5
   clickableLayerMask:
     serializedVersion: 2
     m_Bits: 576
@@ -69565,6 +69564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  animAttackPoint: 0.5
   Damage: 50
   projectilePrefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
 --- !u!114 &2710746016826199023
@@ -69610,6 +69610,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   hasCancelAttackAnim: 1
+  AttackAnimTime: 0
+  attackAnimName: Attack
 --- !u!114 &1626028696452287395
 MonoBehaviour:
   m_ObjectHideFlags: 0
