@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackSpeed: 1
   Range: 10
-  Hp: 15000
+  Hp: 50
   Damage: 0
-  AnimAttackMoment: 0.63
