@@ -7,8 +7,8 @@ public class ShieldController : NetworkBehaviour
     [SerializeField] private float shieldDistance = 5.0f;
     [SerializeField] private float yOffset = 1.0f; // Y-axis offset to ensure the shield is above the ground
     [SerializeField] private GameObject shieldObject;
-    [SerializeField] private float minDissolve = 0.0f;
-    [SerializeField] private float maxDissolve = 1.0f;
+    [SerializeField] private float minOpacity = 0.0f;
+    [SerializeField] private float maxOpacity = 20f;
 
     private Transform protectedTarget;
     private Transform shieldedUnit;
@@ -16,15 +16,18 @@ public class ShieldController : NetworkBehaviour
     private Renderer shieldRenderer;
     private UnitController unitController;
 
-    public void SetupShield(Transform protectedTarget, Transform shieldedUnit)
+    public void SetupShield(Transform threatTarget, Transform shieldedUnit)
     {
         unitController = shieldedUnit.GetComponent<UnitController>();
         shieldRenderer = shieldObject.GetComponent<Renderer>();
-        this.protectedTarget = protectedTarget;
+        this.protectedTarget = threatTarget;
         this.shieldedUnit = shieldedUnit;
         unitController.Health.OnDeath += DestroySelf;
-        UpdateShieldPosition();
+        //UpdateShieldPosition();
+        var pos = Extensions.Vector3WithoutY(shieldedUnit.position);
+        pos.y = 1;
         hitCounter = 0;
+        transform.position = pos;
         NetworkServer.Spawn(gameObject, connectionToClient);
     }
 
@@ -42,13 +45,14 @@ public class ShieldController : NetworkBehaviour
     private void TakeShieldDamage()
     {
         hitCounter++;
-        float dissolveValue = minDissolve + ((maxDissolve - minDissolve) / shieldMaxHitPoint * hitCounter);
-        shieldRenderer.material.SetFloat("_Dissolve", dissolveValue);
+        float opacityValue = maxOpacity - ((maxOpacity - minOpacity) / shieldMaxHitPoint * hitCounter);
+        shieldRenderer.material.SetFloat("_FinalOpacityPower", opacityValue);
         if (hitCounter >= shieldMaxHitPoint)
         {
             DestroySelf();
         }
     }
+
     private void DestroySelf()
     {
         shieldedUnit.GetComponent<UnitController>().Health.OnDeath -= DestroySelf;
@@ -77,9 +81,9 @@ public class ShieldController : NetworkBehaviour
 
     void Update()
     {
-        if (protectedTarget != null && shieldedUnit != null)
-        {
-            UpdateShieldPosition();
-        }
+        //if (protectedTarget != null && shieldedUnit != null)
+        //{
+        //    UpdateShieldPosition();
+        //}
     }
 }

@@ -109,6 +109,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 708b4a86f2d84194ba46db84934e3b02, type: 2}
     - {fileID: 11400000, guid: a2f05e797ef7d5443a5a91fec270fef8, type: 2}
     - {fileID: 11400000, guid: cfc7d6e222bb2fa42965457e919339b4, type: 2}
+  - PackName: Defend
+    Behaviours:
+    - {fileID: 11400000, guid: 5146e65e0c7579348aa52fee95bb7894, type: 2}
 --- !u!114 &1127350715254039117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Radius: 6
   Angle: 135
+  MaxAngle: 300
   Mode: 3
   BlockedStop: 0
   UseWalls: 0
