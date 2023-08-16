@@ -69758,6 +69758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onActualAttackFxPrefab: {fileID: 1437680763721510, guid: a311f5de96916bf44bcb1dae61840939, type: 3}
   actualAttackFxPosRef: {fileID: 3792548669549166751}
+  actualAttackFxRotation: {x: 0, y: -240, z: 0}
 --- !u!1 &8946106163135306598
 GameObject:
   m_ObjectHideFlags: 0

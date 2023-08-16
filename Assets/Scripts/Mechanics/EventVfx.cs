@@ -9,6 +9,7 @@ public class EventVfx : MonoBehaviour
     /// </summary>
     [SerializeField] private GameObject onActualAttackFxPrefab;
     [SerializeField] private Transform actualAttackFxPosRef;
+    [SerializeField] private Vector3 actualAttackFxRotation;
 
 
     private PlayerController controller;
@@ -27,6 +28,6 @@ public class EventVfx : MonoBehaviour
     private void OnActualAttackStart()
     {
         ObjectPooler.Instance.CmdSpawnFromPool(onActualAttackFxPrefab.name,
-            actualAttackFxPosRef.position, Quaternion.identity);
+            actualAttackFxPosRef.position, Quaternion.Euler(actualAttackFxRotation));
     }
 }
