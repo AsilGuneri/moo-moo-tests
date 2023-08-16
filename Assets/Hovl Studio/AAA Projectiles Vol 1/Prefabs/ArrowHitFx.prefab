@@ -4863,7 +4863,7 @@ GameObject:
   - component: {fileID: 77616663633463124}
   - component: {fileID: 1259287048524808454}
   m_Layer: 0
-  m_Name: Hit 1
+  m_Name: ArrowHitFx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -19,7 +19,3 @@ MonoBehaviour:
       Count: 5
       Spacing: 3
       Columns: 2
-    - Prefab: {fileID: 2462893064303745991, guid: f61dd9d56f5809b429696847a8caabf2, type: 3}
-      Count: 1
-      Spacing: 3
-      Columns: 2
