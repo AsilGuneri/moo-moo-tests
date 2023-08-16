@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class EventVfx : MonoBehaviour
 {
+    /// <summary>
+    /// Vfx spawns when ; For range : projectile spawn moment, for melee : hit moment.
+    /// </summary>
+    [SerializeField] private GameObject onActualAttackFxPrefab;
+    [SerializeField] private Transform actualAttackFxPosRef;
+
+
     private PlayerController controller;
 
     private void Awake()
@@ -12,10 +19,14 @@ public class EventVfx : MonoBehaviour
     }
     private void Start()
     {
-        controller.AttackController.OnStartAttack += x;
+        controller.AttackController.OnActualAttackMoment += OnActualAttackStart;
     }
-    private void x()
+    /// <summary>
+    /// For range : projectile spawn moment, for melee : hit moment.
+    /// </summary>
+    private void OnActualAttackStart()
     {
-
+        ObjectPooler.Instance.CmdSpawnFromPool(onActualAttackFxPrefab.name,
+            actualAttackFxPosRef.position, Quaternion.identity);
     }
 }

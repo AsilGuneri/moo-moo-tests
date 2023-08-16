@@ -10,6 +10,9 @@ public abstract class BasicAttackController : NetworkBehaviour
     [Range(0f,1f)]
     [SerializeField] protected float animAttackPoint;
 
+    /// <summary>
+    /// For range : projectile spawn moment, for melee : hit moment.
+    /// </summary>
     public Action OnActualAttackMoment;
     public Action AfterLastAttack;
     public bool IsSetToStopAfterAttack { get => isSetToStopAfterAttack; }
@@ -146,6 +149,9 @@ public abstract class BasicAttackController : NetworkBehaviour
         return true;
     }
     protected abstract void OnAttackStart();
+    /// <summary>
+    /// For range : projectile spawn moment, for melee : hit moment.
+    /// </summary>
     protected virtual void OnAttackImpact()
     {
         if (!IsAutoAttackingAvailable()) return;

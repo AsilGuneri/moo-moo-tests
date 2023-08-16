@@ -2780,6 +2780,8 @@ MonoBehaviour:
   pools:
   - Prefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
     Size: 50
+  - Prefab: {fileID: 1437680763721510, guid: a311f5de96916bf44bcb1dae61840939, type: 3}
+    Size: 50
   - Prefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
     Size: 50
   - Prefab: {fileID: 5432209458267137536, guid: 93bf18897f48e4140b9a368c27bd919b, type: 3}
@@ -3276,23 +3278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f06c19a2b5cb91648a1d8662ab4d4592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UISkills:
-  - SkillIcon: {fileID: 1804205542}
-    Button: {fileID: 1804205544}
-    CooldownImage: {fileID: 2014704871}
-    CooldownText: {fileID: 498567208}
-  - SkillIcon: {fileID: 978322350}
-    Button: {fileID: 978322349}
-    CooldownImage: {fileID: 0}
-    CooldownText: {fileID: 0}
-  - SkillIcon: {fileID: 565392694}
-    Button: {fileID: 565392693}
-    CooldownImage: {fileID: 0}
-    CooldownText: {fileID: 0}
-  - SkillIcon: {fileID: 1703135894}
-    Button: {fileID: 1703135893}
-    CooldownImage: {fileID: 0}
-    CooldownText: {fileID: 0}
 --- !u!1 &498567206
 GameObject:
   m_ObjectHideFlags: 0
@@ -5550,13 +5535,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67e5ca91855326f4c998d4fa54605877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillParents:
-  - {fileID: 77210180}
-  - {fileID: 749373073}
-  - {fileID: 184115265}
-  - {fileID: 57287875}
-  UISkillPrefab: {fileID: 6517478535760197422, guid: 266962aa360a7e846a0e726c48f1454f, type: 3}
-  panel: {fileID: 1029443008}
 --- !u!1 &1213276163
 GameObject:
   m_ObjectHideFlags: 0

@@ -69381,6 +69381,7 @@ GameObject:
   - component: {fileID: 8064767531322124681}
   - component: {fileID: 5904897624730745774}
   - component: {fileID: 2940790932453975993}
+  - component: {fileID: 9161982347859305274}
   m_Layer: 0
   m_Name: Player Parentxx
   m_TagString: Untagged
@@ -69739,9 +69740,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Radius: 6
   Angle: 135
+  MaxAngle: 300
   Mode: 3
   BlockedStop: 0
   UseWalls: 0
+--- !u!114 &9161982347859305274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8938534602783702256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7be376e943caa974eaa6fc1c328f2eee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onActualAttackFxPrefab: {fileID: 1437680763721510, guid: a311f5de96916bf44bcb1dae61840939, type: 3}
+  actualAttackFxPosRef: {fileID: 3792548669549166751}
 --- !u!1 &8946106163135306598
 GameObject:
   m_ObjectHideFlags: 0
