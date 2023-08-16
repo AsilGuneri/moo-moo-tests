@@ -52,7 +52,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.01
   speed: 25
-  onHitParticlePrefab: {fileID: 0}
+  onHitParticlePrefab: {fileID: 1438542530079480, guid: 21710859533a00746ad2bdd323061a2d, type: 3}
 --- !u!114 &817598904071200291
 MonoBehaviour:
   m_ObjectHideFlags: 0

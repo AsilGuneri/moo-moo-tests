@@ -93,7 +93,7 @@ public class Projectile : NetworkBehaviour, IProjectile
 
         if (onHitParticlePrefab)
         {
-            ObjectPooler.Instance.CmdSpawnFromPool(onHitParticlePrefab.name, transform.position, Quaternion.identity);
+            ObjectPooler.Instance.CmdSpawnFromPool(onHitParticlePrefab.name, transform.position, transform.rotation);
         }
 
         DestroySelf();
