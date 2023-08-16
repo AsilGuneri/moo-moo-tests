@@ -12,7 +12,7 @@ public class MeleeAttackController : BasicAttackController
 
     protected override void OnAttackImpact()
     {
-        if (!IsAutoAttackingAvailable()) return;
+        base.OnAttackImpact();
         DealDamageToCurrentTarget();
     }
 

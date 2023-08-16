@@ -10,6 +10,7 @@ public abstract class BasicAttackController : NetworkBehaviour
     [Range(0f,1f)]
     [SerializeField] protected float animAttackPoint;
 
+    public Action OnActualAttackMoment;
     public Action AfterLastAttack;
     public bool IsSetToStopAfterAttack { get => isSetToStopAfterAttack; }
     public bool IsAttacking { get => isAttacking; }
@@ -112,14 +113,12 @@ public abstract class BasicAttackController : NetworkBehaviour
         if (isCurrentlyAttacking) return;
 
         isCurrentlyAttacking = true;
-        Debug.Log("asilxx1 " + controller.AnimationController.AttackAnimTime + " " + name);
         float attackAnimTime = controller.AnimationController.AttackAnimTime == 0 ? 
             1 : controller.AnimationController.AttackAnimTime;
 
         Extensions.GetAttackTimes(attackAnimTime, attackSpeed, animAttackPoint
             , out int msBeforeAttack, out int msAfterAttack);
         GameObject target = controller.TargetController.Target;
-        Debug.Log("asilxx2 " + msBeforeAttack +" after " + msAfterAttack);
 
         RotateToTarget(target);
         OnAttackStart();
@@ -138,7 +137,7 @@ public abstract class BasicAttackController : NetworkBehaviour
         isCurrentlyAttacking = false;
     }
 
-    protected bool IsAutoAttackingAvailable()
+    protected virtual bool IsAutoAttackingAvailable()
     {
         if(attackBlockCount > 0) return false;
         if(isAttackStopped) return false;
@@ -147,6 +146,10 @@ public abstract class BasicAttackController : NetworkBehaviour
         return true;
     }
     protected abstract void OnAttackStart();
-    protected abstract void OnAttackImpact();
+    protected virtual void OnAttackImpact()
+    {
+        if (!IsAutoAttackingAvailable()) return;
+        OnActualAttackMoment?.Invoke();
+    }
     protected abstract void OnAttackEnd();
 }
