@@ -100,6 +100,7 @@ public class Movement : MonoBehaviour
             if (!isFollowing) return;
             ClientMove(target.position);
             await Task.Delay(100);
+            if(!this) return;
             if (!transform || !target) return;
         }
         StopFollow();

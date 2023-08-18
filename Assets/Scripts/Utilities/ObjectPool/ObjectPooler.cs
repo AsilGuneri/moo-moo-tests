@@ -115,40 +115,59 @@ public class Pool
     public GameObject Prefab;
     public int Size;
 
-    private Queue<GameObject> objects;
+    private List<GameObject> objects = new List<GameObject>();
     private Transform parentTransform;
 
     public void Initialize(Transform parentTransform)
     {
         this.parentTransform = parentTransform;
-        objects = new Queue<GameObject>();
 
         for (int i = 0; i < Size; i++)
         {
             GameObject obj = GameObject.Instantiate(Prefab, parentTransform);
             obj.SetActive(false);
-            objects.Enqueue(obj);
+            objects.Add(obj);
         }
     }
 
+
     public GameObject Spawn(Vector3 position, Quaternion rotation)
     {
-        if (objects.Count == 0) return null;
+        GameObject objToSpawn = GetFirstInactiveObject();
 
-        GameObject objToSpawn = objects.Dequeue();
+        if (objToSpawn == null)
+        {
+            Debug.LogError("All objects are active.");
+            return null;
+        }
+
         objToSpawn.SetActive(true);
         objToSpawn.transform.position = position;
         objToSpawn.transform.rotation = rotation;
         return objToSpawn;
     }
 
+    private GameObject GetFirstInactiveObject()
+    {
+        foreach (GameObject obj in objects)
+        {
+            if (!obj.activeInHierarchy)
+            {
+                return obj;
+            }
+        }
+        return null;
+    }
+
+
     public void Return(GameObject obj)
     {
         obj.GetComponent<PoolObject>().OnReturn();
         obj.SetActive(false);
         obj.transform.parent = parentTransform;
-        objects.Enqueue(obj);
+        if (!objects.Contains(obj)) objects.Add(obj);
     }
+
 
     public bool Contains(GameObject obj)
     {

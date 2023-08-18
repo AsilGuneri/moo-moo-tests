@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -127,7 +127,9 @@ namespace Mirror
             }
             catch (Exception e)
             {
-                Debug.LogError($"Disconnecting connId={conn.connectionId} to prevent exploits from an Exception in MessageHandler: {e.GetType().Name} {e.Message}\n{e.StackTrace}");
+                //Debug.LogError($"Disconnecting connId={conn.connectionId} to prevent exploits from an Exception in MessageHandler: {e.GetType().Name} {e.Message}\n{e.StackTrace}");
+                Debug.LogError($"Disconnecting connId={conn.connectionId} ananı götünden sikiyim {e}");
+
                 conn.Disconnect();
             }
         };

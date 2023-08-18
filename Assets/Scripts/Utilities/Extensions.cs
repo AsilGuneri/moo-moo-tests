@@ -81,7 +81,15 @@ public class Extensions : MonoBehaviour
         float distanceBetweenEdges = distanceBetweenCenters - (unitRadius + targetRadius);
         return distanceBetweenEdges <= range;
     }
-
+    public static bool CheckRangeUnitAndCollider3D(UnitController unit, Collider target, float range)
+    {
+        float distanceBetweenCenters = GetDistance(unit.transform.position, target.transform.position);
+        var unitRadius = unit.Movement.AgentRadius;
+        var targetRadius = GetMaxColliderDimension(target);
+        targetRadius = targetRadius == -1 ? 0.5f : targetRadius;
+        float distanceBetweenEdges = distanceBetweenCenters - (unitRadius + targetRadius);
+        return distanceBetweenEdges <= range;
+    }
     public static float GetDistance(Vector3 currentTargetPosition, Vector3 currentUnitPosition){
         return Vector2.Distance(Extensions.To2D(currentTargetPosition), Extensions.To2D(currentUnitPosition));
     }
@@ -97,4 +105,25 @@ public class Extensions : MonoBehaviour
          msAfterAttack = Extensions.ToMiliSeconds((animLength / attackSpeed) * (1 - triggerPointOfAnim));
 
     }
+
+    public static float GetMaxColliderDimension(Collider col)
+    {
+        if (col is BoxCollider box)
+        {
+            return Mathf.Max(box.size.x, box.size.y, box.size.z);
+        }
+        else if (col is SphereCollider sphere)
+        {
+            return sphere.radius * 2f;  // Diameter
+        }
+        else if (col is CapsuleCollider capsule)
+        {
+            // For CapsuleCollider, we should consider both its height and diameter (2 * radius).
+            return Mathf.Max(capsule.height, 2f * capsule.radius);
+        }
+        // Handle other collider types as needed.
+        // Returning -1 to indicate an unsupported collider type.
+        return -1f;
+    }
+
 }

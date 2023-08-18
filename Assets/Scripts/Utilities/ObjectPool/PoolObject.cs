@@ -43,12 +43,10 @@ public class PoolObject : MonoBehaviour
     {
         if (gameObject.TryGetComponent(out NetworkIdentity netId))
         {
-            Debug.Log("asilxx1 cmd return " + name);
             ObjectPooler.Instance.CmdReturnToPool(gameObject.GetComponent<NetworkIdentity>().netId);
         }
         else
         {
-            Debug.Log("asilxx2 local return" + name);
             ObjectPooler.Instance.ReturnToPool(gameObject);
 
         }

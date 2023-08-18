@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 8489722422623134166}
   - component: {fileID: 817598904071200291}
   - component: {fileID: -161897024165834653}
-  - component: {fileID: 4009704115415575050}
-  - component: {fileID: 5732794824940691588}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -29,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8081231170285242933}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.2703457, y: 0.9642168, z: 4.3537803}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2421758730345593896}
@@ -51,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.01
+  collider: {fileID: 0}
   speed: 25
   onHitParticlePrefab: {fileID: 1438542530079480, guid: 21710859533a00746ad2bdd323061a2d, type: 3}
 --- !u!114 &817598904071200291
@@ -84,54 +83,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useLifeTime: 0
   lifeTime: 0
---- !u!65 &4009704115415575050
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8081231170285242933}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.2922122, y: 0.33318013, z: 0.8149654}
-  m_Center: {x: 0.0019938052, y: 0.0055305166, z: -0.122673474}
---- !u!54 &5732794824940691588
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8081231170285242933}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1001 &2419679752278044180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -150,11 +101,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4430283953656380, guid: 24c86df1468884d499ca1d5cb865a6f7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.7
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4430283953656380, guid: 24c86df1468884d499ca1d5cb865a6f7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.3
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430283953656380, guid: 24c86df1468884d499ca1d5cb865a6f7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4430283953656380, guid: 24c86df1468884d499ca1d5cb865a6f7, type: 3}
       propertyPath: m_LocalPosition.x
