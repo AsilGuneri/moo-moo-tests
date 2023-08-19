@@ -69544,6 +69544,7 @@ MonoBehaviour:
   attackSpeed: 2
   unitType: 0
   enemyList: 01000000
+  hitPointOffset: {x: 0, y: 0, z: 0}
   projectileSpawnPoint: {fileID: 3792548669549166751}
   skills: []
   clickableLayerMask:
@@ -69611,7 +69612,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   hasCancelAttackAnim: 1
-  AttackAnimTime: 0
   attackAnimName: Attack
 --- !u!114 &1626028696452287395
 MonoBehaviour:

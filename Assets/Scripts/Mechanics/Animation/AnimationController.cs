@@ -35,7 +35,10 @@ public class AnimationController : NetworkBehaviour
     {
         animator.SetFloat("attackSpeed", attackSpeed);
     }
-
+    public void TriggerAttack()
+    {
+        animator.SetTrigger("attack");
+    }
     //make that class abstract and move that method to player
     public void SetAttackCancelled()
     {
@@ -52,10 +55,24 @@ public class AnimationController : NetworkBehaviour
         {
             if (animationLenghts.ContainsKey(animClip.name)) continue;
             animationLenghts.Add(animClip.name, animClip.length);
+
             if (animClip.name == attackAnimName)
             {
                 AttackAnimTime = animClip.length;
-                SetAttackSpeed(controller.attackSpeed * AttackAnimTime);
+                float multiplier = 0;
+                if (AttackAnimTime >1 )
+                {
+                    multiplier = AttackAnimTime / controller.attackSpeed;
+                }
+                else
+                {
+                    multiplier = controller.attackSpeed/AttackAnimTime;
+                }
+                if (name.Contains("age")) Debug.Log($"AttackAnimTime: {AttackAnimTime}");
+                if (name.Contains("age")) Debug.Log($"Attack Speed: {controller.attackSpeed}");
+                if (name.Contains("age")) Debug.Log($"Multiplier: {multiplier}");
+                SetAttackSpeed(multiplier);
+
             }
         }
     }

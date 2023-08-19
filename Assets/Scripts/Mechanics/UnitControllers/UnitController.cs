@@ -73,7 +73,7 @@ public abstract class UnitController : NetworkBehaviour
     }
     protected void SubscribeAnimEvents()
     {
-        attackController.OnStartAttack += (() => { animationController.SetAttackStatus(true); });
+        attackController.OnStartAttack += (() => { animationController.SetAttackStatus(true); animationController.TriggerAttack(); });
         attackController.OnEndAttack += (() => { animationController.SetAttackStatus(false); });
         attackController.OnAttackCancelled += (() =>
         {

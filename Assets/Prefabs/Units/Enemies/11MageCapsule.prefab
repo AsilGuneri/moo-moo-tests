@@ -1512,7 +1512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  attackRange: 5
+  attackRange: 10
   attackSpeed: 1
   unitType: 1
   enemyList: 00000000
@@ -1536,8 +1536,8 @@ MonoBehaviour:
   - PackName: Default
     Behaviours:
     - {fileID: 11400000, guid: 708b4a86f2d84194ba46db84934e3b02, type: 2}
-    - {fileID: 11400000, guid: cfc7d6e222bb2fa42965457e919339b4, type: 2}
     - {fileID: 11400000, guid: a2f05e797ef7d5443a5a91fec270fef8, type: 2}
+    - {fileID: 11400000, guid: cfc7d6e222bb2fa42965457e919339b4, type: 2}
 --- !u!114 &5995625915929954317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1698,7 +1698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  animAttackPoint: 0.759
+  animAttackPoint: 0.5
   Damage: 1
   projectilePrefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
 --- !u!114 &5203703413200868718
