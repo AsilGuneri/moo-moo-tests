@@ -1,104 +1,101 @@
 using Mirror;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public abstract class BasicAttackController : NetworkBehaviour
 {
-    [Range(0f,1f)]
+    [Range(0f, 1f)]
     [SerializeField] protected float animAttackPoint;
 
-    /// <summary>
-    /// For range : projectile spawn moment, for melee : hit moment.
-    /// </summary>
     public Action OnActualAttackMoment;
     public Action AfterLastAttack;
-    public bool IsSetToStopAfterAttack { get => isSetToStopAfterAttack; }
-    public bool IsAttacking { get => isAttacking; }
-
-    protected UnitController controller;
-    protected bool isAttacking;
-
-    private bool isAttackStopped; //just don't set to false anywhere else, you can set to true if needed
-
     public Action OnStartAttack;
     public Action OnEndAttack;
     public Action OnAttackCancelled;
 
-    private Task attackTask = null;
-    private bool isSetToStopAfterAttack;
-    private int attackBlockCount = 0;
-    //temp
-    public int Damage;
+    protected UnitController controller;
     private bool isCurrentlyAttacking = false;
+    private bool isSetToStopAfterAttack = false;
+    private bool isAttackStopped = false;
+    private int attackBlockCount = 0;
 
+    // Public properties
+    public bool IsSetToStopAfterAttack => isSetToStopAfterAttack;
+    public bool IsAttacking => isCurrentlyAttacking;
+    public int Damage;
 
     protected virtual void Awake()
     {
         controller = GetComponent<UnitController>();
     }
 
-    public async void StartAutoAttack()
+    public void StartAutoAttack()
     {
-        if (isAttacking) return;
-
-        isAttacking = true;
-        OnStartAttack?.Invoke();
-
-        while (IsAutoAttackingAvailable()) await AttackOnce();
-
-        isAttacking = false;
-        isAttackStopped = false;
-        OnEndAttack?.Invoke();
+        if (isCurrentlyAttacking) return;
+        StartCoroutine(AutoAttackRoutine());
     }
+
+    public void StopAfterCurrentAttack()
+    {
+        isSetToStopAfterAttack = true;
+    }
+
+    public void StopAttackInstantly()
+    {
+        isAttackStopped = true;
+    }
+
     public void BlockAttacking()
     {
         attackBlockCount++;
     }
+
     public void RemoveAttackingBlock()
     {
         attackBlockCount--;
     }
-    /// <summary>
-    /// for enemies
-    /// </summary>
-    public async void StopAfterCurrentAttack()
+
+    private IEnumerator AutoAttackRoutine()
     {
-        if (attackTask == null)
+        isCurrentlyAttacking = true;
+        OnStartAttack?.Invoke();
+
+        while (IsAutoAttackingAvailable())
         {
-            Debug.Log("Attack task is null");
-            return;
+            Extensions.GetAttackTimes(controller.attackSpeed, animAttackPoint,
+                out float secondsBeforeAttack, out float secondsAfterAttack);
+
+            RotateToTarget(controller.TargetController.Target);
+
+            OnAttackStart();
+
+            yield return Extensions.GetWait(secondsBeforeAttack);
+
+            if (!IsAutoAttackingAvailable())
+            {
+                OnAttackCancelled?.Invoke();
+                continue; // Move to the next iteration without executing the rest of the loop body
+            }
+
+            RotateToTarget(controller.TargetController.Target);
+
+            OnAttackImpact();
+
+            yield return Extensions.GetWait(secondsAfterAttack);
+
+            OnAttackEnd();
+
+            if (isSetToStopAfterAttack)
+            {
+                StopAttackInstantly();
+                AfterLastAttack?.Invoke();
+            }
         }
 
-        // Set to stop after attack regardless of task status.
-        isSetToStopAfterAttack = true;
-
-        // Await only if the task hasn't already completed.
-        if (attackTask.Status != TaskStatus.RanToCompletion)
-        {
-            await attackTask;
-        }
-
-        isSetToStopAfterAttack = false;
-        StopAttackInstantly();
-        AfterLastAttack?.Invoke();
-    }
-
-    /// <summary>
-    /// for players
-    /// </summary>
-    public void StopAttackInstantly()
-    {
-        if (!isAttacking) return;
-        isAttackStopped = true;
-    }
-
-    private async Task AttackOnce()
-    {
-        attackTask = Attack();
-        await attackTask;
+        isCurrentlyAttacking = false;
+        isAttackStopped = false;
+        OnEndAttack?.Invoke();
     }
 
     private void RotateToTarget(GameObject target)
@@ -110,46 +107,17 @@ public abstract class BasicAttackController : NetworkBehaviour
             transform.LookAt(lookPos);
         }
     }
-    private async Task Attack()
-    {
-        // Return immediately if already attacking
-        if (isCurrentlyAttacking) return;
-
-        isCurrentlyAttacking = true;
-
-        Extensions.GetAttackTimes(controller.attackSpeed, animAttackPoint
-            , out int msBeforeAttack, out int msAfterAttack);
-        GameObject target = controller.TargetController.Target;
-
-        RotateToTarget(target);
-        OnAttackStart();
-        await Task.Delay(msBeforeAttack);
-        if (!IsAutoAttackingAvailable())
-        {
-            OnAttackCancelled?.Invoke();
-            isCurrentlyAttacking = false; // Ensure this is set to false here too
-            return;
-        }
-        RotateToTarget(target);
-        OnAttackImpact();
-        await Task.Delay(msAfterAttack);
-        OnAttackEnd();
-
-        isCurrentlyAttacking = false;
-    }
 
     protected virtual bool IsAutoAttackingAvailable()
     {
-        if(attackBlockCount > 0) return false;
-        if(isAttackStopped) return false;
-        if(controller.TargetController.Target == null) return false;
+        if (attackBlockCount > 0) return false;
+        if (isAttackStopped) return false;
+        if (controller.TargetController.Target == null) return false;
         if (controller.Health.IsDead) return false;
         return true;
     }
+
     protected abstract void OnAttackStart();
-    /// <summary>
-    /// For range : projectile spawn moment, for melee : hit moment.
-    /// </summary>
     protected virtual void OnAttackImpact()
     {
         if (!IsAutoAttackingAvailable()) return;
