@@ -67,12 +67,13 @@ public class Projectile : NetworkBehaviour, IProjectile
         if (_isMoving && Target == null) DestroySelf();
         if (Target == null || !_isMoving) return;
 
-        bool isCloseEnough = Extensions.CheckRangeBetweenUnitAndCollider(Target.transform, hitCollider, 0.1f);
-
+        UnitController targetController = Target.GetComponent<UnitController>();
+        bool isCloseEnough = Extensions.CheckRangeBetweenUnitAndCollider(targetController, hitCollider, 0.1f);
         // Target position remains for guidance purposes.
-        Vector3 targetPos = is3D ?
-            Target.transform.position :
-            new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
+
+
+        Vector3 targetPos = is3D ? targetController.HitPoint :
+            new Vector3(targetController.HitPoint.x, transform.position.y, targetController.HitPoint.z);
 
         if (!isCloseEnough)
         {

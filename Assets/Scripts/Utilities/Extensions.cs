@@ -113,10 +113,10 @@ public class Extensions : MonoBehaviour
         // Handle other collider types as needed.
         return 0f;
     }
-    public static bool CheckRangeBetweenUnitAndCollider(Transform unit, Collider targetCollider, float range)
+    public static bool CheckRangeBetweenUnitAndCollider(UnitController unit, Collider targetCollider, float range)
     {
-        float distanceBetweenCenters = Vector2.Distance(To2D(unit.position), To2D(targetCollider.bounds.center));
-        var unitRadius = unit.GetComponent<UnitController>().Movement.AgentRadius;
+        float distanceBetweenCenters = Vector2.Distance(To2D(unit.transform.position), To2D(targetCollider.bounds.center));
+        var unitRadius = unit.Movement.AgentRadius;
         var targetRadius = Extensions.GetColliderRadius(targetCollider);
 
         float distanceBetweenEdges = distanceBetweenCenters - (unitRadius + targetRadius);

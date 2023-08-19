@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.01
-  is3D: 1
+  is3D: 0
   hitCollider: {fileID: 7374737329107937121}
   speed: 35
   onHitParticlePrefab: {fileID: 1438542530079480, guid: 21710859533a00746ad2bdd323061a2d, type: 3}

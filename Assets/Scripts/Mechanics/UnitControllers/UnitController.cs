@@ -8,6 +8,7 @@ public abstract class UnitController : NetworkBehaviour
 {
     public Dictionary<string,SkillController> SkillControllerDictionary = new Dictionary<string, SkillController>();
     //others
+    public Vector3 HitPoint { get => transform.position + hitPointOffset; }
     public Transform ProjectileSpawnPoint { get => projectileSpawnPoint; }
     public Health Health { get => health; }
     public BasicAttackController AttackController { get => attackController; }
@@ -22,6 +23,7 @@ public abstract class UnitController : NetworkBehaviour
     public UnitType unitType;
     public List<UnitType> enemyList;
 
+    [SerializeField] protected Vector3 hitPointOffset;
     [SerializeField] protected Transform projectileSpawnPoint;
     [SerializeField] protected List<Skill> skills = new List<Skill>();
 
