@@ -40,14 +40,14 @@ public abstract class BasicAttackController : NetworkBehaviour
         controller = GetComponent<UnitController>();
     }
 
-    public async void StartAutoAttack(GameObject target, float attackSpeed)
+    public async void StartAutoAttack()
     {
         if (isAttacking) return;
 
         isAttacking = true;
         OnStartAttack?.Invoke();
 
-        while (IsAutoAttackingAvailable()) await AttackOnce(target, attackSpeed, animAttackPoint);
+        while (IsAutoAttackingAvailable()) await AttackOnce();
 
         isAttacking = false;
         isAttackStopped = false;
@@ -95,9 +95,9 @@ public abstract class BasicAttackController : NetworkBehaviour
         isAttackStopped = true;
     }
 
-    private async Task AttackOnce(GameObject target, float attackSpeed, float animAttackPoint)
+    private async Task AttackOnce()
     {
-        attackTask = Attack(attackSpeed, animAttackPoint);
+        attackTask = Attack();
         await attackTask;
     }
 
@@ -110,16 +110,14 @@ public abstract class BasicAttackController : NetworkBehaviour
             transform.LookAt(lookPos);
         }
     }
-    private async Task Attack(float attackSpeed, float animAttackPoint)
+    private async Task Attack()
     {
         // Return immediately if already attacking
         if (isCurrentlyAttacking) return;
 
         isCurrentlyAttacking = true;
-        float attackAnimTime = controller.AnimationController.AttackAnimTime == 0 ? 
-            1 : controller.AnimationController.AttackAnimTime;
 
-        Extensions.GetAttackTimes(attackAnimTime, attackSpeed, animAttackPoint
+        Extensions.GetAttackTimes(controller.attackSpeed, animAttackPoint
             , out int msBeforeAttack, out int msAfterAttack);
         GameObject target = controller.TargetController.Target;
 

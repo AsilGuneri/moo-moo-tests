@@ -90,10 +90,10 @@ public class Extensions : MonoBehaviour
     /// <param name="attackSpeed"></param>
     /// <param name="triggerPointOfAnim"></param>
     /// <returns></returns>
-    public static void GetAttackTimes(float animLength, float attackSpeed, float triggerPointOfAnim, out int msBeforeAttack, out int msAfterAttack)
+    public static void GetAttackTimes(float attackSpeed, float triggerPointOfAnim, out int msBeforeAttack, out int msAfterAttack)
     {
-         msBeforeAttack = Extensions.ToMiliSeconds(((animLength / attackSpeed) * triggerPointOfAnim));
-         msAfterAttack = Extensions.ToMiliSeconds((animLength / attackSpeed) * (1 - triggerPointOfAnim));
+         msBeforeAttack = Extensions.ToMiliSeconds(((1 / attackSpeed) * triggerPointOfAnim));
+         msAfterAttack = Extensions.ToMiliSeconds((1 / attackSpeed) * (1 - triggerPointOfAnim));
 
     }
     public static float GetColliderRadius(Collider col)

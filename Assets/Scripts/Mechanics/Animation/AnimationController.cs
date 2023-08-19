@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class AnimationController : NetworkBehaviour
 {
+    public float AttackAnimTime { get; private set; }
     public Animator Animator { get => animator; }
     [SerializeField] private bool hasCancelAttackAnim;
     protected UnitController controller;
     protected Animator animator;
     private Dictionary<string, float> animationLenghts = new Dictionary<string, float>();
-    public float AttackAnimTime ;//{ get; private set; }
     [SerializeField] private string attackAnimName;
 
 
@@ -52,10 +52,10 @@ public class AnimationController : NetworkBehaviour
         {
             if (animationLenghts.ContainsKey(animClip.name)) continue;
             animationLenghts.Add(animClip.name, animClip.length);
-
             if (animClip.name == attackAnimName)
             {
                 AttackAnimTime = animClip.length;
+                SetAttackSpeed(controller.attackSpeed * AttackAnimTime);
             }
         }
     }

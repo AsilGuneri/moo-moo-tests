@@ -14,7 +14,6 @@ public class PlayerController : UnitController
     [SerializeField] private GameObject attackModeIndicator;
     public string PlayerName { get; set; }
     public PlayerStats Stats { get; private set; } = new();
-    public EventVfx EventVfx { get; private set; }
 
     public InputKeysData _inputKeys { get; private set; }
     private Camera mainCamera;
@@ -28,8 +27,6 @@ public class PlayerController : UnitController
     {
         base.Awake();
         _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
-        EventVfx = GetComponent<EventVfx>();
-
     }
     protected override void Start()
     {
@@ -150,7 +147,7 @@ public class PlayerController : UnitController
         if (isInRange) //if yes, attack the enemy
         {
             movement.ClientStop();
-            attackController.StartAutoAttack(enemyTransform.transform.gameObject, attackSpeed);
+            attackController.StartAutoAttack();
 
         }
         else //if not, follow the enemy
