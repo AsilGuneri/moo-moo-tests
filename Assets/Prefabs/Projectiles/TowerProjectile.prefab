@@ -53,8 +53,8 @@ MonoBehaviour:
   syncInterval: 0
   is3D: 1
   hitCollider: {fileID: 2026764899851043163}
-  speed: 35
-  onHitParticlePrefab: {fileID: 1348390491135638, guid: d7d554880214e644bbbbfc89aa884b26, type: 3}
+  speed: 20
+  onHitParticlePrefab: {fileID: 1299586717950946, guid: 5740ae2e014a8b14886dad7e67951070, type: 3}
 --- !u!114 &817598904071200291
 MonoBehaviour:
   m_ObjectHideFlags: 0
