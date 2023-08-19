@@ -64,11 +64,12 @@ public class Projectile : NetworkBehaviour, IProjectile
         if (_isMoving && Target == null) DestroySelf();
         if (Target == null || !_isMoving) return;
         if (!visualsParent.activeInHierarchy) visualsParent.SetActive(true);
-        if (Vector2.Distance(Extensions.To2D(transform.position), Extensions.To2D(Target.transform.position)) > speed * Time.deltaTime)
+        if (Vector2.Distance(Extensions.To2D(transform.position), Extensions.To2D(Target.transform.position)) > 0.1)
         {
-            transform.position += Extensions.Vector3WithoutY(Direction(Target.transform.position) * Time.deltaTime * speed);
             Vector3 targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
             transform.LookAt(targetPos);
+            transform.position += (transform.forward).normalized * Time.deltaTime * speed;
+
             return;
         }
 
@@ -80,13 +81,6 @@ public class Projectile : NetworkBehaviour, IProjectile
             return;
         }
     }
-
-    private Vector3 Direction(Vector3 target)
-    {
-        Vector3 direction = target - transform.position;
-        return direction;
-    }
-
 
     public void DestroySelf()
     {

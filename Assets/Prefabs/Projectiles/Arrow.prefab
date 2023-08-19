@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.01
-  speed: 10
+  speed: 35
   visualsParent: {fileID: 2418457785684296350}
   onHitParticlePrefab: {fileID: 1438542530079480, guid: 21710859533a00746ad2bdd323061a2d, type: 3}
 --- !u!114 &817598904071200291
