@@ -55,9 +55,9 @@ public class Projectile : NetworkBehaviour, IProjectile
     {
         if (_isMoving && Target == null) DestroySelf();
         if (Target == null || !_isMoving) return;
-        if (Vector2.Distance(Extensions.To2D(transform.position), Extensions.To2D(Target.transform.position)) > 0.4f)
+        if (Vector2.Distance(Extensions.To2D(transform.position), Extensions.To2D(Target.transform.position)) > 0.1f)
         {
-            transform.position += Extensions.Vector3WithoutY(Direction(Target.transform.position) * Time.deltaTime * speed);
+            transform.position += Extensions.Vector3WithoutY(Direction(Target.transform.position).normalized * Time.deltaTime * speed);
             Vector3 targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
             transform.LookAt(targetPos);
             return;

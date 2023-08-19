@@ -2835,6 +2835,10 @@ MonoBehaviour:
     Size: 20
   - Prefab: {fileID: 5897228174691731997, guid: cc6f069e7016a1e4ca859e353ba25fb0, type: 3}
     Size: 4
+  - Prefab: {fileID: 8081231170285242933, guid: 3924b199210ef564a91a10c040c8d6b9, type: 3}
+    Size: 20
+  - Prefab: {fileID: 1348390491135638, guid: d7d554880214e644bbbbfc89aa884b26, type: 3}
+    Size: 20
 --- !u!114 &334110797
 MonoBehaviour:
   m_ObjectHideFlags: 0
