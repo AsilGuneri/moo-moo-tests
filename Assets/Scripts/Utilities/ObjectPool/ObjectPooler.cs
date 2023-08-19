@@ -140,10 +140,9 @@ public class Pool
             Debug.LogError("All objects are active.");
             return null;
         }
-
-        objToSpawn.SetActive(true);
         objToSpawn.transform.position = position;
         objToSpawn.transform.rotation = rotation;
+        objToSpawn.SetActive(true);
         return objToSpawn;
     }
 

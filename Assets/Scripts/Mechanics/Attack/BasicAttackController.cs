@@ -121,7 +121,6 @@ public abstract class BasicAttackController : NetworkBehaviour
     {
         if (!IsAutoAttackingAvailable()) return;
         OnActualAttackMoment?.Invoke();
-        if (name.Contains("11")) Debug.Log("asilxx " +Time.time );
 
     }
     protected abstract void OnAttackEnd();
