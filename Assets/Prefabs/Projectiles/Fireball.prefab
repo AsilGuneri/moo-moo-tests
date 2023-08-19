@@ -155,8 +155,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
-  collider: {fileID: 0}
   speed: 35
+  visualsParent: {fileID: 2096870184019789436}
   onHitParticlePrefab: {fileID: 0}
 --- !u!114 &817598904071200291
 MonoBehaviour:

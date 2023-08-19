@@ -19,8 +19,11 @@ public interface IProjectile
 public class Projectile : NetworkBehaviour, IProjectile
 {
     public Action OnHit;
+    private Action OnHitClient;
+
 
     [SerializeField] public float speed = 1;
+    [SerializeField] public GameObject visualsParent;
     [SerializeField] private GameObject onHitParticlePrefab;
 
     [SyncVar] private bool _isMoving;
@@ -28,6 +31,11 @@ public class Projectile : NetworkBehaviour, IProjectile
     [SyncVar] private Transform spawnerTransform;
     [NonSerialized][SyncVar] public GameObject Target;
 
+
+    private void Start()
+    {
+        OnHitClient += TargetHitClient;
+    }
 
     public bool BelongsToEnemy(UnitType enemyTo)
     {
@@ -55,26 +63,30 @@ public class Projectile : NetworkBehaviour, IProjectile
     {
         if (_isMoving && Target == null) DestroySelf();
         if (Target == null || !_isMoving) return;
-        if (Vector2.Distance(Extensions.To2D(transform.position), Extensions.To2D(Target.transform.position)) > 0.1f)
+        if (!visualsParent.activeInHierarchy) visualsParent.SetActive(true);
+        if (Vector2.Distance(Extensions.To2D(transform.position), Extensions.To2D(Target.transform.position)) > speed * Time.deltaTime)
         {
-            transform.position += Extensions.Vector3WithoutY(Direction(Target.transform.position).normalized * Time.deltaTime * speed);
+            transform.position += Extensions.Vector3WithoutY(Direction(Target.transform.position) * Time.deltaTime * speed);
             Vector3 targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
             transform.LookAt(targetPos);
             return;
         }
+
         else
         {
             OnHit?.Invoke();
-            CmdTargetHit();
+            OnHitClient?.Invoke();
+            TargetHitServer();
             return;
         }
     }
 
     private Vector3 Direction(Vector3 target)
     {
-        Vector3 direction = (target - transform.position).normalized;
+        Vector3 direction = target - transform.position;
         return direction;
     }
+
 
     public void DestroySelf()
     {
@@ -82,7 +94,7 @@ public class Projectile : NetworkBehaviour, IProjectile
     }
 
     [ServerCallback]
-    private void CmdTargetHit()
+    private void TargetHitServer()
     {
         if (Target == null || spawnerTransform == null)
         {
@@ -91,11 +103,16 @@ public class Projectile : NetworkBehaviour, IProjectile
 
         Target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
 
+        
+
+        DestroySelf();
+    }
+    private void TargetHitClient()
+    {
         if (onHitParticlePrefab)
         {
             ObjectPooler.Instance.CmdSpawnFromPool(onHitParticlePrefab.name, transform.position, transform.rotation);
         }
-
-        DestroySelf();
+        visualsParent.SetActive(false);
     }
 }

@@ -51,8 +51,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   speed: 35
+  visualsParent: {fileID: 9026501004221481018}
   onHitParticlePrefab: {fileID: 1348390491135638, guid: d7d554880214e644bbbbfc89aa884b26, type: 3}
-  is3D: 0
 --- !u!114 &817598904071200291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,6 +235,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6833575834058800487}
   m_SourcePrefab: {fileID: 100100000, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
+--- !u!1 &9026501004221481018 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1531814124222292, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
+  m_PrefabInstance: {fileID: 9025745797650085742}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9026523286689360518 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1483109350596072, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}

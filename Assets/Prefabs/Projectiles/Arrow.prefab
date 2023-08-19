@@ -49,8 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.01
-  collider: {fileID: 0}
-  speed: 25
+  speed: 10
+  visualsParent: {fileID: 2418457785684296350}
   onHitParticlePrefab: {fileID: 1438542530079480, guid: 21710859533a00746ad2bdd323061a2d, type: 3}
 --- !u!114 &817598904071200291
 MonoBehaviour:
@@ -156,6 +156,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24c86df1468884d499ca1d5cb865a6f7, type: 3}
+--- !u!1 &2418457785684296350 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1261555563981962, guid: 24c86df1468884d499ca1d5cb865a6f7, type: 3}
+  m_PrefabInstance: {fileID: 2419679752278044180}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2421758730345593896 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4430283953656380, guid: 24c86df1468884d499ca1d5cb865a6f7, type: 3}
