@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 817598904071200291}
   - component: {fileID: 6983154253710124881}
   - component: {fileID: 3750345282122126642}
+  - component: {fileID: 2026764899851043163}
   m_Layer: 0
   m_Name: TowerProjectile
   m_TagString: Untagged
@@ -50,8 +51,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0
+  is3D: 1
+  hitCollider: {fileID: 2026764899851043163}
   speed: 35
-  visualsParent: {fileID: 9026501004221481018}
   onHitParticlePrefab: {fileID: 1348390491135638, guid: d7d554880214e644bbbbfc89aa884b26, type: 3}
 --- !u!114 &817598904071200291
 MonoBehaviour:
@@ -118,6 +120,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useLifeTime: 0
   lifeTime: 0
+--- !u!135 &2026764899851043163
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8081231170285242933}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &9025745797650085742
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -174,100 +197,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 198059696973432114, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 198059696973432114, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
-      value: 0.01964569
-      objectReference: {fileID: 0}
-    - target: {fileID: 198149117270932434, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 198149117270932434, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
-      value: 0.01964569
-      objectReference: {fileID: 0}
-    - target: {fileID: 198356835336850064, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 198356835336850064, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
-      value: 0.01964569
-      objectReference: {fileID: 0}
-    - target: {fileID: 198382008552040118, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 198382008552040118, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
-      value: 0.01964569
-      objectReference: {fileID: 0}
-    - target: {fileID: 199147082256883192, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199240653785539914, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199548262001964682, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199622684974115234, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 199724920795497730, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114459640776338082, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1483109350596072, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6833575834058800487}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
---- !u!1 &9026501004221481018 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1531814124222292, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-  m_PrefabInstance: {fileID: 9025745797650085742}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &9026523286689360518 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1483109350596072, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}
-  m_PrefabInstance: {fileID: 9025745797650085742}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6833575834058800487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9026523286689360518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 3
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
-  m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
 --- !u!4 &9029464018061241450 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4215891199679236, guid: bc1c406e8debe27419da2b3a80a1ef99, type: 3}

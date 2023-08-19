@@ -21,9 +21,12 @@ public class Projectile : NetworkBehaviour, IProjectile
     public Action OnHit;
     private Action OnHitClient;
 
+    [SerializeField] private bool is3D = false;
+    [SerializeField] private Collider hitCollider;
+
 
     [SerializeField] public float speed = 1;
-    [SerializeField] public GameObject visualsParent;
+    //[SerializeField] public GameObject visualsParent;
     [SerializeField] private GameObject onHitParticlePrefab;
 
     [SyncVar] private bool _isMoving;
@@ -63,16 +66,20 @@ public class Projectile : NetworkBehaviour, IProjectile
     {
         if (_isMoving && Target == null) DestroySelf();
         if (Target == null || !_isMoving) return;
-        if (!visualsParent.activeInHierarchy) visualsParent.SetActive(true);
-        if (Vector2.Distance(Extensions.To2D(transform.position), Extensions.To2D(Target.transform.position)) > 0.1)
+
+        bool isCloseEnough = Extensions.CheckRangeBetweenUnitAndCollider(Target.transform, hitCollider, 0.1f);
+
+        // Target position remains for guidance purposes.
+        Vector3 targetPos = is3D ?
+            Target.transform.position :
+            new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
+
+        if (!isCloseEnough)
         {
-            Vector3 targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
             transform.LookAt(targetPos);
             transform.position += (transform.forward).normalized * Time.deltaTime * speed;
-
             return;
         }
-
         else
         {
             OnHit?.Invoke();
@@ -81,6 +88,8 @@ public class Projectile : NetworkBehaviour, IProjectile
             return;
         }
     }
+
+
 
     public void DestroySelf()
     {
@@ -107,6 +116,6 @@ public class Projectile : NetworkBehaviour, IProjectile
         {
             ObjectPooler.Instance.CmdSpawnFromPool(onHitParticlePrefab.name, transform.position, transform.rotation);
         }
-        visualsParent.SetActive(false);
+       // visualsParent.SetActive(false);
     }
 }
