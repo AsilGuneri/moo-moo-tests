@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4555900160507980057
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -21,7 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SharpOreCrystal_Example_01
-  m_Shader: {fileID: -6465566751694194690, guid: 0b0d41d48b08dfa49bb41a2ef696095e, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 0b0d41d48b08dfa49bb41a2ef696095e,
+    type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -78,7 +66,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Ramp:
-        m_Texture: {fileID: 2800000, guid: 8bbe8f71c2ce46d1a2716a73c8051e6e, type: 3}
+        m_Texture: {fileID: 2800000, guid: ab108a97f1da49bc948e1cba8b0e9084, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Test:
@@ -156,7 +144,7 @@ Material:
     - _QueueOffset: 0
     - _RAMPENABLED: 1
     - _RampOffsetExp: 1
-    - _RampRemapMax: 1
+    - _RampRemapMax: 0
     - _RimEmissionNormal: 1
     - _Smoothness: 1
     - _VERTICALGRADIENTENABLED: 0
@@ -174,3 +162,16 @@ Material:
     - _RampColorTint: {r: 1, g: 1, b: 1, a: 1}
     - _Vector0: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &1207120208545468240
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
