@@ -89,6 +89,7 @@ public abstract class BasicAttackController : NetworkBehaviour
             {
                 StopAttackInstantly();
                 AfterLastAttack?.Invoke();
+                isSetToStopAfterAttack = false;
             }
         }
 

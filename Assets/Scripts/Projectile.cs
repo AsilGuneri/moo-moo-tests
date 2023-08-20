@@ -85,7 +85,6 @@ public class Projectile : NetworkBehaviour, IProjectile
         {
             OnHit?.Invoke();
             OnHitClient?.Invoke();
-            if(name.Contains("Fireball")) Debug.Log($"asilxx {targetController.transform.position} {hitCollider.transform.position}");
             TargetHitServer();
             return;
         }
