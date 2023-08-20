@@ -12,15 +12,16 @@ public class EventVfx : MonoBehaviour
     [SerializeField] private Vector3 actualAttackFxRotation;
 
 
-    private PlayerController controller;
+    private UnitController controller;
 
     private void Awake()
     {
-        controller = GetComponent<PlayerController>();
+        controller = GetComponent<UnitController>();
     }
     private void Start()
     {
-        controller.AttackController.OnActualAttackMoment += OnActualAttackStart;
+        if (onActualAttackFxPrefab) controller.AttackController.OnActualAttackMoment += OnActualAttackStart;
+
     }
     /// <summary>
     /// For range : projectile spawn moment, for melee : hit moment.

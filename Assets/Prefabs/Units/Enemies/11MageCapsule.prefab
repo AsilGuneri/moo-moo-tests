@@ -1456,6 +1456,7 @@ GameObject:
   - component: {fileID: 3592067272230806276}
   - component: {fileID: 9074826505844378808}
   - component: {fileID: 8554989338656548550}
+  - component: {fileID: 1787258461078604181}
   m_Layer: 9
   m_Name: 11MageCapsule
   m_TagString: Untagged
@@ -1511,10 +1512,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  attackRange: 5
+  attackRange: 10
   attackSpeed: 1
   unitType: 1
   enemyList: 00000000
+  hitPointOffset: {x: 0, y: 1.7, z: 0}
   projectileSpawnPoint: {fileID: 95122158191645203}
   skills: []
   minionType: 2
@@ -1534,8 +1536,8 @@ MonoBehaviour:
   - PackName: Default
     Behaviours:
     - {fileID: 11400000, guid: 708b4a86f2d84194ba46db84934e3b02, type: 2}
-    - {fileID: 11400000, guid: cfc7d6e222bb2fa42965457e919339b4, type: 2}
     - {fileID: 11400000, guid: a2f05e797ef7d5443a5a91fec270fef8, type: 2}
+    - {fileID: 11400000, guid: cfc7d6e222bb2fa42965457e919339b4, type: 2}
 --- !u!114 &5995625915929954317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1681,7 +1683,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   hasCancelAttackAnim: 0
-  AttackAnimTime: 0.5
   attackAnimName: Combat_Unarmed_Attack01
 --- !u!114 &667331285345826098
 MonoBehaviour:
@@ -1697,7 +1698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  animAttackPoint: 0.48
+  animAttackPoint: 0.5
   Damage: 1
   projectilePrefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
 --- !u!114 &5203703413200868718
@@ -1803,6 +1804,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.73, y: 1, z: 1.04}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &1787258461078604181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498676492825279152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7be376e943caa974eaa6fc1c328f2eee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onActualAttackFxPrefab: {fileID: 0}
+  actualAttackFxPosRef: {fileID: 95122158191645203}
+  actualAttackFxRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &7744416249070185144
 GameObject:
   m_ObjectHideFlags: 0

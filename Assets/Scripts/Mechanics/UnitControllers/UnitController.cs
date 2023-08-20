@@ -8,6 +8,7 @@ public abstract class UnitController : NetworkBehaviour
 {
     public Dictionary<string,SkillController> SkillControllerDictionary = new Dictionary<string, SkillController>();
     //others
+    public Vector3 HitPoint { get => transform.position + hitPointOffset; }
     public Transform ProjectileSpawnPoint { get => projectileSpawnPoint; }
     public Health Health { get => health; }
     public BasicAttackController AttackController { get => attackController; }
@@ -22,6 +23,7 @@ public abstract class UnitController : NetworkBehaviour
     public UnitType unitType;
     public List<UnitType> enemyList;
 
+    [SerializeField] protected Vector3 hitPointOffset;
     [SerializeField] protected Transform projectileSpawnPoint;
     [SerializeField] protected List<Skill> skills = new List<Skill>();
 
@@ -42,7 +44,6 @@ public abstract class UnitController : NetworkBehaviour
     
     protected virtual void Start()
     {
-        animationController.SetAttackSpeed(attackSpeed);
         health.OnDeath += () => { targetController.SetTarget(null); };
     }
     protected bool IsEnemy(RaycastHit hitInfo)
@@ -72,7 +73,7 @@ public abstract class UnitController : NetworkBehaviour
     }
     protected void SubscribeAnimEvents()
     {
-        attackController.OnStartAttack += (() => { animationController.SetAttackStatus(true); });
+        attackController.OnStartAttack += (() => { animationController.SetAttackStatus(true); animationController.TriggerAttack(); });
         attackController.OnEndAttack += (() => { animationController.SetAttackStatus(false); });
         attackController.OnAttackCancelled += (() =>
         {

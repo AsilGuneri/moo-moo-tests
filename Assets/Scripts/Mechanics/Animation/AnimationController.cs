@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class AnimationController : NetworkBehaviour
 {
+    public float AttackAnimTime { get; private set; }
     public Animator Animator { get => animator; }
     [SerializeField] private bool hasCancelAttackAnim;
     protected UnitController controller;
     protected Animator animator;
     private Dictionary<string, float> animationLenghts = new Dictionary<string, float>();
-    public float AttackAnimTime ;//{ get; private set; }
     [SerializeField] private string attackAnimName;
 
 
@@ -35,7 +35,10 @@ public class AnimationController : NetworkBehaviour
     {
         animator.SetFloat("attackSpeed", attackSpeed);
     }
-
+    public void TriggerAttack()
+    {
+        animator.SetTrigger("attack");
+    }
     //make that class abstract and move that method to player
     public void SetAttackCancelled()
     {
@@ -56,6 +59,20 @@ public class AnimationController : NetworkBehaviour
             if (animClip.name == attackAnimName)
             {
                 AttackAnimTime = animClip.length;
+                float multiplier = 0;
+                if (AttackAnimTime >1 )
+                {
+                    multiplier = AttackAnimTime / controller.attackSpeed;
+                }
+                else
+                {
+                    multiplier = controller.attackSpeed/AttackAnimTime;
+                }
+                if (name.Contains("age")) Debug.Log($"AttackAnimTime: {AttackAnimTime}");
+                if (name.Contains("age")) Debug.Log($"Attack Speed: {controller.attackSpeed}");
+                if (name.Contains("age")) Debug.Log($"Multiplier: {multiplier}");
+                SetAttackSpeed(multiplier);
+
             }
         }
     }

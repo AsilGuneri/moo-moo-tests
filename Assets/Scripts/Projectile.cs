@@ -19,8 +19,14 @@ public interface IProjectile
 public class Projectile : NetworkBehaviour, IProjectile
 {
     public Action OnHit;
+    private Action OnHitClient;
+
+    [SerializeField] private bool is3D = false;
+    [SerializeField] private Collider hitCollider;
+
 
     [SerializeField] public float speed = 1;
+    //[SerializeField] public GameObject visualsParent;
     [SerializeField] private GameObject onHitParticlePrefab;
 
     [SyncVar] private bool _isMoving;
@@ -28,6 +34,11 @@ public class Projectile : NetworkBehaviour, IProjectile
     [SyncVar] private Transform spawnerTransform;
     [NonSerialized][SyncVar] public GameObject Target;
 
+
+    private void Start()
+    {
+        OnHitClient += TargetHitClient;
+    }
 
     public bool BelongsToEnemy(UnitType enemyTo)
     {
@@ -55,26 +66,31 @@ public class Projectile : NetworkBehaviour, IProjectile
     {
         if (_isMoving && Target == null) DestroySelf();
         if (Target == null || !_isMoving) return;
-        if (Vector2.Distance(Extensions.To2D(transform.position), Extensions.To2D(Target.transform.position)) > 0.1f)
+
+        UnitController targetController = Target.GetComponent<UnitController>();
+        bool isCloseEnough = Extensions.CheckRangeBetweenUnitAndCollider(targetController, hitCollider, 0.1f);
+        // Target position remains for guidance purposes.
+
+
+        Vector3 targetPos = is3D ? targetController.HitPoint :
+            new Vector3(targetController.HitPoint.x, transform.position.y, targetController.HitPoint.z);
+
+        if (!isCloseEnough)
         {
-            transform.position += Extensions.Vector3WithoutY(Direction(Target.transform.position).normalized * Time.deltaTime * speed);
-            Vector3 targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
             transform.LookAt(targetPos);
+            transform.position += (transform.forward).normalized * Time.deltaTime * speed;
             return;
         }
         else
         {
             OnHit?.Invoke();
-            CmdTargetHit();
+            OnHitClient?.Invoke();
+            TargetHitServer();
             return;
         }
     }
 
-    private Vector3 Direction(Vector3 target)
-    {
-        Vector3 direction = (target - transform.position).normalized;
-        return direction;
-    }
+
 
     public void DestroySelf()
     {
@@ -82,7 +98,7 @@ public class Projectile : NetworkBehaviour, IProjectile
     }
 
     [ServerCallback]
-    private void CmdTargetHit()
+    private void TargetHitServer()
     {
         if (Target == null || spawnerTransform == null)
         {
@@ -91,11 +107,16 @@ public class Projectile : NetworkBehaviour, IProjectile
 
         Target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
 
+        
+
+        DestroySelf();
+    }
+    private void TargetHitClient()
+    {
         if (onHitParticlePrefab)
         {
             ObjectPooler.Instance.CmdSpawnFromPool(onHitParticlePrefab.name, transform.position, transform.rotation);
         }
-
-        DestroySelf();
+       // visualsParent.SetActive(false);
     }
 }

@@ -2816,7 +2816,7 @@ MonoBehaviour:
   - Prefab: {fileID: 1438542530079480, guid: 21710859533a00746ad2bdd323061a2d, type: 3}
     Size: 10
   - Prefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
-    Size: 50
+    Size: 20
   - Prefab: {fileID: 5432209458267137536, guid: 93bf18897f48e4140b9a368c27bd919b, type: 3}
     Size: 20
   - Prefab: {fileID: 811260699408436622, guid: 299615328751d224781d31e0fe65de66, type: 3}
@@ -2837,7 +2837,7 @@ MonoBehaviour:
     Size: 4
   - Prefab: {fileID: 8081231170285242933, guid: 3924b199210ef564a91a10c040c8d6b9, type: 3}
     Size: 20
-  - Prefab: {fileID: 1348390491135638, guid: d7d554880214e644bbbbfc89aa884b26, type: 3}
+  - Prefab: {fileID: 1299586717950946, guid: 5740ae2e014a8b14886dad7e67951070, type: 3}
     Size: 20
 --- !u!114 &334110797
 MonoBehaviour:
@@ -5734,6 +5734,14 @@ PrefabInstance:
     - target: {fileID: 1307371847260389139, guid: 05b785be22e31bc4ca3aa134018a4c54, type: 3}
       propertyPath: m_Name
       value: Meshes
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627120147088922108, guid: 05b785be22e31bc4ca3aa134018a4c54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 1627120147088922108, guid: 05b785be22e31bc4ca3aa134018a4c54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -20.51
       objectReference: {fileID: 0}
     - target: {fileID: 3179868047967579560, guid: 05b785be22e31bc4ca3aa134018a4c54, type: 3}
       propertyPath: m_RootOrder

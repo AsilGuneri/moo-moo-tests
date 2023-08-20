@@ -50,7 +50,7 @@ public class TowerController : UnitController
 
             if (targetController.Target && !attackController.IsAttacking)
             {
-                attackController.StartAutoAttack(targetController.Target, attackSpeed);
+                attackController.StartAutoAttack();
             }
             else
             {

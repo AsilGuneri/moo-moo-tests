@@ -23,12 +23,10 @@ public class RangeAttackController : BasicAttackController
     [Command(requiresAuthority = false)]
     private void CmdSpawnProjectile(GameObject target)
     {
-       
-            //if (checkAuthority && !hasAuthority) return;
-            GameObject projectile = ObjectPooler.Instance.SpawnFromPool(projectilePrefab, controller.ProjectileSpawnPoint.position, Quaternion.identity);
+        //if (checkAuthority && !hasAuthority) return;
+        GameObject projectile = ObjectPooler.Instance.SpawnFromPool(projectilePrefab, controller.ProjectileSpawnPoint.position, Quaternion.identity);
             projectile.GetComponent<Projectile>().SetupProjectile(target, Damage, transform);
             NetworkServer.Spawn(projectile, connectionToClient);
-
     }
 
 }

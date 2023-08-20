@@ -130,6 +130,7 @@ MonoBehaviour:
   attackSpeed: 1
   unitType: 1
   enemyList: 0000000002000000
+  hitPointOffset: {x: 0, y: 1.7, z: 0}
   projectileSpawnPoint: {fileID: 1928936259698625956}
   skills:
   - {fileID: 11400000, guid: 06a19e14a02ad8a48a22a2fc0e6ae555, type: 2}
