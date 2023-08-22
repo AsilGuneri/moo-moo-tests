@@ -1512,8 +1512,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  attackRange: 10
-  attackSpeed: 1
+  attackRange: 5
+  attackSpeed: 0.66
   unitType: 1
   enemyList: 00000000
   hitPointOffset: {x: 0, y: 1.7, z: 0}
@@ -1699,7 +1699,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   animAttackPoint: 0.5
-  Damage: 1
+  Damage: 24
   projectilePrefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
 --- !u!114 &5203703413200868718
 MonoBehaviour:

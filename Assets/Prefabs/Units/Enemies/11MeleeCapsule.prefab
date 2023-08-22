@@ -127,7 +127,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   attackRange: 1
-  attackSpeed: 1
+  attackSpeed: 1.25
   unitType: 1
   enemyList: 0000000002000000
   hitPointOffset: {x: 0, y: 1.7, z: 0}
@@ -245,7 +245,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   hasCancelAttackAnim: 0
-  AttackAnimTime: 0
   attackAnimName: Combat_Unarmed_Attack
 --- !u!114 &211520756723830630
 MonoBehaviour:
@@ -262,7 +261,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   animAttackPoint: 0.55
-  Damage: 10
+  Damage: 12
 --- !u!114 &3030335984463891531
 MonoBehaviour:
   m_ObjectHideFlags: 0

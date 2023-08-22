@@ -12,6 +12,10 @@ public class TargetController : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void SetTarget(GameObject target)
     {
+        if (Target) //old target
+        {
+            Target.GetComponent<Health>().OnDeath -= SetToNull;
+        }
         Target = target;
         if (target)
         {

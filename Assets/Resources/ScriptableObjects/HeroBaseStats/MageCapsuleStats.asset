@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ebbdafe1142af49aaf908ef701887b, type: 3}
   m_Name: MageCapsuleStats
   m_EditorClassIdentifier: 
-  AttackSpeed: 1
-  Range: 4
-  Hp: 50000
-  Damage: 10
+  AttackSpeed: 0.66
+  Range: 5
+  Hp: 300
+  Damage: 24

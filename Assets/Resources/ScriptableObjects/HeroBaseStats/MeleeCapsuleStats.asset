@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ebbdafe1142af49aaf908ef701887b, type: 3}
   m_Name: MeleeCapsuleStats
   m_EditorClassIdentifier: 
-  AttackSpeed: 1
+  AttackSpeed: 1.25
   Range: 1
-  Hp: 10000
-  Damage: 10
+  Hp: 500
+  Damage: 12

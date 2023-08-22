@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackSpeed: 2.5
   Range: 10
-  Hp: 500
-  Damage: 40
+  Hp: 5000
+  Damage: 90
