@@ -58,6 +58,10 @@ public class PoolObject : MonoBehaviour
         {
             brain.KillBrain();
         }
+        if(TryGetComponent(out BasicAttackController controller))
+        {
+            controller.ResetAttackController();
+        }
        
     }
     public virtual void OnSpawn()

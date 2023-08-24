@@ -69,6 +69,8 @@ public abstract class BasicAttackController : NetworkBehaviour
             RotateToTarget(controller.TargetController.Target);
 
             OnAttackStart();
+            if (name.Contains("11")) Debug.Log($"asilxx0 {Time.time}");
+
             yield return Extensions.GetWait(secondsBeforeAttack);
 
             if (!IsAutoAttackingAvailable())
@@ -78,10 +80,11 @@ public abstract class BasicAttackController : NetworkBehaviour
             }
 
             RotateToTarget(controller.TargetController.Target);
-
+            if (name.Contains("11")) Debug.Log($"asilxx1 {Time.time}");
             OnAttackImpact();
 
             yield return Extensions.GetWait(secondsAfterAttack);
+            if (name.Contains("11")) Debug.Log($"asilxx2 {Time.time}");
 
             OnAttackEnd();
 
@@ -125,4 +128,12 @@ public abstract class BasicAttackController : NetworkBehaviour
 
     }
     protected abstract void OnAttackEnd();
+
+
+    public void ResetAttackController()
+    {
+        isSetToStopAfterAttack = false;
+        isCurrentlyAttacking = false;
+
+    }
 }
