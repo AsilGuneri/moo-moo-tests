@@ -248,6 +248,7 @@ MonoBehaviour:
   hitPointOffset: {x: 0, y: 0, z: 0}
   projectileSpawnPoint: {fileID: 1807417763134420697}
   skills: []
+  visualEffectObject: {fileID: 8817614824520590940}
 --- !u!114 &9003178876454803527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -626,5 +627,10 @@ PrefabInstance:
 --- !u!4 &1415119515673024238 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7104928572471369780, guid: 911732ef8575a5c4c9cb4f8384adde9c, type: 3}
+  m_PrefabInstance: {fileID: 8158909915080177370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8817614824520590940 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 820834496361304198, guid: 911732ef8575a5c4c9cb4f8384adde9c, type: 3}
   m_PrefabInstance: {fileID: 8158909915080177370}
   m_PrefabAsset: {fileID: 0}

@@ -8,6 +8,7 @@ public abstract class BasicAttackController : NetworkBehaviour
     [Range(0f, 1f)]
     [SerializeField] protected float animAttackPoint;
 
+    public Action OnEachAttackStart;
     public Action OnActualAttackMoment;
     public Action AfterLastAttack;
     public Action OnStartAttack;
@@ -21,6 +22,7 @@ public abstract class BasicAttackController : NetworkBehaviour
     private int attackBlockCount = 0;
 
     // Public properties
+    public float AnimAttackPoint { get => animAttackPoint; }
     public bool IsSetToStopAfterAttack => isSetToStopAfterAttack;
     public bool IsAttacking => isCurrentlyAttacking;
     public int Damage;
@@ -68,6 +70,7 @@ public abstract class BasicAttackController : NetworkBehaviour
 
             RotateToTarget(controller.TargetController.Target);
 
+            OnEachAttackStart?.Invoke();
             OnAttackStart();
             if (name.Contains("11")) Debug.Log($"asilxx0 {Time.time}");
 
