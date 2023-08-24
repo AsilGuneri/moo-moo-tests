@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class PickClosestEnemy : EnemyBehaviourData
 {
-    public float BetterOptionCooldown;
-    public float AggroRange;
-    [Range(0f, 100f)]
-    public float PercentageDivision = 10;
-    public int HealthPercentScoreMultiplier = 1;
+    //public float BetterOptionCooldown;
+    //public float AggroRange;
+    //[Range(0f, 100f)]
+    //public float PercentageDivision = 10;
+    //public int HealthPercentScoreMultiplier = 1;
     // Create the MoveController and add it to the given game object
     public override EnemyBehaviourController CreateBehaviourController(GameObject gameObject)
     {
@@ -24,10 +24,10 @@ public class PickClosestEnemyController : EnemyBehaviourController
 {
     private PickClosestEnemy pickEnemyData;
     private UnitController controller;
-    private GameObject bestTarget;
+    //private GameObject bestTarget;
 
-    private float timer = 0;
-    private bool onCooldown = false;
+    //private float timer = 0;
+    //private bool onCooldown = false;
 
 
     public override void OnInitialize(EnemyBehaviourData data)
@@ -49,7 +49,8 @@ public class PickClosestEnemyController : EnemyBehaviourController
 
     public override void OnEnter()
     {
-        AssignTargetAndExitBehavior(bestTarget);
+        //AssignTargetAndExitBehavior(bestTarget);
+        AssignTargetAndExitBehavior(null);
     }
 
     public override void OnExit()
@@ -59,56 +60,61 @@ public class PickClosestEnemyController : EnemyBehaviourController
 
     private void Update() 
     {
-        if (onCooldown)
-        {
-            timer += Time.deltaTime;
-            if(timer >= pickEnemyData.BetterOptionCooldown)
-            {
-                timer = 0;
-                onCooldown = false;
-            }
-        }
+        //if (onCooldown)
+        //{
+        //    timer += Time.deltaTime;
+        //    if(timer >= pickEnemyData.BetterOptionCooldown)
+        //    {
+        //        timer = 0;
+        //        onCooldown = false;
+        //    }
+        //}
     }
 
     private bool ShouldEnter()
     {
         if (controller.TargetController.Target == null) return true;
-        if (onCooldown) return false;
-        var bestTarget = GetBestTarget();
-        if (bestTarget != null && bestTarget != controller.TargetController.Target)
-        {
-            onCooldown = true;
-            this.bestTarget = bestTarget;
-            return true;
-        }
+        //if (onCooldown) return false;
+        //var bestTarget = GetBestTarget();
+        //if (bestTarget != null && bestTarget != controller.TargetController.Target)
+        //{
+        //    onCooldown = true;
+        //    this.bestTarget = bestTarget;
+        //    return true;
+        //}
         return false;
     }
 
-    private GameObject GetBestTarget()
-    {
-        var possibleTargets = UnitManager.Instance.GetEnemiesInRadius(controller, pickEnemyData.AggroRange);
-        float bestScore = float.MinValue;
-        GameObject bestTarget = null;
-        foreach (var possibleTarget in possibleTargets)
-        {
-            var unitController = possibleTarget.GetComponent<UnitController>();
-            float score = 0;
+    //private GameObject GetBestTarget()
+    //{
+    //    var possibleTargets = UnitManager.Instance.GetEnemiesInRadius(controller, pickEnemyData.AggroRange);
+    //    float bestScore = float.MinValue;
+    //    GameObject bestTarget = null;
+    //    foreach (var possibleTarget in possibleTargets)
+    //    {
+    //        var unitController = possibleTarget.GetComponent<UnitController>();
+    //        float score = 0;
 
-            score -= (unitController.Health.CurrentHealthPercentage % pickEnemyData.PercentageDivision);
-            score -= Extensions.GetDistance(possibleTarget.transform.position, controller.transform.position);
+    //        score -= (unitController.Health.CurrentHealthPercentage % pickEnemyData.PercentageDivision);
+    //        score -= Extensions.GetDistance(possibleTarget.transform.position, controller.transform.position);
 
-            if (score > bestScore)
-            {
-                bestScore = score;
-                bestTarget = possibleTarget;
-            }
-        }
-        return bestTarget;
-    }
+    //        if (score > bestScore)
+    //        {
+    //            bestScore = score;
+    //            bestTarget = possibleTarget;
+    //        }
+    //    }
+    //    return bestTarget;
+    //}
 
     private void AssignTargetAndExitBehavior(GameObject closestEnemy)
     {
-        if (closestEnemy == null) closestEnemy = UnitManager.Instance.GetClosestEnemy(transform.position, controller);
+        if (closestEnemy == null)
+        {
+            var closestBuilding = UnitManager.Instance.GetClosestBuilding(transform.position);
+            closestEnemy = closestBuilding ? closestBuilding : UnitManager.Instance.GetClosestEnemy(transform.position, controller);
+
+        }
         controller.TargetController.SetTarget(closestEnemy);
         controller.GetComponent<EnemyBrain>().ExitBehaviour();
     }
