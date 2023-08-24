@@ -59,18 +59,7 @@ public class AnimationController : NetworkBehaviour
             if (animClip.name == attackAnimName)
             {
                 AttackAnimTime = animClip.length;
-                float multiplier = 0;
-                //if (controller.attackSpeed > 1)
-                //{
-                //    multiplier = AttackAnimTime / controller.attackSpeed;
-                //}
-                //else
-                {
-                    multiplier = controller.attackSpeed * AttackAnimTime;
-                }
-                if (name.Contains("age")) Debug.Log($"AttackAnimTime: {AttackAnimTime}");
-                if (name.Contains("age")) Debug.Log($"Attack Speed: {controller.attackSpeed}");
-                if (name.Contains("age")) Debug.Log($"Multiplier: {multiplier}");
+                float multiplier = controller.attackSpeed * AttackAnimTime;
                 SetAttackSpeed(multiplier);
 
             }
