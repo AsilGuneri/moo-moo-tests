@@ -60,11 +60,11 @@ public class AnimationController : NetworkBehaviour
             {
                 AttackAnimTime = animClip.length;
                 float multiplier = 0;
-                if (controller.attackSpeed > 1)
-                {
-                    multiplier = AttackAnimTime / controller.attackSpeed;
-                }
-                else
+                //if (controller.attackSpeed > 1)
+                //{
+                //    multiplier = AttackAnimTime / controller.attackSpeed;
+                //}
+                //else
                 {
                     multiplier = controller.attackSpeed * AttackAnimTime;
                 }
