@@ -71,7 +71,6 @@ Shader "CustomShaders/HealthBar"
                 OUT.positionOS = IN.positionOS;
                 return OUT;
             }
-
             float4 frag(Varyings IN) : SV_Target
             {
                 float3 _objectScale = GetObjectScale();
@@ -97,14 +96,15 @@ Shader "CustomShaders/HealthBar"
                 #endif
 
                 float healthBarMask = GetSmoothMask(healthBarSDF);
-                
-                // Segmented Bars Logic
+    
+                // Border Mask
+                float borderSDF = healthBarSDF + _borderWidth * _objectScale.y;
+                float borderMask =  1 - GetSmoothMask(borderSDF);
+
+                // Segmented Bars Logic inside health bar (excluding border)
                 float segmentWidth = 1.0f / _segmentCount;
-                float segmentPos = fmod(IN.uv.y, segmentWidth + _segmentSpacing); // Changed to IN.uv.y
-                if (segmentPos > segmentWidth) 
-                {
-                    return float4(0, 0, 0, 0); // Transparent gap between segments
-                }
+                float segmentPos = fmod(IN.uv.y, segmentWidth + _segmentSpacing);
+                float segmentMask = segmentPos > segmentWidth ? 0.0f : 1.0f; 
 
                 float waveOffset = _waveAmp * cos(_waveFreq * (IN.uv.x + _Time.y * _waveSpeed)) * min(1.3f * sin(PI * _healthNormalized), 1);
                 float marginNormalizedY = margin / _objectScale.y;
@@ -113,11 +113,9 @@ Shader "CustomShaders/HealthBar"
                 float healthMapped = lerp(fillOffset - 0.01f, 1 - fillOffset, _healthNormalized);
                 float fillSDF = IN.uv.y - healthMapped + waveOffset;
 
-                float fillMask = GetSmoothMask(fillSDF) * step(IN.uv.y, _healthNormalized); // Changed to IN.uv.y
+                float fillMask = GetSmoothMask(fillSDF) * step(IN.uv.y, _healthNormalized) * segmentMask;
 
-
-                float borderSDF = healthBarSDF + _borderWidth*_objectScale.y;
-                float borderMask =  1 - GetSmoothMask(borderSDF);
+                // Combine everything
                 float4 outColor = healthBarMask * (fillMask * (1 - borderMask) * _fillColor + (1 - fillMask) * (1 - borderMask) * _backgroundColor + borderMask * _borderColor);
 
                 outColor *= float4(2 - healthBarSDF/(minScale/2).xxx, 1);
@@ -127,7 +125,7 @@ Shader "CustomShaders/HealthBar"
                     float flash = 0.1*cos(6*_Time.y) + 0.1;
                     outColor.xyz += flash;
                 } 
-                
+
                 return outColor;
             }
             ENDHLSL
