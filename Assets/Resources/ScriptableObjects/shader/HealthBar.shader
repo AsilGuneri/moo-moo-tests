@@ -7,6 +7,8 @@ Shader "CustomShaders/HealthBar"
         _healthNormalized("Health Normalized", Range(0,1)) = 0.0
         _lowHealthThreshold("Low Health Threshold", Range(0,1)) = 0.2
         _fillColor("Fill Start Color", Color) = (0,0,0,0)
+        _segmentSeparatorThickness("Segment Separator Thickness", Range(0.001, 0.1)) = 0.01
+
 
         [Space(10)]
         _waveAmp("Fill Wave Amplitude", float) = 0.01
@@ -45,9 +47,11 @@ Shader "CustomShaders/HealthBar"
             float4 _fillColor, _backgroundColor, _borderColor;
             float _lowHealthThreshold, _borderWidth;
             float _waveAmp, _waveFreq, _waveSpeed;
+            float _segmentSeparatorThickness;
             int _segmentCount;
             CBUFFER_END
-
+                        
+            
             struct Attributes
             {
                 float4 positionOS : POSITION;
@@ -72,7 +76,7 @@ Shader "CustomShaders/HealthBar"
             float4 frag(Varyings IN) : SV_Target
             {
                 float3 _objectScale = GetObjectScale();
-
+                float segmentSeparatorThickness = _segmentSeparatorThickness;
                 float minScale = min(_objectScale.x, _objectScale.y);
                 float margin = minScale * 0.1;
                 float3 _shapeElongation = (_objectScale - minScale)/2;
@@ -98,11 +102,12 @@ Shader "CustomShaders/HealthBar"
                 // Border Mask
                 float borderSDF = healthBarSDF + _borderWidth * _objectScale.y;
                 float borderMask =  1 - GetSmoothMask(borderSDF);
+                //float segmentSeparatorThickness = _segmentSeparatorThickness;
 
-                float segmentHeight = 1.0f / _segmentCount;
+                float segmentHeight = (1.0f + segmentSeparatorThickness) / _segmentCount - segmentSeparatorThickness;
                 float segmentFill = 0.9f * segmentHeight; // 90% of the segment's height is filled, adjust if needed
-                float segmentPos = fmod(IN.uv.y, segmentHeight);
-                float segmentMask = segmentPos < segmentFill ? 1.0f : 0.0f;
+                float segmentPos = fmod(IN.uv.y, segmentHeight + segmentSeparatorThickness);
+                float segmentMask = (segmentPos < segmentHeight) ? 1.0f : 0.0f;
 
                 float waveOffset = _waveAmp * cos(_waveFreq * (IN.uv.x + _Time.y * _waveSpeed)) * min(1.3f * sin(PI * _healthNormalized), 1);
                 float marginNormalizedY = margin / _objectScale.y;
