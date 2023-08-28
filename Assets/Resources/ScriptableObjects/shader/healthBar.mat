@@ -25,7 +25,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _SHAPE_RHOMBUS
+  - _SHAPE_BOX
   m_InvalidKeywords:
   - _COLOR_BLUE
   - _HEALTHNORMALIZED_ON
@@ -83,6 +83,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _barTexture:
+        m_Texture: {fileID: 2800000, guid: b9c0f089c365d441fbeb35684fcc0049, type: 3}
+        m_Scale: {x: -2.23, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _fillTexture:
         m_Texture: {fileID: 2800000, guid: 7ffb121cd6868bd4a9a6c54707482699, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -129,17 +133,19 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _borderWidth: 0.01
+    - _borderWidth: 0.024
     - _emptyThreshold: 0.2
     - _endThreshold: 0.9
     - _fillValue: 0.525
     - _floatProperty: 0
     - _fullThreshold: 0.9
-    - _healthNormalized: 0.552
+    - _healthNormalized: 1
     - _key: 0
     - _lowHealthThreshold: 0
     - _lowLifeThreshold: 0.2
-    - _shape: 2
+    - _segmentCount: 2
+    - _segmentSpacing: 0.0135
+    - _shape: 1
     - _startThreshold: 0.2
     - _waveAmp: 0
     - _waveFreq: 0
@@ -153,7 +159,8 @@ Material:
     - _borderColor: {r: 0, g: 0, b: 0, a: 0.9019608}
     - _emptyColor: {r: 0.8207547, g: 0.17344245, b: 0.17344245, a: 1}
     - _endColor: {r: 0.8773585, g: 0.13495642, b: 0.12746526, a: 1}
-    - _fillColor: {r: 0.6792453, g: 0.15699539, b: 0.15699539, a: 1}
+    - _fillColor: {r: 0.5377358, g: 0, b: 0, a: 1}
     - _fullColor: {r: 0.2453214, g: 0.8962264, b: 0.23166601, a: 1}
+    - _segmentSize: {r: 1, g: 1, b: 0, a: 0}
     - _startColor: {r: 0.6037736, g: 0.20462953, b: 0.18454966, a: 1}
   m_BuildTextureStacks: []

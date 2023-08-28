@@ -20,7 +20,6 @@ Shader "CustomShaders/HealthBar"
         
         [Space(10)]
         _segmentCount("Number of Segments", int) = 10
-        _segmentSpacing("Spacing Between Segments", Range(0, 0.1)) = 0.01
     }
 
     SubShader
@@ -47,7 +46,6 @@ Shader "CustomShaders/HealthBar"
             float _lowHealthThreshold, _borderWidth;
             float _waveAmp, _waveFreq, _waveSpeed;
             int _segmentCount;
-            float _segmentSpacing;
             CBUFFER_END
 
             struct Attributes
@@ -101,10 +99,10 @@ Shader "CustomShaders/HealthBar"
                 float borderSDF = healthBarSDF + _borderWidth * _objectScale.y;
                 float borderMask =  1 - GetSmoothMask(borderSDF);
 
-                // Segmented Bars Logic inside health bar (excluding border)
-                float segmentWidth = 1.0f / _segmentCount;
-                float segmentPos = fmod(IN.uv.y, segmentWidth + _segmentSpacing);
-                float segmentMask = segmentPos > segmentWidth ? 0.0f : 1.0f; 
+                float segmentHeight = 1.0f / _segmentCount;
+                float segmentFill = 0.9f * segmentHeight; // 90% of the segment's height is filled, adjust if needed
+                float segmentPos = fmod(IN.uv.y, segmentHeight);
+                float segmentMask = segmentPos < segmentFill ? 1.0f : 0.0f;
 
                 float waveOffset = _waveAmp * cos(_waveFreq * (IN.uv.x + _Time.y * _waveSpeed)) * min(1.3f * sin(PI * _healthNormalized), 1);
                 float marginNormalizedY = margin / _objectScale.y;
