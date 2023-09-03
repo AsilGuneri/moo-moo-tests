@@ -24,8 +24,8 @@ public class LobbyUIAnimations : MonoBehaviour
         if (!background) return;
         background.DOScale(2, backgroundAnimTime).OnComplete(() =>
         {
-            secondBackground.gameObject.SetActive(true);
-            background.gameObject.SetActive(false);
+            //secondBackground.gameObject.SetActive(true);
+            //background.gameObject.SetActive(false);
         }).SetEase(Ease.InOutCubic);
 
 
