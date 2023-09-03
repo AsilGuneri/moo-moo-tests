@@ -9,7 +9,6 @@ public class LobbyUIAnimations : MonoBehaviour
     public static LobbyUIAnimations Instance { get; private set; }
 
     [SerializeField] private Transform background;
-    [SerializeField] private Transform secondBackground;
     [SerializeField] private float backgroundAnimTime;
     private void Awake()
     {
@@ -22,12 +21,6 @@ public class LobbyUIAnimations : MonoBehaviour
     private void AnimateBackground()
     {
         if (!background) return;
-        background.DOScale(2, backgroundAnimTime).OnComplete(() =>
-        {
-            //secondBackground.gameObject.SetActive(true);
-            //background.gameObject.SetActive(false);
-        }).SetEase(Ease.InOutCubic);
-
-
+        background.DOScale(2, backgroundAnimTime).SetEase(Ease.InOutCubic);
     }
 }
