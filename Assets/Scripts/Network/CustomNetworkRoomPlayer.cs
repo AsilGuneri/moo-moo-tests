@@ -11,12 +11,6 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
 
 
     [SerializeField] private RectTransform playerUITransform;
-    [SerializeField] private Button[] selectionButtons;
-    [SerializeField] private TextMeshProUGUI playerNameText;
-    [SerializeField] private Image classImage;
-    [SerializeField] private TextMeshProUGUI classNameText;
-    [SerializeField] private Button readyButton;
-    [SerializeField] private TextMeshProUGUI readyButtonText;
 
     private CustomNetworkRoomManager CustomManager;
     private RoomPlayerUI roomPlayerUI;
@@ -36,10 +30,7 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
         base.OnStartClient();
         //For Everyone
         playerUITransform.SetParent(LobbyManager.Instance.RoomPlayerParent);
-        roomPlayerUI = GetComponent<RoomPlayerUI>();
-        CustomManager.RoomPlayers.Add(this);
-        roomPlayerUI.InitializeUI(this);
-        
+        CustomManager.RoomPlayers.Add(this);        
     }
 
     public override void OnStopClient()
@@ -61,7 +52,6 @@ public class CustomNetworkRoomPlayer : NetworkRoomPlayer
         {
             CmdChangeReadyState(readyState);
         }
-        roomPlayerUI.CmdOnSetReady(readyState);
     }
     public void SetPlayerData(int connectionId)
     {

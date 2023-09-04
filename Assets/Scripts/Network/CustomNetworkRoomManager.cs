@@ -77,14 +77,14 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         else
         {
             StartHost();
-            loader.Load(loadingSceneAsync);
+           // loader.Load(loadingSceneAsync);
         }
     }
 
     public override void OnRoomServerPlayersReady()
     {
         base.OnRoomServerPlayersReady();
-        loader.Load(loadingSceneAsync);
+        //loader.Load(loadingSceneAsync);
     }
 
     public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
