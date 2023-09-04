@@ -24,12 +24,12 @@ public class CustomNetworkRoomManager : NetworkRoomManager
     protected Callback<LobbyEnter_t> lobbyEntered;
 
     [Header("Loading Screen")]
-    private LoadingManager loader;
+    private LoadingManager loadingManager;
 
     private new void Start()
     {
         base.Start();
-        loader = GetComponent<LoadingManager>();
+        loadingManager = GetComponent<LoadingManager>();
         if (!UseSteam) return;
         lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
@@ -77,14 +77,14 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         else
         {
             StartHost();
-           // loader.Load(loadingSceneAsync);
+            loadingManager.Load(loadingSceneAsync);
         }
     }
 
     public override void OnRoomServerPlayersReady()
     {
         base.OnRoomServerPlayersReady();
-        //loader.Load(loadingSceneAsync);
+        loadingManager.Load(loadingSceneAsync);
     }
 
     public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
@@ -105,20 +105,4 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         roomPlayer.SetPlayerData(conn.connectionId);
         return roomPlayer.gameObject;
     }
-    //public override void OnServerSceneChanged(string sceneName)
-    //{
-    //    base.OnServerSceneChanged(sceneName);
-    //    if (sceneName == GameplayScene)
-    //    {
-    //        ObjectPooler.Instance.Initialize();
-    //    }
-    //}
-    //public override void OnClientSceneChanged()
-    //{
-    //    base.OnClientSceneChanged();
-    //    if (SceneManager.GetActiveScene().name == "GameScene")
-    //    {
-    //        ObjectPooler.Instance.Initialize();
-    //    }
-    //}
 }
