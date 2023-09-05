@@ -996,7 +996,7 @@ MonoBehaviour:
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
-  - {fileID: 8081231170285242933, guid: 10dc0758f302e994e8df7287548a25b4, type: 3}
+  - {fileID: 5897228174691731997, guid: cc6f069e7016a1e4ca859e353ba25fb0, type: 3}
   - {fileID: 182491089992915758, guid: 11ea5b7ac5ddc324684f5931b3883e13, type: 3}
   showRoomGUI: 1
   minPlayers: 1
