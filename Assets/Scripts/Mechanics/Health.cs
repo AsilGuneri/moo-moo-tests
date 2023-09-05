@@ -93,7 +93,7 @@ public class Health : NetworkBehaviour
         {
             levelController.GainExperience(ExpToGain);
         }
-        ObjectPooler.Instance.CmdReturnToPool(gameObject.GetComponent<NetworkIdentity>().netId);
+        PrefabPoolManager.Instance.CmdReturnToPool(gameObject);
     }
     #endregion
     #region Client

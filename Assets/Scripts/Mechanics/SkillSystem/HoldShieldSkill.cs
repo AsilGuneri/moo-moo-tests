@@ -38,7 +38,7 @@ public class HoldShieldSkillController : SkillController
     protected override void OnSkillStart()
     {
         var prefab = holdShieldData.ShieldPrefab;
-        currentShieldObject = ObjectPooler.Instance.SpawnFromPool(holdShieldData.ShieldPrefab, controller.ProjectileSpawnPoint.position, Quaternion.identity);
+        currentShieldObject = PrefabPoolManager.Instance.GetFromPool(controller.ProjectileSpawnPoint.position, Quaternion.identity, holdShieldData.ShieldPrefab);
         Transform protectedUnit = UnitManager.Instance.GetClosestUnit(transform.position, UnitType.Player).transform;
         currentShieldObject.GetComponent<ShieldController>().SetupShield(protectedUnit,controller.transform);
 

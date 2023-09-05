@@ -70119,9 +70119,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
+  _assetId: 3745463599
   serverOnly: 0
   visible: 0
-  m_AssetId: 07f25eb048b773949a9ea2aeb2b5fb05
   hasSpawned: 0
 --- !u!114 &7516589810736755903
 MonoBehaviour:
@@ -70132,31 +70132,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 8938534602783702256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 1
   syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 1
-  sendInterval: 0.05
+  syncInterval: 0
+  target: {fileID: 5419681646419041297}
+  clientAuthority: 0
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
-  bufferResetMultiplier: 5
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
-  scaleSensitivity: 0.01
+  coordinateSpace: 0
+  sendIntervalMultiplier: 1
+  timelineOffset: 0
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChange: 1
+  onlySyncOnChangeCorrectionMultiplier: 2
+  rotationSensitivity: 0.01
+  compressRotation: 0
+  positionPrecision: 0.01
+  scalePrecision: 0.01
 --- !u!114 &4334566937998049036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70169,6 +70170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   clientAuthority: 1
@@ -70199,6 +70201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4756adf68d9a84e4daa6d98c18068e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   healthBar: {fileID: 1508059408740813576}
@@ -70215,6 +70218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ff0d1fe159e3384593491ce8bbc9dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   attackRange: 50
@@ -70241,6 +70245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79271c53189dfec4cabe16d9c81bfebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   animAttackPoint: 0.5
@@ -70258,6 +70263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cfd51a3d8cd18f418b6fdcfccca327e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   Target: {fileID: 0}
@@ -70286,6 +70292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52a9d35aecd85c04696f777cf496a54c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   hasCancelAttackAnim: 1

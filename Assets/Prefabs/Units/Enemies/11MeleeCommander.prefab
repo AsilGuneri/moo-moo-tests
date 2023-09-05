@@ -674,9 +674,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
+  _assetId: 1248466188
   serverOnly: 0
   visible: 0
-  m_AssetId: f61dd9d56f5809b429696847a8caabf2
   hasSpawned: 0
 --- !u!95 &1929066000756038323
 Animator:
@@ -730,15 +730,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d11eb890278d642b6215f2f8b4b459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   attackRange: 1
   attackSpeed: 1
   unitType: 1
   enemyList: 0000000002000000
+  hitPointOffset: {x: 0, y: 0, z: 0}
   projectileSpawnPoint: {fileID: 0}
   skills: []
-  animAttackPoint: 0.5
   minionType: 3
 --- !u!114 &3004930868394129945
 MonoBehaviour:
@@ -752,15 +753,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f0257c19b12d4449b0badd930838765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   attackRange: 1
   attackSpeed: 1
   unitType: 1
   enemyList: 0000000002000000
+  hitPointOffset: {x: 0, y: 0, z: 0}
   projectileSpawnPoint: {fileID: 0}
   skills: []
-  animAttackPoint: 0.5
   minionType: 3
 --- !u!114 &2093334184839592437
 MonoBehaviour:
@@ -771,31 +773,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 2462893064303745991}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 1
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
+  target: {fileID: 5843045748780198311}
   clientAuthority: 0
-  sendInterval: 0.05
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
-  bufferResetMultiplier: 5
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
-  scaleSensitivity: 0.01
+  coordinateSpace: 0
+  sendIntervalMultiplier: 1
+  timelineOffset: 0
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChange: 1
+  onlySyncOnChangeCorrectionMultiplier: 2
+  rotationSensitivity: 0.01
+  compressRotation: 0
+  positionPrecision: 0.01
+  scalePrecision: 0.01
 --- !u!114 &901659194503043128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -808,6 +811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cfd51a3d8cd18f418b6fdcfccca327e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   Target: {fileID: 0}
@@ -823,6 +827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4756adf68d9a84e4daa6d98c18068e01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   healthBar: {fileID: 2506929575589975820}
@@ -839,6 +844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   clientAuthority: 1
@@ -869,9 +875,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52a9d35aecd85c04696f777cf496a54c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   hasCancelAttackAnim: 0
+  attackAnimName: 
 --- !u!114 &211520756723830630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -884,8 +892,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aed26f83edd39554487f6bfb473c942e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
+  animAttackPoint: 0
   Damage: 10
 --- !u!114 &3030335984463891531
 MonoBehaviour:
@@ -965,6 +975,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Radius: 6
   Angle: 135
+  MaxAngle: 300
   Mode: 3
   BlockedStop: 0
   UseWalls: 0
@@ -1017,15 +1028,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d11eb890278d642b6215f2f8b4b459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   attackRange: 1
   attackSpeed: 1
   unitType: 1
   enemyList: 0000000002000000
+  hitPointOffset: {x: 0, y: 0, z: 0}
   projectileSpawnPoint: {fileID: 0}
   skills: []
-  animAttackPoint: 0.5
   minionType: 3
 --- !u!1 &2821640562202802715
 GameObject:

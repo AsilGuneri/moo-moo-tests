@@ -43,11 +43,11 @@ public class PoolObject : MonoBehaviour
     {
         if (gameObject.TryGetComponent(out NetworkIdentity netId))
         {
-            ObjectPooler.Instance.CmdReturnToPool(gameObject.GetComponent<NetworkIdentity>().netId);
+            PrefabPoolManager.Instance.PutBackInPool(gameObject);
         }
         else
         {
-            ObjectPooler.Instance.ReturnToPool(gameObject);
+            PrefabPoolManager.Instance.PutBackInPool(gameObject);
 
         }
     }

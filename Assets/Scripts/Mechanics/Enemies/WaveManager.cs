@@ -82,43 +82,17 @@ public class WaveManager : NetworkSingleton<WaveManager>
         SpawnWave(AllWavesData.Instance.WavesData[currentWaveIndex]);
     }
 
+
+    [ServerCallback]
     private void SpawnWave(WaveData waveData)
     {
-        spawnArea.position = initialSpawnPos;
-        Vector3 offset = Vector3.zero;
-        int maxRows = 0;
 
         foreach (SubWave subWave in waveData.SubWaves)
         {
-            int columnsPerRow = Mathf.CeilToInt((float)subWave.Count / subWave.Columns);
-            int middleRowIndex = columnsPerRow / 2;
-            int middleColumnIndex = subWave.Columns / 2;
-
-            for (int column = 0; column < subWave.Columns; column++)
-            {
-                int offsetColumnIndex = column - middleColumnIndex;
-
-                for (int row = 0; row < columnsPerRow; row++)
-                {
-                    int index = row * subWave.Columns + column;
-                    if (index >= subWave.Count)
-                        break;
-
-                    int offsetRowIndex = row - middleRowIndex;
-
-                    offset.x = offsetColumnIndex * spacing;
-                    offset.z = offsetRowIndex * spacing;
-
-                    Vector3 position = spawnArea.position + offset;
-
-                    ObjectPooler.Instance.CmdSpawnFromPool(subWave.Prefab.name, position, Quaternion.identity);
-                }
-            }
-
-            maxRows += columnsPerRow;
-            spawnArea.position -= Vector3.forward * spacing * (maxRows + 1);
+            Vector3 position = spawnArea.position;
+            Debug.Log("asilxx1 " + subWave.Prefab.name);
+            PrefabPoolManager.Instance.SpawnFromPoolServer(subWave.Prefab, position, Quaternion.identity);
         }
-        lastSpawnedIndex++;
     }
 }
 

@@ -2677,6 +2677,7 @@ GameObject:
   - component: {fileID: 334110797}
   - component: {fileID: 334110798}
   - component: {fileID: 334110799}
+  - component: {fileID: 334110800}
   m_Layer: 0
   m_Name: = Managers
   m_TagString: Untagged
@@ -2712,9 +2713,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 2722224837
+  _assetId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 
   hasSpawned: 0
 --- !u!114 &334110790
 MonoBehaviour:
@@ -2728,6 +2729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16711f0edd5d3ba4ea9355023d2384a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   goldText: {fileID: 0}
@@ -2743,6 +2745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89f5148991e7cea45b220a9f923f2d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   bank:
@@ -2759,6 +2762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c574a0e85c33a71469aa5a84820cf326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
 --- !u!114 &334110793
@@ -2773,6 +2777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 374ab05e8bcf4e04dbe0f65de0a7577c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0
   spawnArea: {fileID: 1849601163}
@@ -2790,6 +2795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f576cb5fc0c459e45af48adfe56a0931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   contributionFieldPrefab: {fileID: 1019676739148843741, guid: 11ea5b7ac5ddc324684f5931b3883e13, type: 3}
@@ -2806,39 +2812,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91e11a7c12d4d924296a59fd5c2b0abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  pools:
-  - Prefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
-    Size: 10
-  - Prefab: {fileID: 1437680763721510, guid: a311f5de96916bf44bcb1dae61840939, type: 3}
-    Size: 10
-  - Prefab: {fileID: 1438542530079480, guid: 21710859533a00746ad2bdd323061a2d, type: 3}
-    Size: 10
-  - Prefab: {fileID: 8081231170285242933, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
-    Size: 20
-  - Prefab: {fileID: 5432209458267137536, guid: 93bf18897f48e4140b9a368c27bd919b, type: 3}
-    Size: 20
-  - Prefab: {fileID: 811260699408436622, guid: 299615328751d224781d31e0fe65de66, type: 3}
-    Size: 20
-  - Prefab: {fileID: 7498676492825279152, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
-    Size: 20
-  - Prefab: {fileID: 2462893064303745991, guid: 736be56d32648c548a0becfa8a517805, type: 3}
-    Size: 20
-  - Prefab: {fileID: 7498676492825279152, guid: 005862c229814ed4daaedb294ce591ea, type: 3}
-    Size: 20
-  - Prefab: {fileID: 1231636063597364, guid: be1a08daa8a036c459b2c544709f1969, type: 3}
-    Size: 20
-  - Prefab: {fileID: 2462893064303745991, guid: f61dd9d56f5809b429696847a8caabf2, type: 3}
-    Size: 10
-  - Prefab: {fileID: 7333777408438456969, guid: bcc885a124bc01241838dcfe3abffeb3, type: 3}
-    Size: 20
-  - Prefab: {fileID: 5897228174691731997, guid: cc6f069e7016a1e4ca859e353ba25fb0, type: 3}
-    Size: 4
-  - Prefab: {fileID: 1299586717950946, guid: 5740ae2e014a8b14886dad7e67951070, type: 3}
-    Size: 20
-  - Prefab: {fileID: 8081231170285242933, guid: 3924b199210ef564a91a10c040c8d6b9, type: 3}
-    Size: 20
 --- !u!114 &334110797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2884,6 +2860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ab2542f3cffc94fac543f1c693eac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   towerParent: {fileID: 1524798944}
@@ -2891,6 +2868,62 @@ MonoBehaviour:
   towerPositions:
   - {fileID: 1950282930}
   - {fileID: 213215435}
+--- !u!114 &334110800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334110787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c11eaa2dc74df28499441803585d6294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  poolConfigs:
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: -457628512542246865, guid: 93bf18897f48e4140b9a368c27bd919b, type: 3}
+    currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 3557746330322355302, guid: 299615328751d224781d31e0fe65de66, type: 3}
+    currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: -161897024165834653, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
+    currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 3750345282122126642, guid: 5bba669c92f52414ca3bbc449f1b5d87, type: 3}
+    currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 1035025884081351565, guid: bcc885a124bc01241838dcfe3abffeb3, type: 3}
+    currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 3008269667613471278, guid: cc6f069e7016a1e4ca859e353ba25fb0, type: 3}
+    currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 5956842592629035594, guid: 005862c229814ed4daaedb294ce591ea, type: 3}
+    currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 1306364402251745579, guid: 736be56d32648c548a0becfa8a517805, type: 3}
+    currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 5956842592629035594, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
+    currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 1306364402251745579, guid: f61dd9d56f5809b429696847a8caabf2, type: 3}
+    currentCount: 0
 --- !u!1 &361532535
 GameObject:
   m_ObjectHideFlags: 0
@@ -5120,7 +5153,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32262
+  m_Name: pb_Mesh685554
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2

@@ -50,9 +50,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
+  _assetId: 4040042047
   serverOnly: 0
   visible: 0
-  m_AssetId: bcc885a124bc01241838dcfe3abffeb3
   hasSpawned: 0
 --- !u!114 &5854346218254119991
 MonoBehaviour:
@@ -63,31 +63,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 7333777408438456969}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
-  syncInterval: 0.1
+  syncInterval: 0
+  target: {fileID: 9148052377511098102}
   clientAuthority: 0
-  sendInterval: 0.05
   syncPosition: 1
   syncRotation: 1
   syncScale: 0
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
-  bufferResetMultiplier: 5
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
-  scaleSensitivity: 0.01
+  coordinateSpace: 0
+  sendIntervalMultiplier: 1
+  timelineOffset: 0
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChange: 1
+  onlySyncOnChangeCorrectionMultiplier: 2
+  rotationSensitivity: 0.01
+  compressRotation: 0
+  positionPrecision: 0.01
+  scalePrecision: 0.01
 --- !u!114 &2059377680462124239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,14 +101,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d5dbb367e556f54cb292e2449e3be1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
   shieldMaxHitPoint: 5
   shieldDistance: 1
   yOffset: 1.5
   shieldObject: {fileID: 7940631936232113961}
-  minOppacity: 0
-  maxOppacity: 20
+  minOpacity: 0
+  maxOpacity: 20
 --- !u!114 &1035025884081351565
 MonoBehaviour:
   m_ObjectHideFlags: 0

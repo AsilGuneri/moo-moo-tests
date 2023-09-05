@@ -156,7 +156,7 @@ public class PlayerController : UnitController
     }
     private void OnAttackModeClick(Vector3 clickPos)
     {
-        ObjectPooler.Instance.SpawnFromPool(attackModeIndicator.gameObject, Extensions.Vector3WithoutY(clickPos), attackModeIndicator.transform.rotation);
+        PrefabPoolManager.Instance.GetFromPool(Extensions.Vector3WithoutY(clickPos), attackModeIndicator.transform.rotation, attackModeIndicator.gameObject);
         var closestEnemy = UnitManager.Instance.GetClosestUnit(clickPos, UnitType.WaveEnemy);
         if (closestEnemy == null)
         {
@@ -181,7 +181,7 @@ public class PlayerController : UnitController
 
         Vector3 newPoint = Extensions.CheckNavMesh(point);
         Movement.ClientMove(newPoint);
-        ObjectPooler.Instance.SpawnFromPool(moveIndicator.gameObject, Extensions.Vector3WithoutY(newPoint), moveIndicator.transform.rotation);
+        PrefabPoolManager.Instance.GetFromPool(Extensions.Vector3WithoutY(newPoint), moveIndicator.transform.rotation, moveIndicator.gameObject);
     }
 
     private bool CanClick()

@@ -94,7 +94,7 @@ public class Projectile : NetworkBehaviour, IProjectile
 
     public void DestroySelf()
     {
-        ObjectPooler.Instance.CmdReturnToPool(gameObject.GetComponent<NetworkIdentity>().netId);
+        PrefabPoolManager.Instance.PutBackInPool(gameObject);
     }
 
     [ServerCallback]
@@ -115,7 +115,7 @@ public class Projectile : NetworkBehaviour, IProjectile
     {
         if (onHitParticlePrefab)
         {
-            ObjectPooler.Instance.CmdSpawnFromPool(onHitParticlePrefab.name, transform.position, transform.rotation);
+            PrefabPoolManager.Instance.GetFromPool(transform.position, transform.rotation, onHitParticlePrefab);
         }
        // visualsParent.SetActive(false);
     }
