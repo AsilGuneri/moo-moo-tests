@@ -55,7 +55,6 @@ public class Health : NetworkBehaviour
 
     public void ResetHealth()
     {
-        Debug.Log("asilxx1");
         SetupHealth();
     }
 
@@ -95,7 +94,7 @@ public class Health : NetworkBehaviour
         {
             levelController.GainExperience(ExpToGain);
         }
-        PrefabPoolManager.Instance.CmdReturnToPool(gameObject);
+        PrefabPoolManager.Instance.ReturnToPoolClient(gameObject);
     }
     #endregion
     #region Client

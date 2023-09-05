@@ -143,7 +143,7 @@ public class PrefabPoolManager : NetworkBehaviour
 
 
     [Command(requiresAuthority = false)]
-    public void CmdReturnToPool(GameObject spawned)
+    public void ReturnToPoolClient(GameObject spawned)
     {
         ReturnToPoolServer(spawned);
     }
