@@ -16,57 +16,57 @@ public class UnitManager : NetworkSingleton<UnitManager>
     [Command(requiresAuthority = false)]
     public void RegisterUnit(NetworkIdentityReference unit, UnitType unitType)
     {
-        switch (unitType)
-        {
-            case UnitType.Player:
-                if (Players.Contains(unit)) return;
-                Players.Add(unit);
-                var player = unit.Value.GetComponent<PlayerController>();
-                player.OnRegister();
-                break;
-            case UnitType.WaveEnemy:
-                if (WaveEnemies.Contains(unit)) return;
-                WaveEnemies.Add(unit);
-                unit.Value.GetComponent<EnemyBrain>().StartBrain();
-                break;
-            case UnitType.Building:
-                if (Buildings.Contains(unit)) return;
-                Buildings.Add(unit);
-                //unit.Value.GetComponent<EnemyBrain>().StartBrain();
-                break;
+        //switch (unitType)
+        //{
+        //    case UnitType.Player:
+        //        if (Players.Contains(unit)) return;
+        //        Players.Add(unit);
+        //        var player = unit.Value.GetComponent<PlayerController>();
+        //        player.OnRegister();
+        //        break;
+        //    case UnitType.WaveEnemy:
+        //        if (WaveEnemies.Contains(unit)) return;
+        //        WaveEnemies.Add(unit);
+        //        unit.Value.GetComponent<EnemyBrain>().StartBrain();
+        //        break;
+        //    case UnitType.Building:
+        //        if (Buildings.Contains(unit)) return;
+        //        Buildings.Add(unit);
+        //        //unit.Value.GetComponent<EnemyBrain>().StartBrain();
+        //        break;
 
 
-        }
+        //}
     }
     [ServerCallback]
     public void UnregisterUnits(NetworkIdentityReference unit, UnitType unitType)
     {
-        switch (unitType)
-        {
-            case UnitType.Player:
+        //switch (unitType)
+        //{
+        //    case UnitType.Player:
 
-                foreach(var player in Players)
-                {
-                    if (player.networkId == unit.networkId) { Players.Remove(player);}
-                }
-                break;
-            case UnitType.WaveEnemy:
-                foreach (var enemy in WaveEnemies)
-                {
-                    if (enemy.networkId == unit.networkId) 
-                    { 
-                        WaveEnemies.Remove(enemy);
-                        if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd();
-                    }
-                }
-                break;
-            case UnitType.Building:
-                foreach(var building in Buildings)
-                {
-                    Buildings.Remove(building);
-                }
-                break;
-        }
+        //        foreach(var player in Players)
+        //        {
+        //            if (player.networkId == unit.networkId) { Players.Remove(player);}
+        //        }
+        //        break;
+        //    case UnitType.WaveEnemy:
+        //        foreach (var enemy in WaveEnemies)
+        //        {
+        //            if (enemy.networkId == unit.networkId) 
+        //            { 
+        //                WaveEnemies.Remove(enemy);
+        //                if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd();
+        //            }
+        //        }
+        //        break;
+        //    case UnitType.Building:
+        //        foreach(var building in Buildings)
+        //        {
+        //            Buildings.Remove(building);
+        //        }
+        //        break;
+        //}
     }
     public void GiveCommand(string commandPackName, MinionType minionType)
     {

@@ -10,9 +10,9 @@ public class NetworkIdentityReference
         get{
             if(networkId == 0)
                 return null;
-            if(_networkIdentityCached == null){
-                _networkIdentityCached = NetworkIdentity.spawned[networkId];
-            }
+            //if(_networkIdentityCached == null){
+            //    _networkIdentityCached = NetworkIdentity. spawned[networkId];
+            //}
 
             return _networkIdentityCached;
         }

@@ -35,17 +35,17 @@ public class MainMenu : MonoBehaviour
 
     private void OnEnable() {
         CustomNetworkManager.ClientOnConnected += HandleClientConnected;
-        CustomNetworkManager.ClientOnDisonnected += HandleClientDisconnected;
+        //CustomNetworkManager.ClientOnDisonnected += HandleClientDisconnected;
     }
 
     private void OnDisable() {
         CustomNetworkManager.ClientOnConnected -= HandleClientConnected;
-        CustomNetworkManager.ClientOnDisonnected -= HandleClientDisconnected;
+        //CustomNetworkManager.ClientOnDisonnected -= HandleClientDisconnected;
     }
 
     private void OnDestroy() {
         CustomNetworkManager.ClientOnConnected -= HandleClientConnected;
-        CustomNetworkManager.ClientOnDisonnected -= HandleClientDisconnected;
+        //CustomNetworkManager.ClientOnDisonnected -= HandleClientDisconnected;
         CustomNetworkPlayer.AuthorityOnPartyOwnerStateUpdated -= AuthorityHandlePartyOwnerStateUpdated;
         CustomNetworkPlayer.ClientOnInfoUpdated -= ClientHandleInfoUpdated;
 

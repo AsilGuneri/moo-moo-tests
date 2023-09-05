@@ -9,7 +9,7 @@ using Steamworks;
 public class CustomNetworkManager : NetworkManager
 {
     public static event Action ClientOnConnected;
-    public static event Action ClientOnDisonnected;
+    //public static event Action ClientOnDisonnected;
     public static event Action HostOnStop;
 
     private bool isGameInProgress = false;
@@ -93,11 +93,11 @@ public class CustomNetworkManager : NetworkManager
     }
 
 
-    public override void OnClientDisconnect(NetworkConnection conn)
-    {
-        base.OnClientDisconnect(conn);
-        ClientOnDisonnected?.Invoke();
-    }
+    //public override void OnClientDisconnect(NetworkConnection conn)
+    //{
+    //    base.OnClientDisconnect(conn);
+    //    ClientOnDisonnected?.Invoke();
+    //}
 
     public override void OnStartClient()
     {
