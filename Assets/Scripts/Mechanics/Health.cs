@@ -55,15 +55,17 @@ public class Health : NetworkBehaviour
 
     public void ResetHealth()
     {
+        Debug.Log("asilxx1");
         SetupHealth();
     }
+
+    [ServerCallback]
     private void SetupHealth()
     {
+        UnitManager.Instance.RegisterUnitServer(controller);
         IsDead = false;
         currentHealth = baseHp;
         healthBar.SetupHealthBar(currentHealth);
-        if (controller.unitType != UnitType.Player)
-            UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), controller.unitType);
         isActive = true;
     }
 

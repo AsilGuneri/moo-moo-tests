@@ -62,24 +62,26 @@ public class PlayerController : UnitController
     }
     private void Activate()
     {
-        if (NetworkServer.active) //server 
+        if (!isOwned) return;
+
+        if (NetworkServer.active) //host
         {
+            UnitManager.Instance.RegisterUnitServer(this);
             //GoldManager.Instance.GameBank.AddBankAccount(this);
             //ContributionPanel.Instance.AddPlayerContributionField(this);
         }
-        if (hasAuthority) //owner
+        else //owner client
         {
-            mainCamera = Camera.main;
-            mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
-            SubscribeAnimEvents();
-            UnitManager.Instance.RegisterUnit(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), UnitType.Player);
+            UnitManager.Instance.RegisterUnitClient(this);
         }
+        StartCharacter(); //for both
     }
 
-    [TargetRpc]
-    public void OnRegister()
+    private void StartCharacter()
     {
-        //SkillSelectionPanel.Instance.CacheClassSkills();
+        mainCamera = Camera.main;
+        mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
+        SubscribeAnimEvents();
     }
 
     private void GetMousePositionRaycastInfo(out Ray ray, out RaycastHit[] hits)

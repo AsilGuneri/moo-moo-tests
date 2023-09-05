@@ -7,36 +7,38 @@ using Mirror;
 
 public class UnitManager : NetworkSingleton<UnitManager> 
 {
-    public readonly SyncList<NetworkIdentityReference> Players = new SyncList<NetworkIdentityReference>();
-    public readonly SyncList<NetworkIdentityReference> WaveEnemies = new SyncList<NetworkIdentityReference>();
+    List<UnitController> Players = new List<UnitController>();
+    List<UnitController> WaveEnemies = new List<UnitController>();
+    List<UnitController> Buildings = new List<UnitController>();
 
-    public readonly SyncList<NetworkIdentityReference> Buildings = new SyncList<NetworkIdentityReference>();
-
-
-    [Command(requiresAuthority = false)]
-    public void RegisterUnit(NetworkIdentityReference unit, UnitType unitType)
+    [Command(requiresAuthority =false)]
+    public void RegisterUnitClient(UnitController unit)
     {
-        //switch (unitType)
-        //{
-        //    case UnitType.Player:
-        //        if (Players.Contains(unit)) return;
-        //        Players.Add(unit);
-        //        var player = unit.Value.GetComponent<PlayerController>();
-        //        player.OnRegister();
-        //        break;
-        //    case UnitType.WaveEnemy:
-        //        if (WaveEnemies.Contains(unit)) return;
-        //        WaveEnemies.Add(unit);
-        //        unit.Value.GetComponent<EnemyBrain>().StartBrain();
-        //        break;
-        //    case UnitType.Building:
-        //        if (Buildings.Contains(unit)) return;
-        //        Buildings.Add(unit);
-        //        //unit.Value.GetComponent<EnemyBrain>().StartBrain();
-        //        break;
-
-
-        //}
+        RegisterUnitServer(unit);
+    }
+    [ServerCallback]
+    public void RegisterUnitServer(UnitController unit)
+    {
+        var unitType = unit.unitType;
+        switch (unitType)
+        {
+            case UnitType.Player:
+                var playerUnit = unit as PlayerController;
+                if (Players.Contains(playerUnit)) return;
+                Players.Add(playerUnit);
+                break;
+            case UnitType.WaveEnemy:
+                var enemyUnit = unit as EnemyController;
+                if (WaveEnemies.Contains(enemyUnit)) return;
+                WaveEnemies.Add(enemyUnit);
+                enemyUnit.GetComponent<EnemyBrain>().StartBrain();
+                break;
+            case UnitType.Building:
+                var towerUnit = unit as TowerController;
+                if (Buildings.Contains(towerUnit)) return;
+                Buildings.Add(towerUnit);
+                break;
+        }
     }
     [ServerCallback]
     public void UnregisterUnits(NetworkIdentityReference unit, UnitType unitType)
@@ -72,9 +74,9 @@ public class UnitManager : NetworkSingleton<UnitManager>
     {
         foreach (var enemy in WaveEnemies)
         {
-            if (enemy.Value.TryGetComponent(out EnemyController enemyController) && enemyController.MinionType == minionType)
+            if (enemy.TryGetComponent(out EnemyController enemyController) && enemyController.MinionType == minionType)
             {
-                enemy.Value.GetComponent<EnemyBrain>().SetPackRoutine(commandPackName);    
+                enemy.GetComponent<EnemyBrain>().SetPackRoutine(commandPackName);
             }
         }
     }
@@ -85,11 +87,11 @@ public class UnitManager : NetworkSingleton<UnitManager>
         GameObject closestBuilding = null;
         foreach(var building in Buildings)
         {
-            var distance = Extensions.GetDistance(building.Value.transform.position, myPos);
+            var distance = Extensions.GetDistance(building.transform.position, myPos);
             if (distance < minDistance)
             {
                 minDistance = distance;
-                closestBuilding = building.Value.gameObject;
+                closestBuilding = building.gameObject;
             }
         }
         return closestBuilding;
@@ -120,14 +122,14 @@ public class UnitManager : NetworkSingleton<UnitManager>
     {
         float closestDistance = Mathf.Infinity;
         GameObject closestUnit = null;
-        foreach (NetworkIdentityReference unit in GetUnitList(requestedUnitType))
+        foreach (UnitController unit in GetUnitList(requestedUnitType))
         {
-            if (!unit.Value) continue;
-            if (!unit.Value.gameObject) continue;
-            float distance = Extensions.Distance(myPosition, unit.Value.gameObject.transform.position);
+            if (!unit) continue;
+            if (!unit.gameObject) continue;
+            float distance = Extensions.Distance(myPosition, unit.gameObject.transform.position);
             if (closestDistance < distance) continue;
             closestDistance = distance;
-            closestUnit = unit.Value.gameObject;
+            closestUnit = unit.gameObject;
         }
         return closestUnit;
     }
@@ -136,15 +138,15 @@ public class UnitManager : NetworkSingleton<UnitManager>
         List<GameObject> units = new List<GameObject>();
         foreach(var enemyType in controller.enemyList)
         {
-            foreach (NetworkIdentityReference unit in GetUnitList(enemyType))
+            foreach (var unit in GetUnitList(enemyType))
             {
-                if (!unit.Value) continue;
-                if (!unit.Value.gameObject) continue;
+                if (!unit) continue;
+                if (!unit.gameObject) continue;
 
-                bool inRange = Extensions.CheckRange(controller.transform.position, unit.Value.gameObject.transform.position, radius);
-                if (inRange && !units.Contains(unit.Value.gameObject))
+                bool inRange = Extensions.CheckRange(controller.transform.position, unit.gameObject.transform.position, radius);
+                if (inRange && !units.Contains(unit.gameObject))
                 {
-                    units.Add(unit.Value.gameObject);
+                    units.Add(unit.gameObject);
                 }
             }
         }
@@ -159,11 +161,11 @@ public class UnitManager : NetworkSingleton<UnitManager>
     {
         foreach(var player in Players)
         {
-            if (player.Value.gameObject.GetComponent<UnitController>().hasAuthority) return player.Value.gameObject.GetComponent<UnitController>();
+            if (player.gameObject.GetComponent<UnitController>().isOwned) return player.gameObject.GetComponent<UnitController>();
         }
         return null;
     }
-    private SyncList<NetworkIdentityReference> GetUnitList(UnitType type)
+    private List<UnitController> GetUnitList(UnitType type)
     {
         switch (type)
         {

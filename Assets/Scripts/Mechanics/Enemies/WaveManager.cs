@@ -90,7 +90,6 @@ public class WaveManager : NetworkSingleton<WaveManager>
         foreach (SubWave subWave in waveData.SubWaves)
         {
             Vector3 position = spawnArea.position;
-            Debug.Log("asilxx1 " + subWave.Prefab.name);
             PrefabPoolManager.Instance.SpawnFromPoolServer(subWave.Prefab, position, Quaternion.identity);
         }
     }

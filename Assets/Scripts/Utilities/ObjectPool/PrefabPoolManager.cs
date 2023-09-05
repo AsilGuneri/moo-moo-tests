@@ -100,7 +100,6 @@ public class PrefabPoolManager : NetworkBehaviour
     }
     public GameObject GetFromPool(Vector3 position, Quaternion rotation, GameObject netIdObject)
     {
-        Debug.Log($"asilxx {netIdObject == null}");
         if (netIdObject.TryGetComponent(out NetworkIdentity netId))
         {
             return GetFromPool(position, rotation, netId.assetId);
@@ -129,7 +128,6 @@ public class PrefabPoolManager : NetworkBehaviour
     [ServerCallback]
     public void SpawnFromPoolServer(GameObject prefab, Vector3 position, Quaternion rotation)
     {
-        Debug.Log("asilxx2" + prefab.name);
         var obj = GetFromPool(position, rotation, prefab);
         Debug.Log(obj.name);
         NetworkServer.Spawn(obj);
@@ -152,7 +150,6 @@ public class PrefabPoolManager : NetworkBehaviour
     [Command(requiresAuthority = false)]
     public void SpawnFromPoolClient(GameObject prefab, Vector3 position, Quaternion rotation)
     {
-        Debug.Log("asilxx 2.5 " + prefab.name);
         SpawnFromPoolServer(prefab, position, rotation);
     }
 }
