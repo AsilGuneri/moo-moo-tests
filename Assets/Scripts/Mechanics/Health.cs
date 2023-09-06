@@ -16,7 +16,13 @@ public class Health : NetworkBehaviour
     [SerializeField] private HealthBar healthBar;
     public int ExpToGain;
 
-    [SyncVar(hook = nameof(UpdateHealthBar))] protected int currentHealth;
+    [SyncVar(hook = nameof(OnCurrentHealthChanged))]
+    protected int currentHealth;
+
+    private void OnCurrentHealthChanged(int oldHealth, int newHealth)
+    {
+        healthBar.UpdateHealthBar(baseHp, newHealth);
+    }
 
     private HeroBaseStatsData _heroStats;
     private int baseHp;
@@ -30,8 +36,6 @@ public class Health : NetworkBehaviour
         controller = GetComponent<UnitController>();
         //baseHp = 10000000;
     }
-    #region Server
-    
     [Server]
     public void TakeDamage(int dmg, Transform dealerTransform)
     {
@@ -40,32 +44,43 @@ public class Health : NetworkBehaviour
         AddDamageStats(dmg, dealerTransform);
         if (currentHealth <= 0)
         {
-            if(GetComponent<UnitController>().unitType != UnitType.Player) Die(dealerTransform);
+            if (GetComponent<UnitController>().unitType != UnitType.Player)
+            {
+                Die(dealerTransform);
+            }
         }
     }
+
+
+
     [Server]
     public void Heal(int amount)
     {
         currentHealth += amount;
-        if(currentHealth > baseHp)
+        if (currentHealth > baseHp)
         {
             currentHealth = baseHp;
         }
     }
-
+    [Command]
     public void ResetHealth()
     {
         SetupHealth();
     }
 
-    [ServerCallback]
+    [Server]
     private void SetupHealth()
     {
         UnitManager.Instance.RegisterUnit(controller);
         IsDead = false;
         currentHealth = baseHp;
-        healthBar.SetupHealthBar(currentHealth);
         isActive = true;
+        RpcSetupHealth();
+    }
+    [ClientRpc]
+    private void RpcSetupHealth()
+    {
+        healthBar.UpdateHealthBar(baseHp, baseHp);
     }
 
     private void AddDamageStats(int dmg, Transform dealerTransform)
@@ -90,21 +105,22 @@ public class Health : NetworkBehaviour
         isActive = false;
         OnDeath?.Invoke();
         UnitManager.Instance.UnregisterUnits(controller);
-        if(damageDealerTransform.TryGetComponent(out PlayerLevelController levelController))
+        if (damageDealerTransform.TryGetComponent(out PlayerLevelController levelController))
         {
             levelController.GainExperience(ExpToGain);
         }
         PrefabPoolManager.Instance.ReturnToPoolServer(gameObject);
     }
-    #endregion
-    #region Client
-    private void UpdateHealthBar(int oldHealth, int newHeatlh)
-    {
-        if (!isActive) return;
-        healthBar.UpdateHealthBar(newHeatlh);
-    }
-    #endregion
 
+
+    //in case new client joined after you
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        // Call the UpdateHealthBar method directly to make sure the client initializes with the current health values
+        healthBar.UpdateHealthBar(baseHp, currentHealth);
+    }
 
 }
 

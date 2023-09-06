@@ -1,3 +1,4 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,26 +10,11 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private Slider healthSlider;
     [SerializeField] private TextMeshProUGUI healthText; 
 
-    private int maxHp = 0;
 
-    public void SetupHealthBar(int maxHp, bool updateRequired = false, int newHp = 0)
+    public void UpdateHealthBar(int maxHp, int newHp)
     {
-        healthSlider.value = 1;
-        healthText.text = maxHp.ToString();
-        this.maxHp = maxHp;
-        if (updateRequired)
-        {
-            UpdateHealthBar(newHp);
-        }
-    }
-
-    public void UpdateHealthBar(int newHp)
-    {
-        if (this.healthSlider != null)
-        {
-            healthSlider.value = (float)((float)newHp / (float)maxHp);
-            healthText.text = newHp.ToString();
-        }
+        healthSlider.value = (float)((float)newHp / (float)maxHp);
+        healthText.text = newHp.ToString();
     }
 
 }

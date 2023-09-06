@@ -64,6 +64,7 @@ public class PoolObject : MonoBehaviour
         }
        
     }
+    [Server]
     public virtual void OnSpawn()
     {
         if (TryGetComponent(out UnitController controller))

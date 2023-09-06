@@ -125,14 +125,14 @@ public class PrefabPoolManager : NetworkBehaviour
             Debug.LogError($"No pool configuration found for asset ID: {assetId}");
         }
     }
-    [ServerCallback]
+    [Server]
     public void SpawnFromPoolServer(GameObject prefab, Vector3 position, Quaternion rotation)
     {
         var obj = GetFromPool(position, rotation, prefab);
         NetworkServer.Spawn(obj);
         obj.GetComponent<PoolObject>().OnSpawn();
     }
-    [ServerCallback]
+    [Server]
     public void ReturnToPoolServer(GameObject spawned)
     {
         spawned.GetComponent<PoolObject>().OnReturn();
