@@ -31,6 +31,10 @@ public class PlayerController : UnitController
     protected override void Start()
     {
         base.Start();
+    }
+    public override void OnStartAuthority()
+    {
+        base.OnStartAuthority();
         Activate();
     }
 
@@ -63,23 +67,25 @@ public class PlayerController : UnitController
     private void Activate()
     {
         if (!isOwned) return;
-
+        
         if (NetworkServer.active) //host
         {
             UnitManager.Instance.RegisterUnitServer(this);
             //GoldManager.Instance.GameBank.AddBankAccount(this);
             //ContributionPanel.Instance.AddPlayerContributionField(this);
         }
-        else //owner client
+        else // client
         {
             UnitManager.Instance.RegisterUnitClient(this);
         }
-        StartCharacter(); //for both
+        StartCharacter(); // everyone
+        GetComponent<PlayerInput>().enabled = true;
     }
 
     private void StartCharacter()
     {
         mainCamera = Camera.main;
+        Debug.Log("Main camera is set");
         mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
         SubscribeAnimEvents();
     }
@@ -240,26 +246,37 @@ public class PlayerController : UnitController
 
     private void OnRightClick()//used by input component
     {
-        if (!isOwned) return;
-        if (!CanClick()) return;
+        Debug.Log("asilxx0");
 
+        if (!isOwned) return;
+        //if (!CanClick()) return;
+        Debug.Log("asilxx1");
         Ray ray;
         RaycastHit[] hits;
         GetMousePositionRaycastInfo(out ray, out hits);
         RaycastHit? groundHit = hits.FirstOrDefault(hit => hit.collider.gameObject.layer == 6);
+        Debug.Log("asilxx2");
 
         if (isAttackClickMode) //will handle that part later
         {
+            Debug.Log("asilxx3");
+
             if (groundHit.HasValue)
             {
+                Debug.Log("asilxx4");
+
                 OnAttackModeClick(groundHit.Value.point);
                 return;
             }
         }
         else if (hits.Length > 0)
         {
+            Debug.Log("asilxx5");
+
             OnRayHit(hits);
         }
+        Debug.Log("asilxx6");
+
     }
     private void OnSetAutoAttackMode()//used by input component
     {
