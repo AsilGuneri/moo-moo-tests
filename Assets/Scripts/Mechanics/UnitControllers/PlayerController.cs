@@ -216,6 +216,7 @@ public class PlayerController : UnitController
     #region Input Events
     private void OnLeftClick() //used by input component
     {
+         if (!isOwned) return;
         if (!CanClick()) return;
         Ray ray;
         RaycastHit[] hits;
@@ -239,6 +240,7 @@ public class PlayerController : UnitController
 
     private void OnRightClick()//used by input component
     {
+        if (!isOwned) return;
         if (!CanClick()) return;
 
         Ray ray;
@@ -261,6 +263,7 @@ public class PlayerController : UnitController
     }
     private void OnSetAutoAttackMode()//used by input component
     {
+        if (!isOwned) return;
         isAttackClickMode = true;
     }
     #endregion
