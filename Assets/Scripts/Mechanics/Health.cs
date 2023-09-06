@@ -62,7 +62,7 @@ public class Health : NetworkBehaviour
             currentHealth = baseHp;
         }
     }
-    [Command]
+    [Command(requiresAuthority = false)] //no authority because we dont own enemies
     public void ResetHealth()
     {
         SetupHealth();
