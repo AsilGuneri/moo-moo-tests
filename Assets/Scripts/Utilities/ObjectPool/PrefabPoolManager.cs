@@ -139,17 +139,5 @@ public class PrefabPoolManager : NetworkBehaviour
         NetworkServer.UnSpawn(spawned);
         PrefabPoolManager.Instance.PutBackInPool(spawned);
     }
-
-
-    [Command(requiresAuthority = false)]
-    public void ReturnToPoolClient(GameObject spawned)
-    {
-        ReturnToPoolServer(spawned);
-    }
-    [Command(requiresAuthority = false)]
-    public void SpawnFromPoolClient(GameObject prefab, Vector3 position, Quaternion rotation)
-    {
-        SpawnFromPoolServer(prefab, position, rotation);
-    }
 }
 

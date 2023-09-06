@@ -68,18 +68,20 @@ public class PlayerController : UnitController
     {
         if (!isOwned) return;
         
-        if (NetworkServer.active) //host
+        if (isServer) //host
         {
-            UnitManager.Instance.RegisterUnitServer(this);
             //GoldManager.Instance.GameBank.AddBankAccount(this);
             //ContributionPanel.Instance.AddPlayerContributionField(this);
+            Debug.Log("networkserver active");
         }
-        else // client
+        if (isClient) // client (host is also a client)
         {
-            UnitManager.Instance.RegisterUnitClient(this);
+            UnitManager.Instance.RegisterUnit(this);
+            Debug.Log("registered client");
+            StartCharacter(); // everyone
+            GetComponent<PlayerInput>().enabled = true;
         }
-        StartCharacter(); // everyone
-        GetComponent<PlayerInput>().enabled = true;
+        
     }
 
     private void StartCharacter()

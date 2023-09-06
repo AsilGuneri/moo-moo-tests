@@ -61,7 +61,7 @@ public class Health : NetworkBehaviour
     [ServerCallback]
     private void SetupHealth()
     {
-        UnitManager.Instance.RegisterUnitServer(controller);
+        UnitManager.Instance.RegisterUnit(controller);
         IsDead = false;
         currentHealth = baseHp;
         healthBar.SetupHealthBar(currentHealth);
@@ -89,12 +89,12 @@ public class Health : NetworkBehaviour
         IsDead = true;
         isActive = false;
         OnDeath?.Invoke();
-        UnitManager.Instance.UnregisterUnits(new NetworkIdentityReference(gameObject.GetComponent<NetworkIdentity>()), controller.unitType);
+        UnitManager.Instance.UnregisterUnits(controller);
         if(damageDealerTransform.TryGetComponent(out PlayerLevelController levelController))
         {
             levelController.GainExperience(ExpToGain);
         }
-        PrefabPoolManager.Instance.ReturnToPoolClient(gameObject);
+        PrefabPoolManager.Instance.ReturnToPoolServer(gameObject);
     }
     #endregion
     #region Client

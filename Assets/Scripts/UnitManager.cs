@@ -5,70 +5,55 @@ using UnityEngine;
 using Utilities;
 using Mirror;
 
-public class UnitManager : NetworkSingleton<UnitManager> 
+public class UnitManager : NetworkSingleton<UnitManager>
 {
-    List<UnitController> Players = new List<UnitController>();
-    List<UnitController> WaveEnemies = new List<UnitController>();
-    List<UnitController> Buildings = new List<UnitController>();
+    public readonly SyncList<GameObject> Players = new SyncList<GameObject>();
+    public readonly SyncList<GameObject> WaveEnemies = new SyncList<GameObject>();
 
-    [Command(requiresAuthority =false)]
-    public void RegisterUnitClient(UnitController unit)
+    public readonly SyncList<GameObject> Buildings = new SyncList<GameObject>();
+
+    
+    [Command(requiresAuthority = false)]
+    public void RegisterUnit(UnitController unit)
     {
-        RegisterUnitServer(unit);
-    }
-    [ServerCallback]
-    public void RegisterUnitServer(UnitController unit)
-    {
-        var unitType = unit.unitType;
-        switch (unitType)
+        GameObject unitObj = unit.gameObject;
+        switch (unit.unitType)
         {
             case UnitType.Player:
-                var playerUnit = unit as PlayerController;
-                if (Players.Contains(playerUnit)) return;
-                Players.Add(playerUnit);
+                if (Players.Contains(unitObj)) return;
+                Players.Add(unitObj);
                 break;
             case UnitType.WaveEnemy:
-                var enemyUnit = unit as EnemyController;
-                if (WaveEnemies.Contains(enemyUnit)) return;
-                WaveEnemies.Add(enemyUnit);
-                enemyUnit.GetComponent<EnemyBrain>().StartBrain();
+                if (WaveEnemies.Contains(unitObj)) return;
+                WaveEnemies.Add(unitObj);
+                unitObj.GetComponent<EnemyBrain>().StartBrain();
                 break;
             case UnitType.Building:
-                var towerUnit = unit as TowerController;
-                if (Buildings.Contains(towerUnit)) return;
-                Buildings.Add(towerUnit);
+                if (Buildings.Contains(unitObj)) return;
+                Buildings.Add(unitObj);
+                //unit.Value.GetComponent<EnemyBrain>().StartBrain();
                 break;
         }
+        Debug.Log("registered server");
+
     }
     [ServerCallback]
-    public void UnregisterUnits(NetworkIdentityReference unit, UnitType unitType)
+    public void UnregisterUnits(UnitController unit)
     {
-        //switch (unitType)
-        //{
-        //    case UnitType.Player:
-
-        //        foreach(var player in Players)
-        //        {
-        //            if (player.networkId == unit.networkId) { Players.Remove(player);}
-        //        }
-        //        break;
-        //    case UnitType.WaveEnemy:
-        //        foreach (var enemy in WaveEnemies)
-        //        {
-        //            if (enemy.networkId == unit.networkId) 
-        //            { 
-        //                WaveEnemies.Remove(enemy);
-        //                if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd();
-        //            }
-        //        }
-        //        break;
-        //    case UnitType.Building:
-        //        foreach(var building in Buildings)
-        //        {
-        //            Buildings.Remove(building);
-        //        }
-        //        break;
-        //}
+        var unitObj = unit.gameObject;
+        switch (unit.unitType)
+        {
+            case UnitType.Player:
+                Players.Remove(unitObj);
+                break;
+            case UnitType.WaveEnemy:
+                WaveEnemies.Remove(unitObj);
+                if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd();
+                break;
+            case UnitType.Building:
+                Buildings.Remove(unitObj);
+                break;
+        }
     }
     public void GiveCommand(string commandPackName, MinionType minionType)
     {
@@ -85,13 +70,13 @@ public class UnitManager : NetworkSingleton<UnitManager>
     {
         float minDistance = float.MaxValue;
         GameObject closestBuilding = null;
-        foreach(var building in Buildings)
+        foreach (var building in Buildings)
         {
             var distance = Extensions.GetDistance(building.transform.position, myPos);
             if (distance < minDistance)
             {
                 minDistance = distance;
-                closestBuilding = building.gameObject;
+                closestBuilding = building;
             }
         }
         return closestBuilding;
@@ -122,28 +107,26 @@ public class UnitManager : NetworkSingleton<UnitManager>
     {
         float closestDistance = Mathf.Infinity;
         GameObject closestUnit = null;
-        foreach (UnitController unit in GetUnitList(requestedUnitType))
+        foreach (var unit in GetUnitList(requestedUnitType))
         {
             if (!unit) continue;
-            if (!unit.gameObject) continue;
-            float distance = Extensions.Distance(myPosition, unit.gameObject.transform.position);
+            float distance = Extensions.Distance(myPosition, unit.transform.position);
             if (closestDistance < distance) continue;
             closestDistance = distance;
-            closestUnit = unit.gameObject;
+            closestUnit = unit;
         }
         return closestUnit;
     }
     public List<GameObject> GetEnemiesInRadius(UnitController controller, float radius)
     {
         List<GameObject> units = new List<GameObject>();
-        foreach(var enemyType in controller.enemyList)
+        foreach (var enemyType in controller.enemyList)
         {
             foreach (var unit in GetUnitList(enemyType))
             {
                 if (!unit) continue;
-                if (!unit.gameObject) continue;
 
-                bool inRange = Extensions.CheckRange(controller.transform.position, unit.gameObject.transform.position, radius);
+                bool inRange = Extensions.CheckRange(controller.transform.position, unit.transform.position, radius);
                 if (inRange && !units.Contains(unit.gameObject))
                 {
                     units.Add(unit.gameObject);
@@ -159,13 +142,13 @@ public class UnitManager : NetworkSingleton<UnitManager>
     }
     public UnitController GetPlayerController()
     {
-        foreach(var player in Players)
+        foreach (var player in Players)
         {
-            if (player.gameObject.GetComponent<UnitController>().isOwned) return player.gameObject.GetComponent<UnitController>();
+            if (player.GetComponent<UnitController>().isOwned) return player.GetComponent<UnitController>();
         }
         return null;
     }
-    private List<UnitController> GetUnitList(UnitType type)
+    private SyncList<GameObject> GetUnitList(UnitType type)
     {
         switch (type)
         {

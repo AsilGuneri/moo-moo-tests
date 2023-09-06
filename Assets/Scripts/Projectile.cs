@@ -19,7 +19,6 @@ public interface IProjectile
 public class Projectile : NetworkBehaviour, IProjectile
 {
     public Action OnHit;
-    private Action OnHitClient;
 
     [SerializeField] private bool is3D = false;
     [SerializeField] private Collider hitCollider;
@@ -34,11 +33,6 @@ public class Projectile : NetworkBehaviour, IProjectile
     [SyncVar] private Transform spawnerTransform;
     [NonSerialized][SyncVar] public GameObject Target;
 
-
-    private void Start()
-    {
-        OnHitClient += TargetHitClient;
-    }
 
     public bool BelongsToEnemy(UnitType enemyTo)
     {
@@ -84,17 +78,16 @@ public class Projectile : NetworkBehaviour, IProjectile
         else
         {
             OnHit?.Invoke();
-            OnHitClient?.Invoke();
             TargetHitServer();
             return;
         }
     }
 
 
-
+    [Command]
     public void DestroySelf()
     {
-        PrefabPoolManager.Instance.PutBackInPool(gameObject);
+        PrefabPoolManager.Instance.ReturnToPoolServer(gameObject);
     }
 
     [ServerCallback]
@@ -104,19 +97,11 @@ public class Projectile : NetworkBehaviour, IProjectile
         {
             return;
         }
-
-        Target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
-
-        
-
-        DestroySelf();
-    }
-    private void TargetHitClient()
-    {
         if (onHitParticlePrefab)
         {
-            PrefabPoolManager.Instance.GetFromPool(transform.position, transform.rotation, onHitParticlePrefab);
+            PrefabPoolManager.Instance.SpawnFromPoolServer(onHitParticlePrefab, transform.position, transform.rotation);
         }
-       // visualsParent.SetActive(false);
+        Target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
+        DestroySelf();
     }
 }
