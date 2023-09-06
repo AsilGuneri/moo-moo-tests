@@ -246,37 +246,24 @@ public class PlayerController : UnitController
 
     private void OnRightClick()//used by input component
     {
-        Debug.Log("asilxx0");
-
         if (!isOwned) return;
-        //if (!CanClick()) return;
-        Debug.Log("asilxx1");
+        if (!CanClick()) return;
         Ray ray;
         RaycastHit[] hits;
         GetMousePositionRaycastInfo(out ray, out hits);
         RaycastHit? groundHit = hits.FirstOrDefault(hit => hit.collider.gameObject.layer == 6);
-        Debug.Log("asilxx2");
-
         if (isAttackClickMode) //will handle that part later
         {
-            Debug.Log("asilxx3");
-
             if (groundHit.HasValue)
             {
-                Debug.Log("asilxx4");
-
                 OnAttackModeClick(groundHit.Value.point);
                 return;
             }
         }
         else if (hits.Length > 0)
         {
-            Debug.Log("asilxx5");
-
             OnRayHit(hits);
         }
-        Debug.Log("asilxx6");
-
     }
     private void OnSetAutoAttackMode()//used by input component
     {
