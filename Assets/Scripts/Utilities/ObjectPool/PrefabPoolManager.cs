@@ -129,7 +129,6 @@ public class PrefabPoolManager : NetworkBehaviour
     public void SpawnFromPoolServer(GameObject prefab, Vector3 position, Quaternion rotation)
     {
         var obj = GetFromPool(position, rotation, prefab);
-        Debug.Log(obj.name);
         NetworkServer.Spawn(obj);
         obj.GetComponent<PoolObject>().OnSpawn();
     }

@@ -2924,6 +2924,18 @@ MonoBehaviour:
     maxSize: 50
     prefab: {fileID: 1306364402251745579, guid: f61dd9d56f5809b429696847a8caabf2, type: 3}
     currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 5659620054751730341, guid: a311f5de96916bf44bcb1dae61840939, type: 3}
+    currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 77616663633463124, guid: 21710859533a00746ad2bdd323061a2d, type: 3}
+    currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 1058284059558819871, guid: 5740ae2e014a8b14886dad7e67951070, type: 3}
+    currentCount: 0
 --- !u!1 &361532535
 GameObject:
   m_ObjectHideFlags: 0
