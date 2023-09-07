@@ -37,12 +37,10 @@ public abstract class BasicAttackController : NetworkBehaviour
         if (isCurrentlyAttacking) return;
         StartCoroutine(AutoAttackRoutine());
     }
-
     public void StopAfterCurrentAttack()
     {
         isSetToStopAfterAttack = true;
     }
-
     public void StopAttackInstantly()
     {
         isAttackStopped = true;
@@ -65,8 +63,7 @@ public abstract class BasicAttackController : NetworkBehaviour
 
         while (IsAutoAttackingAvailable())
         {
-            Extensions.GetAttackTimes(controller.attackSpeed, animAttackPoint,
-                out float secondsBeforeAttack, out float secondsAfterAttack);
+            Extensions.GetAttackTimes(controller.attackSpeed, animAttackPoint,out float secondsBeforeAttack, out float secondsAfterAttack);
 
             RotateToTarget(controller.TargetController.Target);
 

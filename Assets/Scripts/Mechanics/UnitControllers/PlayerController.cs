@@ -178,13 +178,11 @@ public class PlayerController : UnitController
         float maxDistanceBetweenPointAndUnit = 20; /*distance between the click and monster change that*/
         if (!Extensions.IsInRange(closestEnemy.transform.position, clickPos, maxDistanceBetweenPointAndUnit))
         {
-
             isAttackClickMode = false;
             return;
         }
         StartAttack(closestEnemy.transform);
         isAttackClickMode = false;
-
         return;
     }
     private void MoveToPoint(Vector3 point)

@@ -7,7 +7,7 @@ using System;
 public interface IProjectile
 {
     // Initialize the projectile.
-    void SetupProjectile(GameObject target, int damage, Transform spawnerTransform, Action action = null);
+    void SetupProjectile(GameObject target, int damage, Transform spawnerTransform);
 
     // Update the projectile.
     void UpdateProjectile();
@@ -18,8 +18,6 @@ public interface IProjectile
 
 public class Projectile : NetworkBehaviour, IProjectile
 {
-    public Action OnHit;
-
     [SerializeField] private bool is3D = false;
     [SerializeField] private Collider hitCollider;
 
@@ -28,10 +26,10 @@ public class Projectile : NetworkBehaviour, IProjectile
     //[SerializeField] public GameObject visualsParent;
     [SerializeField] private GameObject onHitParticlePrefab;
 
-    [SyncVar] private bool _isMoving;
-    [SyncVar] private int _damage;
-    [SyncVar] private Transform spawnerTransform;
-    [NonSerialized][SyncVar] public GameObject Target;
+    private bool _isMoving;
+    private int _damage;
+    private Transform spawnerTransform;
+    private GameObject Target;
 
 
     public bool BelongsToEnemy(UnitType enemyTo)
@@ -40,22 +38,21 @@ public class Projectile : NetworkBehaviour, IProjectile
     }
 
     [Server]
-    public void SetupProjectile(GameObject target, int damage, Transform spawnerTransform, Action action = null)
+    public void SetupProjectile(GameObject target, int damage, Transform spawnerTransform)
     {
-        OnHit = action;
         _isMoving = true;
         Target = target;
         _damage = damage;
         this.spawnerTransform = spawnerTransform;
     }
 
-    [ClientCallback]
+    [Server]
     public void Update()
     {
         UpdateProjectile();
     }
 
-    [ClientCallback]
+    [Server]
     public void UpdateProjectile()
     {
         if (_isMoving && Target == null) DestroySelf();
@@ -77,20 +74,19 @@ public class Projectile : NetworkBehaviour, IProjectile
         }
         else
         {
-            OnHit?.Invoke();
             TargetHitServer();
             return;
         }
     }
 
 
-    [Command]
+    [Server]
     public void DestroySelf()
     {
         PrefabPoolManager.Instance.ReturnToPoolServer(gameObject);
     }
 
-    [ServerCallback]
+    [Server]
     private void TargetHitServer()
     {
         if (Target == null || spawnerTransform == null)

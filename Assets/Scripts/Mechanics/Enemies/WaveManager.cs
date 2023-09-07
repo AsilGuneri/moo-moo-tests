@@ -94,7 +94,6 @@ public class WaveManager : NetworkSingleton<WaveManager>
             for (int j = 0; j < subWave.Count; j++)
             {
                 var posY = spawnArea.position + new Vector3(0, 0, j * 1.5f);
-                Debug.Log("asilxx");
                 PrefabPoolManager.Instance.SpawnFromPoolServer(subWave.Prefab, position, Quaternion.identity);
 
             }
