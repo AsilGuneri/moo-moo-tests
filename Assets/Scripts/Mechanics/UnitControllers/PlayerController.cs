@@ -40,6 +40,7 @@ public class PlayerController : UnitController
 
     void Update()
     {
+        if (!isOwned) return;
         if (Input.GetKeyDown(_inputKeys.SpawnWaveKey))
             WaveManager.Instance.SpawnTestWave();
 

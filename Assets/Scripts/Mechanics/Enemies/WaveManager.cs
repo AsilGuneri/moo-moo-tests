@@ -87,10 +87,17 @@ public class WaveManager : NetworkSingleton<WaveManager>
     private void SpawnWave(WaveData waveData)
     {
 
-        foreach (SubWave subWave in waveData.SubWaves)
+        for (int i = 0; i < waveData.SubWaves.Count; i++)
         {
+            var subWave = waveData.SubWaves[i];
             Vector3 position = spawnArea.position;
-            PrefabPoolManager.Instance.SpawnFromPoolServer(subWave.Prefab, position, Quaternion.identity);
+            for (int j = 0; j < subWave.Count; j++)
+            {
+                var posY = spawnArea.position + new Vector3(0, 0, j * 1.5f);
+                Debug.Log("asilxx");
+                PrefabPoolManager.Instance.SpawnFromPoolServer(subWave.Prefab, position, Quaternion.identity);
+
+            }
         }
     }
 }
