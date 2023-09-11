@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 817598904071200291}
   - component: {fileID: -161897024165834653}
   - component: {fileID: 7374737329107937121}
-  - component: {fileID: 2728564732967738080}
+  - component: {fileID: -490527080679766340}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -108,7 +108,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1478385, y: 0.12701958, z: 0.95843124}
   m_Center: {x: 0.0020784289, y: 0, z: -0.5029831}
---- !u!114 &2728564732967738080
+--- !u!114 &-490527080679766340
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,7 +133,7 @@ MonoBehaviour:
   interpolateScale: 1
   coordinateSpace: 1
   sendIntervalMultiplier: 1
-  timelineOffset: 0
+  timelineOffset: 1
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
@@ -141,7 +141,7 @@ MonoBehaviour:
   onlySyncOnChangeCorrectionMultiplier: 2
   rotationSensitivity: 0.01
   compressRotation: 0
-  positionPrecision: 0.01
+  positionPrecision: 1
   scalePrecision: 0.01
 --- !u!1001 &2419679752278044180
 PrefabInstance:

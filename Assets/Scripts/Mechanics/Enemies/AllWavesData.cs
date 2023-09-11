@@ -20,7 +20,7 @@ public class SubWave
 {
     public GameObject Prefab;
     public int Count;
-    public float Spacing = 2f;
-    public int Columns = 1;
+    public float SpacingX = 1f;
+    public float SpacingZ = 1.5f;
 }
 

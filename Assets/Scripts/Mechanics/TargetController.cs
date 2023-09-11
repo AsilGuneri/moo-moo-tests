@@ -7,9 +7,8 @@ using MyBox;
 
 public class TargetController : NetworkBehaviour
 {
-    [SyncVar] public GameObject Target;
+    public GameObject Target;
 
-    [Command(requiresAuthority = false)]
     public void SetTarget(GameObject target)
     {
         if (Target) //old target

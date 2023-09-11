@@ -6,13 +6,8 @@ using System;
 
 public interface IProjectile
 {
-    // Initialize the projectile.
     void SetupProjectile(GameObject target, int damage, Transform spawnerTransform);
-
-    // Update the projectile.
     void UpdateProjectile();
-
-    // Destroy the projectile.
     void DestroySelf();
 }
 
@@ -21,9 +16,7 @@ public class Projectile : NetworkBehaviour, IProjectile
     [SerializeField] private bool is3D = false;
     [SerializeField] private Collider hitCollider;
 
-
     [SerializeField] public float speed = 1;
-    //[SerializeField] public GameObject visualsParent;
     [SerializeField] private GameObject onHitParticlePrefab;
 
     private bool _isMoving;
@@ -31,13 +24,11 @@ public class Projectile : NetworkBehaviour, IProjectile
     private Transform spawnerTransform;
     private GameObject Target;
 
-
     public bool BelongsToEnemy(UnitType enemyTo)
     {
         return spawnerTransform.GetComponent<UnitController>().IsEnemyTo(enemyTo);
     }
 
-    [Server]
     public void SetupProjectile(GameObject target, int damage, Transform spawnerTransform)
     {
         _isMoving = true;
@@ -46,13 +37,13 @@ public class Projectile : NetworkBehaviour, IProjectile
         this.spawnerTransform = spawnerTransform;
     }
 
-    [Server]
+    [Client]
     public void Update()
     {
         UpdateProjectile();
     }
 
-    [Server]
+    [Client]
     public void UpdateProjectile()
     {
         if (_isMoving && Target == null) DestroySelf();
@@ -60,8 +51,6 @@ public class Projectile : NetworkBehaviour, IProjectile
 
         UnitController targetController = Target.GetComponent<UnitController>();
         bool isCloseEnough = Extensions.CheckRangeBetweenUnitAndCollider(targetController, hitCollider, 0.1f);
-        // Target position remains for guidance purposes.
-
 
         Vector3 targetPos = is3D ? targetController.HitPoint :
             new Vector3(targetController.HitPoint.x, transform.position.y, targetController.HitPoint.z);
@@ -70,15 +59,12 @@ public class Projectile : NetworkBehaviour, IProjectile
         {
             transform.LookAt(targetPos);
             transform.position += (transform.forward).normalized * Time.deltaTime * speed;
-            return;
         }
         else
         {
-            TargetHitServer();
-            return;
+            CmdNotifyHit(Target);
         }
     }
-
 
     [Server]
     public void DestroySelf()
@@ -86,18 +72,29 @@ public class Projectile : NetworkBehaviour, IProjectile
         PrefabPoolManager.Instance.ReturnToPoolServer(gameObject);
     }
 
-    [Server]
-    private void TargetHitServer()
+    [Command(requiresAuthority = false)]
+    public void CmdNotifyHit(GameObject target)
     {
-        if (Target == null || spawnerTransform == null)
+        if (!IsValidHit(target))
         {
             return;
         }
+
         if (onHitParticlePrefab)
         {
             PrefabPoolManager.Instance.SpawnFromPoolServer(onHitParticlePrefab, transform.position, transform.rotation);
         }
-        Target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
+
+        target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
         DestroySelf();
+    }
+
+    [Server]
+    private bool IsValidHit(GameObject target)
+    {
+        // Logic to validate if the hit was legitimate goes here.
+        // E.g., check distances, validate that the target was not behind a wall, etc.
+        // Returning true for now as a placeholder.
+        return true;
     }
 }

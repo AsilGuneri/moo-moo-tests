@@ -21,6 +21,6 @@ public class LobbyUIAnimations : MonoBehaviour
     private void AnimateBackground()
     {
         if (!background) return;
-        background.DOScale(2, backgroundAnimTime).SetEase(Ease.InOutCubic);
+        background.DOScale(1, backgroundAnimTime).SetEase(Ease.InOutCubic);
     }
 }

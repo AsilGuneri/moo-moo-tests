@@ -60,7 +60,7 @@ public abstract class BasicAttackController : NetworkBehaviour
     {
         isCurrentlyAttacking = true;
         OnStartAttack?.Invoke();
-
+        //yield return new WaitUntil(() => controller.TargetController.Target != null);
         while (IsAutoAttackingAvailable())
         {
             Extensions.GetAttackTimes(controller.attackSpeed, animAttackPoint,out float secondsBeforeAttack, out float secondsAfterAttack);
@@ -110,7 +110,11 @@ public abstract class BasicAttackController : NetworkBehaviour
     {
         if (attackBlockCount > 0) return false;
         if (isAttackStopped) return false;
-        if (controller.TargetController.Target == null) return false;
+        if (controller.TargetController.Target == null)
+        {
+            Debug.Log("asilxx");
+            return false;
+        }
         if (controller.Health.IsDead) return false;
         return true;
     }
