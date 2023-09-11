@@ -12,7 +12,6 @@ public class PlayerController : UnitController
     [SerializeField] private LayerMask clickableLayerMask;
     [SerializeField] private GameObject moveIndicator;
     [SerializeField] private GameObject attackModeIndicator;
-    [SerializeField] private GameObject dynamicAttackModeIndicator;
     public string PlayerName { get; set; }
     public PlayerStats Stats { get; private set; } = new();
 
@@ -272,11 +271,6 @@ public class PlayerController : UnitController
     {
         if (!isOwned) return;
         isAttackClickMode = true;
-        Ray ray;
-        RaycastHit[] hits;
-        GetMousePositionRaycastInfo(out ray, out hits);
-        RaycastHit? groundHit = hits.FirstOrDefault(hit => hit.collider.gameObject.layer == 6);
-        PrefabPoolManager.Instance.GetFromPool(groundHit.Value.point, dynamicAttackModeIndicator.transform.rotation, dynamicAttackModeIndicator);
     }
     #endregion
 }

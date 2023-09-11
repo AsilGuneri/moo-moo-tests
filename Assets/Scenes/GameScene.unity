@@ -2936,10 +2936,6 @@ MonoBehaviour:
     maxSize: 50
     prefab: {fileID: 1058284059558819871, guid: 5740ae2e014a8b14886dad7e67951070, type: 3}
     currentCount: 0
-  - startSize: 1
-    maxSize: 5
-    prefab: {fileID: 1752118109617785545, guid: c3de8c07e6c93e84a9cd303ea6f16a6a, type: 3}
-    currentCount: 0
 --- !u!1 &361532535
 GameObject:
   m_ObjectHideFlags: 0
