@@ -19,16 +19,16 @@ public class Projectile : NetworkBehaviour, IProjectile
     [SerializeField] public float speed = 1;
     [SerializeField] private GameObject onHitParticlePrefab;
 
-    private bool _isMoving;
-    private int _damage;
-    private Transform spawnerTransform;
-    private GameObject Target;
+    [SyncVar] private bool _isMoving;
+    [SyncVar] private int _damage;
+    [SyncVar] private Transform spawnerTransform;
+    [SyncVar] private GameObject Target;
 
     public bool BelongsToEnemy(UnitType enemyTo)
     {
         return spawnerTransform.GetComponent<UnitController>().IsEnemyTo(enemyTo);
     }
-
+    [Server]
     public void SetupProjectile(GameObject target, int damage, Transform spawnerTransform)
     {
         _isMoving = true;
@@ -37,15 +37,14 @@ public class Projectile : NetworkBehaviour, IProjectile
         this.spawnerTransform = spawnerTransform;
     }
 
-    [Client]
     public void Update()
     {
         UpdateProjectile();
     }
 
-    [Client]
     public void UpdateProjectile()
     {
+
         if (_isMoving && Target == null) DestroySelf();
         if (Target == null || !_isMoving) return;
 

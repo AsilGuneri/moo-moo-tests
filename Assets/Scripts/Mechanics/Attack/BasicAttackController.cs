@@ -112,7 +112,6 @@ public abstract class BasicAttackController : NetworkBehaviour
         if (isAttackStopped) return false;
         if (controller.TargetController.Target == null)
         {
-            Debug.Log("asilxx");
             return false;
         }
         if (controller.Health.IsDead) return false;
