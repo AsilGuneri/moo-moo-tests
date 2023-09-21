@@ -136,13 +136,10 @@ public class PlayerController : UnitController
                 Debug.Log("Clicked on enemy: " + closestClickableArea.gameObject.name);
             }
             // Use the closest clickable area.
-            // Replace this with your own logic.
         }
         else
         {
             MoveToPoint(groundHitPos);
-            // Perform move logic
-            // MoveToPoint(hitInfo);
         }
     }
 
@@ -153,7 +150,7 @@ public class PlayerController : UnitController
     }
     private void StartAttack(Transform enemyTransform)
     {
-        targetController.SetTarget(enemyTransform.gameObject);
+        targetController.SetTarget(enemyTransform.GetComponent<NetworkIdentity>());
         //Check if the enemy is in range
         bool isInRange = Extensions.CheckRange(enemyTransform.position, transform.position, attackRange);
         if (isInRange) //if yes, attack the enemy

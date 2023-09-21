@@ -30,11 +30,12 @@ public class CustomNetworkRoomManager : NetworkRoomManager
     {
         base.Start();
         loadingManager = GetComponent<LoadingManager>();
+
         if (!UseSteam) return;
+
         lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);
         lobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
-
     }
 
     private void OnLobbyCreated(LobbyCreated_t callback)

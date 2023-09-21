@@ -65,7 +65,7 @@ public abstract class BasicAttackController : NetworkBehaviour
         {
             Extensions.GetAttackTimes(controller.attackSpeed, animAttackPoint,out float secondsBeforeAttack, out float secondsAfterAttack);
 
-            RotateToTarget(controller.TargetController.Target);
+            RotateToTarget(controller.TargetController.Target.gameObject);
 
             OnEachAttackStart?.Invoke();
             OnAttackStart();
@@ -77,7 +77,7 @@ public abstract class BasicAttackController : NetworkBehaviour
                 continue; // Move to the next iteration without executing the rest of the loop body
             }
 
-            RotateToTarget(controller.TargetController.Target);
+            RotateToTarget(controller.TargetController.Target.gameObject);
             OnAttackImpact();
 
             yield return Extensions.GetWait(secondsAfterAttack);

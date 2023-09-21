@@ -37,9 +37,9 @@ public class AttackController : EnemyBehaviourController
 
     public override void OnEnter()
     {
-        var target = controller.TargetController.Target;
+        //var target = controller.TargetController.Target;
         controller.Movement.ClientStop();
-        controller.TargetController.SetTarget(target);
+        //controller.TargetController.SetTarget(target);
         attackController.StartAutoAttack();
     }
 

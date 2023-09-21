@@ -70233,7 +70233,6 @@ MonoBehaviour:
     m_Bits: 576
   moveIndicator: {fileID: 811260699408436622, guid: 299615328751d224781d31e0fe65de66, type: 3}
   attackModeIndicator: {fileID: 5432209458267137536, guid: 93bf18897f48e4140b9a368c27bd919b, type: 3}
-  dynamicAttackModeIndicator: {fileID: 5432209458267137536, guid: c3de8c07e6c93e84a9cd303ea6f16a6a, type: 3}
 --- !u!114 &9067681001629958667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70264,7 +70263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cfd51a3d8cd18f418b6fdcfccca327e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
+  syncDirection: 1
   syncMode: 0
   syncInterval: 0.1
   Target: {fileID: 0}

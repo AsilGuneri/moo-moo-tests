@@ -14,7 +14,7 @@ public class RangeAttackController : BasicAttackController
     protected override void OnAttackImpact()
     {
         base.OnAttackImpact();
-        CmdSpawnProjectile(controller.TargetController.Target, connectionToClient);
+        CmdSpawnProjectile(controller.TargetController.Target.gameObject, connectionToClient);
     }
     protected override void OnAttackEnd()
     {

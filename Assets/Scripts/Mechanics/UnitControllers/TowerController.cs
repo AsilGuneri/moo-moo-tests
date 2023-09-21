@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -66,7 +67,7 @@ public class TowerController : UnitController
             }
             else
             {
-                GameObject target = UnitManager.Instance.GetClosestEnemy(transform.position, this);
+                var target = UnitManager.Instance.GetClosestEnemy(transform.position, this).GetComponent<NetworkIdentity>();
                 if (target != targetController.Target)
                     targetController.SetTarget(target);
             }

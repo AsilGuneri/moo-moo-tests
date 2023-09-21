@@ -7,9 +7,11 @@ using MyBox;
 
 public class TargetController : NetworkBehaviour
 {
-    public GameObject Target;
+    [SyncVar]
+    public NetworkIdentity Target;
 
-    public void SetTarget(GameObject target)
+    [Client]
+    public void SetTarget(NetworkIdentity target)
     {
         if (Target) //old target
         {

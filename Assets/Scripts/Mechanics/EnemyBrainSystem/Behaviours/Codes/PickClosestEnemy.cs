@@ -1,3 +1,4 @@
+using Mirror;
 using MyBox;
 using System.Collections;
 using UnityEngine;
@@ -115,7 +116,7 @@ public class PickClosestEnemyController : EnemyBehaviourController
             closestEnemy = closestBuilding ? closestBuilding : UnitManager.Instance.GetClosestEnemy(transform.position, controller);
 
         }
-        controller.TargetController.SetTarget(closestEnemy);
+        controller.TargetController.SetTarget(closestEnemy.GetComponent<NetworkIdentity>());
         controller.GetComponent<EnemyBrain>().ExitBehaviour();
     }
 }
