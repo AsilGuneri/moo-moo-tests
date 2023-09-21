@@ -24,7 +24,7 @@ public class RangeAttackController : BasicAttackController
     private void CmdSpawnProjectile(GameObject target, NetworkConnectionToClient client)
     {
         //if (checkAuthority && !hasAuthority) return;
-        GameObject projectile = PrefabPoolManager.Instance.GetFromPool(controller.ProjectileSpawnPoint.position, Quaternion.identity, projectilePrefab);
+        GameObject projectile = PrefabPoolManager.Instance.GetFromPool(projectilePrefab, controller.ProjectileSpawnPoint.position, Quaternion.identity);
             projectile.GetComponent<Projectile>().SetupProjectile(target, Damage, transform);
             NetworkServer.Spawn(projectile, connectionToClient);
     }

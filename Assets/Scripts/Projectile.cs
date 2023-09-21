@@ -68,7 +68,8 @@ public class Projectile : NetworkBehaviour, IProjectile
     [Server]
     public void DestroySelf()
     {
-        PrefabPoolManager.Instance.ReturnToPoolServer(gameObject);
+        NetworkServer.UnSpawn(gameObject);
+        PrefabPoolManager.Instance.PutBackInPool(gameObject);
     }
 
     [Command(requiresAuthority = false)]
@@ -81,7 +82,8 @@ public class Projectile : NetworkBehaviour, IProjectile
 
         if (onHitParticlePrefab)
         {
-            PrefabPoolManager.Instance.SpawnFromPoolServer(onHitParticlePrefab, transform.position, transform.rotation);
+            var obj = PrefabPoolManager.Instance.GetFromPool(onHitParticlePrefab, transform.position, transform.rotation);
+            NetworkServer.Spawn(obj);
         }
 
         target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);

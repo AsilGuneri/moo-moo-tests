@@ -110,7 +110,8 @@ public class Health : NetworkBehaviour
         {
             levelController.GainExperience(ExpToGain);
         }
-        PrefabPoolManager.Instance.ReturnToPoolServer(gameObject);
+        NetworkServer.UnSpawn(gameObject);
+        PrefabPoolManager.Instance.PutBackInPool(gameObject);
     }
 
 

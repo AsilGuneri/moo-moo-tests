@@ -66,7 +66,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
     [Server]
     private void CheckVotes()
     {
-        if (readyCount >= CustomNetworkManager.singleton.numPlayers)
+        if (readyCount >= CustomNetworkRoomManager.singleton.numPlayers)
         {
             SpawnNextWave();
         }
@@ -93,7 +93,8 @@ public class WaveManager : NetworkSingleton<WaveManager>
 
             for (int j = 0; j < subWave.Count; j++)
             {
-                PrefabPoolManager.Instance.SpawnFromPoolServer(subWave.Prefab, currentPosition, Quaternion.identity);
+                var obj = PrefabPoolManager.Instance.GetFromPool(subWave.Prefab, currentPosition, Quaternion.identity);
+                NetworkServer.Spawn(obj);
 
                 // Move to the next spawn position in the row.
                 currentPosition.x += subWave.SpacingX;

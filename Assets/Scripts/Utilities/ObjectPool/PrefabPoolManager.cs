@@ -69,7 +69,7 @@ public class PrefabPoolManager : NetworkBehaviour
 
     GameObject SpawnHandler(SpawnMessage msg)
     {
-        return GetFromPool(msg.position, msg.rotation, msg.assetId);
+        return GetFromPool(msg.assetId, msg.position, msg.rotation);
     }
 
     void UnspawnHandler(GameObject spawned)
@@ -77,7 +77,7 @@ public class PrefabPoolManager : NetworkBehaviour
         PutBackInPool(spawned);
     }
 
-    public GameObject GetFromPool(Vector3 position, Quaternion rotation, uint assetId)
+    public GameObject GetFromPool(uint assetId, Vector3 position, Quaternion rotation)
     {
         if (assetIdToConfigMap.TryGetValue(assetId, out PoolConfig config))
         {
@@ -98,11 +98,11 @@ public class PrefabPoolManager : NetworkBehaviour
             return null;
         }
     }
-    public GameObject GetFromPool(Vector3 position, Quaternion rotation, GameObject netIdObject)
+    public GameObject GetFromPool(GameObject netIdObject, Vector3 position, Quaternion rotation)
     {
         if (netIdObject.TryGetComponent(out NetworkIdentity netId))
         {
-            return GetFromPool(position, rotation, netId.assetId);
+            return GetFromPool(netId.assetId, position, rotation);
         }
         else
         {
@@ -125,19 +125,6 @@ public class PrefabPoolManager : NetworkBehaviour
             Debug.LogError($"No pool configuration found for asset ID: {assetId}");
         }
     }
-    [Server]
-    public void SpawnFromPoolServer(GameObject prefab, Vector3 position, Quaternion rotation)
-    {
-        var obj = GetFromPool(position, rotation, prefab);
-        NetworkServer.Spawn(obj);
-        obj.GetComponent<PoolObject>().OnSpawn();
-    }
-    [Server]
-    public void ReturnToPoolServer(GameObject spawned)
-    {
-        spawned.GetComponent<PoolObject>().OnReturn();
-        NetworkServer.UnSpawn(spawned);
-        PrefabPoolManager.Instance.PutBackInPool(spawned);
-    }
+
 }
 

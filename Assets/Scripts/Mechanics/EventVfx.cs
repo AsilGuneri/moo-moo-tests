@@ -28,7 +28,7 @@ public class EventVfx : MonoBehaviour
     /// </summary>
     private void OnActualAttackStart()
     {
-        PrefabPoolManager.Instance.GetFromPool(actualAttackFxPosRef.position,
-            Quaternion.Euler(actualAttackFxRotation), onActualAttackFxPrefab);
+        PrefabPoolManager.Instance.GetFromPool(onActualAttackFxPrefab, actualAttackFxPosRef.position,
+            Quaternion.Euler(actualAttackFxRotation));
     }
 }

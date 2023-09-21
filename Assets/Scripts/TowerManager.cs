@@ -14,7 +14,7 @@ public class TowerManager : NetworkSingleton<TowerManager>
     {
         foreach(var pos in towerPositions)
         {
-            PrefabPoolManager.Instance.GetFromPool(pos.position, Quaternion.identity, towerPrefab);
+            PrefabPoolManager.Instance.GetFromPool(towerPrefab, pos.position, Quaternion.identity);
         }
     }
 

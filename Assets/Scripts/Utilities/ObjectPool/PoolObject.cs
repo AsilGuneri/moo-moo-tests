@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PoolObject : MonoBehaviour
+public class PoolObject : NetworkBehaviour
 {
     private string prefabName;
     [SerializeField] bool useLifeTime;
@@ -52,7 +52,7 @@ public class PoolObject : MonoBehaviour
         }
     }
 
-    public virtual void OnReturn()
+    protected virtual void OnReturn()
     {
         if(TryGetComponent(out EnemyBrain brain))
         {
@@ -64,8 +64,7 @@ public class PoolObject : MonoBehaviour
         }
        
     }
-    [Server]
-    public virtual void OnSpawn()
+    protected virtual void OnSpawn()
     {
         if (TryGetComponent(out UnitController controller))
         {
@@ -77,5 +76,13 @@ public class PoolObject : MonoBehaviour
         }
     }
 
+    public override void OnStartServer()
+    {
+        OnSpawn();
+    }
+    public override void OnStopServer()
+    {
+        OnReturn();
+    }
 }
 
