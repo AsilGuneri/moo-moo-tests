@@ -19676,6 +19676,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4015c930984090469e7d32dbe258a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   useLifeTime: 1
   lifeTime: 2
 --- !u!114 &2895701539723998451
@@ -19691,9 +19694,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
+  _assetId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 5740ae2e014a8b14886dad7e67951070
   hasSpawned: 0
 --- !u!1 &1344552049766864
 GameObject:

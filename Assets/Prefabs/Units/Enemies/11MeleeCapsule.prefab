@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 2649789469614115756}
   - component: {fileID: 4493909082151338282}
   - component: {fileID: 1306364402251745579}
-  - component: {fileID: 566745377156777818}
+  - component: {fileID: 5674337443361508037}
   m_Layer: 9
   m_Name: 11MeleeCapsule
   m_TagString: Untagged
@@ -366,14 +366,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.3
-  m_Height: 2.74
+  m_Radius: 0.9
+  m_Height: 2.05
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.68, z: 0}
 --- !u!114 &1306364402251745579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,9 +386,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4015c930984090469e7d32dbe258a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   useLifeTime: 0
   lifeTime: 0
---- !u!114 &566745377156777818
+--- !u!114 &5674337443361508037
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -397,9 +400,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2462893064303745991}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e25ea706f53ff5748ab48314e3c7dbe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 24f2b1200d6544b4e921d9e551bae590, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlineScale: 1.09
+  rend: {fileID: 1597286418225296681}
 --- !u!1 &4986314707648265162
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,6 +444,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5843045748780198311}
     m_Modifications:
+    - target: {fileID: 1312159165405267625, guid: 6ce9683ad666e9648b3a44eca765add0, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1312159165405267625, guid: 6ce9683ad666e9648b3a44eca765add0, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: dc139c8b61bcb774ca523711e15def9c, type: 2}
     - target: {fileID: 5039620476151817679, guid: 6ce9683ad666e9648b3a44eca765add0, type: 3}
       propertyPath: m_Name
       value: StoneElemental_Ye
@@ -510,6 +523,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ce9683ad666e9648b3a44eca765add0, type: 3}
+--- !u!137 &1597286418225296681 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1312159165405267625, guid: 6ce9683ad666e9648b3a44eca765add0, type: 3}
+  m_PrefabInstance: {fileID: 296967404047496064}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6569837422214415100 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6860048846328066428, guid: 6ce9683ad666e9648b3a44eca765add0, type: 3}

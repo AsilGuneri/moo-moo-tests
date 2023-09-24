@@ -43,27 +43,6 @@ public class PlayerController : UnitController
         if (!isOwned) return;
         if (Input.GetKeyDown(_inputKeys.SpawnWaveKey))
             WaveManager.Instance.SpawnTestWave();
-
-       
-
-        // Check if the Q key is pressed.
-        //if (Input.GetKeyDown(KeyCode.Q))
-        //{
-        //    if (skills[0].TargetRequired)
-        //    {
-        //        GameObject target = null;
-
-        //        Ray ray;
-        //        bool isRayHit;
-        //        RaycastHit hitInfo;
-        //        GetMousePositionRaycastInfo(out ray, out isRayHit, out hitInfo);
-        //        if(IsEnemy(hitInfo)) target = hitInfo.transform.gameObject;
-        //        else return;
-                
-        //        // Use the first skill on a target.
-        //       // skills[0].Use(this, target.GetComponent<UnitController>());
-        //    }
-        //}
     }
     private void Activate()
     {
@@ -103,41 +82,29 @@ public class PlayerController : UnitController
 
     private void OnRayHit(RaycastHit[] hits)
     {
-        float minDistance = float.MaxValue;
-        ClickableArea closestClickableArea = null;
         Vector3 groundHitPos = default;
-
+        GameObject clickedEnemy = null;
         foreach (var hitInfo in hits)
         {
-            if(hitInfo.collider.gameObject.layer ==  6) // ground
+            var obj = hitInfo.collider.gameObject;
+            if (obj.layer == 9 && !clickedEnemy)
+            {
+                clickedEnemy = obj;
+            }
+            if (obj.layer ==  6) // ground
             {
                 groundHitPos = hitInfo.point;
-                continue;
-            }
-
-            var clickableArea = hitInfo.collider.GetComponent<ClickableArea>();
-            if (clickableArea)
-            {
-                float distance = Vector3.Distance(hitInfo.point, clickableArea.ClickableCollider.bounds.center);
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    closestClickableArea = clickableArea;
-                }
             }
         }
-
-        if (closestClickableArea)
+        if (clickedEnemy)
         {
-            var clickedUnitType = closestClickableArea.gameObject.GetComponent<UnitController>().unitType;
+            var clickedUnitType = clickedEnemy.GetComponent<UnitController>().unitType;
             if (IsEnemyTo(clickedUnitType))
             {
-                OnClickEnemy(closestClickableArea.transform);
-                Debug.Log("Clicked on enemy: " + closestClickableArea.gameObject.name);
+                OnClickEnemy(clickedEnemy.transform);
             }
-            // Use the closest clickable area.
         }
-        else
+        else if(groundHitPos != default)
         {
             MoveToPoint(groundHitPos);
         }

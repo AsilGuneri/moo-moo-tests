@@ -4870,6 +4870,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4015c930984090469e7d32dbe258a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   useLifeTime: 1
   lifeTime: 1.5
 --- !u!114 &1102768770792991397
@@ -4885,9 +4888,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
+  _assetId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: be1a08daa8a036c459b2c544709f1969
   hasSpawned: 0
 --- !u!1 &1549887343498594
 GameObject:

@@ -561,6 +561,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 0ada3471b770b8647858909ae00159e7, type: 2}
+  - {fileID: 2100000, guid: dc139c8b61bcb774ca523711e15def9c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1132,6 +1133,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 0ada3471b770b8647858909ae00159e7, type: 2}
+  - {fileID: 2100000, guid: dc139c8b61bcb774ca523711e15def9c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1455,8 +1457,10 @@ GameObject:
   - component: {fileID: 3681833499136793706}
   - component: {fileID: 3592067272230806276}
   - component: {fileID: 9074826505844378808}
-  - component: {fileID: 8554989338656548550}
   - component: {fileID: 1787258461078604181}
+  - component: {fileID: 8141388948468154649}
+  - component: {fileID: 2257623507367073674}
+  - component: {fileID: 8763208378387576232}
   m_Layer: 9
   m_Name: 11MageCapsule
   m_TagString: Untagged
@@ -1671,6 +1675,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4015c930984090469e7d32dbe258a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   useLifeTime: 0
   lifeTime: 0
 --- !u!114 &5640336512563222759
@@ -1790,27 +1797,6 @@ MonoBehaviour:
   Mode: 3
   BlockedStop: 0
   UseWalls: 0
---- !u!65 &8554989338656548550
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7498676492825279152}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.73, y: 1, z: 1.04}
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &1787258461078604181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1826,6 +1812,57 @@ MonoBehaviour:
   onActualAttackFxPrefab: {fileID: 0}
   actualAttackFxPosRef: {fileID: 95122158191645203}
   actualAttackFxRotation: {x: 0, y: 0, z: 0}
+--- !u!114 &8141388948468154649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498676492825279152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24f2b1200d6544b4e921d9e551bae590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineScale: 1.09
+  rend: {fileID: 6692508942712592451}
+--- !u!114 &2257623507367073674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498676492825279152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24f2b1200d6544b4e921d9e551bae590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineScale: 1.09
+  rend: {fileID: 3449837733680122925}
+--- !u!136 &8763208378387576232
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7498676492825279152}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.9
+  m_Height: 2.05
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.68, z: 0}
 --- !u!1 &7744416249070185144
 GameObject:
   m_ObjectHideFlags: 0
@@ -2029,6 +2066,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4784393099699799652, guid: c661ba664229e414dbc829792b0b6cb0, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 4784393099699799652, guid: c661ba664229e414dbc829792b0b6cb0, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
