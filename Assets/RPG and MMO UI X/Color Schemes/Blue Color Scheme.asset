@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ImageEffect3: {r: 0.08235294, g: 0.6392157, b: 0.93333334, a: 1}
   m_ImageBordersPrimary: {r: 0.5882353, g: 0.45490196, b: 0.3254902, a: 1}
   m_ImageBordersSecondary: {r: 1, g: 1, b: 1, a: 1}
-  m_ButtonForeground: {r: 0.24705882, g: 0.4117647, b: 0.6666667, a: 1}
+  m_ButtonForeground: {r: 0.078431375, g: 0.2627451, b: 0.42745098, a: 1}
   m_ButtonEffect: {r: 0.9529412, g: 0.7411765, b: 0.53333336, a: 1}
   m_WindowHeader: {r: 0.08235294, g: 0.6392157, b: 0.93333334, a: 1}
   m_Animation: {r: 0.13725491, g: 0.21960784, b: 0.27058825, a: 1}
