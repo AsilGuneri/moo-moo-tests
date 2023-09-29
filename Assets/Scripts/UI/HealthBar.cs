@@ -15,6 +15,7 @@ public class HealthBar : MonoBehaviour
     {
         healthSlider.value = (float)((float)newHp / (float)maxHp);
         healthText.text = newHp.ToString();
+        LocalPlayerUI.Instance.UpdateHealthBar(maxHp, newHp);
     }
 
 }
