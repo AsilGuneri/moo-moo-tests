@@ -10,37 +10,36 @@ public class PlayerLevelController : NetworkBehaviour
     [SyncVar] int currentLevel = 1;
     int levelUpBaseCost = 1;
 
-    [SerializeField] TextMeshProUGUI levelText;
 
     public int CurrentLevel { get { return currentLevel; } }
 
-    private void Start()
-    {
-        SetLevelText();
-    }
 
-    public void GainExperience(int exp)
+
+    [Server]
+    public void GainExp(int exp)
     {
         currentExperience += exp;
         if (currentExperience >= ExperienceRequired())
         {
             LevelUp();
         }
-        UIStatsManager.Instance.UpdateSlider(currentExperience, ExperienceRequired());
+        //UIStatsManager.Instance.UpdateSlider(currentExperience, ExperienceRequired());
+        GainExpVisual(currentExperience, ExperienceRequired());
+    }
+    [TargetRpc]
+    private void GainExpVisual(float currentValue, float maxValue)
+    {
+        LocalPlayerUI.Instance.UpdateExpBar(currentValue, maxValue);
     }
     private int ExperienceRequired()
     {
         return levelUpBaseCost * (currentLevel + 1);
     }
+    [Server]
     private void LevelUp()
     {
         currentLevel++;
         currentExperience = 0;
-        SetLevelText();
-        UIStatsManager.Instance.UpdateLevelText(currentLevel.ToString());
     }
-    private void SetLevelText()
-    {
-        levelText.text = currentLevel.ToString();
-    }
+
 }
