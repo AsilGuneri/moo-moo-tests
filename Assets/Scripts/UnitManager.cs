@@ -34,8 +34,6 @@ public class UnitManager : NetworkSingleton<UnitManager>
                 //unit.Value.GetComponent<EnemyBrain>().StartBrain();
                 break;
         }
-        Debug.Log("registered server");
-
     }
     [ServerCallback]
     public void UnregisterUnits(UnitController unit)

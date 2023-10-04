@@ -84,6 +84,12 @@ public class Health : NetworkBehaviour
         healthBar.UpdateHealthBar(baseHp, baseHp);
     }
 
+    [ClientRpc]
+    private void RpcUpdateHealth()
+    {
+        healthBar.UpdateHealthBar(baseHp, baseHp);
+    }
+
     private void AddDamageStats(int dmg, Transform dealerTransform)
     {
         if (dealerTransform.TryGetComponent(out PlayerController playerController))
@@ -108,7 +114,7 @@ public class Health : NetworkBehaviour
         UnitManager.Instance.UnregisterUnits(controller);
         if (damageDealerTransform.TryGetComponent(out PlayerLevelController levelController))
         {
-            levelController.GainExperience(ExpToGain);
+            levelController.GainExp(ExpToGain);
         }
         NetworkServer.UnSpawn(gameObject);
         PrefabPoolManager.Instance.PutBackInPool(gameObject);
