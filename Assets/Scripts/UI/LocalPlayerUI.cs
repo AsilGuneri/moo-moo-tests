@@ -21,7 +21,7 @@ public class LocalPlayerUI : NetworkSingleton<LocalPlayerUI>
     }
     public void UpdateExpBar(float currentValue, float maxValue)
     {
-        float fillAmount = 100f * (currentValue / maxValue);
+        float fillAmount = currentValue / maxValue;
         expFill.fillAmount= fillAmount;
     }
 }

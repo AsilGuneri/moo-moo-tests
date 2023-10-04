@@ -52,12 +52,10 @@ public class PlayerController : UnitController
         {
             //GoldManager.Instance.GameBank.AddBankAccount(this);
             //ContributionPanel.Instance.AddPlayerContributionField(this);
-            Debug.Log("networkserver active");
         }
         if (isClient) // client (host is also a client)
         {
             UnitManager.Instance.RegisterUnit(this);
-            Debug.Log("registered client");
             StartCharacter(); // everyone
             GetComponent<PlayerInput>().enabled = true;
         }

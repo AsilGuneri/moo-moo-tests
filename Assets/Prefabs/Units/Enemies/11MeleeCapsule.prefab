@@ -203,7 +203,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   healthBar: {fileID: 8367084093036167732}
-  ExpToGain: 1
+  ExpToGain: 5
 --- !u!114 &2163373812530429147
 MonoBehaviour:
   m_ObjectHideFlags: 0

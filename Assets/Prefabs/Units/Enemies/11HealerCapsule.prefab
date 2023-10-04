@@ -266,7 +266,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   healthBar: {fileID: 4472089681556050790}
-  ExpToGain: 1
+  ExpToGain: 5
 --- !u!95 &700732724531390349
 Animator:
   serializedVersion: 5
@@ -331,6 +331,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4015c930984090469e7d32dbe258a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   useLifeTime: 0
   lifeTime: 0
 --- !u!114 &5141234474190036653

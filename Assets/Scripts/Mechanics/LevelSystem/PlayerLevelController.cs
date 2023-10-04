@@ -8,7 +8,7 @@ public class PlayerLevelController : NetworkBehaviour
 {
     [SyncVar] int currentExperience = 0;
     [SyncVar] int currentLevel = 1;
-    int levelUpBaseCost = 1;
+    int levelUpBaseCost = 10;
 
 
     public int CurrentLevel { get { return currentLevel; } }
@@ -24,12 +24,13 @@ public class PlayerLevelController : NetworkBehaviour
             LevelUp();
         }
         //UIStatsManager.Instance.UpdateSlider(currentExperience, ExperienceRequired());
-        GainExpVisual(currentExperience, ExperienceRequired());
+        UpdateExpBar();
+        Debug.Log("asilxx1 " + exp + " " + currentExperience + " " + ExperienceRequired() +" " + name);
     }
     [TargetRpc]
-    private void GainExpVisual(float currentValue, float maxValue)
+    private void UpdateExpBar()
     {
-        LocalPlayerUI.Instance.UpdateExpBar(currentValue, maxValue);
+        LocalPlayerUI.Instance.UpdateExpBar(currentExperience, ExperienceRequired());
     }
     private int ExperienceRequired()
     {
@@ -40,6 +41,7 @@ public class PlayerLevelController : NetworkBehaviour
     {
         currentLevel++;
         currentExperience = 0;
+        UpdateExpBar();
     }
 
 }
