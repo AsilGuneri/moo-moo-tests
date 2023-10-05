@@ -2411,9 +2411,17 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  healthFill: {fileID: 6098983191333190546}
-  healthText: {fileID: 1104281528}
-  expFill: {fileID: 6098983192863316829}
+  HealthBarUI:
+    healthFill: {fileID: 6098983191333190546}
+    healthText: {fileID: 1104281528}
+  ExpBarUI:
+    expFill: {fileID: 6098983191193143006}
+  SkillBarUI:
+    uiSlots:
+    - {fileID: 6098983192312164296}
+    - {fileID: 2676848881370480932}
+    - {fileID: 2676848883375131559}
+    - {fileID: 2676848881919912510}
 --- !u!1 &361532535
 GameObject:
   m_ObjectHideFlags: 0
@@ -13485,7 +13493,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &6098983192700138556
 MonoBehaviour:
   m_ObjectHideFlags: 0
