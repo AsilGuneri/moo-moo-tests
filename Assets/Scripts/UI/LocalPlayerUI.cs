@@ -24,7 +24,7 @@ public class SkillBarUI
 
         for (int i = 0; i < uiSlots.Length; i++)
         {
-            if (!player.Skills[i]) continue;
+            if (player.Skills.Count -1 < i) break;
             uiSlots[i].Assign(player.Skills[i].skillInfo);
         }
     }

@@ -70214,11 +70214,7 @@ MonoBehaviour:
   enemyList: 01000000
   hitPointOffset: {x: 0, y: 0, z: 0}
   projectileSpawnPoint: {fileID: 3792548669549166751}
-  skills:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  skills: []
   clickableLayerMask:
     serializedVersion: 2
     m_Bits: 576
