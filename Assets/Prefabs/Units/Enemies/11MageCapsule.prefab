@@ -1610,7 +1610,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  healthBar: {fileID: 0}
   ExpToGain: 5
 --- !u!95 &700732724531390349
 Animator:

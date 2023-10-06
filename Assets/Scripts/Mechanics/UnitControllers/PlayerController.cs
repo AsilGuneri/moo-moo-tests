@@ -73,7 +73,7 @@ public class PlayerController : UnitController
         SubscribeAnimEvents();
     }
 
-    private void GetMousePositionRaycastInfo(out Ray ray, out RaycastHit[] hits)
+    public void GetMousePositionRaycastInfo(out Ray ray, out RaycastHit[] hits)
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
         ray = mainCamera.ScreenPointToRay(mousePos);

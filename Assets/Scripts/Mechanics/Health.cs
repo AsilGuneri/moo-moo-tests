@@ -14,7 +14,7 @@ public class Health : NetworkBehaviour
     public int CurrentHealth { get => currentHealth; }
     public int CurrentHealthPercentage { get { return (currentHealth / baseHp) * 100; } }
 
-    [SerializeField] private HealthBar healthBar;
+    private HealthBar healthBar;//
     public int ExpToGain;
 
     [SyncVar(hook = nameof(OnCurrentHealthChanged))]
@@ -35,6 +35,7 @@ public class Health : NetworkBehaviour
         _heroStats = GetComponent<PlayerDataHolder>().HeroStatsData;
         baseHp = _heroStats.Hp;
         controller = GetComponent<UnitController>();
+        healthBar = GetComponent<HealthBar>();
         //baseHp = 10000000;
     }
     [Server]

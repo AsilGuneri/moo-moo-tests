@@ -12,9 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba353d810bcece84a851c6074952ae7f, type: 3}
   m_Name: TopDownArrows
   m_EditorClassIdentifier: 
-  HasCastTime: 0
-  CastTime: 0
+  HasCastTime: 1
+  CastTime: 1
   HasSkillTime: 0
   SkillTime: 0
-  CooldownTime: 0
-  ShieldPrefab: {fileID: 0}
+  CooldownTime: 5
+  skillInfo:
+    ID: 0
+    Name: TopDownArrows
+    Icon: {fileID: 21300000, guid: 82d3d502591c76e4f87b86ec4b3a9c03, type: 3}
+    Description: Shoots arrows and deals damage
+    Range: 0
+    Cooldown: 5
+    CastTime: 1
+    PowerCost: 50
+    Flags: 0
+  ArrowsPrefab: {fileID: 322692590112694557, guid: 1bd7fa446bf12e7458c9321d85b834a0, type: 3}
