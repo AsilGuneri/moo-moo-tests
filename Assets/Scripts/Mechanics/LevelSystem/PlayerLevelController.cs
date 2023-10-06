@@ -30,7 +30,7 @@ public class PlayerLevelController : NetworkBehaviour
     [TargetRpc]
     private void UpdateExpBar()
     {
-        LocalPlayerUI.Instance.UpdateExpBar(currentExperience, ExperienceRequired());
+        LocalPlayerUI.Instance.ExpBarUI.UpdateExpBar(currentExperience, ExperienceRequired());
     }
     private int ExperienceRequired()
     {

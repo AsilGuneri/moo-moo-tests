@@ -17,7 +17,7 @@ public class HealthBar : NetworkBehaviour
         healthText.text = newHp.ToString();
         if (isLocalPlayer && isOwned)
         {
-            LocalPlayerUI.Instance.UpdateHealthBar(maxHp, newHp);
+            LocalPlayerUI.Instance.HealthBarUI.UpdateHealthBar(maxHp, newHp);
         }
     }
 
