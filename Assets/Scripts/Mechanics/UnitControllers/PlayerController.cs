@@ -48,7 +48,7 @@ public class PlayerController : UnitController
     {
         if (!isOwned) return;
         
-        if (isServer) //server
+        if (isServer) //host
         {
             //GoldManager.Instance.GameBank.AddBankAccount(this);
             //ContributionPanel.Instance.AddPlayerContributionField(this);
@@ -58,8 +58,6 @@ public class PlayerController : UnitController
             UnitManager.Instance.RegisterUnit(this);
             StartCharacter(); // everyone
             GetComponent<PlayerInput>().enabled = true;
-            LocalPlayerUI.Instance.SkillBarUI.AssignSkills(this);
-            //show skills on UI here
         }
         
     }

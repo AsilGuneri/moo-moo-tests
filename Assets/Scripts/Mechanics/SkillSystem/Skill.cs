@@ -1,4 +1,3 @@
-using DuloGames.UI;
 using Mirror;
 using MyBox;
 using System.Collections;
@@ -14,8 +13,6 @@ public abstract class Skill : ScriptableObject
     [ConditionalField(nameof(HasSkillTime), false)] public float SkillTime;
 
     public float CooldownTime;
-
-    public UISpellInfo skillInfo;
 
     protected bool isOnCooldown = false;
 
