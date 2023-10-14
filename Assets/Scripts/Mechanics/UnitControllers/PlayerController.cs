@@ -15,7 +15,6 @@ public class PlayerController : UnitController
     public string PlayerName { get; set; }
     public PlayerStats Stats { get; private set; } = new();
 
-    public InputKeysData _inputKeys { get; private set; }
     private Camera mainCamera;
     private bool isAttackClickMode;
 
@@ -26,7 +25,6 @@ public class PlayerController : UnitController
     protected override void Awake()
     {
         base.Awake();
-        _inputKeys = GetComponent<PlayerDataHolder>().KeysData;
     }
     protected override void Start()
     {
@@ -41,7 +39,7 @@ public class PlayerController : UnitController
     void Update()
     {
         if (!isOwned) return;
-        if (Input.GetKeyDown(_inputKeys.SpawnWaveKey))
+        if (Input.GetKeyDown(KeyCode.T))
             WaveManager.Instance.SpawnTestWave();
     }
     private void Activate()

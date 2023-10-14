@@ -7,6 +7,9 @@ using UnityEngine;
 
 public abstract class Skill : ScriptableObject
 {
+    public bool HasIndicator;
+    [ConditionalField(nameof(HasIndicator), false)] public GameObject IndicatorPrefab;
+
     public bool HasCastTime;
     [ConditionalField(nameof(HasCastTime), false)] public float CastTime;
 
