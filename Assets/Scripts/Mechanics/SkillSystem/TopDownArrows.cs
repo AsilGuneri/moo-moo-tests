@@ -20,6 +20,7 @@ public class TopDownArrowsSkillController : SkillController
 {
     private TopDownArrows arrowsData;
     private PlayerController controller;
+    private Vector3 castStartPoint;
     public override void OnInitialize(Skill skill)
     {
         base.OnInitialize(skill);
@@ -30,6 +31,14 @@ public class TopDownArrowsSkillController : SkillController
     protected override void OnCastStart()
     {
         Debug.Log($"cast start topdownarrows");
+        Ray ray;
+        RaycastHit[] hits;
+        controller.GetMousePositionRaycastInfo(out ray, out hits);
+        RaycastHit? groundHit = hits.FirstOrDefault(hit => hit.collider.gameObject.layer == 6);
+        if (groundHit.HasValue)
+        {
+            castStartPoint = groundHit.Value.point;
+        }
     }
     protected override void OnCastEnd()
     {
@@ -39,17 +48,9 @@ public class TopDownArrowsSkillController : SkillController
     protected override void OnSkillStart()
     {
         Debug.Log($"skill start topdownarrows");
-        Ray ray;
-        RaycastHit[] hits;
-        controller.GetMousePositionRaycastInfo(out ray, out hits);
-        RaycastHit? groundHit = hits.FirstOrDefault(hit => hit.collider.gameObject.layer == 6);
-        if (groundHit.HasValue)
-        {
-            var skillObj = PrefabPoolManager.Instance.GetFromPool(arrowsData.ArrowsPrefab, groundHit.Value.point, Quaternion.identity);
-            //NetworkServer.
 
-        }
-        
+        var skillObj = PrefabPoolManager.Instance.GetFromPool(arrowsData.ArrowsPrefab, castStartPoint, Quaternion.identity);
+            //NetworkServer.
     }
 
     protected override void OnSkillEnd()

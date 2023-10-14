@@ -70191,7 +70191,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  healthBar: {fileID: 7177976634720571292}
   ExpToGain: 0
 --- !u!114 &7291038196165993128
 MonoBehaviour:

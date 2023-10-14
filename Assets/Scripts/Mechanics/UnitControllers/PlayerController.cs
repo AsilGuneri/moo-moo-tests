@@ -162,6 +162,10 @@ public class PlayerController : UnitController
         if (!mainCamera) return false;
         return true;
     }
+    private void UseSkillById(int id)
+    {
+        SkillControllerDictionary[skills[id].name].Use();
+    }
 
     #region Stats
     public void AddDamageDealt(int damage)
@@ -233,6 +237,22 @@ public class PlayerController : UnitController
     {
         if (!isOwned) return;
         isAttackClickMode = true;
+    }
+    private void OnSkill0()
+    {
+        UseSkillById(0);
+    }
+    private void OnSkill1()
+    {
+        //UseSkillById(1);
+    }
+    private void OnSkill2()
+    {
+        //UseSkillById(2);
+    }
+    private void OnSkill3()
+    {
+        //UseSkillById(3);
     }
     #endregion
 }
