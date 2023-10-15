@@ -162,10 +162,6 @@ public class PlayerController : UnitController
         if (!mainCamera) return false;
         return true;
     }
-    private void UseSkillById(int id)
-    {
-        SkillControllerDictionary[skills[id].name].Use();
-    }
 
     #region Stats
     public void AddDamageDealt(int damage)
@@ -240,7 +236,7 @@ public class PlayerController : UnitController
     }
     private void OnSkill0()
     {
-        UseSkillById(0);
+        skills[0].Use();
     }
     private void OnSkill1()
     {

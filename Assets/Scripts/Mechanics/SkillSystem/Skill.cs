@@ -20,31 +20,13 @@ public abstract class Skill : ScriptableObject
 
     public UISpellInfo skillInfo;
 
-    protected bool isOnCooldown = false;
-
-    public abstract SkillController CreateBehaviourController(GameObject gameObject);
-
-    public virtual void Initialize(Transform owner)
-    {
-        // Create the appropriate controller
-        var controller = CreateBehaviourController(owner.gameObject);
-        owner.GetComponent<UnitController>().SkillControllerDictionary.Add(this.name, controller);
-        controller.OnInitialize(this);
-    }
 }
-public abstract class SkillController : MonoBehaviour
+public abstract class SkillController : NetworkBehaviour
 {
-    protected Skill skill;
+    public Skill SkillData;
     protected bool isCasting;
     protected bool isSkillActive;
-    /// <summary>
-    /// Override and keep the base of that method
-    /// </summary>
-    /// <param name="data"></param>
-    public virtual void OnInitialize(Skill skill)
-    {
-        this.skill = skill;
-    }
+
 
     public void Use()
     {
@@ -89,7 +71,7 @@ public abstract class SkillController : MonoBehaviour
     {
         if (isCasting)
         {
-            var castTime = skill.HasCastTime ? skill.CastTime : 0;
+            var castTime = SkillData.HasCastTime ? SkillData.CastTime : 0;
             yield return Extensions.GetWait(castTime);
         }
         EndCast();
@@ -98,7 +80,7 @@ public abstract class SkillController : MonoBehaviour
     {
         if (isSkillActive)
         {
-            var castTime = skill.HasSkillTime ? skill.SkillTime : 0;
+            var castTime = SkillData.HasSkillTime ? SkillData.SkillTime : 0;
             yield return Extensions.GetWait(castTime);
         }
         EndSkill();

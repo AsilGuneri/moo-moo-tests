@@ -70046,6 +70046,7 @@ GameObject:
   - component: {fileID: 9161982347859305274}
   - component: {fileID: 4018582201208944742}
   - component: {fileID: 7177976634720571292}
+  - component: {fileID: 4197839386302705712}
   m_Layer: 0
   m_Name: Player Parentxx
   m_TagString: Untagged
@@ -70214,7 +70215,7 @@ MonoBehaviour:
   hitPointOffset: {x: 0, y: 0, z: 0}
   projectileSpawnPoint: {fileID: 3792548669549166751}
   skills:
-  - {fileID: 11400000, guid: 495558f66c8229f479348be1be32bbc3, type: 2}
+  - {fileID: 4197839386302705712}
   clickableLayerMask:
     serializedVersion: 2
     m_Bits: 576
@@ -70462,6 +70463,22 @@ MonoBehaviour:
   syncInterval: 0
   healthSlider: {fileID: 5392881077852431337}
   healthText: {fileID: 2876633180322426738}
+--- !u!114 &4197839386302705712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8938534602783702256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6118cf134854b64c906ecdfc622c85c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  SkillData: {fileID: 11400000, guid: 495558f66c8229f479348be1be32bbc3, type: 2}
 --- !u!1 &8946106163135306598
 GameObject:
   m_ObjectHideFlags: 0

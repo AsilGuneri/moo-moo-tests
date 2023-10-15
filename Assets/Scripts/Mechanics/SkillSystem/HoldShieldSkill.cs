@@ -8,22 +8,17 @@ using UnityEngine;
 public class HoldShieldSkill : Skill
 {
     public GameObject ShieldPrefab;
-    public override SkillController CreateBehaviourController(GameObject gameObject)
-    {
-        var controller = gameObject.AddComponent<HoldShieldSkillController>();
-        return controller;
-    }
+
 }
 public class HoldShieldSkillController : SkillController
 {
     private HoldShieldSkill holdShieldData;
     private UnitController controller;
     private GameObject currentShieldObject;
-    public override void OnInitialize(Skill skill)
+
+    private void Awake()
     {
-        base.OnInitialize(skill);
-        this.skill = skill;
-        holdShieldData = skill as HoldShieldSkill;
+        holdShieldData = SkillData as HoldShieldSkill;
         controller = GetComponent<UnitController>();
     }
     protected override void OnCastStart()

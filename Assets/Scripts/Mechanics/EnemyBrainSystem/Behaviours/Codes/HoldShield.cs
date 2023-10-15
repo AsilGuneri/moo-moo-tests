@@ -45,7 +45,7 @@ public class HoldShieldController : EnemyBehaviourController
 
     public override void OnEnter()
     {
-        controller.UseSkill(defendData.shieldSkill);
+       // controller.UseSkill(defendData.shieldSkill);
     }
     public override void OnExit()
     {

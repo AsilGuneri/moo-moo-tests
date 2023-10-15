@@ -1,6 +1,7 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using UnityEngine;
 
@@ -10,54 +11,5 @@ using UnityEngine;
 public class TopDownArrows : Skill
 {
     public GameObject ArrowsPrefab;
-    public override SkillController CreateBehaviourController(GameObject gameObject)
-    {
-        var controller = gameObject.AddComponent<TopDownArrowsSkillController>();
-        return controller;
-    }
-}
-public class TopDownArrowsSkillController : SkillController
-{
-    private TopDownArrows arrowsData;
-    private PlayerController controller;
-    private Vector3 castStartPoint;
-    public override void OnInitialize(Skill skill)
-    {
-        base.OnInitialize(skill);
-        this.skill = skill;
-        arrowsData = skill as TopDownArrows;
-        controller = GetComponent<PlayerController>();
-    }
-    protected override void OnCastStart()
-    {
-        Debug.Log($"cast start topdownarrows");
-        Ray ray;
-        RaycastHit[] hits;
-        controller.GetMousePositionRaycastInfo(out ray, out hits);
-        RaycastHit? groundHit = hits.FirstOrDefault(hit => hit.collider.gameObject.layer == 6);
-        if (groundHit.HasValue)
-        {
-            castStartPoint = groundHit.Value.point;
-        }
-    }
-    protected override void OnCastEnd()
-    {
-        Debug.Log($"cast end topdownarrows");
-    }
 
-    protected override void OnSkillStart()
-    {
-        Debug.Log($"skill start topdownarrows ");
-        SkillCallbackProvider.Instance.SpawnTopDownArrows(arrowsData.ArrowsPrefab, castStartPoint);
-        
-    }
-    protected override void OnSkillEnd()
-    {
-        Debug.Log($"skill end topdownarrows");
-    }
-   // [Command(requiresAuthority = false)]
-    private void SpawnArrows()
-    {
-        
-    }
 }

@@ -7,9 +7,8 @@ using UnityEngine.EventSystems;
 public abstract class UnitController : NetworkBehaviour
 {
     
-    public Dictionary<string,SkillController> SkillControllerDictionary = new Dictionary<string, SkillController>();
     //others
-    public List<Skill> Skills { get => skills; }
+    public List<SkillController> Skills { get => skills; }
     public Vector3 HitPoint { get => transform.position + hitPointOffset; }
     public Transform ProjectileSpawnPoint { get => projectileSpawnPoint; }
     public Health Health { get => health; }
@@ -27,7 +26,7 @@ public abstract class UnitController : NetworkBehaviour
 
     [SerializeField] protected Vector3 hitPointOffset;
     [SerializeField] protected Transform projectileSpawnPoint;
-    [SerializeField] protected List<Skill> skills = new List<Skill>();
+    [SerializeField] protected List<SkillController> skills = new List<SkillController>();
 
 
 
@@ -41,7 +40,6 @@ public abstract class UnitController : NetworkBehaviour
     protected virtual void Awake()
     {
         CacheReferences();
-        InitializeSkills();
     }
     
     protected virtual void Start()
@@ -59,10 +57,6 @@ public abstract class UnitController : NetworkBehaviour
     public bool IsEnemyTo(UnitType unit)
     {
         return enemyList.Contains(unit);
-    }
-    public void UseSkill(Skill skill)
-    {
-        SkillControllerDictionary[skill.name].Use();
     }
     private void CacheReferences()
     {
@@ -84,12 +78,5 @@ public abstract class UnitController : NetworkBehaviour
         });
         movement.OnMoveStart += (() => { animationController.SetMoveStatus(true); });
         movement.OnMoveStop += (() => { animationController.SetMoveStatus(false); });
-    }
-    private void InitializeSkills()
-    {
-        foreach (var skill in skills)
-        {
-            skill.Initialize(transform);
-        }
     }
 }
