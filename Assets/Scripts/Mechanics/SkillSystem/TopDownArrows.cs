@@ -47,14 +47,17 @@ public class TopDownArrowsSkillController : SkillController
 
     protected override void OnSkillStart()
     {
-        Debug.Log($"skill start topdownarrows");
-
-        var skillObj = PrefabPoolManager.Instance.GetFromPool(arrowsData.ArrowsPrefab, castStartPoint, Quaternion.identity);
-            //NetworkServer.
+        Debug.Log($"skill start topdownarrows ");
+        SkillCallbackProvider.Instance.SpawnTopDownArrows(arrowsData.ArrowsPrefab, castStartPoint);
+        
     }
-
     protected override void OnSkillEnd()
     {
         Debug.Log($"skill end topdownarrows");
+    }
+   // [Command(requiresAuthority = false)]
+    private void SpawnArrows()
+    {
+        
     }
 }

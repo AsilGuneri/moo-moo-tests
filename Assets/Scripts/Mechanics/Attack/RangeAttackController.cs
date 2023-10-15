@@ -25,8 +25,8 @@ public class RangeAttackController : BasicAttackController
     {
         //if (checkAuthority && !hasAuthority) return;
         GameObject projectile = PrefabPoolManager.Instance.GetFromPool(projectilePrefab, controller.ProjectileSpawnPoint.position, Quaternion.identity);
-            projectile.GetComponent<Projectile>().SetupProjectile(target, Damage, transform);
-            NetworkServer.Spawn(projectile, connectionToClient);
+        projectile.GetComponent<Projectile>().SetupProjectile(target, Damage, transform);
+        NetworkServer.Spawn(projectile, connectionToClient);
     }
 
 }
