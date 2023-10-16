@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba353d810bcece84a851c6074952ae7f, type: 3}
   m_Name: TopDownArrows
   m_EditorClassIdentifier: 
-  HasIndicator: 0
-  IndicatorPrefab: {fileID: 0}
+  HasIndicator: 1
+  IndicatorPrefab: {fileID: 811260699408436622, guid: 424f4377a8a434a4ca074a3df3a7fb1c, type: 3}
   HasCastTime: 0
   CastTime: 0
   HasSkillTime: 0

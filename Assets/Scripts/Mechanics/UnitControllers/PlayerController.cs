@@ -17,6 +17,8 @@ public class PlayerController : UnitController
 
     private Camera mainCamera;
     private bool isAttackClickMode;
+    private bool isSkillIndicatorActive;
+    private SkillController indicatorActiveSkill;
 
     public AgentBody agent;
 
@@ -201,6 +203,12 @@ public class PlayerController : UnitController
                 return;
             }
         }
+        else if (isSkillIndicatorActive)
+        {
+            indicatorActiveSkill.EndIndicator();
+            indicatorActiveSkill = null;
+            isSkillIndicatorActive = false;
+        }
         else if (hits.Length > 0)
         {
             OnRayHit(hits);
@@ -236,7 +244,14 @@ public class PlayerController : UnitController
     }
     private void OnSkill0()
     {
-        skills[0].Use();
+        var skill = skills[0];
+        if (skill.SkillData.HasIndicator)
+        {
+            skill.StartIndicator();
+            isSkillIndicatorActive = true;
+            indicatorActiveSkill = skill;
+        }
+        else skill.Use();
     }
     private void OnSkill1()
     {

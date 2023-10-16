@@ -26,10 +26,24 @@ public abstract class SkillController : NetworkBehaviour
     public Skill SkillData;
     protected bool isCasting;
     protected bool isSkillActive;
-
+    protected SkillIndicator currentIndicator;
 
     public void Use()
     {
+        StartCast();
+    }
+
+    public void StartIndicator()
+    {
+        SkillIndicator indicator = PrefabPoolManager.Instance.GetFromPool(SkillData.IndicatorPrefab, Vector3.zero, Quaternion.identity).GetComponent<SkillIndicator>();
+        indicator.Setup();
+        currentIndicator = indicator;
+    }
+
+    public void EndIndicator()
+    {
+        currentIndicator.EndIndicator();
+        currentIndicator = null;
         StartCast();
     }
 
