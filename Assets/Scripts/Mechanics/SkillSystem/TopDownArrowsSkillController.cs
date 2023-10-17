@@ -7,19 +7,20 @@ using System.Linq;
 public class TopDownArrowsSkillController : SkillController
 {
     private TopDownArrows arrowsData;
-    private PlayerController controller;
+    private PlayerController playerController;
     private Vector3 castStartPoint;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         arrowsData = SkillData as TopDownArrows;
-        controller = GetComponent<PlayerController>();
+        playerController = controller as PlayerController;
     }
     protected override void OnCastStart()
     {
         Debug.Log($"cast start topdownarrows");
         Ray ray;
         RaycastHit[] hits;
-        controller.GetMousePositionRaycastInfo(out ray, out hits);
+        playerController.GetMousePositionRaycastInfo(out ray, out hits);
         RaycastHit? groundHit = hits.FirstOrDefault(hit => hit.collider.gameObject.layer == 6);
         if (groundHit.HasValue)
         {

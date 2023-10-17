@@ -12,9 +12,16 @@ public abstract class Skill : ScriptableObject
 
     public bool HasCastTime;
     [ConditionalField(nameof(HasCastTime), false)] public float CastTime;
+    [ConditionalField(nameof(HasCastTime), false)] public bool BlockMovementOnCast;
+    [ConditionalField(nameof(HasCastTime), false)] public bool BlockAttackOnCast;
+
+
 
     public bool HasSkillTime;
     [ConditionalField(nameof(HasSkillTime), false)] public float SkillTime;
+    [ConditionalField(nameof(HasSkillTime), false)] public bool BlockMovementOnSkill;
+    [ConditionalField(nameof(HasSkillTime), false)] public bool BlockAttackOnSkill;
+
 
     public float CooldownTime;
 
@@ -27,6 +34,12 @@ public abstract class SkillController : NetworkBehaviour
     protected bool isCasting;
     protected bool isSkillActive;
     protected SkillIndicator currentIndicator;
+    protected UnitController controller;
+
+    protected virtual void Awake()
+    {
+        controller = GetComponent<UnitController>();
+    }
 
     public void Use()
     {
@@ -50,12 +63,28 @@ public abstract class SkillController : NetworkBehaviour
     private void StartCast()
     {
         isCasting = true;
+        if (SkillData.BlockMovementOnCast)
+        {
+            controller.Movement.BlockMovement();
+        }
+        if (SkillData.BlockAttackOnCast)
+        {
+            controller.AttackController.BlockAttacking();
+        }
         StartCoroutine(EndCastRoutine());
         OnCastStart();
     }
     private void EndCast()
     {
         isCasting = false;
+        if (SkillData.BlockMovementOnCast)
+        {
+            controller.Movement.RemoveMovementBlock();
+        }
+        if (SkillData.BlockAttackOnCast)
+        {
+            controller.AttackController.RemoveAttackingBlock();
+        }
         StartSkill();
         OnCastEnd();
     }
@@ -63,6 +92,14 @@ public abstract class SkillController : NetworkBehaviour
     private void StartSkill()
     {
         isSkillActive = false;
+        if (SkillData.BlockMovementOnSkill)
+        {
+            controller.Movement.BlockMovement();
+        }
+        if (SkillData.BlockAttackOnSkill)
+        {
+            controller.AttackController.BlockAttacking();
+        }
         StartCoroutine(EndSkillRoutine());
         OnSkillStart();
 
@@ -70,6 +107,14 @@ public abstract class SkillController : NetworkBehaviour
     private void EndSkill()
     {
         isSkillActive = false;
+        if (SkillData.BlockMovementOnSkill)
+        {
+            controller.Movement.RemoveMovementBlock();
+        }
+        if (SkillData.BlockAttackOnSkill)
+        {
+            controller.AttackController.RemoveAttackingBlock();
+        }
         OnSkillEnd();
     }
 
