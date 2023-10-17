@@ -24,9 +24,9 @@ MonoBehaviour:
   BlockAttackOnSkill: 0
   CooldownTime: 5
   skillInfo:
-    ID: 0
+    ID: 4
     Name: TopDownArrows
-    Icon: {fileID: 21300000, guid: 82d3d502591c76e4f87b86ec4b3a9c03, type: 3}
+    Icon: {fileID: 21300000, guid: 4f5753855a32afc469de26e2e93c7f40, type: 3}
     Description: Shoots arrows and deals damage
     Range: 0
     Cooldown: 5
