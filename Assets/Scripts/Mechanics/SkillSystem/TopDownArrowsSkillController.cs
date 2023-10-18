@@ -45,8 +45,8 @@ public class TopDownArrowsSkillController : SkillController
     [Command(requiresAuthority = false)]
     private void SpawnArrows(Vector3 castStartPos)
     {
-        var skillObj = PrefabPoolManager.Instance.
-            GetFromPool(arrowsData.ArrowsPrefab, castStartPos, Quaternion.identity);
+        var skillObj = PrefabPoolManager.Instance.GetFromPool(arrowsData.ArrowsPrefab, castStartPos, Quaternion.identity);
+        skillObj.GetComponent<TopDownArrowsObject>().Setup(transform);
         NetworkServer.Spawn(skillObj);
     }
 }

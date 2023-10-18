@@ -36,7 +36,7 @@ public abstract class SkillController : NetworkBehaviour
     protected SkillIndicator currentIndicator;
     protected UnitController controller;
     protected UISpellSlot assignedSlot;
-    protected float remainingCooldown = 0;
+    protected bool onCooldown;
 
     protected virtual void Awake()
     {
@@ -67,15 +67,9 @@ public abstract class SkillController : NetworkBehaviour
         StartCast();
     }
 
-    private void StartCooldown()
-    {
-        assignedSlot.cooldownComponent.StartCooldown(SkillData.skillInfo.ID, SkillData.CooldownTime);
-    }
-
     private void StartCast()
     {
         isCasting = true;
-        StartCooldown();
         if (SkillData.BlockMovementOnCast)
         {
             controller.Movement.BlockMovement();
@@ -156,5 +150,20 @@ public abstract class SkillController : NetworkBehaviour
             yield return Extensions.GetWait(castTime);
         }
         EndSkill();
+    }
+
+
+    public IEnumerator StartCooldown()
+    {
+        onCooldown = true;
+        assignedSlot.cooldownComponent.StartCooldown(SkillData.skillInfo.ID, SkillData.CooldownTime);
+        yield return Extensions.GetWait(SkillData.CooldownTime);
+        onCooldown = false;
+    }
+
+    public virtual bool IsSkillReady()
+    {
+        if (onCooldown) return false;
+        return true;
     }
 }

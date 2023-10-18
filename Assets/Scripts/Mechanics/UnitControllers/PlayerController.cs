@@ -245,6 +245,8 @@ public class PlayerController : UnitController
     private void OnSkill0()
     {
         var skill = skills[0];
+        if (!skill.IsSkillReady()) return;
+        StartCoroutine(skill.StartCooldown());
         if (skill.SkillData.HasIndicator)
         {
             skill.StartIndicator();
