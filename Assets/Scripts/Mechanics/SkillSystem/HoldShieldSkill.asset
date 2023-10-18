@@ -12,10 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6065db9a201115443a66d06926c75083, type: 3}
   m_Name: HoldShieldSkill
   m_EditorClassIdentifier: 
+  HasIndicator: 0
+  IndicatorPrefab: {fileID: 0}
   HasCastTime: 1
   CastTime: 0
+  BlockMovementOnCast: 0
+  BlockAttackOnCast: 0
   HasSkillTime: 1
   SkillTime: 30
+  BlockMovementOnSkill: 0
+  BlockAttackOnSkill: 0
+  ManaCost: 50
   CooldownTime: 5
   skillInfo:
     ID: 0

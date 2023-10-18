@@ -22,6 +22,7 @@ MonoBehaviour:
   SkillTime: 0
   BlockMovementOnSkill: 0
   BlockAttackOnSkill: 0
+  ManaCost: 10
   CooldownTime: 5
   skillInfo:
     ID: 4
@@ -31,6 +32,6 @@ MonoBehaviour:
     Range: 0
     Cooldown: 5
     CastTime: 1
-    PowerCost: 50
+    PowerCost: 10
     Flags: 0
   ArrowsPrefab: {fileID: 322692590112694557, guid: 1bd7fa446bf12e7458c9321d85b834a0, type: 3}

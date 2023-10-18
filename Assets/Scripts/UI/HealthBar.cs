@@ -7,17 +7,26 @@ using UnityEngine.UI;
 
 public class HealthBar : NetworkBehaviour
 {
-    [SerializeField] private Slider healthSlider;
-    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private Image healthFill;
+    [SerializeField] private Image manaFill;
 
     [Client]
-    public void UpdateHealthBar(int maxHp, int newHp)
+    public void UpdateHealthBar(int maxHealth, int newHealth)
     {
-        healthSlider.value = (float)((float)newHp / (float)maxHp);
-        healthText.text = newHp.ToString();
+
+        if (healthFill) healthFill.fillAmount = (float)((float)newHealth / (float)maxHealth);
         if (isLocalPlayer && isOwned)
         {
-            LocalPlayerUI.Instance.HealthBarUI.UpdateHealthBar(maxHp, newHp);
+            LocalPlayerUI.Instance.HealthBarUI.UpdateHealthBar(maxHealth, newHealth);
+        }
+    }
+    [Client]
+    public void UpdateMana(int maxMana, int newMana)
+    {
+        if(manaFill) manaFill.fillAmount = (float)((float)newMana / (float)maxMana);
+        if (isLocalPlayer && isOwned)
+        {
+            LocalPlayerUI.Instance.HealthBarUI.UpdateMana(maxMana, newMana);
         }
     }
 

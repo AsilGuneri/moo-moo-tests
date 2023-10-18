@@ -38,11 +38,20 @@ public class HealthBarUI
     [SerializeField] Image healthFill;
     [SerializeField] TextMeshProUGUI healthText;
 
-    public void UpdateHealthBar(int maxHp, int newHp)
+    [SerializeField] Image manaFill;
+    [SerializeField] TextMeshProUGUI manaText;
+
+
+    public void UpdateHealthBar(int maxHealth, int newHealth)
     {
         //if (!isOwned) return;
-        healthFill.fillAmount = (float)((float)newHp / (float)maxHp);
-        healthText.text = newHp.ToString();
+        healthFill.fillAmount = (float)((float)newHealth / (float)maxHealth);
+        healthText.text = newHealth.ToString();
+    }
+    public void UpdateMana(int maxMana, int newMana)
+    {
+        manaFill.fillAmount = (float)((float)newMana / (float)maxMana);
+        manaText.text = newMana.ToString();
     }
 }
 [Serializable]

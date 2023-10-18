@@ -245,8 +245,7 @@ public class PlayerController : UnitController
     private void OnSkill0()
     {
         var skill = skills[0];
-        if (!skill.IsSkillReady()) return;
-        StartCoroutine(skill.StartCooldown());
+        if (!CanCastSkill(skill)) return;
         if (skill.SkillData.HasIndicator)
         {
             skill.StartIndicator();
@@ -268,4 +267,10 @@ public class PlayerController : UnitController
         //UseSkillById(3);
     }
     #endregion
+    private bool CanCastSkill(SkillController skill)
+    {
+        if (skill.OnCooldown) return false;
+        if (skill.SkillData.ManaCost > health.CurrentMana) return false;
+        return true;
+    }
 }

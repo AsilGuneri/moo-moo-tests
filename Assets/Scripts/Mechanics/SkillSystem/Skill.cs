@@ -23,6 +23,7 @@ public abstract class Skill : ScriptableObject
     [ConditionalField(nameof(HasSkillTime), false)] public bool BlockAttackOnSkill;
 
 
+    public int ManaCost;
     public float CooldownTime;
 
     public UISpellInfo skillInfo;
@@ -30,7 +31,10 @@ public abstract class Skill : ScriptableObject
 }
 public abstract class SkillController : NetworkBehaviour
 {
+    public bool OnCooldown { get => onCooldown; }
+
     public Skill SkillData;
+
     protected bool isCasting;
     protected bool isSkillActive;
     protected SkillIndicator currentIndicator;
@@ -70,6 +74,7 @@ public abstract class SkillController : NetworkBehaviour
     private void StartCast()
     {
         isCasting = true;
+        if (SkillData.ManaCost > 0) controller.Health.CmdUseMana(SkillData.ManaCost);
         if (SkillData.BlockMovementOnCast)
         {
             controller.Movement.BlockMovement();
@@ -78,6 +83,7 @@ public abstract class SkillController : NetworkBehaviour
         {
             controller.AttackController.BlockAttacking();
         }
+        StartCoroutine(StartCooldown());
         StartCoroutine(EndCastRoutine());
         OnCastStart();
     }
@@ -161,9 +167,5 @@ public abstract class SkillController : NetworkBehaviour
         onCooldown = false;
     }
 
-    public virtual bool IsSkillReady()
-    {
-        if (onCooldown) return false;
-        return true;
-    }
+   
 }

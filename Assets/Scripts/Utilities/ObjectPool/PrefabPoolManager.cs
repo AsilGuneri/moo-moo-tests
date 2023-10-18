@@ -59,7 +59,10 @@ public class PrefabPoolManager : NetworkBehaviour
             Debug.LogError($"Pool for {config.prefab.name} has reached max size of {config.maxSize}");
             return null;
         }
-
+        if(config.prefab == null)
+        {
+            Debug.Log("asilxx " + config.prefab.name);
+        }
         GameObject next = Instantiate(config.prefab.gameObject, transform);
         next.name = $"{config.prefab.name}_pooled_{config.currentCount}";
         next.SetActive(false);

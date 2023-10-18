@@ -8,6 +8,7 @@ public class HeroBaseStatsData : ScriptableObject
 {
     public float AttackSpeed;
     public float Range;
-    public int Hp;
+    public int Health;
+    public int Mana;
     public int Damage;
 }

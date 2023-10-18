@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackSpeed: 0.66
   Range: 5
-  Hp: 180
+  Health: 140
+  Mana: 0
   Damage: 24
