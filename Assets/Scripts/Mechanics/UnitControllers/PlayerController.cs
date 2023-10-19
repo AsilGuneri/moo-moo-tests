@@ -27,6 +27,7 @@ public class PlayerController : UnitController
     protected override void Awake()
     {
         base.Awake();
+        statController = GetComponent<StatController>();
     }
     protected override void Start()
     {
@@ -69,7 +70,7 @@ public class PlayerController : UnitController
         mainCamera = Camera.main;
         Debug.Log("Main camera is set");
         mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
-        health.ResetHealth();
+        statController.SetupStats();
         SubscribeAnimEvents();
     }
 

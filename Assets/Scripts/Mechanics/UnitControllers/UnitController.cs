@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(StatController))]
 public abstract class UnitController : NetworkBehaviour
 {
     
     //others
+    public StatController StatController { get => statController; }
     public List<SkillController> Skills { get => skills; }
     public Vector3 HitPoint { get => transform.position + hitPointOffset; }
     public Transform ProjectileSpawnPoint { get => projectileSpawnPoint; }
@@ -36,6 +38,8 @@ public abstract class UnitController : NetworkBehaviour
     protected BasicAttackController attackController;
     protected Movement movement;
     protected Health health;
+    protected StatController statController;
+
 
     protected virtual void Awake()
     {
@@ -66,6 +70,7 @@ public abstract class UnitController : NetworkBehaviour
         animationController = GetComponent<AnimationController>();
         networkAnimator = GetComponent<NetworkAnimator>();
         health = GetComponent<Health>();
+        statController = GetComponent<StatController>();
     }
     protected void SubscribeAnimEvents()
     {
