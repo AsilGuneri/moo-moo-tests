@@ -18,7 +18,9 @@ public class Health : NetworkBehaviour
     private HealthBar healthBar;//
     public int ExpToGain;
 
+    [SyncVar]
     private int maxHealth;
+    [SyncVar]
     private int maxMana;
     private UnitController controller;
     private bool isActive = false;
@@ -76,13 +78,19 @@ public class Health : NetworkBehaviour
         }
     }
     [Command(requiresAuthority = false)] //no authority because we dont own enemies
-    public void CmdSetupHealth(int maxHealth, int maxMana)
+    public void CmdInitializeHealth(int maxHealth, int maxMana)
     {
-        SetupHealth(maxHealth, maxMana);
+        InitializeHealth(maxHealth, maxMana);
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdUpdateMaxStats(int maxHealth, int maxMana)
+    {
+        if (maxHealth != this.maxHealth) this.maxHealth = maxHealth;
+        if (maxMana != this.maxMana) this.maxMana = maxMana;
     }
 
     [Server]
-    private void SetupHealth(int maxHealth, int maxMana)
+    private void InitializeHealth(int maxHealth, int maxMana)
     {
         UnitManager.Instance.RegisterUnit(controller);
         IsDead = false;
@@ -91,16 +99,16 @@ public class Health : NetworkBehaviour
         currentHealth = maxHealth;
         currentMana = maxMana;
         isActive = true;
-        RpcSetupHealth();
-        if (maxMana > 0) RpcSetupMana();
+        RpcUpdateHealthBar();
+        if (maxMana > 0) RpcUpdateMana();
     }
     [ClientRpc]
-    private void RpcSetupHealth()
+    private void RpcUpdateHealthBar()
     {
         healthBar.UpdateHealthBar(maxHealth, currentHealth);
     }
     [ClientRpc]
-    private void RpcSetupMana()
+    private void RpcUpdateMana()
     {
         healthBar.UpdateMana(maxMana, currentMana);
     }

@@ -25,13 +25,17 @@ public class StatController : MonoBehaviour
         maxHealth = baseHealth;
         maxMana = baseMana;
     }
-    public void SetupStats()
+    public void InitializeStats()
     {
-        controller.Health.CmdSetupHealth(maxHealth, maxMana);
+        controller.Health.CmdInitializeHealth(maxHealth, maxMana);
     }
 
-    //public void ChangeMaxHealth(int additionalHealth)
-    //{
-    //    maxHealth = additionalHealth;
-    //}
+    public void ChangeMaxStats(int additionalHealth, int additionalMana)
+    {
+
+        maxHealth += additionalHealth;
+        maxMana += additionalMana;
+
+        controller.Health.CmdUpdateMaxStats(maxHealth, maxMana);   
+    }
 }
