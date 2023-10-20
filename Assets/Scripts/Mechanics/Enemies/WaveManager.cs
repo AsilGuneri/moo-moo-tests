@@ -30,7 +30,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
     {
         int maxWaveIndex = AllWavesData.Instance.WavesData.Count - 1;
 
-        GoldManager.Instance.DistributeGold(AllWavesData.Instance.WavesData[currentWaveIndex].WaveGoldReward);
+        //GoldManager.Instance.DistributeGold(AllWavesData.Instance.WavesData[currentWaveIndex].WaveGoldReward);
 
         currentWaveIndex++;
 

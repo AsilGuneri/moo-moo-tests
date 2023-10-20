@@ -1,3 +1,4 @@
+using DuloGames.UI;
 using MyBox;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,13 +12,11 @@ public abstract class Item : ScriptableObject
     [Separator]
     public int HealthBonus;
     public int ManaBonus;
-    public int MoveSpeedBonus;
-    [Range(0f, 1f)]
-    public float CooldownBonus;
-    [Separator]
-    public int DamageBonus;
-    [Range (0f, 1f)]
-    public float AttackSpeedBonus;
-    [Range(0f, 1f)]
-    public float LifeStealBonus;
+
+    public UIItemInfo ItemInfo;
+
+    public virtual void OnAcquire(StatController statController)
+    {
+        statController.ChangeMaxStats(HealthBonus, ManaBonus);
+    }
 }

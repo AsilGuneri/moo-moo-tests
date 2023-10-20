@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 public class CustomNetworkRoomManager : NetworkRoomManager
 {
     public List<CustomNetworkRoomPlayer> RoomPlayers = new List<CustomNetworkRoomPlayer>();
-    public List<UnitController> GamePlayers = new List<UnitController>();
+    public List<PlayerController> GamePlayers = new List<PlayerController>();
 
     public bool IsGameInProgress = false;
 
@@ -95,7 +95,7 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         GameObject prefab = playerPrefab;
         GameObject gamePlayer = Instantiate(prefab, Vector3.zero, Quaternion.identity);
 
-        var playerController = gamePlayer.GetComponent<UnitController>();
+        var playerController = gamePlayer.GetComponent<PlayerController>();
         //playerController.PlayerName = conn.connectionId.ToString(); // temp
         GamePlayers.Add(playerController);
         return gamePlayer;
@@ -105,5 +105,17 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         CustomNetworkRoomPlayer roomPlayer = (CustomNetworkRoomPlayer)Instantiate(roomPlayerPrefab);
         roomPlayer.SetPlayerData(conn.connectionId);
         return roomPlayer.gameObject;
+    }
+    public PlayerController GetLocalPlayer()
+    {
+        foreach(var player in GamePlayers)
+        {
+            Debug.Log("asilxx " + player.connectionToClient.connectionId + " " + NetworkConnection.LocalConnectionId);
+            if(player.connectionToClient.connectionId == NetworkConnection.LocalConnectionId)
+            {
+                return player;
+            }
+        }
+        return null;
     }
 }

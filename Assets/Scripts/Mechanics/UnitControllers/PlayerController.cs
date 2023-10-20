@@ -51,7 +51,6 @@ public class PlayerController : UnitController
         
         if (isServer) //server
         {
-            //GoldManager.Instance.GameBank.AddBankAccount(this);
             //ContributionPanel.Instance.AddPlayerContributionField(this);
         }
         if (isClient) // client (host is also a client)
