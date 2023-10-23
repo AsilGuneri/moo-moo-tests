@@ -12,7 +12,7 @@ public class LocalPlayerUI : NetworkSingleton<LocalPlayerUI>
     public HealthBarUI HealthBarUI;
     public ExpBarUI ExpBarUI;
     public SkillBarUI SkillBarUI;
-    
+    public GoldUI GoldUI;
 }
 [Serializable]
 public class SkillBarUI
@@ -24,14 +24,13 @@ public class SkillBarUI
 
         for (int i = 0; i < uiSlots.Length; i++)
         {
-            if (player.Skills.Count -1 < i) break;
+            if (player.Skills.Count - 1 < i) break;
             var skillController = player.Skills[i];
             uiSlots[i].Assign(skillController.SkillData.skillInfo);
             skillController.SetUISlot(uiSlots[i]);
         }
     }
 }
-
 [Serializable]
 public class HealthBarUI
 {
@@ -59,11 +58,19 @@ public class ExpBarUI
 {
     [SerializeField] Image expFill;
 
-
-
     public void UpdateExpBar(float currentValue, float maxValue)
     {
         float fillAmount = currentValue / maxValue;
         expFill.fillAmount = fillAmount;
+    }
+}
+[Serializable]
+public class GoldUI
+{
+    [SerializeField] TextMeshProUGUI goldText;
+
+    public void UpdateGold(int amount)
+    {
+       goldText.text = amount.ToString();
     }
 }

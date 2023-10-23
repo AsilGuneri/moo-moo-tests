@@ -2035,7 +2035,7 @@ GameObject:
   - component: {fileID: 132851739}
   - component: {fileID: 132851738}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: GoldDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2386,7 +2386,6 @@ GameObject:
   - component: {fileID: 334110800}
   - component: {fileID: 334110801}
   - component: {fileID: 334110803}
-  - component: {fileID: 334110802}
   m_Layer: 0
   m_Name: = Managers
   m_TagString: Untagged
@@ -2441,8 +2440,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  bank:
-    BankAccounts: []
 --- !u!114 &334110792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2657,22 +2654,8 @@ MonoBehaviour:
     - {fileID: 2676848881370480932}
     - {fileID: 2676848883375131559}
     - {fileID: 2676848881919912510}
---- !u!114 &334110802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 334110787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16711f0edd5d3ba4ea9355023d2384a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  goldText: {fileID: 132851738}
+  GoldUI:
+    goldText: {fileID: 132851738}
 --- !u!114 &334110803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2688,8 +2671,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  bank:
-    BankAccounts: []
 --- !u!1 &336534665
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,6 +25,8 @@ public class ShopItemSlot : MonoBehaviour
     }
     private void BuyItem()
     {
-       // GoldManager.Instance.GameBank.SpendGold(item.GoldCost);
+        var customManager = NetworkRoomManager.singleton as CustomNetworkRoomManager;
+        var player = customManager.GetLocalPlayer();
+        player.GoldController.CmdSpendGold(item.GoldCost);
     }
 }
