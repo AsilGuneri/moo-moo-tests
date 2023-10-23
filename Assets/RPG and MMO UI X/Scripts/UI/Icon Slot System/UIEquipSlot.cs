@@ -143,8 +143,8 @@ namespace DuloGames.UI
             if (info == null)
                 return false;
 
-			if (info.EquipType != this.equipType)
-				return false;
+			//if (info.EquipType != this.equipType)
+			//	return false;
 			
 			return true;
 		}

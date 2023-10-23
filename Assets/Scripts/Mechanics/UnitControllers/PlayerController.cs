@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : UnitController
 {
+    public PlayerGoldController GoldController { get; private set; }
+
     [SerializeField] private LayerMask clickableLayerMask;
     [SerializeField] private GameObject moveIndicator;
     [SerializeField] private GameObject attackModeIndicator;
@@ -27,6 +29,8 @@ public class PlayerController : UnitController
     protected override void Awake()
     {
         base.Awake();
+        statController = GetComponent<StatController>();
+        GoldController = GetComponent<PlayerGoldController>();
     }
     protected override void Start()
     {
@@ -50,11 +54,11 @@ public class PlayerController : UnitController
         
         if (isServer) //server
         {
-            //GoldManager.Instance.GameBank.AddBankAccount(this);
             //ContributionPanel.Instance.AddPlayerContributionField(this);
         }
         if (isClient) // client (host is also a client)
         {
+            GoldController.CmdAddGold(100);
             UnitManager.Instance.RegisterUnit(this);
             StartCharacter(); // everyone
             GetComponent<PlayerInput>().enabled = true;
@@ -69,7 +73,7 @@ public class PlayerController : UnitController
         mainCamera = Camera.main;
         Debug.Log("Main camera is set");
         mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
-        health.ResetHealth();
+        statController.InitializeStats();
         SubscribeAnimEvents();
     }
 

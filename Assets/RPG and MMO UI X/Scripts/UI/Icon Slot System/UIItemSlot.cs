@@ -18,7 +18,9 @@ namespace DuloGames.UI
 		
 		[SerializeField] private UIItemSlot_Group m_SlotGroup = UIItemSlot_Group.None;
 		[SerializeField] private int m_ID = 0;
-		
+
+		public bool isFull;
+
 		/// <summary>
 		/// Gets or sets the slot group.
 		/// </summary>
@@ -454,36 +456,36 @@ namespace DuloGames.UI
             UITooltip.AddTitle("<color=#" + UIItemQualityColor.GetHexColor(itemInfo.Quality) + ">" + itemInfo.Name + "</color>");
 
             // Spacer
-            UITooltip.AddSpacer();
+            //UITooltip.AddSpacer();
 
             // Item types
-            UITooltip.AddLineColumn(itemInfo.Type, "ItemAttribute");
-            UITooltip.AddLineColumn(itemInfo.Subtype, "ItemAttribute");
+            //UITooltip.AddLineColumn(itemInfo.Type, "ItemAttribute");
+            //UITooltip.AddLineColumn(itemInfo.Subtype, "ItemAttribute");
 
-            if (itemInfo.ItemType == 1)
-            {
-                UITooltip.AddLineColumn(itemInfo.Damage.ToString() + " Damage", "ItemAttribute");
-                UITooltip.AddLineColumn(itemInfo.AttackSpeed.ToString("0.0") + " Attack speed", "ItemAttribute");
+            //if (itemInfo.ItemType == 1)
+            //{
+            //    UITooltip.AddLineColumn(itemInfo.Damage.ToString() + " Damage", "ItemAttribute");
+            //    UITooltip.AddLineColumn(itemInfo.AttackSpeed.ToString("0.0") + " Attack speed", "ItemAttribute");
 
-                UITooltip.AddLine("(" + ((float)itemInfo.Damage / itemInfo.AttackSpeed).ToString("0.0") + " damage per second)", "ItemAttribute");
-            }
-            else
-            {
-                UITooltip.AddLineColumn(itemInfo.Armor.ToString() + " Armor", "ItemAttribute");
-                UITooltip.AddLineColumn(itemInfo.Block.ToString() + " Block", "ItemAttribute");
-            }
-
-            UITooltip.AddSpacer();
-
-            UITooltip.AddLine("+" + itemInfo.Stamina.ToString() + " Stamina", "ItemStat");
-            UITooltip.AddLine("+" + itemInfo.Strength.ToString() + " Strength", "ItemStat");
+            //    UITooltip.AddLine("(" + ((float)itemInfo.Damage / itemInfo.AttackSpeed).ToString("0.0") + " damage per second)", "ItemAttribute");
+            //}
+            //else
+            //{
+            //    UITooltip.AddLineColumn(itemInfo.Armor.ToString() + " Armor", "ItemAttribute");
+            //    UITooltip.AddLineColumn(itemInfo.Block.ToString() + " Block", "ItemAttribute");
+            //}
 
             UITooltip.AddSpacer();
 
-            UITooltip.AddLine("Durability " + itemInfo.Durability + "/" + itemInfo.Durability, "ItemAttribute");
+            UITooltip.AddLine("+" + itemInfo.Health.ToString() + " Health", "ItemStat");
+            UITooltip.AddLine("+" + itemInfo.Mana.ToString() + " Mana", "ItemStat");
 
-            if (itemInfo.RequiredLevel > 0)
-                UITooltip.AddLine("Requires Level " + itemInfo.RequiredLevel, "ItemAttribute");
+            UITooltip.AddSpacer();
+
+            //UITooltip.AddLine("Durability " + itemInfo.Durability + "/" + itemInfo.Durability, "ItemAttribute");
+
+            //if (itemInfo.RequiredLevel > 0)
+            //    UITooltip.AddLine("Requires Level " + itemInfo.RequiredLevel, "ItemAttribute");
 
             // Set the item description if not empty
             if (!string.IsNullOrEmpty(itemInfo.Description))

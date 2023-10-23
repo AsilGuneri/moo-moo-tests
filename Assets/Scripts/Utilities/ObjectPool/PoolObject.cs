@@ -68,7 +68,8 @@ public class PoolObject : NetworkBehaviour
     {
         if (TryGetComponent(out UnitController controller))
         {
-            controller.Health.ResetHealth();
+            if (controller.unitType != UnitType.Player)
+                controller.StatController.InitializeStats();
         }
         if (TryGetComponent(out EnemyBrain brain))
         {

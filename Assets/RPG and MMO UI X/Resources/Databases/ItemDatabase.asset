@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -17,14 +18,14 @@ MonoBehaviour:
     Icon: {fileID: 21300000, guid: 10f84c976431925449c6c450abe174fc, type: 3}
     Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     Quality: 5
-    EquipType: 1
-    ItemType: 1
-    Type: Sword
-    Subtype: Two-Handed
+    EquipType: 0
+    ItemType: 0
+    Type: 
+    Subtype: 
     Damage: 1200
     AttackSpeed: 3.6
-    Block: 0
-    Armor: 0
+    Block: 100
+    Armor: 100
     Stamina: 230
     Strength: 370
     Durability: 100

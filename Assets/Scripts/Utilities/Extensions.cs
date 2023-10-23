@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -121,6 +122,13 @@ public class Extensions : MonoBehaviour
 
         float distanceBetweenEdges = distanceBetweenCenters - (unitRadius + targetRadius);
         return distanceBetweenEdges <= range;
+    }
+    public static void DestroyAllChildren(Transform parent)
+    {
+        foreach (Transform child in parent)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
 

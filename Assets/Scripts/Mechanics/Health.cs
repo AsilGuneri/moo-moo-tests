@@ -13,14 +13,15 @@ public class Health : NetworkBehaviour
     public bool IsDead { get; private set; }
     public int CurrentMana { get => currentMana; }
     public int CurrentHealth { get => currentHealth; }
-    public int CurrentHealthPercentage { get { return (currentHealth / baseHealth) * 100; } }
+    public int CurrentHealthPercentage { get { return (currentHealth / maxHealth) * 100; } }
 
     private HealthBar healthBar;//
     public int ExpToGain;
 
-    private HeroBaseStatsData _heroStats;
-    private int baseHealth;
-    private int baseMana;
+    [SyncVar]
+    private int maxHealth;
+    [SyncVar]
+    private int maxMana;
     private UnitController controller;
     private bool isActive = false;
 
@@ -31,20 +32,16 @@ public class Health : NetworkBehaviour
 
     private void OnHealthChanged(int oldHealth, int newHealth)
     {
-        healthBar.UpdateHealthBar(baseHealth, newHealth);
+        healthBar.UpdateHealthBar(maxHealth, newHealth);
     }
     private void OnManaChanged(int oldMana, int newMana)
     {
-        healthBar.UpdateMana(baseMana, newMana);
+        healthBar.UpdateMana(maxMana, newMana);
     }
-
 
 
     private void Awake()
     {
-        _heroStats = GetComponent<PlayerDataHolder>().HeroStatsData;
-        baseHealth = _heroStats.Health;
-        baseMana = _heroStats.Mana;
         controller = GetComponent<UnitController>();
         healthBar = GetComponent<HealthBar>();
         //baseHp = 10000000;
@@ -75,37 +72,55 @@ public class Health : NetworkBehaviour
     public void Heal(int amount)
     {
         currentHealth += amount;
-        if (currentHealth > baseHealth)
+        if (currentHealth > maxHealth)
         {
-            currentHealth = baseHealth;
+            currentHealth = maxHealth;
         }
     }
     [Command(requiresAuthority = false)] //no authority because we dont own enemies
-    public void ResetHealth()
+    public void CmdInitializeHealth(int maxHealth, int maxMana)
     {
-        SetupHealth();
+        InitializeHealth(maxHealth, maxMana);
+    }
+    [Command(requiresAuthority = false)]
+    public void CmdUpdateMaxStats(int additionalHealth, int additionalMana)
+    {
+        if (additionalHealth != 0)
+        {
+            maxHealth += additionalHealth;
+            currentHealth += additionalHealth;
+            RpcUpdateHealthBar();
+        }
+        if (additionalMana != 0) 
+        {
+            maxMana += additionalMana;
+            currentMana += additionalMana;
+            RpcUpdateMana();
+        }
     }
 
     [Server]
-    private void SetupHealth()
+    private void InitializeHealth(int maxHealth, int maxMana)
     {
         UnitManager.Instance.RegisterUnit(controller);
         IsDead = false;
-        currentHealth = baseHealth;
-        if (baseMana > 0) currentMana = baseMana; 
+        this.maxHealth = maxHealth;
+        this.maxMana = maxMana;
+        currentHealth = maxHealth;
+        currentMana = maxMana;
         isActive = true;
-        RpcSetupHealth();
+        RpcUpdateHealthBar();
+        if (maxMana > 0) RpcUpdateMana();
     }
     [ClientRpc]
-    private void RpcSetupHealth()
+    private void RpcUpdateHealthBar()
     {
-        healthBar.UpdateHealthBar(baseHealth, baseHealth);
+        healthBar.UpdateHealthBar(maxHealth, currentHealth);
     }
-
     [ClientRpc]
-    private void RpcUpdateHealth()
+    private void RpcUpdateMana()
     {
-        healthBar.UpdateHealthBar(baseHealth, baseHealth);
+        healthBar.UpdateMana(maxMana, currentMana);
     }
 
     private void AddDamageStats(int dmg, Transform dealerTransform)
@@ -145,7 +160,7 @@ public class Health : NetworkBehaviour
         base.OnStartClient();
 
         // Call the UpdateHealthBar method directly to make sure the client initializes with the current health values
-        healthBar.UpdateHealthBar(baseHealth, currentHealth);
+        healthBar.UpdateHealthBar(maxHealth, currentHealth);
     }
 
 }
