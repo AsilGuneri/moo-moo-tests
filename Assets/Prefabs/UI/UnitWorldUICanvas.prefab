@@ -205,7 +205,6 @@ GameObject:
   - component: {fileID: 749608212114956279}
   - component: {fileID: 5929131373154905016}
   - component: {fileID: 3411778304062409471}
-  - component: {fileID: 8170649597135888926}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -222,7 +221,7 @@ RectTransform:
   m_GameObject: {fileID: 2637416046925072383}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.04, y: 0.04, z: 0.04}
+  m_LocalScale: {x: 0.07, y: 0.07, z: 0.07}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1941386820667333898}
@@ -324,20 +323,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8170649597135888926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2637416046925072383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95c090c813dc3724187906693b7a29d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthSlider: {fileID: 3411778304062409471}
-  healthText: {fileID: 4784393099699799652}
 --- !u!1 &3073179089772320531
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,8 +391,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e14eb4d9eba074660b35c9d2ccd6d8d9, type: 2}
-  m_sharedMaterial: {fileID: 4136455183930518563, guid: e14eb4d9eba074660b35c9d2ccd6d8d9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
