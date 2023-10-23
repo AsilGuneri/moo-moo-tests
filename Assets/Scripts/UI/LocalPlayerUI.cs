@@ -13,6 +13,7 @@ public class LocalPlayerUI : NetworkSingleton<LocalPlayerUI>
     public ExpBarUI ExpBarUI;
     public SkillBarUI SkillBarUI;
     public GoldUI GoldUI;
+    public InventoryUI InventoryUI;
 }
 [Serializable]
 public class SkillBarUI
@@ -72,5 +73,32 @@ public class GoldUI
     public void UpdateGold(int amount)
     {
        goldText.text = amount.ToString();
+    }
+}
+[Serializable]
+public class InventoryUI
+{
+    [SerializeField] List<UIItemSlot> slots = new List<UIItemSlot>();
+
+    public void AssignItem(UIItemInfo itemInfo)
+    {
+        foreach(var slot in slots)
+        {
+            if (!slot.isFull)
+            {
+                slot.Assign(itemInfo);
+                slot.isFull = true;
+                break;
+            }
+        }
+    }
+    public bool IsInventoryFull()
+    {
+        bool isFull = true;
+        foreach(var slot in slots)
+        {
+            if (!slot.isFull) isFull = false;
+        }
+        return isFull;
     }
 }

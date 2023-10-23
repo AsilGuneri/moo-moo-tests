@@ -110,7 +110,6 @@ public class CustomNetworkRoomManager : NetworkRoomManager
     {
         foreach(var player in GamePlayers)
         {
-            Debug.Log("asilxx " + player.connectionToClient.connectionId + " " + NetworkConnection.LocalConnectionId);
             if(player.connectionToClient.connectionId == NetworkConnection.LocalConnectionId)
             {
                 return player;

@@ -36,6 +36,6 @@ public class StatController : MonoBehaviour
         maxHealth += additionalHealth;
         maxMana += additionalMana;
 
-        controller.Health.CmdUpdateMaxStats(maxHealth, maxMana);   
+        controller.Health.CmdUpdateMaxStats(additionalHealth, additionalMana);   
     }
 }

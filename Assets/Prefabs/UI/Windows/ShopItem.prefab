@@ -440,6 +440,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 0
   m_ID: 1
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -776,7 +777,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 600, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7760849801511056716
 MonoBehaviour:
@@ -962,6 +963,7 @@ MonoBehaviour:
   nameText: {fileID: 3986032495900615287}
   priceText: {fileID: 3777751437346347487}
   buyButton: {fileID: 2303994218520057250}
+  frameButton: {fileID: 7760849801511056716}
 --- !u!1 &908061480972835740
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,8 +1341,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 137.4, y: -32.8}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 202.479, y: -0.381}
+  m_SizeDelta: {x: 122.679, y: 95.503}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5210166783390980325
 CanvasRenderer:

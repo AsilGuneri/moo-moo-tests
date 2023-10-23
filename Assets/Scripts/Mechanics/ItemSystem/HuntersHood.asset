@@ -12,25 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30048887a768235498af21dd10c137cf, type: 3}
   m_Name: HuntersHood
   m_EditorClassIdentifier: 
-  Name: HuntersHood
+  Name: Red Lipstick
   GoldCost: 10
   HealthBonus: 42
   ManaBonus: 20
   ItemInfo:
     ID: 0
-    Name: 
+    Name: Red Lipstick
     Icon: {fileID: 21300000, guid: f6116e77b83830d40bfb0a16527fa228, type: 3}
-    Description: 
+    Description: Birlesmis dudaklar hava gecmiyor aradan, sikilmeyecek amcik yoktur
+      sen haber ver paradan.
     Quality: 0
     EquipType: 0
-    ItemType: 0
-    Type: 
-    Subtype: 
-    Damage: 0
-    AttackSpeed: 0
-    Block: 0
-    Armor: 0
-    Stamina: 0
-    Strength: 0
-    Durability: 0
-    RequiredLevel: 0
+    Health: 42
+    Mana: 20

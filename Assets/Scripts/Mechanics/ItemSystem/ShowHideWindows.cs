@@ -1,15 +1,27 @@
 using DuloGames.UI;
 using Mirror;
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using Utilities;
 
-public class ShowHideWindows : NetworkBehaviour
+public class ShowHideWindows : NetworkSingleton<ShowHideWindows>
 {
     [SerializeField] private UIWindow shopWindow;
     [SerializeField] private ShopItemSlot shopSlotPrefab;
     [SerializeField] private Transform shopContentParent;
+    [Separator("Selected Item")]
+    [SerializeField] private TextMeshProUGUI selectedItemName;
+    [SerializeField] private Image selectedItemIcon;
+    [SerializeField] private TextMeshProUGUI selectedItemDescripton;
+    [SerializeField] private TextMeshProUGUI selectedItemStats;
 
+
+    private List<ShopItemSlot> shopItems = new();
+    private ShopItemSlot selectedItem;
 
     private void Start()
     {
@@ -32,8 +44,16 @@ public class ShowHideWindows : NetworkBehaviour
         {
             var slot = Instantiate(shopSlotPrefab, shopContentParent).GetComponent<ShopItemSlot>();
             slot.Setup(item);
+            shopItems.Add(slot);
         }
-        Debug.Log("asilxx121");
-
+    }
+    public void SelectItem(ShopItemSlot slot)
+    {
+        if (slot == selectedItem) return;
+        selectedItem = slot;
+        selectedItemName.text = slot.Item.ItemInfo.Name;
+        selectedItemIcon.sprite = slot.Item.ItemInfo.Icon;
+        selectedItemDescripton.text = slot.Item.ItemInfo.Description;
+    //    selectedItemStats.text 
     }
 }

@@ -19,4 +19,8 @@ public abstract class Item : ScriptableObject
     {
         statController.ChangeMaxStats(HealthBonus, ManaBonus);
     }
+    public virtual void OnRemove(StatController statController)
+    {
+        statController.ChangeMaxStats(-HealthBonus, -ManaBonus);
+    }
 }

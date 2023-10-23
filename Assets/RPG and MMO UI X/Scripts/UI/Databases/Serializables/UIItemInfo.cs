@@ -12,16 +12,9 @@ namespace DuloGames.UI
 		public string Description;
         public UIItemQuality Quality;
         public UIEquipmentType EquipType;
-		public int ItemType;
-		public string Type;
-		public string Subtype;
-		public int Damage;
-		public float AttackSpeed;
-		public int Block;
-		public int Armor;
-		public int Stamina;
-		public int Strength;
-        public int Durability;
-        public int RequiredLevel;
+
+		public int Health;
+		public int Mana;
+
 	}
 }

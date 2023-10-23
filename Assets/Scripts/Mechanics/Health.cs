@@ -83,10 +83,20 @@ public class Health : NetworkBehaviour
         InitializeHealth(maxHealth, maxMana);
     }
     [Command(requiresAuthority = false)]
-    public void CmdUpdateMaxStats(int maxHealth, int maxMana)
+    public void CmdUpdateMaxStats(int additionalHealth, int additionalMana)
     {
-        if (maxHealth != this.maxHealth) this.maxHealth = maxHealth;
-        if (maxMana != this.maxMana) this.maxMana = maxMana;
+        if (additionalHealth != 0)
+        {
+            maxHealth += additionalHealth;
+            currentHealth += additionalHealth;
+            RpcUpdateHealthBar();
+        }
+        if (additionalMana != 0) 
+        {
+            maxMana += additionalMana;
+            currentMana += additionalMana;
+            RpcUpdateMana();
+        }
     }
 
     [Server]
