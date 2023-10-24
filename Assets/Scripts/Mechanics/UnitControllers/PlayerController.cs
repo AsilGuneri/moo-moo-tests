@@ -74,7 +74,7 @@ public class PlayerController : UnitController
     {
         mainCamera = Camera.main;
         Debug.Log("Main camera is set");
-        mainCamera.GetComponent<FollowingCamera>().SetupCinemachine(transform);
+        mainCamera.transform.parent.GetComponent<FollowingCamera>().SetupCinemachine(transform);
         statController.InitializeStats();
         SubscribeAnimEvents();
     }

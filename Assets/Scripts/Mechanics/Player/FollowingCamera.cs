@@ -7,6 +7,7 @@ using MyBox;
 public class FollowingCamera : MonoBehaviour
 {
     public bool IsFollowing = true;
+    public Transform zoomTransform;
 
     [SerializeField] private float cornerThickness;
     [SerializeField] private float cornerMovementSpeed;
@@ -19,22 +20,36 @@ public class FollowingCamera : MonoBehaviour
     Camera mainCam;
     Vector3 initialOffset;
     bool isActive;
+    bool isZooming;
+    private float targetDistance;
 
     private void Awake()
     {
         mainCam = GetComponent<Camera>();
     }
+
     private void Update()
     {
         if (!isActive) return;
 
         if (Input.GetKeyDown(KeyCode.Y)) ToggleLock();
-        
+
+        if (Input.mouseScrollDelta.y != 0)
+        {
+            targetDistance = zoomTransform.localPosition.z + (Input.mouseScrollDelta.y * scrollSpeed);
+            targetDistance = Mathf.Clamp(targetDistance, minDistance, maxDistance);
+        }
+
+        // Check if the current zoom position is far from the target or if mouse scrolling is happening
+        isZooming = Mathf.Abs(zoomTransform.localPosition.z - targetDistance) > 0.01f || Input.mouseScrollDelta.y != 0;
     }
     void LateUpdate()
     {
         if (!isActive) return;
-        //ZoomInOut();
+        if (isZooming)
+        {
+            ZoomInOut();
+        }
         if (IsFollowing)
         {
             FollowTarget();
@@ -77,7 +92,15 @@ public class FollowingCamera : MonoBehaviour
        
     }
 
-    private void ZoomInOut()
-    {
-    }
+    [SerializeField]
+    private float zoomSmoothness = 10.0f; // The higher the value, the faster the zoom. Adjust to taste.
+
+  private void ZoomInOut()
+{
+    Vector3 currentPos = zoomTransform.localPosition;
+    Vector3 targetPos = new Vector3(0, 0, targetDistance);
+
+    zoomTransform.localPosition = Vector3.Lerp(currentPos, targetPos, Time.deltaTime * zoomSmoothness);
+}
+
 }
