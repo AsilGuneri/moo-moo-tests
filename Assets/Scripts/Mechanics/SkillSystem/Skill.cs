@@ -104,7 +104,7 @@ public abstract class SkillController : NetworkBehaviour
 
     private void StartSkill()
     {
-        isSkillActive = false;
+        isSkillActive = true;
         if (SkillData.BlockMovementOnSkill)
         {
             controller.Movement.BlockMovement();

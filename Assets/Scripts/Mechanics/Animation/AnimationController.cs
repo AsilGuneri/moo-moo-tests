@@ -45,7 +45,15 @@ public class AnimationController : NetworkBehaviour
         if (!hasCancelAttackAnim) return;
         animator.Play("CancelAttack");
     }
-
+    public void StartJump()
+    {
+        animator.SetBool("isJumping", true);
+        animator.SetTrigger("jump");
+    }
+    public void EndJump()
+    {
+        animator.SetBool("isJumping", false);
+    }
     private void CacheAnimationDurations()
     {
         if (!animator) return;

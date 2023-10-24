@@ -9,8 +9,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : UnitController
 {
+    public SkillController JumpSkill { get => jumpSkill; }
     public PlayerGoldController GoldController { get; private set; }
 
+    [SerializeField] private SkillController jumpSkill;
     [SerializeField] private LayerMask clickableLayerMask;
     [SerializeField] private GameObject moveIndicator;
     [SerializeField] private GameObject attackModeIndicator;
@@ -269,6 +271,20 @@ public class PlayerController : UnitController
     private void OnSkill3()
     {
         //UseSkillById(3);
+    }
+    private void OnFlash()
+    {
+        if (!CanCastSkill(jumpSkill)) return;
+        var skill = jumpSkill;
+
+        if (skill.SkillData.HasIndicator)
+        {
+            skill.StartIndicator();
+            isSkillIndicatorActive = true;
+            indicatorActiveSkill = skill;
+        }
+        else skill.Use();
+
     }
     #endregion
     private bool CanCastSkill(SkillController skill)

@@ -19,18 +19,22 @@ public class LocalPlayerUI : NetworkSingleton<LocalPlayerUI>
 public class SkillBarUI
 {
     [SerializeField] UISpellSlot[] uiSlots = new UISpellSlot[4];
-
+    [SerializeField] UISpellSlot jumpSkillSlot;
     public void AssignSkills(PlayerController player)
     {
-
         for (int i = 0; i < uiSlots.Length; i++)
         {
             if (player.Skills.Count - 1 < i) break;
-            var skillController = player.Skills[i];
-            uiSlots[i].Assign(skillController.SkillData.skillInfo);
-            skillController.SetUISlot(uiSlots[i]);
+            AssignSkill(player.Skills[i], uiSlots[i]);
         }
+        AssignSkill(player.JumpSkill, jumpSkillSlot);
     }
+    private void AssignSkill(SkillController skill, UISpellSlot slot)
+    {
+        slot.Assign(skill.SkillData.skillInfo);
+        skill.SetUISlot(slot);
+    }
+
 }
 [Serializable]
 public class HealthBarUI

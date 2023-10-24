@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using ProjectDawn.Navigation.Hybrid;
 using System.Threading.Tasks;
+using System.Collections;
 
 public class Movement : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class Movement : MonoBehaviour
     }
     public void BlockMovement()
     {
+        ClientStop();
         movementBlockCount++;
     }
     public void RemoveMovementBlock()
@@ -75,7 +77,7 @@ public class Movement : MonoBehaviour
 
     public void ClientStop()
     {
-        agent.SetDestination(transform.position);
+        agent.Stop();
         currentTargetPos = Vector3.zero;
         isMoving = false;
         OnMoveStop?.Invoke();
@@ -112,6 +114,7 @@ public class Movement : MonoBehaviour
         ClientStop();
         OnFollowStop?.Invoke();
     }
+
 
     private bool CanMove()
     {
