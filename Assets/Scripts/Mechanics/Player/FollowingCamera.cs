@@ -6,7 +6,7 @@ using MyBox;
 
 public class FollowingCamera : MonoBehaviour
 {
-    public bool IsLocked = true;
+    public bool IsFollowing = true;
 
    // [SerializeField] private CinemachineVirtualCamera virtualCam;
     [SerializeField] private float cornerThickness;
@@ -29,7 +29,7 @@ public class FollowingCamera : MonoBehaviour
     {
         ZoomInOut();
         if (Input.GetKeyDown(KeyCode.Y)) ToggleLock();
-        if (IsLocked) return;
+        if (IsFollowing) return;
 
         
         if (Input.mousePosition.x >= Screen.width - cornerThickness) 
@@ -59,16 +59,16 @@ public class FollowingCamera : MonoBehaviour
     }
     private void ToggleLock()
     {
-        IsLocked = !IsLocked;
-        if (IsLocked)
+        IsFollowing = !IsFollowing;
+        if (IsFollowing)
         {
-            followPos.enabled = false;
+            followPos.enabled = true;
             // cinemachineVirtualCamera.m_Follow = PlayerFollower.transform;
             //virtualCam.enabled = false;
         }
         else
         {
-            followPos.enabled = true;
+            followPos.enabled = false;
             //followEmptyObj.transform.position = PlayerFollower.transform.position;
             //virtualCam.enabled = true;
         }
