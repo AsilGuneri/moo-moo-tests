@@ -6,85 +6,77 @@ using MyBox;
 
 public class FollowingCamera : MonoBehaviour
 {
-    public GameObject PlayerFollower;
+    public bool IsLocked = true;
 
-    [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
+   // [SerializeField] private CinemachineVirtualCamera virtualCam;
     [SerializeField] private float cornerThickness;
     [SerializeField] private float cornerMovementSpeed;
     [Separator("Mouse Wheel Zoom")]
     [SerializeField] private float minDistance;
     [SerializeField] private float maxDistance;
     [SerializeField] private float scrollSpeed;
-    [Separator("Input Data")]
-    [SerializeField] private InputKeysData inputKeysData;
 
+    private Transform target;
+    private FollowPosition followPos;
+    Camera mainCam;
 
-    private Transform _playerTransform;
-    private bool _isLocked;
-    private Vector3 _positionDif;
-    private float _cameraDistance;
-
-    public bool IsLocked = true ;
-    public GameObject followEmptyObj;
-
+    private void Awake()
+    {
+        mainCam = GetComponent<Camera>();
+        followPos = GetComponent<FollowPosition>();
+    }
     void LateUpdate()
     {
-        if (Input.GetKeyDown(inputKeysData.CameraLockKey)) ToggleLock();
         ZoomInOut();
-
+        if (Input.GetKeyDown(KeyCode.Y)) ToggleLock();
         if (IsLocked) return;
 
         
-        if (Input.GetKey(inputKeysData.CenterCameraKey)) CenterCamera();
-
         if (Input.mousePosition.x >= Screen.width - cornerThickness) 
         {
-            followEmptyObj.transform.position += new Vector3(Time.deltaTime * cornerMovementSpeed, 0, 0);
+            transform.position += new Vector3(Time.deltaTime * cornerMovementSpeed, 0, 0);
         }
         else if(Input.mousePosition.x <= cornerThickness)
         {
-            followEmptyObj.transform.position -= new Vector3(Time.deltaTime * cornerMovementSpeed, 0, 0);
+            transform.position -= new Vector3(Time.deltaTime * cornerMovementSpeed, 0, 0);
         }
 
         if (Input.mousePosition.y >= Screen.height - cornerThickness)
         {
-            followEmptyObj.transform.position += new Vector3(0, 0, Time.deltaTime * cornerMovementSpeed);
+            transform.position += new Vector3(0, 0, Time.deltaTime * cornerMovementSpeed);
 
         }
         else if (Input.mousePosition.y <= cornerThickness)
         {
-            followEmptyObj.transform.position -= new Vector3(0, 0, Time.deltaTime * cornerMovementSpeed);
+            transform.position -= new Vector3(0, 0, Time.deltaTime * cornerMovementSpeed);
         }
     }
     public void SetupCinemachine(Transform playerTransform)
     {
-        PlayerFollower.GetComponent<FollowPosition>().TargetTransform = playerTransform;
-        _playerTransform = playerTransform;
-        cinemachineVirtualCamera.m_Follow = PlayerFollower.transform;
-        _positionDif = cinemachineVirtualCamera.transform.position - playerTransform.position;
-
+        //virtualCam.m_Follow = playerTransform;
+        target = playerTransform;
+        followPos.Setup(mainCam, target);
     }
     private void ToggleLock()
     {
         IsLocked = !IsLocked;
         if (IsLocked)
         {
-            cinemachineVirtualCamera.m_Follow = PlayerFollower.transform;
+            followPos.enabled = false;
+            // cinemachineVirtualCamera.m_Follow = PlayerFollower.transform;
+            //virtualCam.enabled = false;
         }
         else
         {
-            followEmptyObj.transform.position = PlayerFollower.transform.position;
-            cinemachineVirtualCamera.m_Follow = followEmptyObj.transform;
-            CenterCamera();
+            followPos.enabled = true;
+            //followEmptyObj.transform.position = PlayerFollower.transform.position;
+            //virtualCam.enabled = true;
         }
     }
-    private void CenterCamera()
-    {
-        followEmptyObj.transform.position = PlayerFollower.transform.position;
-    }
+
     private void ZoomInOut()
     {
-        cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance -= Input.mouseScrollDelta.y * Time.deltaTime * scrollSpeed;
-        cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance = Mathf.Clamp(cinemachineVirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance, minDistance, maxDistance);
+        //virtualCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance -= Input.mouseScrollDelta.y * Time.deltaTime * scrollSpeed;
+        //virtualCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance = Mathf.Clamp(virtualCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance, minDistance, maxDistance);
     }
 }

@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class FollowPosition : MonoBehaviour
 {
-  public Transform TargetTransform { get; set; }
+    private Vector3 initialOffset;
+    private Transform targetTransform;
     void LateUpdate()
     {
-        if (!TargetTransform) return;
-        transform.position = TargetTransform.position;
+        if (!targetTransform) return;
+        transform.position = targetTransform.position + initialOffset;
+    }
+    public void Setup(Camera cam, Transform target)
+    {
+        initialOffset = cam.transform.position - target.position;
+        targetTransform = target;
     }
 }
