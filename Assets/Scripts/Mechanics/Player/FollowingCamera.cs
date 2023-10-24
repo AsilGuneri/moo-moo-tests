@@ -8,7 +8,6 @@ public class FollowingCamera : MonoBehaviour
 {
     public bool IsFollowing = true;
 
-   // [SerializeField] private CinemachineVirtualCamera virtualCam;
     [SerializeField] private float cornerThickness;
     [SerializeField] private float cornerMovementSpeed;
     [Separator("Mouse Wheel Zoom")]
@@ -17,19 +16,30 @@ public class FollowingCamera : MonoBehaviour
     [SerializeField] private float scrollSpeed;
 
     private Transform target;
-    private FollowPosition followPos;
     Camera mainCam;
+    Vector3 initialOffset;
+    bool isActive;
 
     private void Awake()
     {
         mainCam = GetComponent<Camera>();
-        followPos = GetComponent<FollowPosition>();
+    }
+    private void Update()
+    {
+        if (!isActive) return;
+
+        if (Input.GetKeyDown(KeyCode.Y)) ToggleLock();
+        
     }
     void LateUpdate()
     {
-        ZoomInOut();
-        if (Input.GetKeyDown(KeyCode.Y)) ToggleLock();
-        if (IsFollowing) return;
+        if (!isActive) return;
+        //ZoomInOut();
+        if (IsFollowing)
+        {
+            FollowTarget();
+            return;
+        }
 
         
         if (Input.mousePosition.x >= Screen.width - cornerThickness) 
@@ -51,32 +61,23 @@ public class FollowingCamera : MonoBehaviour
             transform.position -= new Vector3(0, 0, Time.deltaTime * cornerMovementSpeed);
         }
     }
+    private void FollowTarget()
+    {
+        transform.position = target.position + initialOffset;
+    }
     public void SetupCinemachine(Transform playerTransform)
     {
-        //virtualCam.m_Follow = playerTransform;
         target = playerTransform;
-        followPos.Setup(mainCam, target);
+        initialOffset = transform.position - target.position;
+        isActive = true;
     }
     private void ToggleLock()
     {
         IsFollowing = !IsFollowing;
-        if (IsFollowing)
-        {
-            followPos.enabled = true;
-            // cinemachineVirtualCamera.m_Follow = PlayerFollower.transform;
-            //virtualCam.enabled = false;
-        }
-        else
-        {
-            followPos.enabled = false;
-            //followEmptyObj.transform.position = PlayerFollower.transform.position;
-            //virtualCam.enabled = true;
-        }
+       
     }
 
     private void ZoomInOut()
     {
-        //virtualCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance -= Input.mouseScrollDelta.y * Time.deltaTime * scrollSpeed;
-        //virtualCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance = Mathf.Clamp(virtualCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_CameraDistance, minDistance, maxDistance);
     }
 }
