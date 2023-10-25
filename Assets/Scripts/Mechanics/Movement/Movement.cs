@@ -92,21 +92,22 @@ public class Movement : MonoBehaviour
         }
         return false;
     }
-    public async void StartFollow(Transform target, float followDistance)
+    public void StartFollow(Transform target, float followDistance)
+    {
+        StartCoroutine(StartFollowRoutine(target, followDistance));
+    }
+    private IEnumerator StartFollowRoutine(Transform target, float followDistance)
     {
         currentTargetPos = target.position;
         isFollowing = true;
 
         while (!Extensions.CheckRangeBetweenUnits(transform, target, followDistance))
         {
-            if (!isFollowing) return;
             ClientMove(target.position);
-            await Task.Delay(100);
-            if(!this) return;
-            if (!transform || !target) return;
+            yield return Extensions.GetWait(0.1f);
+            if (!target || !isFollowing) yield break;
         }
         StopFollow();
-
     }
     public void StopFollow()
     {
