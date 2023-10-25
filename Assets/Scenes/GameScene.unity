@@ -4196,10 +4196,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f5641cf13e09b40ae57ef399660f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsFollowing: 1
-  zoomTransform: {fileID: 1622623377}
+  holdCenterActionRef: {fileID: 2687683034198626302, guid: 23ad589a6b8972949b25f69a1dbb72b6, type: 3}
   cornerThickness: 50
   cornerMovementSpeed: 15
+  zoomTransform: {fileID: 1622623377}
+  zoomSmoothness: 10
   minDistance: -3
   maxDistance: 8
   scrollSpeed: 10

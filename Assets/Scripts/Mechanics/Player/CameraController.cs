@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using MyBox;
+using UnityEngine.InputSystem;
 
 public class CameraController : Singleton<CameraController>
 {
+    [SerializeField] InputActionReference holdCenterActionRef;
+    [Separator("Corner")]
     [SerializeField] private float cornerThickness;
     [SerializeField] private float cornerMovementSpeed;
     [Separator("Mouse Wheel Zoom")]
@@ -21,7 +24,13 @@ public class CameraController : Singleton<CameraController>
     bool isFollowing = true;
     bool isZooming;
     float targetDistance;
+    bool holdingCenterKey = false;
 
+    private void Start()
+    {
+        holdCenterActionRef.action.performed += x => { holdingCenterKey = true; };
+        holdCenterActionRef.action.canceled += x => { holdingCenterKey = false; };
+    }
 
     private void Update()
     {
@@ -34,8 +43,6 @@ public class CameraController : Singleton<CameraController>
             targetDistance = zoomTransform.localPosition.z + (Input.mouseScrollDelta.y * scrollSpeed);
             targetDistance = Mathf.Clamp(targetDistance, minDistance, maxDistance);
         }
-
-        // Check if the current zoom position is far from the target or if mouse scrolling is happening
         isZooming = Mathf.Abs(zoomTransform.localPosition.z - targetDistance) > 0.01f || Input.mouseScrollDelta.y != 0;
     }
     void LateUpdate()
@@ -45,7 +52,7 @@ public class CameraController : Singleton<CameraController>
         {
             ZoomInOut();
         }
-        if (isFollowing)
+        if (isFollowing || holdingCenterKey)
         {
             FollowTarget();
             return;
@@ -71,16 +78,17 @@ public class CameraController : Singleton<CameraController>
             transform.position -= new Vector3(0, 0, Time.deltaTime * cornerMovementSpeed);
         }
     }
-    private void FollowTarget()
-    {
-        transform.position = target.position + initialOffset;
-    }
     public void Setup(Transform playerTransform)
     {
         target = playerTransform;
         initialOffset = transform.position - target.position;
         isActive = true;
     }
+    private void FollowTarget()
+    {
+        transform.position = target.position + initialOffset;
+    }
+    
     private void ToggleLock()
     {
         isFollowing = !isFollowing;
