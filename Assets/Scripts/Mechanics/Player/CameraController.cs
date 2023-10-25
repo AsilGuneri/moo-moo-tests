@@ -4,7 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using MyBox;
 
-public class FollowingCamera : MonoBehaviour
+public class CameraController : Singleton<CameraController>
 {
     public bool IsFollowing = true;
     public Transform zoomTransform;
@@ -80,7 +80,7 @@ public class FollowingCamera : MonoBehaviour
     {
         transform.position = target.position + initialOffset;
     }
-    public void SetupCinemachine(Transform playerTransform)
+    public void Setup(Transform playerTransform)
     {
         target = playerTransform;
         initialOffset = transform.position - target.position;
