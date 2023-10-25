@@ -6,27 +6,22 @@ using MyBox;
 
 public class CameraController : Singleton<CameraController>
 {
-    public bool IsFollowing = true;
-    public Transform zoomTransform;
-
     [SerializeField] private float cornerThickness;
     [SerializeField] private float cornerMovementSpeed;
     [Separator("Mouse Wheel Zoom")]
+    [SerializeField] private Transform zoomTransform;
+    [SerializeField] private float zoomSmoothness = 10.0f;
     [SerializeField] private float minDistance;
     [SerializeField] private float maxDistance;
     [SerializeField] private float scrollSpeed;
 
-    private Transform target;
-    Camera mainCam;
+    Transform target;
     Vector3 initialOffset;
     bool isActive;
+    bool isFollowing = true;
     bool isZooming;
-    private float targetDistance;
+    float targetDistance;
 
-    private void Awake()
-    {
-        mainCam = GetComponent<Camera>();
-    }
 
     private void Update()
     {
@@ -50,18 +45,18 @@ public class CameraController : Singleton<CameraController>
         {
             ZoomInOut();
         }
-        if (IsFollowing)
+        if (isFollowing)
         {
             FollowTarget();
             return;
         }
 
-        
-        if (Input.mousePosition.x >= Screen.width - cornerThickness) 
+
+        if (Input.mousePosition.x >= Screen.width - cornerThickness)
         {
             transform.position += new Vector3(Time.deltaTime * cornerMovementSpeed, 0, 0);
         }
-        else if(Input.mousePosition.x <= cornerThickness)
+        else if (Input.mousePosition.x <= cornerThickness)
         {
             transform.position -= new Vector3(Time.deltaTime * cornerMovementSpeed, 0, 0);
         }
@@ -88,19 +83,15 @@ public class CameraController : Singleton<CameraController>
     }
     private void ToggleLock()
     {
-        IsFollowing = !IsFollowing;
-       
+        isFollowing = !isFollowing;
+
     }
+    private void ZoomInOut()
+    {
+        Vector3 currentPos = zoomTransform.localPosition;
+        Vector3 targetPos = new Vector3(0, 0, targetDistance);
 
-    [SerializeField]
-    private float zoomSmoothness = 10.0f; // The higher the value, the faster the zoom. Adjust to taste.
-
-  private void ZoomInOut()
-{
-    Vector3 currentPos = zoomTransform.localPosition;
-    Vector3 targetPos = new Vector3(0, 0, targetDistance);
-
-    zoomTransform.localPosition = Vector3.Lerp(currentPos, targetPos, Time.deltaTime * zoomSmoothness);
-}
+        zoomTransform.localPosition = Vector3.Lerp(currentPos, targetPos, Time.deltaTime * zoomSmoothness);
+    }
 
 }
