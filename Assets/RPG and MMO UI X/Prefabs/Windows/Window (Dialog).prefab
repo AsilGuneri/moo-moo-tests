@@ -816,6 +816,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 2
   m_ID: 2
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -2194,7 +2195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.24705882, g: 0.4117647, b: 0.6666667, a: 1}
+  m_Color: {r: 0.078431375, g: 0.2627451, b: 0.42745098, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6941,6 +6942,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 2
   m_ID: 1
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []

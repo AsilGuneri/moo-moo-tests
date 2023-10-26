@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasIndicator: 1
   IndicatorPrefab: {fileID: 811260699408436622, guid: 424f4377a8a434a4ca074a3df3a7fb1c, type: 3}
-  HasCastTime: 0
+  HasCastTime: 1
   CastTime: 0
-  BlockMovementOnCast: 0
-  BlockAttackOnCast: 0
-  HasSkillTime: 0
+  BlockMovementOnCast: 1
+  BlockAttackOnCast: 1
+  HasSkillTime: 1
   SkillTime: 0
   BlockMovementOnSkill: 0
   BlockAttackOnSkill: 0

@@ -18498,6 +18498,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 3
   m_ID: 2
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -20902,6 +20903,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 3
   m_ID: 1
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []

@@ -695,6 +695,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 22
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -881,6 +882,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 2
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -1770,6 +1772,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 6
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -2746,6 +2749,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 12
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -2932,6 +2936,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 28
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -4261,6 +4266,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 17
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -4447,6 +4453,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 16
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -4709,6 +4716,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 11
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -5524,6 +5532,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 23
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -6240,6 +6249,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 15
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -7173,6 +7183,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 13
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -7636,6 +7647,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 38
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -7822,6 +7834,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 42
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -8008,6 +8021,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 24
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -8611,6 +8625,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 7
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -8998,6 +9013,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 9
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -11097,6 +11113,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 8
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -11511,6 +11528,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 18
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -11697,6 +11715,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 3
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -11920,6 +11939,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 34
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -12850,6 +12870,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 31
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -13283,6 +13304,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 14
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -15089,6 +15111,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 1
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -15900,6 +15923,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 30
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -18494,6 +18518,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 33
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -18832,6 +18857,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 29
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -20028,6 +20054,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 19
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -20536,6 +20563,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 25
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -21120,6 +21148,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 27
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -21726,6 +21755,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 26
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -22500,6 +22530,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 20
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -22989,6 +23020,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 4
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -23500,6 +23532,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 35
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -25785,6 +25818,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 41
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -26411,6 +26445,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 39
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -26597,6 +26632,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 37
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -26859,6 +26895,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 40
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -27197,6 +27234,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 36
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -27459,6 +27497,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 5
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -28128,6 +28167,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 32
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -28523,6 +28563,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 21
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
@@ -28957,6 +28998,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 1
   m_ID: 10
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []

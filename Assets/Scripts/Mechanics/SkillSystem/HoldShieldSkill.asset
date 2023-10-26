@@ -16,12 +16,12 @@ MonoBehaviour:
   IndicatorPrefab: {fileID: 0}
   HasCastTime: 1
   CastTime: 0
-  BlockMovementOnCast: 0
-  BlockAttackOnCast: 0
+  BlockMovementOnCast: 1
+  BlockAttackOnCast: 1
   HasSkillTime: 1
   SkillTime: 30
-  BlockMovementOnSkill: 0
-  BlockAttackOnSkill: 0
+  BlockMovementOnSkill: 1
+  BlockAttackOnSkill: 1
   ManaCost: 50
   CooldownTime: 5
   skillInfo:

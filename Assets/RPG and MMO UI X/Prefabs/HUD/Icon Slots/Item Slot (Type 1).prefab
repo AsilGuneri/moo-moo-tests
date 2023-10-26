@@ -352,6 +352,7 @@ MonoBehaviour:
   m_PressForceHoverNormal: 1
   m_SlotGroup: 0
   m_ID: 0
+  isFull: 0
   onRightClick:
     m_PersistentCalls:
       m_Calls: []
