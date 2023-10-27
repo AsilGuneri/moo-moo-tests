@@ -961,9 +961,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSlot: {fileID: 330209993858384572}
   nameText: {fileID: 3986032495900615287}
-  priceText: {fileID: 3777751437346347487}
-  buyButton: {fileID: 2303994218520057250}
-  frameButton: {fileID: 7760849801511056716}
 --- !u!1 &908061480972835740
 GameObject:
   m_ObjectHideFlags: 0
