@@ -26,7 +26,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
             case UnitType.WaveEnemy:
                 if (WaveEnemies.Contains(unitObj)) return;
                 WaveEnemies.Add(unitObj);
-                unitObj.GetComponent<EnemyBrain>().StartBrain();
+                //unitObj.GetComponent<EnemyBrain>().StartBrain();
                 break;
             case UnitType.Building:
                 if (Buildings.Contains(unitObj)) return;
