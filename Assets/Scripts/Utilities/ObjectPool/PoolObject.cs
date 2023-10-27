@@ -54,10 +54,6 @@ public class PoolObject : NetworkBehaviour
 
     protected virtual void OnReturn()
     {
-        if(TryGetComponent(out EnemyBrain brain))
-        {
-            brain.KillBrain();
-        }
         if(TryGetComponent(out BasicAttackController controller))
         {
             controller.ResetAttackController();
@@ -70,10 +66,6 @@ public class PoolObject : NetworkBehaviour
         {
             if (controller.unitType != UnitType.Player)
                 controller.StatController.InitializeStats();
-        }
-        if (TryGetComponent(out EnemyBrain brain))
-        {
-            brain.StartBrain();
         }
     }
 

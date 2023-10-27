@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
 
-public class LocalPlayerUI : NetworkSingleton<LocalPlayerUI>
+public class LocalPlayerUI : Singleton<LocalPlayerUI>
 {
     public HealthBarUI HealthBarUI;
     public ExpBarUI ExpBarUI;

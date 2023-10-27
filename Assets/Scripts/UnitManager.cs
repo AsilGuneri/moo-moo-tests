@@ -26,12 +26,10 @@ public class UnitManager : NetworkSingleton<UnitManager>
             case UnitType.WaveEnemy:
                 if (WaveEnemies.Contains(unitObj)) return;
                 WaveEnemies.Add(unitObj);
-                //unitObj.GetComponent<EnemyBrain>().StartBrain();
                 break;
             case UnitType.Building:
                 if (Buildings.Contains(unitObj)) return;
                 Buildings.Add(unitObj);
-                //unit.Value.GetComponent<EnemyBrain>().StartBrain();
                 break;
         }
     }
@@ -53,17 +51,6 @@ public class UnitManager : NetworkSingleton<UnitManager>
                 break;
         }
     }
-    public void GiveCommand(string commandPackName, MinionType minionType)
-    {
-        foreach (var enemy in WaveEnemies)
-        {
-            if (enemy.TryGetComponent(out EnemyController enemyController) && enemyController.MinionType == minionType)
-            {
-                enemy.GetComponent<EnemyBrain>().SetPackRoutine(commandPackName);
-            }
-        }
-    }
-
     public GameObject GetClosestBuilding(Vector3 myPos)
     {
         float minDistance = float.MaxValue;

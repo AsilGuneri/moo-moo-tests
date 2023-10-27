@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using UnityEngine;
 
 public class PlayerGoldController : NetworkBehaviour
@@ -33,5 +34,19 @@ public class PlayerGoldController : NetworkBehaviour
         {
             Debug.LogWarning("Not enough gold to spend!");
         }
+    }
+}
+[Serializable]
+public class PlayerStats
+{
+    public int TotalDamageDealt;
+    public int TotalHealAmount;
+    public int TotalDamageTanked;
+
+    public void ResetStats()
+    {
+        TotalDamageDealt = 0;
+        TotalHealAmount = 0;
+        TotalDamageTanked = 0;
     }
 }
