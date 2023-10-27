@@ -63,7 +63,7 @@ public class MoveToPositionController : EnemyBehaviourController
             targetPos = availablePoint.position;
             currentPoint = availablePoint;
         }
-        controller.Movement.SetDestinationOnAvailable(targetPos, true);
+        //controller.Movement.SetDestinationOnAvailable(targetPos, true);
 
     }
     public override void OnExit()

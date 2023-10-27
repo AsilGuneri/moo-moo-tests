@@ -115,6 +115,10 @@ public abstract class BasicAttackController : NetworkBehaviour
             return false;
         }
         if (controller.Health.IsDead) return false;
+        //if (Extensions.CheckRangeBetweenUnits(transform, controller.TargetController.Target.transform, controller.attackRange))
+        //{
+        //    return false;
+        //}
         return true;
     }
 
