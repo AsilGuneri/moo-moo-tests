@@ -210,6 +210,7 @@ MonoBehaviour:
   Entry: {fileID: 0}
   Actions:
   - {fileID: 11400000, guid: d4044f1dba79f24479fce8bd478d6584, type: 2}
+  - {fileID: 11400000, guid: d4044f1dba79f24479fce8bd478d6584, type: 2}
   Transitions: []
 --- !u!114 &1772036239930189776
 MonoBehaviour:

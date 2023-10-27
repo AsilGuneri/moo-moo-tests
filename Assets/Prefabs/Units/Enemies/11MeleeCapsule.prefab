@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 3531211051871817834}
   - component: {fileID: 57896658140523758}
   - component: {fileID: 5731631979561634012}
-  - component: {fileID: 9058565917412253608}
   - component: {fileID: 8891325126718888063}
   - component: {fileID: 6710437633401050889}
   - component: {fileID: 6159798623457959203}
@@ -61,6 +60,7 @@ GameObject:
   - component: {fileID: 4047693140017633607}
   - component: {fileID: 7275352532936005611}
   - component: {fileID: 6306328089689109996}
+  - component: {fileID: 6329739408046780343}
   m_Layer: 9
   m_Name: 11MeleeCapsule
   m_TagString: Untagged
@@ -124,27 +124,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &9058565917412253608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4162034819610443299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a473c251a25634a88e45cec322a3fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Packs:
-  - PackName: Default
-    Behaviours:
-    - {fileID: 11400000, guid: 708b4a86f2d84194ba46db84934e3b02, type: 2}
-    - {fileID: 11400000, guid: a2f05e797ef7d5443a5a91fec270fef8, type: 2}
-    - {fileID: 11400000, guid: cfc7d6e222bb2fa42965457e919339b4, type: 2}
-  - PackName: Defend
-    Behaviours:
-    - {fileID: 11400000, guid: 5146e65e0c7579348aa52fee95bb7894, type: 2}
 --- !u!114 &8891325126718888063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,6 +446,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroBaseStats: {fileID: 11400000, guid: 4b4b3affc107cff428d6783b91d7298f, type: 2}
+--- !u!114 &6329739408046780343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4162034819610443299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4777dcff4dbc4447a5b52a5477f17db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialState: {fileID: 0}
+  _graph: {fileID: 11400000, guid: 8b930c9ee61131e49ac0be62f18e6088, type: 2}
 --- !u!1 &6322785318481407606
 GameObject:
   m_ObjectHideFlags: 0
