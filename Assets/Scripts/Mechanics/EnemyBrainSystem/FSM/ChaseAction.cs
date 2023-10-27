@@ -9,16 +9,10 @@ namespace Demo.MyFSM
     [CreateAssetMenu(menuName = "FSM/Actions/Chase")]
     public class ChaseAction : FSMAction
     {
-        public bool FollowByAttackRange;
-        [ConditionalField(nameof(FollowByAttackRange), false)] public float FollowDistance;
+        
         public override void Execute(BaseStateMachine stateMachine)
         {
-            var controller = stateMachine.GetComponent<UnitController>();
-            if (controller.Movement.IsFollowing) return;
-            var target = controller.TargetController.Target.transform;
-            var followRange = FollowByAttackRange ? controller.attackRange : FollowDistance;
-            controller.Movement.StartFollow(target, followRange);
-            Debug.Log("chase action execute");
+            
         }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 namespace Demo.FSM.Graph
 {
     [CreateNodeMenu("State")]
-    public sealed class StateNode : BaseStateNode
+    public class StateNode : BaseStateNode
     {
         public List<FSMAction> Actions;
         [Output] public List<TransitionNode> Transitions;

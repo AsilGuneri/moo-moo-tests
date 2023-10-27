@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7496206840963268615
+--- !u!114 &-8476616353022800696
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Transition
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 168, y: 8}
+  position: {x: -248, y: 200}
   ports:
     keys:
     - TrueState
@@ -21,36 +21,36 @@ MonoBehaviour:
     - Entry
     values:
     - _fieldName: TrueState
-      _node: {fileID: -7496206840963268615}
+      _node: {fileID: -8476616353022800696}
       _typeQualifiedName: Demo.FSM.Graph.BaseStateNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Entry
-        node: {fileID: -5412568963709668740}
+        node: {fileID: 6534509400784193065}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: FalseState
-      _node: {fileID: -7496206840963268615}
+      _node: {fileID: -8476616353022800696}
       _typeQualifiedName: Demo.FSM.Graph.BaseStateNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Entry
-        node: {fileID: 3995370684164369035}
+        node: {fileID: -6175123234779417654}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: Entry
-      _node: {fileID: -7496206840963268615}
+      _node: {fileID: -8476616353022800696}
       _typeQualifiedName: Demo.FSM.Graph.FSMNodeBase, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Transitions
-        node: {fileID: 1153094113929153306}
+        node: {fileID: 5660919552846999422}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -60,7 +60,7 @@ MonoBehaviour:
   Decision: {fileID: 11400000, guid: 1c38c41ffc60f8541a569a02adfad962, type: 2}
   TrueState: {fileID: 0}
   FalseState: {fileID: 0}
---- !u!114 &-5826710227594286926
+--- !u!114 &-6175123234779417654
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,67 +69,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63ea57a3f03ce01448fee113408a5834, type: 3}
-  m_Name: FSM Initial
+  m_Script: {fileID: 11500000, guid: b0020b81ae670044b9005514f99fcee7, type: 3}
+  m_Name: Chase
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -360, y: -136}
-  ports:
-    keys:
-    - InitialNode
-    values:
-    - _fieldName: InitialNode
-      _node: {fileID: -5826710227594286926}
-      _typeQualifiedName: Demo.FSM.Graph.StateNode, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Entry
-        node: {fileID: 6647798704046073421}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  InitialNode: {fileID: 0}
---- !u!114 &-5412568963709668740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 299ef84747ae4dc44beeadf57287e89d, type: 3}
-  m_Name: State
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 376, y: -152}
+  position: {x: -904, y: -40}
   ports:
     keys:
     - Transitions
     - Entry
     values:
     - _fieldName: Transitions
-      _node: {fileID: -5412568963709668740}
+      _node: {fileID: -6175123234779417654}
       _typeQualifiedName: System.Collections.Generic.List`1[[Demo.FSM.Graph.TransitionNode,
         Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
         mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: Entry
-        node: {fileID: 1772036239930189776}
+        node: {fileID: 8113924264383305543}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: Entry
-      _node: {fileID: -5412568963709668740}
+      _node: {fileID: -6175123234779417654}
       _typeQualifiedName: Demo.FSM.Graph.FSMNodeBase, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: TrueState
-        node: {fileID: -7496206840963268615}
+        node: {fileID: 1927550522676412788}
+        reroutePoints: []
+      - fieldName: FalseState
+        node: {fileID: -8476616353022800696}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -137,8 +109,9 @@ MonoBehaviour:
       _dynamic: 0
   Entry: {fileID: 0}
   Actions:
-  - {fileID: 11400000, guid: 2b414c57e44c42448911f96b22e589bb, type: 2}
+  - {fileID: 11400000, guid: d4044f1dba79f24479fce8bd478d6584, type: 2}
   Transitions: []
+  EnterExitActions: {fileID: 11400000, guid: cc3c387476e7f5d4c87067f00a5c553f, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,15 +125,15 @@ MonoBehaviour:
   m_Name: BasicMinion
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: -5826710227594286926}
-  - {fileID: 1153094113929153306}
-  - {fileID: 4655042852065267735}
-  - {fileID: 6647798704046073421}
-  - {fileID: 3995370684164369035}
-  - {fileID: -5412568963709668740}
-  - {fileID: -7496206840963268615}
-  - {fileID: 1772036239930189776}
---- !u!114 &1153094113929153306
+  - {fileID: 4747970872848353029}
+  - {fileID: 83729428583046987}
+  - {fileID: -6175123234779417654}
+  - {fileID: 5660919552846999422}
+  - {fileID: 1927550522676412788}
+  - {fileID: 8113924264383305543}
+  - {fileID: -8476616353022800696}
+  - {fileID: 6534509400784193065}
+--- !u!114 &83729428583046987
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,50 +142,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 299ef84747ae4dc44beeadf57287e89d, type: 3}
-  m_Name: State
+  m_Script: {fileID: 11500000, guid: 63ea57a3f03ce01448fee113408a5834, type: 3}
+  m_Name: FSM Initial
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 168, y: -152}
+  position: {x: -1528, y: -40}
   ports:
     keys:
-    - Transitions
-    - Entry
+    - InitialNode
     values:
-    - _fieldName: Transitions
-      _node: {fileID: 1153094113929153306}
-      _typeQualifiedName: System.Collections.Generic.List`1[[Demo.FSM.Graph.TransitionNode,
-        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+    - _fieldName: InitialNode
+      _node: {fileID: 83729428583046987}
+      _typeQualifiedName: Demo.FSM.Graph.StateNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Entry
-        node: {fileID: -7496206840963268615}
+        node: {fileID: 4747970872848353029}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: Entry
-      _node: {fileID: 1153094113929153306}
-      _typeQualifiedName: Demo.FSM.Graph.FSMNodeBase, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: TrueState
-        node: {fileID: 4655042852065267735}
-        reroutePoints: []
-      - fieldName: FalseState
-        node: {fileID: 1772036239930189776}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  Entry: {fileID: 0}
-  Actions:
-  - {fileID: 11400000, guid: d4044f1dba79f24479fce8bd478d6584, type: 2}
-  - {fileID: 11400000, guid: d4044f1dba79f24479fce8bd478d6584, type: 2}
-  Transitions: []
---- !u!114 &1772036239930189776
+  InitialNode: {fileID: 0}
+--- !u!114 &1927550522676412788
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,7 +177,7 @@ MonoBehaviour:
   m_Name: Transition
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 376, y: -280}
+  position: {x: -1128, y: 184}
   ports:
     keys:
     - TrueState
@@ -233,46 +185,143 @@ MonoBehaviour:
     - Entry
     values:
     - _fieldName: TrueState
-      _node: {fileID: 1772036239930189776}
+      _node: {fileID: 1927550522676412788}
       _typeQualifiedName: Demo.FSM.Graph.BaseStateNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Entry
-        node: {fileID: 3995370684164369035}
+        node: {fileID: -6175123234779417654}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: FalseState
-      _node: {fileID: 1772036239930189776}
+      _node: {fileID: 1927550522676412788}
       _typeQualifiedName: Demo.FSM.Graph.BaseStateNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Entry
-        node: {fileID: 1153094113929153306}
+        node: {fileID: 6534509400784193065}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: Entry
-      _node: {fileID: 1772036239930189776}
+      _node: {fileID: 1927550522676412788}
       _typeQualifiedName: Demo.FSM.Graph.FSMNodeBase, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Transitions
-        node: {fileID: -5412568963709668740}
+        node: {fileID: 4747970872848353029}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   Entry: {fileID: 0}
-  Decision: {fileID: 11400000, guid: 1c38c41ffc60f8541a569a02adfad962, type: 2}
+  Decision: {fileID: 11400000, guid: e2daf03e4ac01bc4d9a89ffabe24b732, type: 2}
   TrueState: {fileID: 0}
   FalseState: {fileID: 0}
---- !u!114 &3995370684164369035
+--- !u!114 &4747970872848353029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0020b81ae670044b9005514f99fcee7, type: 3}
+  m_Name: Select Target
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1256, y: -40}
+  ports:
+    keys:
+    - Transitions
+    - Entry
+    values:
+    - _fieldName: Transitions
+      _node: {fileID: 4747970872848353029}
+      _typeQualifiedName: System.Collections.Generic.List`1[[Demo.FSM.Graph.TransitionNode,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
+        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: Entry
+        node: {fileID: 1927550522676412788}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Entry
+      _node: {fileID: 4747970872848353029}
+      _typeQualifiedName: Demo.FSM.Graph.FSMNodeBase, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: InitialNode
+        node: {fileID: 83729428583046987}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Entry: {fileID: 0}
+  Actions:
+  - {fileID: 11400000, guid: b229ec26ded1b0c40b15303f0c3d7c14, type: 2}
+  Transitions: []
+  EnterExitActions: {fileID: 0}
+--- !u!114 &5660919552846999422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0020b81ae670044b9005514f99fcee7, type: 3}
+  m_Name: Attack
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -472, y: -40}
+  ports:
+    keys:
+    - Transitions
+    - Entry
+    values:
+    - _fieldName: Transitions
+      _node: {fileID: 5660919552846999422}
+      _typeQualifiedName: System.Collections.Generic.List`1[[Demo.FSM.Graph.TransitionNode,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
+        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: Entry
+        node: {fileID: -8476616353022800696}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Entry
+      _node: {fileID: 5660919552846999422}
+      _typeQualifiedName: Demo.FSM.Graph.FSMNodeBase, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: TrueState
+        node: {fileID: 8113924264383305543}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Entry: {fileID: 0}
+  Actions: []
+  Transitions: []
+  EnterExitActions: {fileID: 11400000, guid: 723bd7276d120854089a13165d513726, type: 2}
+--- !u!114 &6534509400784193065
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -285,31 +334,31 @@ MonoBehaviour:
   m_Name: Remain In State
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 168, y: 168}
+  position: {x: -760, y: 392}
   ports:
     keys:
     - Entry
     values:
     - _fieldName: Entry
-      _node: {fileID: 3995370684164369035}
+      _node: {fileID: 6534509400784193065}
       _typeQualifiedName: Demo.FSM.Graph.FSMNodeBase, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FalseState
-        node: {fileID: 4655042852065267735}
+        node: {fileID: 1927550522676412788}
         reroutePoints: []
       - fieldName: FalseState
-        node: {fileID: -7496206840963268615}
+        node: {fileID: 8113924264383305543}
         reroutePoints: []
       - fieldName: TrueState
-        node: {fileID: 1772036239930189776}
+        node: {fileID: -8476616353022800696}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   Entry: {fileID: 0}
---- !u!114 &4655042852065267735
+--- !u!114 &8113924264383305543
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -322,7 +371,7 @@ MonoBehaviour:
   m_Name: Transition
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -56, y: 8}
+  position: {x: -680, y: 200}
   ports:
     keys:
     - TrueState
@@ -330,90 +379,42 @@ MonoBehaviour:
     - Entry
     values:
     - _fieldName: TrueState
-      _node: {fileID: 4655042852065267735}
+      _node: {fileID: 8113924264383305543}
       _typeQualifiedName: Demo.FSM.Graph.BaseStateNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Entry
-        node: {fileID: 1153094113929153306}
+        node: {fileID: 5660919552846999422}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: FalseState
-      _node: {fileID: 4655042852065267735}
+      _node: {fileID: 8113924264383305543}
       _typeQualifiedName: Demo.FSM.Graph.BaseStateNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Entry
-        node: {fileID: 3995370684164369035}
+        node: {fileID: 6534509400784193065}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: Entry
-      _node: {fileID: 4655042852065267735}
+      _node: {fileID: 8113924264383305543}
       _typeQualifiedName: Demo.FSM.Graph.FSMNodeBase, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: Transitions
-        node: {fileID: 6647798704046073421}
+        node: {fileID: -6175123234779417654}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   Entry: {fileID: 0}
-  Decision: {fileID: 11400000, guid: e2daf03e4ac01bc4d9a89ffabe24b732, type: 2}
+  Decision: {fileID: 11400000, guid: 1c38c41ffc60f8541a569a02adfad962, type: 2}
   TrueState: {fileID: 0}
   FalseState: {fileID: 0}
---- !u!114 &6647798704046073421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 299ef84747ae4dc44beeadf57287e89d, type: 3}
-  m_Name: State
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -56, y: -152}
-  ports:
-    keys:
-    - Transitions
-    - Entry
-    values:
-    - _fieldName: Transitions
-      _node: {fileID: 6647798704046073421}
-      _typeQualifiedName: System.Collections.Generic.List`1[[Demo.FSM.Graph.TransitionNode,
-        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: Entry
-        node: {fileID: 4655042852065267735}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Entry
-      _node: {fileID: 6647798704046073421}
-      _typeQualifiedName: Demo.FSM.Graph.FSMNodeBase, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: InitialNode
-        node: {fileID: -5826710227594286926}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  Entry: {fileID: 0}
-  Actions:
-  - {fileID: 11400000, guid: b229ec26ded1b0c40b15303f0c3d7c14, type: 2}
-  Transitions: []
