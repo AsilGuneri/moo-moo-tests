@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
     public Action OnFollowStop;
 
     public float AgentRadius;
+    public bool IsFollowing { get => isFollowing; }
     public bool IsMoving { get { return isMoving; } }
 
     private UnitController controller;
@@ -48,23 +49,7 @@ public class Movement : MonoBehaviour
     {
         movementBlockCount--;
     }
-    public void SetDestinationOnAvailable(Vector3 pos, bool cancelTarget = false)
-    {
-        if (isFollowing)
-        {
-            StopFollow();
-            OnFollowStop += (() => MoveOnFollowEnd(pos, cancelTarget));
-        }
-        if(controller.AttackController.IsAttacking)
-        {
-            controller.AttackController.StopAfterCurrentAttack();
-            controller.AttackController.AfterLastAttack += (() => MoveOnAttackEnd(pos, cancelTarget));
-        }
-        else
-        {
-            ClientMove(pos, cancelTarget);
-        }
-    }
+    
     public void ClientMove(Vector3 pos, bool cancelTarget = false)
     {
         if (!CanMove()) return;

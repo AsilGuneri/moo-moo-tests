@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Actions/Chase")]
+[CreateAssetMenu(menuName = "FSM/Actions/SelectTarget")]
 public class SelectTargetAction : FSMAction
 {
 
@@ -13,5 +13,7 @@ public class SelectTargetAction : FSMAction
         var controller = stateMachine.GetComponent<UnitController>();
         var closestEnemy = UnitManager.Instance.GetClosestEnemy(controller.transform.position, controller);
         controller.TargetController.SetTarget(closestEnemy.GetComponent<NetworkIdentity>());
+        Debug.Log("SelectTarget execute");
+
     }
 }
