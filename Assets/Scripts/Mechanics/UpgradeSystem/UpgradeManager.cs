@@ -30,12 +30,12 @@ public class UpgradeManager : NetworkSingleton<UpgradeManager>
 
     private void InitializeUpgrades()
     {
-        Extensions.DestroyAllChildren(shopContentParent);
-        var itemList = AllItemsData.Instance.AllItems;
-        foreach (var item in itemList) 
-        {
-            var slot = Instantiate(upgradeSlotPrefab, shopContentParent).GetComponent<UpgradeSlot>();
-            slot.Setup();
-        }
+        //Extensions.DestroyAllChildren(shopContentParent);
+        //var itemList = AllItemsData.Instance.AllItems;
+        //foreach (var item in itemList) 
+        //{
+        //    var slot = Instantiate(upgradeSlotPrefab, shopContentParent).GetComponent<UpgradeSlot>();
+        //    slot.Setup();
+        //}
     }
 }

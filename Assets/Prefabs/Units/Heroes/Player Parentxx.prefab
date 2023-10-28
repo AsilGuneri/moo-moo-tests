@@ -70204,9 +70204,9 @@ GameObject:
   - component: {fileID: 4018582201208944742}
   - component: {fileID: 7177976634720571292}
   - component: {fileID: 1513735478957757573}
-  - component: {fileID: 9085198624449402202}
   - component: {fileID: 1943440883098335689}
   - component: {fileID: 4197839386302705712}
+  - component: {fileID: 9085198624449402202}
   m_Layer: 0
   m_Name: Player Parentxx
   m_TagString: Untagged
@@ -70639,19 +70639,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
---- !u!114 &9085198624449402202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8938534602783702256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61dea3e63677a2b429ebd89080eba571, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heroBaseStats: {fileID: 11400000, guid: a6bf7a8ecff814b48a8120fc7dfae65d, type: 2}
 --- !u!114 &1943440883098335689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70684,6 +70671,19 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   SkillData: {fileID: 11400000, guid: 495558f66c8229f479348be1be32bbc3, type: 2}
+--- !u!114 &9085198624449402202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8938534602783702256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57688d2558b91404596856d4055b7a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroBaseStats: {fileID: 11400000, guid: a6bf7a8ecff814b48a8120fc7dfae65d, type: 2}
 --- !u!1 &8946106163135306598
 GameObject:
   m_ObjectHideFlags: 0
