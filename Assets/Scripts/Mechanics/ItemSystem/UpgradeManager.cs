@@ -8,10 +8,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
 
-public class ShowHideWindows : NetworkSingleton<ShowHideWindows>
+public class UpgradeManager : NetworkSingleton<UpgradeManager>
 {
-    [SerializeField] private UIWindow shopWindow;
-    [SerializeField] private ShopItemSlot shopSlotPrefab;
+    [SerializeField] private UIWindow upgradeWindow;
+    [SerializeField] private UpgradeSlot upgradeSlotPrefab;
     [SerializeField] private Transform shopContentParent;
 
 
@@ -24,7 +24,7 @@ public class ShowHideWindows : NetworkSingleton<ShowHideWindows>
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            shopWindow.Toggle();
+            upgradeWindow.Toggle();
         }
     }
 
@@ -34,7 +34,7 @@ public class ShowHideWindows : NetworkSingleton<ShowHideWindows>
         var itemList = AllItemsData.Instance.AllItems;
         foreach (var item in itemList) 
         {
-            var slot = Instantiate(shopSlotPrefab, shopContentParent).GetComponent<ShopItemSlot>();
+            var slot = Instantiate(upgradeSlotPrefab, shopContentParent).GetComponent<UpgradeSlot>();
             slot.Setup(item);
         }
     }

@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopItemSlot : MonoBehaviour
+public class UpgradeSlot : MonoBehaviour
 {
     public Item Item { get => item; }
 
