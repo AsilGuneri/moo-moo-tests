@@ -33,7 +33,8 @@ public class AnimationController : NetworkBehaviour
     }
     public void SetAttackSpeed(float attackSpeed)
     {
-        animator.SetFloat("attackSpeed", attackSpeed);
+        float multiplier = attackSpeed * AttackAnimTime;
+        animator.SetFloat("attackSpeed", multiplier);
     }
     public void TriggerAttack()
     {
