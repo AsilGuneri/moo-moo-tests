@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Name: Transition
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1128, y: 184}
+  position: {x: -1096, y: 184}
   ports:
     keys:
     - TrueState

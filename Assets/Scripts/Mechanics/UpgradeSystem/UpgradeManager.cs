@@ -17,7 +17,7 @@ public class UpgradeManager : NetworkSingleton<UpgradeManager>
 
     private void Start()
     {
-        InitializeShop();
+        InitializeUpgrades();
     }
 
     void Update()
@@ -28,14 +28,14 @@ public class UpgradeManager : NetworkSingleton<UpgradeManager>
         }
     }
 
-    private void InitializeShop()
+    private void InitializeUpgrades()
     {
         Extensions.DestroyAllChildren(shopContentParent);
         var itemList = AllItemsData.Instance.AllItems;
         foreach (var item in itemList) 
         {
             var slot = Instantiate(upgradeSlotPrefab, shopContentParent).GetComponent<UpgradeSlot>();
-            slot.Setup(item);
+            slot.Setup();
         }
     }
 }

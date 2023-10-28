@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "HuntersHood", menuName = "Scriptable Objects/Items/HuntersHood")]
-public class HuntersHood : Item
+public class HuntersHood : UpgradeData
 {
     
 }
