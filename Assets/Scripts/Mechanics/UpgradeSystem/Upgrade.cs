@@ -39,7 +39,9 @@ public class Upgrade
                 statController.ChangeMaxStats(value, 0);
                 break;
             case UpgradeType.AttackSpeed:
+
                 break;
+            
         }
     }
 }
@@ -47,6 +49,5 @@ public enum UpgradeType
 {
     None,
     Health,
-    AttackSpeed,
-    Baskabisey
+    AttackSpeed
 }
