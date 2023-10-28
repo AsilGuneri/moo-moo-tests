@@ -17,6 +17,8 @@ public class StatController : MonoBehaviour
     int baseHealth;
     int baseMana;
     float baseAttackSpeed;
+    float attackSpeedBoost = 1;
+
 
     private void Awake()
     {
@@ -27,6 +29,7 @@ public class StatController : MonoBehaviour
 
         maxHealth = baseHealth;
         maxMana = baseMana;
+
     }
     public void InitializeStats()
     {
@@ -38,24 +41,40 @@ public class StatController : MonoBehaviour
 
         maxHealth += additionalHealth;
         maxMana += additionalMana;
-        controller.Health.CmdUpdateMaxStats(additionalHealth, additionalMana);   
+        controller.Health.CmdUpdateMaxStats(additionalHealth, additionalMana);
     }
     public void ChangeAttackSpeed(float attackSpeedFactor)
     {
-        baseAttackSpeed*= attackSpeedFactor;
-        controller.attackSpeed = baseAttackSpeed;
-        controller.AnimationController.SetAttackSpeed(baseAttackSpeed);
-        
+        attackSpeedBoost += attackSpeedFactor;
+        var newAttackSpeed = baseAttackSpeed * attackSpeedBoost;
+        controller.attackSpeed = newAttackSpeed;
+        controller.AnimationController.SetAttackSpeed(newAttackSpeed);
+
     }
+
+
+    IEnumerator AttackSpeedChangerCount(float attackSpeedFactorTemp, int effectTime)
+    {
+
+        ChangeAttackSpeed(attackSpeedFactorTemp);
+        yield return Extensions.GetWait(effectTime);
+        ChangeAttackSpeed(-attackSpeedFactorTemp);
+
+    }
+
     public void Update()
     {
-        if(controller.unitType!=UnitType.Player)
+        if (controller.unitType != UnitType.Player)
         {
             return;
         }
-        if(Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B))
         {
-            ChangeAttackSpeed(0.5f);
+            ChangeAttackSpeed(-0.5f);
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            StartCoroutine(AttackSpeedChangerCount(1.5f, 10)); ;
         }
     }
 }

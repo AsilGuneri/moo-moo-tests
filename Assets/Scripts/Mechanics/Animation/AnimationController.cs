@@ -15,7 +15,7 @@ public class AnimationController : NetworkBehaviour
 
 
     protected void Awake()
-    {
+    {//
         controller = GetComponent<UnitController>();
         animator = GetComponent<Animator>();
     }
