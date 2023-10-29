@@ -9,6 +9,8 @@ using UnityEngine;
 public abstract class UpgradeData : ScriptableObject
 {
     public string DisplayName;
+    public string Description;
+    public Sprite Icon;
     public List<Upgrade> Upgrades = new List<Upgrade>();
 
 

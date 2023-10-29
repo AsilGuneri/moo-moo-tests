@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30048887a768235498af21dd10c137cf, type: 3}
   m_Name: HuntersHood
   m_EditorClassIdentifier: 
-  DisplayName: 
+  DisplayName: Health
+  Description: Gives bonus health.
+  Icon: {fileID: 0}
   Upgrades:
   - Type: 1
     Amount: 38
-    Percentage: 0.05
+    Percentage: 0.082
   - Type: 2
     Amount: 0
     Percentage: 0.442

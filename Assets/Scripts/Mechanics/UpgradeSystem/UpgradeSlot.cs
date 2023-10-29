@@ -8,12 +8,31 @@ using UnityEngine.UI;
 
 public class UpgradeSlot : MonoBehaviour
 {
+    public UpgradeData Data { get => data; }
 
     [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI descriptionText;
+    [SerializeField] private Image upgradeIcon;
 
-    public void Setup()
+    private UpgradeData data;
+    private Toggle toggle;
+
+    private void Awake()
     {
-        nameText.text = "";
+        toggle = GetComponent<Toggle>();
+        toggle.onValueChanged.AddListener(OnSlotClicked);
+        
+    }
+    public void Setup(UpgradeData data)
+    {
+        this.data = data;
+        nameText.text = data.DisplayName;
+        descriptionText.text = data.Description;
+        upgradeIcon.sprite = data.Icon;
+    }
+    private void OnSlotClicked(bool isOn)
+    {
+        UpgradeManager.Instance.OnSlotClicked(this, isOn);
     }
 
 

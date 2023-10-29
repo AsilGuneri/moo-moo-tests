@@ -12,9 +12,11 @@ public class UpgradeManager : NetworkSingleton<UpgradeManager>
 {
     [SerializeField] private UIWindow upgradeWindow;
     [SerializeField] private UpgradeSlot upgradeSlotPrefab;
-    [SerializeField] private Transform shopContentParent;
+    [SerializeField] private Transform upgradesContentParent;
+    [SerializeField] private ToggleGroup toggleGroup;
+    [SerializeField] private Button selectButton;
 
-
+    private UpgradeData selectedUpgrade;
     private void Start()
     {
         InitializeUpgrades();
@@ -25,17 +27,54 @@ public class UpgradeManager : NetworkSingleton<UpgradeManager>
         if (Input.GetKeyDown(KeyCode.P))
         {
             upgradeWindow.Toggle();
+            if (upgradeWindow.IsOpen) InitializeUpgrades();
         }
     }
 
     private void InitializeUpgrades()
     {
-        //Extensions.DestroyAllChildren(shopContentParent);
-        //var itemList = AllItemsData.Instance.AllItems;
-        //foreach (var item in itemList) 
-        //{
-        //    var slot = Instantiate(upgradeSlotPrefab, shopContentParent).GetComponent<UpgradeSlot>();
-        //    slot.Setup();
-        //}
+        Extensions.DestroyAllChildren(upgradesContentParent);
+        var upgrades = AllItemsData.Instance.AllItems;
+        foreach (var upgrade in upgrades)
+        {
+            var slot = Instantiate(upgradeSlotPrefab, upgradesContentParent).GetComponent<UpgradeSlot>();
+            slot.Setup(upgrade);
+        }
+        ResetSelected();
+    }
+    public void OnSlotClicked(UpgradeSlot slot, bool isOn)
+    {
+        if(isOn)
+        {
+            this.selectedUpgrade = slot.Data;
+            selectButton.interactable = true;
+        }
+        else if (!IsAnyToggleActive()) ResetSelected();
+    }
+    public void OnUpgradeAcquired()
+    {
+        if (selectedUpgrade == null) return;
+        var manager = (CustomNetworkRoomManager) NetworkRoomManager.singleton;
+        var statController = manager.GetLocalPlayer().StatController;
+        
+        selectedUpgrade.OnAcquire(statController);
+        ResetSelected();
+        upgradeWindow.Hide();
+    }
+    private void ResetSelected()
+    {
+        selectedUpgrade = null;
+        selectButton.interactable = false;
+    }
+    bool IsAnyToggleActive()
+    {
+        foreach (var toggle in toggleGroup.ActiveToggles())
+        {
+            if (toggle.isOn)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
