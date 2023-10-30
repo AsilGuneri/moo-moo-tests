@@ -6140,6 +6140,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  readyButton: {fileID: 693985718}
   firstWaveCountdown: 10
 --- !u!114 &1259053969
 MonoBehaviour:
@@ -9034,7 +9035,6 @@ MonoBehaviour:
   syncInterval: 0
   spawnArea: {fileID: 1849601163}
   spacing: 2
-  readyButton: {fileID: 693985718}
   notificationParent: {fileID: 1171473384}
   timerText: {fileID: 413383799}
 --- !u!114 &1862085745

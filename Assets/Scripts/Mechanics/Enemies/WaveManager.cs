@@ -12,14 +12,12 @@ public class WaveManager : NetworkSingleton<WaveManager>
 {
     [SerializeField] Transform spawnArea;
     [SerializeField] float spacing = 2f;
-    [SerializeField] Button readyButton;
 
     [SerializeField] GameObject notificationParent;
     [SerializeField] TextMeshProUGUI timerText;
 
     Vector3 initialSpawnPos;
     int lastSpawnedIndex = -1;
-    int readyCount;
     int currentWaveIndex = 0;
 
     private void Start()
@@ -47,39 +45,10 @@ public class WaveManager : NetworkSingleton<WaveManager>
         {
             currentWaveIndex = maxWaveIndex;
         }
-
-        StartVote();
+        GameFlowManager.Instance.SetGameState(GameState.Free);
     }
 
-    [ClientRpc]
-    private void StartVote()
-    {
-        readyCount = 0;
-        readyButton.interactable = true;
-        readyButton.gameObject.SetActive(true);
-        readyButton.onClick.RemoveAllListeners();
-        readyButton.onClick.AddListener(() =>
-        {
-            readyButton.interactable = false;
-            Vote();
-        });
-    }
-
-    [Command(requiresAuthority = false)]
-    private void Vote()
-    {
-        readyCount++;
-        CheckVotes();
-    }
-
-    [Server]
-    private void CheckVotes()
-    {
-        if (readyCount >= CustomNetworkRoomManager.singleton.numPlayers)
-        {
-            Spawn(5);
-        }
-    }
+  
 
     [Server]
     private void SpawnNextWave()
