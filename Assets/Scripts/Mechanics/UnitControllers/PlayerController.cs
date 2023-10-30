@@ -47,8 +47,8 @@ public class PlayerController : UnitController
     void Update()
     {
         if (!isOwned) return;
-        if (Input.GetKeyDown(KeyCode.T))
-            WaveManager.Instance.SpawnTestWave();
+        //if (Input.GetKeyDown(KeyCode.T))
+        //    WaveManager.Instance.SpawnTestWave();
     }
     private void Activate()
     {
@@ -65,6 +65,7 @@ public class PlayerController : UnitController
             StartCharacter(); // everyone
             GetComponent<PlayerInput>().enabled = true;
             LocalPlayerUI.Instance.SkillBarUI.AssignSkills(this);
+
             //show skills on UI here
         }
         

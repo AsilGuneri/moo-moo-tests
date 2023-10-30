@@ -1,18 +1,18 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utilities;
 
-public class GameFlowManager : MonoBehaviour
+public class GameFlowManager : NetworkSingleton<GameFlowManager>
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] int firstWaveCountdown;
+    /// <summary>
+    /// Everyone in the lobby loaded
+    /// </summary>
+    [Server]
+    public void OnGameStart()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        WaveManager.Instance.Spawn(firstWaveCountdown);
     }
 }

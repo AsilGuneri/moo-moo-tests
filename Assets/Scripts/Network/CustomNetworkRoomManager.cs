@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 
 public class CustomNetworkRoomManager : NetworkRoomManager
 {
+    public int PlayerCount { get => playerCount; }
     public List<CustomNetworkRoomPlayer> RoomPlayers = new List<CustomNetworkRoomPlayer>();
     public List<PlayerController> GamePlayers = new List<PlayerController>();
 
@@ -25,6 +26,8 @@ public class CustomNetworkRoomManager : NetworkRoomManager
 
     [Header("Loading Screen")]
     private LoadingManager loadingManager;
+
+    int playerCount;
 
     private new void Start()
     {
@@ -84,6 +87,8 @@ public class CustomNetworkRoomManager : NetworkRoomManager
 
     public override void OnRoomServerPlayersReady()
     {
+        playerCount = RoomPlayers.Count;
+        Debug.Log("room players count " + RoomPlayers.Count);
         base.OnRoomServerPlayersReady();
         loadingManager.Load(loadingSceneAsync);
     }
@@ -98,6 +103,7 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         var playerController = gamePlayer.GetComponent<PlayerController>();
         //playerController.PlayerName = conn.connectionId.ToString(); // temp
         GamePlayers.Add(playerController);
+        if (GamePlayers.Count == playerCount) GameFlowManager.Instance.OnGameStart();
         return gamePlayer;
     }
     public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnectionToClient conn)

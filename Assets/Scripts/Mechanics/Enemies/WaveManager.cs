@@ -5,12 +5,18 @@ using Utilities;
 using System;
 using Mirror;
 using UnityEngine.UI;
+using MyBox;
+using TMPro;
 
 public class WaveManager : NetworkSingleton<WaveManager>
 {
     [SerializeField] Transform spawnArea;
     [SerializeField] float spacing = 2f;
     [SerializeField] Button readyButton;
+
+    [SerializeField] GameObject notificationParent;
+    [SerializeField] TextMeshProUGUI timerText;
+
     Vector3 initialSpawnPos;
     int lastSpawnedIndex = -1;
     int readyCount;
@@ -21,9 +27,12 @@ public class WaveManager : NetworkSingleton<WaveManager>
         initialSpawnPos = spawnArea.position;
     }
     [Server]
-    public void SpawnTestWave()
+    public void Spawn(int countdown = 0)
     {
-        SpawnWave(AllWavesData.Instance.WavesData[0]);
+        if (countdown != 0)
+            StartCoroutine(SpawnWithCountdown(countdown));
+        else
+            SpawnNextWave();
     }
     [ServerCallback]
     public void OnWaveEnd()
@@ -68,11 +77,11 @@ public class WaveManager : NetworkSingleton<WaveManager>
     {
         if (readyCount >= CustomNetworkRoomManager.singleton.numPlayers)
         {
-            SpawnNextWave();
+            Spawn(5);
         }
     }
 
-    [ServerCallback]
+    [Server]
     private void SpawnNextWave()
     {
         if (currentWaveIndex > AllWavesData.Instance.WavesData.Count - 1)
@@ -82,7 +91,18 @@ public class WaveManager : NetworkSingleton<WaveManager>
         SpawnWave(AllWavesData.Instance.WavesData[currentWaveIndex]);
     }
 
-    [ServerCallback]
+    [Server]
+    private IEnumerator SpawnWithCountdown(int seconds)
+    {
+        notificationParent.SetActive(true);
+        for (int i = 0; i < seconds; i++)
+        {
+            timerText.text = (seconds - i).ToString();
+            yield return Extensions.GetWait(1);
+        }
+        notificationParent.SetActive(false);
+        SpawnNextWave();
+    }
     private void SpawnWave(WaveData waveData)
     {
         Vector3 currentPosition = initialSpawnPos; // Starting from the initial position.
