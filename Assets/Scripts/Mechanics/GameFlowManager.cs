@@ -7,15 +7,15 @@ using Utilities;
 
 public class GameFlowManager : NetworkSingleton<GameFlowManager>
 {
-
+    [SerializeField] int firstWaveCountdown;
+    [SerializeField] int waveCountdown;
     [SerializeField] Button readyButton;
     int readyCount;
 
-    [SerializeField] int firstWaveCountdown;
 
     GameState currentState;
 
-    public void SetGameState(GameState state, int countdown = 0)
+    public void SetGameState(GameState state)
     {
         currentState = state;
         switch (state)
@@ -24,6 +24,7 @@ public class GameFlowManager : NetworkSingleton<GameFlowManager>
                 OnFree();
                 break;
             case GameState.WaveCountdown:
+                var countdown = WaveManager.Instance.CurrentWaveIndex == 0 ? firstWaveCountdown : waveCountdown;
                 OnWaveCountdown(countdown);
                 break;
             case GameState.WaveStarted:

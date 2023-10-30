@@ -10,6 +10,8 @@ using TMPro;
 
 public class WaveManager : NetworkSingleton<WaveManager>
 {
+    public int CurrentWaveIndex { get => currentWaveIndex; }
+
     [SerializeField] Transform spawnArea;
     [SerializeField] float spacing = 2f;
 
@@ -17,7 +19,6 @@ public class WaveManager : NetworkSingleton<WaveManager>
     [SerializeField] TextMeshProUGUI timerText;
 
     Vector3 initialSpawnPos;
-    int lastSpawnedIndex = -1;
     int currentWaveIndex = 0;
 
     private void Start()

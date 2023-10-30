@@ -6140,8 +6140,9 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  readyButton: {fileID: 693985718}
   firstWaveCountdown: 10
+  waveCountdown: 5
+  readyButton: {fileID: 693985718}
 --- !u!114 &1259053969
 MonoBehaviour:
   m_ObjectHideFlags: 0
