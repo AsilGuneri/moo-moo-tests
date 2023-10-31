@@ -59,6 +59,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
             currentWaveIndex = AllWavesData.Instance.WavesData.Count - 1;
         }
         SpawnWave(AllWavesData.Instance.WavesData[currentWaveIndex]);
+        GameFlowManager.Instance.SetGameState(GameState.WaveStarted);
     }
 
     [Server]

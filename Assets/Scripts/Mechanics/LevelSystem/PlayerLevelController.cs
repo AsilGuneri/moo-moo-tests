@@ -25,7 +25,6 @@ public class PlayerLevelController : NetworkBehaviour
         }
         //UIStatsManager.Instance.UpdateSlider(currentExperience, ExperienceRequired());
         UpdateExpBar();
-        Debug.Log("asilxx1 " + exp + " " + currentExperience + " " + ExperienceRequired() +" " + name);
     }
     [TargetRpc]
     private void UpdateExpBar()

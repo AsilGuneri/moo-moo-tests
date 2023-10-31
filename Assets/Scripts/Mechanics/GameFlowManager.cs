@@ -28,6 +28,7 @@ public class GameFlowManager : NetworkSingleton<GameFlowManager>
                 OnWaveCountdown(countdown);
                 break;
             case GameState.WaveStarted:
+                OnWaveStart();
                 break;
         }
     }
@@ -49,6 +50,10 @@ public class GameFlowManager : NetworkSingleton<GameFlowManager>
     private void OnWaveCountdown(int countdown)
     {
         WaveManager.Instance.Spawn(countdown);
+    }
+    private void OnWaveStart()
+    {
+
     }
     [ClientRpc]
     private void SetReadyButton()
