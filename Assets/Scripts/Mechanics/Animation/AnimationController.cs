@@ -70,6 +70,8 @@ public class AnimationController : NetworkBehaviour
                 AttackAnimTime = animClip.length;
                 float multiplier = controller.attackSpeed * AttackAnimTime;
                 SetAttackSpeed(multiplier);
+                //float multiplier = controller.attackSpeed * AttackAnimTime;
+                SetAttackSpeed(controller.attackSpeed);
 
             }
         }
