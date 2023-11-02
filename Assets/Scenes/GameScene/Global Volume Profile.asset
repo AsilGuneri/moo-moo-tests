@@ -33,8 +33,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: -6440015324244364968}
-  - {fileID: 1003636345717366479}
---- !u!114 &1003636345717366479
+  - {fileID: 7634742036295856059}
+--- !u!114 &7634742036295856059
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,11 +51,11 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
   threshold:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0.9
   intensity:
     m_OverrideState: 1
-    m_Value: 1.16
+    m_Value: 1
   scatter:
     m_OverrideState: 0
     m_Value: 0.7
