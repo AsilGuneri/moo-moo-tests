@@ -31,7 +31,6 @@ public class PrefabPoolManager : NetworkBehaviour
             NetworkClient.RegisterPrefab(config.prefab.gameObject, SpawnHandler, UnspawnHandler);
             assetIdToConfigMap[config.prefab.GetComponent<NetworkIdentity>().assetId] = config;
         }
-        GameFlowManager.Instance.OnPoolReady();
     }
 
     void OnDestroy()

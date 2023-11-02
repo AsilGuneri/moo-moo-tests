@@ -1,6 +1,7 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities;
@@ -39,14 +40,17 @@ public class GameFlowManager : NetworkSingleton<GameFlowManager>
     [Server]
     public void OnGameStart()
     {
-        SetGameState(GameState.WaveCountdown);
-    }
-    [Server]
-    public void OnPoolReady()
-    {
-        TowerManager.Instance.SetTowers();
+        StartCoroutine(StartGameRoutine());
+
     }
 
+    IEnumerator StartGameRoutine()
+    {
+        yield return Extensions.GetWait(3);
+        TowerManager.Instance.SetTowers();
+        SetGameState(GameState.WaveCountdown);
+
+    }
     private void OnFree()
     {
         SetReadyButton();

@@ -10,6 +10,7 @@ public class TowerManager : NetworkSingleton<TowerManager>
     [SerializeField] private GameObject towerPrefab;
     [SerializeField] private Transform[] towerPositions;
 
+    [Command(requiresAuthority = false)]
     public void SetTowers()
     {
         foreach(var pos in towerPositions)
