@@ -93,6 +93,7 @@ public class Projectile : NetworkBehaviour, IProjectile
     [Server]
     private bool IsValidHit(GameObject target)
     {
+        if(!target) return false;
         // Logic to validate if the hit was legitimate goes here.
         // E.g., check distances, validate that the target was not behind a wall, etc.
         // Returning true for now as a placeholder.

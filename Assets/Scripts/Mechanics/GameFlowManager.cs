@@ -41,6 +41,11 @@ public class GameFlowManager : NetworkSingleton<GameFlowManager>
     {
         SetGameState(GameState.WaveCountdown);
     }
+    [Server]
+    public void OnPoolReady()
+    {
+        TowerManager.Instance.SetTowers();
+    }
 
     private void OnFree()
     {

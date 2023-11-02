@@ -2307,6 +2307,14 @@ MonoBehaviour:
     maxSize: 50
     prefab: {fileID: 3557746330322355302, guid: 424f4377a8a434a4ca074a3df3a7fb1c, type: 3}
     currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 446494124656438392, guid: cc6f069e7016a1e4ca859e353ba25fb0, type: 3}
+    currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 3750345282122126642, guid: 3924b199210ef564a91a10c040c8d6b9, type: 3}
+    currentCount: 0
 --- !u!114 &68926458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4718,7 +4726,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh40734
+  m_Name: pb_Mesh109512
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -7179,8 +7187,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  firstWaveCountdown: 10
-  waveCountdown: 5
+  firstWaveCountdown: 2
+  waveCountdown: 1
   readyButton: {fileID: 693985718}
 --- !u!114 &1259053969
 MonoBehaviour:

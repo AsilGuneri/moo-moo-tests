@@ -13,5 +13,9 @@ public class EnemyController : UnitController
         base.Start();
         SubscribeAnimEvents();
     }
-    
+
+    public override void RpcOnRegister()
+    {
+        //throw new System.NotImplementedException();
+    }
 }

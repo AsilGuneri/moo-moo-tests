@@ -13,7 +13,6 @@ public class SelectTargetAction : FSMAction
         var controller = stateMachine.GetComponent<UnitController>();
         var closestEnemy = UnitManager.Instance.GetClosestEnemy(controller.transform.position, controller);
         controller.TargetController.SetTarget(closestEnemy.GetComponent<NetworkIdentity>());
-        Debug.Log("SelectTarget execute");
 
     }
 }

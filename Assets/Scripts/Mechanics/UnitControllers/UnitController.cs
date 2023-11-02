@@ -84,4 +84,10 @@ public abstract class UnitController : NetworkBehaviour
         movement.OnMoveStart += (() => { animationController.SetMoveStatus(true); });
         movement.OnMoveStop += (() => { animationController.SetMoveStatus(false); });
     }
+
+    [ClientRpc]
+    public virtual void RpcOnRegister()
+    {
+
+    }
 }

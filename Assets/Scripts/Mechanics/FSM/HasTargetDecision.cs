@@ -11,7 +11,6 @@ public class HasTargetDecision : Decision
     public override bool Decide(BaseStateMachine state)
     {
         bool hasTarget = state.GetComponent<UnitController>().TargetController.Target != null;
-        Debug.Log("HasTarget decision check " + hasTarget);
         return hasTarget;
     }
 

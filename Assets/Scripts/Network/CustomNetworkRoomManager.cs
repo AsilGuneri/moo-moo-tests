@@ -85,7 +85,6 @@ public class CustomNetworkRoomManager : NetworkRoomManager
 
     public override void OnRoomServerPlayersReady()
     {
-        Debug.Log("room players count " + RoomPlayers.Count);
         base.OnRoomServerPlayersReady();
         loadingManager.Load(loadingSceneAsync);
     }

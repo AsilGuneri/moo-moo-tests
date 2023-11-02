@@ -74,7 +74,6 @@ public class PlayerController : UnitController
     private void StartCharacter()
     {
         mainCamera = Camera.main;
-        Debug.Log("Main camera is set");
         CameraController.Instance.Setup(transform);
         statController.InitializeStats();
         SubscribeAnimEvents();
@@ -293,5 +292,10 @@ public class PlayerController : UnitController
         if (skill.OnCooldown) return false;
         if (skill.SkillData.ManaCost > health.CurrentMana) return false;
         return true;
+    }
+
+    public override void RpcOnRegister()
+    {
+       // throw new NotImplementedException();
     }
 }

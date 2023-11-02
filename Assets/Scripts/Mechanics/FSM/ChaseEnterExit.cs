@@ -16,13 +16,11 @@ public class ChaseEnterExit : StateEnterExitActions
         var target = controller.TargetController.Target.transform;
         var followRange = FollowByAttackRange ? controller.attackRange : FollowDistance;
         controller.Movement.StartFollow(target, followRange);
-        Debug.Log("chase state start execute");
     }
 
     public override void OnExit(BaseStateMachine stateMachine)
     {
         var controller = stateMachine.GetComponent<UnitController>();
         controller.Movement.StopFollow();
-        Debug.Log("chase on exit");
     }
 }

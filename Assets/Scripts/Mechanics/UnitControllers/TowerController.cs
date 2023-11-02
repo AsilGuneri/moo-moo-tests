@@ -67,9 +67,10 @@ public class TowerController : UnitController
             }
             else
             {
-                var target = UnitManager.Instance.GetClosestEnemy(transform.position, this).GetComponent<NetworkIdentity>();
+                var target = UnitManager.Instance.GetClosestEnemy(transform.position, this);
+                if (!target) continue;
                 if (target != targetController.Target)
-                    targetController.SetTarget(target);
+                    targetController.SetTarget(target.GetComponent<NetworkIdentity>());
             }
         }
     }
@@ -103,15 +104,9 @@ public class TowerController : UnitController
             });
         }
     }
-    private void UpdateVisualEffect(float currentCooldown, float totalCooldown)
+
+    public override void RpcOnRegister()
     {
-        if (visualEffectMaterial)
-        {
-            float normalizedValue = Mathf.Clamp01(currentCooldown / totalCooldown); // Ensures the value is between 0 and 1
-            float finalPower = Mathf.Lerp(2, 10, normalizedValue); // Map this value between 2 and 10 for Final Power
-
-            visualEffectMaterial.SetFloat("_FinalPower", finalPower); // Assuming the shader's internal name for the property is "_FinalPower"
-        }
+        StartTower();
     }
-
 }

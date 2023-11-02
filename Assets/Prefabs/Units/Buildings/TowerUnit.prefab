@@ -168,9 +168,9 @@ GameObject:
   - component: {fileID: 8900049609058426603}
   - component: {fileID: 1331339329506011159}
   - component: {fileID: 6123815797971010092}
-  - component: {fileID: 3008269667613471278}
-  - component: {fileID: 8153774780244134079}
   - component: {fileID: 2272968842811932216}
+  - component: {fileID: 8153774780244134079}
+  - component: {fileID: 446494124656438392}
   m_Layer: 0
   m_Name: TowerUnit
   m_TagString: Untagged
@@ -402,36 +402,6 @@ MonoBehaviour:
     x: 10
     y: 10
     z: 10
---- !u!114 &3008269667613471278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5897228174691731997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e7f0831bfc127441bc87704e9cde00c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  useLifeTime: 0
-  lifeTime: 0
---- !u!114 &8153774780244134079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5897228174691731997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61dea3e63677a2b429ebd89080eba571, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heroBaseStats: {fileID: 11400000, guid: fd329804bebc9674683332e37882a7cc, type: 2}
 --- !u!114 &2272968842811932216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,6 +419,36 @@ MonoBehaviour:
   syncInterval: 0
   healthFill: {fileID: 0}
   manaFill: {fileID: 0}
+--- !u!114 &8153774780244134079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5897228174691731997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57688d2558b91404596856d4055b7a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroBaseStats: {fileID: 11400000, guid: fd329804bebc9674683332e37882a7cc, type: 2}
+--- !u!114 &446494124656438392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5897228174691731997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4015c930984090469e7d32dbe258a5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  useLifeTime: 0
+  lifeTime: 0
 --- !u!1001 &2204606041642752521
 PrefabInstance:
   m_ObjectHideFlags: 0

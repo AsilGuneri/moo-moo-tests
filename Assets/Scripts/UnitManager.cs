@@ -11,8 +11,10 @@ public class UnitManager : NetworkSingleton<UnitManager>
     public readonly SyncList<GameObject> WaveEnemies = new SyncList<GameObject>();
 
     public readonly SyncList<GameObject> Buildings = new SyncList<GameObject>();
+    public readonly SyncList<GameObject> Towers = new SyncList<GameObject>();
 
-    
+
+
     [Command(requiresAuthority = false)]
     public void RegisterUnit(UnitController unit)
     {
@@ -31,7 +33,12 @@ public class UnitManager : NetworkSingleton<UnitManager>
                 if (Buildings.Contains(unitObj)) return;
                 Buildings.Add(unitObj);
                 break;
+            case UnitType.Tower:
+                if (Buildings.Contains(unitObj)) return;
+                Towers.Add(unitObj);
+                break;
         }
+        unit.RpcOnRegister();
     }
     [ServerCallback]
     public void UnregisterUnits(UnitController unit)
@@ -153,4 +160,5 @@ public enum UnitType
     Player,
     WaveEnemy,
     Building,
+    Tower
 }

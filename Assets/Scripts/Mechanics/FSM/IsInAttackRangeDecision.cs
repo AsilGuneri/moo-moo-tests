@@ -11,7 +11,6 @@ public class IsInAttackRangeDecision : Decision
     {
         var controller = state.GetComponent<UnitController>();
         bool isInRange = Extensions.CheckRangeBetweenUnits(controller.transform, controller.TargetController.Target.transform, controller.attackRange);
-        Debug.Log("is in attack range decision check " + isInRange);
         return isInRange;
     }
 }
