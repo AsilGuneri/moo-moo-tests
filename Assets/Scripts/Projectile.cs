@@ -24,6 +24,8 @@ public class Projectile : NetworkBehaviour, IProjectile
     [SyncVar] private Transform spawnerTransform;
     [SyncVar] private GameObject Target;
 
+    private Health targetHealth;
+
     public bool BelongsToEnemy(UnitType enemyTo)
     {
         return spawnerTransform.GetComponent<UnitController>().IsEnemyTo(enemyTo);
@@ -35,6 +37,7 @@ public class Projectile : NetworkBehaviour, IProjectile
         Target = target;
         _damage = damage;
         this.spawnerTransform = spawnerTransform;
+        targetHealth = target.GetComponent<Health>();
     }
 
     public void Update()
@@ -45,8 +48,8 @@ public class Projectile : NetworkBehaviour, IProjectile
     public void UpdateProjectile()
     {
 
-        if (_isMoving && Target == null) DestroySelf();
-        if (Target == null || !_isMoving) return;
+        if (_isMoving && (targetHealth == null || targetHealth.IsDead)) DestroySelf();
+        if (targetHealth == null || targetHealth.IsDead || !_isMoving) return;
 
         UnitController targetController = Target.GetComponent<UnitController>();
         bool isCloseEnough = Extensions.CheckRangeBetweenUnitAndCollider(targetController, hitCollider, 0.1f);
