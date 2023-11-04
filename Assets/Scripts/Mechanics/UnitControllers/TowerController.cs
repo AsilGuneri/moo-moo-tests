@@ -21,6 +21,11 @@ public class TowerController : UnitController
         if (visualEffectObject)
             visualEffectMaterial = visualEffectObject.GetComponent<Renderer>().material;
     }
+    protected override void Start()
+    {
+        base.Start();
+        statController.InitializeStats();
+    }
 
     public void StartTower()
     {

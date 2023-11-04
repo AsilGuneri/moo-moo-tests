@@ -8,6 +8,7 @@ using Utilities;
 
 public class GameFlowManager : NetworkSingleton<GameFlowManager>
 {
+    [SerializeField] int sceneWarmupTime;
     [SerializeField] int firstWaveCountdown;
     [SerializeField] int waveCountdown;
     [SerializeField] Button readyButton;
@@ -41,13 +42,13 @@ public class GameFlowManager : NetworkSingleton<GameFlowManager>
     public void OnGameStart()
     {
         StartCoroutine(StartGameRoutine());
-
     }
 
     IEnumerator StartGameRoutine()
     {
-        yield return Extensions.GetWait(3);
-        TowerManager.Instance.SetTowers();
+        yield return Extensions.GetWait(1);
+        NotificationManager.Instance.SetNotification("Welcome");
+        yield return Extensions.GetWait(sceneWarmupTime - 1);
         SetGameState(GameState.WaveCountdown);
 
     }

@@ -100,7 +100,7 @@ public class Health : NetworkBehaviour
     }
 
     [Server]
-    private void InitializeHealth(int maxHealth, int maxMana)
+    public void InitializeHealth(int maxHealth, int maxMana)
     {
         UnitManager.Instance.RegisterUnit(controller);
         IsDead = false;

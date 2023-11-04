@@ -15,8 +15,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
     [SerializeField] Transform spawnArea;
     [SerializeField] float spacing = 2f;
 
-    [SerializeField] GameObject notificationParent;
-    [SerializeField] TextMeshProUGUI timerText;
+    
 
     Vector3 initialSpawnPos;
     int currentWaveIndex = 0;
@@ -65,13 +64,8 @@ public class WaveManager : NetworkSingleton<WaveManager>
     [Server]
     private IEnumerator SpawnWithCountdown(int seconds)
     {
-        notificationParent.SetActive(true);
-        for (int i = 0; i < seconds; i++)
-        {
-            timerText.text = (seconds - i).ToString();
-            yield return Extensions.GetWait(1);
-        }
-        notificationParent.SetActive(false);
+        NotificationManager.Instance.SetNotification("NEXT WAVE IN :", seconds);
+        yield return Extensions.GetWait(seconds);
         SpawnNextWave();
     }
     private void SpawnWave(WaveData waveData)

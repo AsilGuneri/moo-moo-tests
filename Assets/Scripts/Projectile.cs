@@ -6,7 +6,7 @@ using System;
 
 public interface IProjectile
 {
-    void SetupProjectile(GameObject target, int damage, Transform spawnerTransform);
+    void SetupProjectile(Health target, int damage, Transform spawnerTransform);
     void UpdateProjectile();
     void DestroySelf();
 }
@@ -22,23 +22,23 @@ public class Projectile : NetworkBehaviour, IProjectile
     [SyncVar] private bool _isMoving;
     [SyncVar] private int _damage;
     [SyncVar] private Transform spawnerTransform;
-    [SyncVar] private GameObject Target;
+    [SyncVar] private Health targetHealth;
 
-    private Health targetHealth;
+  //  private Health targetHealth;
 
     public bool BelongsToEnemy(UnitType enemyTo)
     {
         return spawnerTransform.GetComponent<UnitController>().IsEnemyTo(enemyTo);
     }
     [Server]
-    public void SetupProjectile(GameObject target, int damage, Transform spawnerTransform)
+    public void SetupProjectile(Health target, int damage, Transform spawnerTransform)
     {
         _isMoving = true;
-        Target = target;
+        targetHealth = target;
         _damage = damage;
         this.spawnerTransform = spawnerTransform;
-        targetHealth = target.GetComponent<Health>();
     }
+
 
     public void Update()
     {
@@ -51,7 +51,7 @@ public class Projectile : NetworkBehaviour, IProjectile
         if (_isMoving && (targetHealth == null || targetHealth.IsDead)) DestroySelf();
         if (targetHealth == null || targetHealth.IsDead || !_isMoving) return;
 
-        UnitController targetController = Target.GetComponent<UnitController>();
+        UnitController targetController = targetHealth.GetComponent<UnitController>();
         bool isCloseEnough = Extensions.CheckRangeBetweenUnitAndCollider(targetController, hitCollider, 0.1f);
 
         Vector3 targetPos = is3D ? targetController.HitPoint :
@@ -64,7 +64,7 @@ public class Projectile : NetworkBehaviour, IProjectile
         }
         else
         {
-            CmdNotifyHit(Target);
+            CmdNotifyHit(targetHealth.gameObject);
         }
     }
 

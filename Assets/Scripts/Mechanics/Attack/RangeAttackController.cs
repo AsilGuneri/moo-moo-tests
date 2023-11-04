@@ -14,14 +14,14 @@ public class RangeAttackController : BasicAttackController
     protected override void OnAttackImpact()
     {
         base.OnAttackImpact();
-        CmdSpawnProjectile(controller.TargetController.Target.gameObject, connectionToClient);
+        CmdSpawnProjectile(controller.TargetController.Target.GetComponent<Health>(), connectionToClient);
     }
     protected override void OnAttackEnd()
     {
 
     }
     [Command(requiresAuthority = false)]
-    private void CmdSpawnProjectile(GameObject target, NetworkConnectionToClient client)
+    private void CmdSpawnProjectile(Health target, NetworkConnectionToClient client)
     {
         //if (checkAuthority && !hasAuthority) return;
         GameObject projectile = PrefabPoolManager.Instance.GetFromPool(projectilePrefab, controller.ProjectileSpawnPoint.position, Quaternion.identity);
