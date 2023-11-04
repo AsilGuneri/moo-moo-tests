@@ -445,6 +445,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4777dcff4dbc4447a5b52a5477f17db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   _initialState: {fileID: 0}
   _graph: {fileID: 11400000, guid: 8b930c9ee61131e49ac0be62f18e6088, type: 2}
 --- !u!114 &6306328089689109996

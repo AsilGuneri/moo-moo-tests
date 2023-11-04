@@ -1,28 +1,34 @@
+using Mirror;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Demo.FSM
 {
-    public class BaseStateMachine : MonoBehaviour
+    public class BaseStateMachine : NetworkBehaviour
     {
         [SerializeField] private BaseState _initialState;
-        private Dictionary<Type, Component> _cachedComponents;
+        private Dictionary<Type, Component> _cachedComponents = new Dictionary<Type, Component>();
+
+        protected bool isActive = false;
+
         private void Awake()
         {
             Init();
-            _cachedComponents = new Dictionary<Type, Component>();
+            isActive = true;
         }
 
         public BaseState CurrentState { get; set; }
 
         private void Update()
         {
+            if (!isServer) return;
             Execute();
         }
 
         public virtual void Init()
         {
+            if (!isServer) return;
             CurrentState = _initialState;
         }
 
