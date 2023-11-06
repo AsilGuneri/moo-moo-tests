@@ -17,7 +17,6 @@ public class TopDownArrowsSkillController : SkillController
     }
     protected override void OnCastStart()
     {
-        Debug.Log($"cast start topdownarrows");
         Ray ray;
         RaycastHit[] hits;
         playerController.GetMousePositionRaycastInfo(out ray, out hits);
@@ -29,18 +28,15 @@ public class TopDownArrowsSkillController : SkillController
     }
     protected override void OnCastEnd()
     {
-        Debug.Log($"cast end topdownarrows");
     }
 
     protected override void OnSkillStart()
     {
-        Debug.Log($"skill start topdownarrows ");
         SpawnArrows(castStartPoint);
 
     }
     protected override void OnSkillEnd()
     {
-        Debug.Log($"skill end topdownarrows");
     }
     [Command(requiresAuthority = false)]
     private void SpawnArrows(Vector3 castStartPos)
