@@ -34,10 +34,6 @@ public class PlayerController : UnitController
         statController = GetComponent<StatController>();
         GoldController = GetComponent<PlayerGoldController>();
     }
-    protected override void Start()
-    {
-        base.Start();
-    }
     public override void OnStartAuthority()
     {
         base.OnStartAuthority();
@@ -76,7 +72,7 @@ public class PlayerController : UnitController
         mainCamera = Camera.main;
         CameraController.Instance.Setup(transform);
         statController.InitializeStats();
-        SubscribeAnimEvents();
+        SubscribeEvents();
     }
 
     public void GetMousePositionRaycastInfo(out Ray ray, out RaycastHit[] hits)
@@ -194,7 +190,7 @@ public class PlayerController : UnitController
     #region Input Events
     private void OnLeftClick() //used by input component
     {
-         if (!isOwned) return;
+         if (!CanUseInputs()) return;
         if (!CanClick()) return;
         Ray ray;
         RaycastHit[] hits;
@@ -224,7 +220,7 @@ public class PlayerController : UnitController
 
     private void OnRightClick()//used by input component
     {
-        if (!isOwned) return;
+        if (!CanUseInputs()) return;
         if (!CanClick()) return;
         Ray ray;
         RaycastHit[] hits;
@@ -245,11 +241,12 @@ public class PlayerController : UnitController
     }
     private void OnSetAutoAttackMode()//used by input component
     {
-        if (!isOwned) return;
+        if (!CanUseInputs()) return;
         isAttackClickMode = true;
     }
     private void OnSkill0()
     {
+        if (!CanUseInputs()) return;
         var skill = skills[0];
         if (!CanCastSkill(skill)) return;
         if (skill.SkillData.HasIndicator)
@@ -274,6 +271,7 @@ public class PlayerController : UnitController
     }
     private void OnFlash()
     {
+        if (!CanUseInputs()) return;
         if (!CanCastSkill(jumpSkill)) return;
         var skill = jumpSkill;
 
@@ -291,6 +289,12 @@ public class PlayerController : UnitController
     {
         if (skill.OnCooldown) return false;
         if (skill.SkillData.ManaCost > health.CurrentMana) return false;
+        return true;
+    }
+    private bool CanUseInputs()
+    {
+        if(!isOwned) return false;
+        if(health.IsDead) return false;
         return true;
     }
 

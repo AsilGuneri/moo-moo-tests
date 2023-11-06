@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class Health : NetworkBehaviour
 {
-    public Action OnDeath;
+    public Action<Transform> OnDeath;
     public bool IsDead { get; private set; }
     public int CurrentMana { get => currentMana; }
     public int CurrentHealth { get => currentHealth; }
@@ -23,7 +23,6 @@ public class Health : NetworkBehaviour
     [SyncVar]
     private int maxMana;
     private UnitController controller;
-    private bool isActive = false;
 
     [SyncVar(hook = nameof(OnHealthChanged))]
     protected int currentHealth;
@@ -108,7 +107,6 @@ public class Health : NetworkBehaviour
         this.maxMana = maxMana;
         currentHealth = maxHealth;
         currentMana = maxMana;
-        isActive = true;
         RpcUpdateHealthBar();
         if (maxMana > 0) RpcUpdateMana();
     }
@@ -142,15 +140,7 @@ public class Health : NetworkBehaviour
     {
         if (IsDead) return;
         IsDead = true;
-        isActive = false;
-        OnDeath?.Invoke();
-        UnitManager.Instance.UnregisterUnits(controller);
-        if (damageDealerTransform.TryGetComponent(out PlayerLevelController levelController))
-        {
-            levelController.GainExp(ExpToGain);
-        }
-        NetworkServer.UnSpawn(gameObject);
-        PrefabPoolManager.Instance.PutBackInPool(gameObject);
+        OnDeath?.Invoke(damageDealerTransform);
     }
 
 

@@ -1,6 +1,8 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class EnemyController : UnitController
 {
@@ -8,14 +10,21 @@ public class EnemyController : UnitController
 
     [SerializeField] protected MinionType minionType;
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();
-        SubscribeAnimEvents();
+        SubscribeEvents();
     }
 
-    public override void RpcOnRegister()
+    public override void OnDeath(Transform k)
     {
+        UnitManager.Instance.UnregisterUnits(this);
+        if (k.TryGetComponent(out PlayerLevelController levelController))
+        {
+            var unit = k.GetComponent<UnitController>();
+            levelController.GainExp(unit.Health.ExpToGain);
+        }
+        NetworkServer.UnSpawn(gameObject);
+        PrefabPoolManager.Instance.PutBackInPool(gameObject);
         //throw new System.NotImplementedException();
     }
 }

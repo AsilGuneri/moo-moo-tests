@@ -13,22 +13,14 @@ public class TargetController : NetworkBehaviour
     [Client]
     public void SetTarget(NetworkIdentity target)
     {
-        if (Target) //old target
-        {
-            Target.GetComponent<Health>().OnDeath -= SetToNull;
-        }
         Target = target;
-        if (target)
+    }
+
+    private void Update()
+    {
+        if (Target)
         {
-            target.GetComponent<Health>().OnDeath += SetToNull;
+
         }
     }
-    private void SetToNull()
-    {
-        if (Target == null) return;
-        if(Target.TryGetComponent(out Health health)) health.OnDeath -= SetToNull;
-        Target = null;
-    }
-
-
 }

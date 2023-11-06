@@ -56,6 +56,9 @@ public class UnitManager : NetworkSingleton<UnitManager>
             case UnitType.Building:
                 Buildings.Remove(unitObj);
                 break;
+            case UnitType.Tower:
+                Towers.Remove(unitObj);
+                break;
         }
     }
     public GameObject GetClosestBuilding(Vector3 myPos)

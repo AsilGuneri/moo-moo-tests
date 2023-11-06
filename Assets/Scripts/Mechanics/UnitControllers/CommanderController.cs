@@ -9,10 +9,6 @@ public class CommanderController : EnemyController
         base.Awake();
         if(minionType != MinionType.Commander) minionType = MinionType.Commander;
     }
-    protected override void Start()
-    {
-        base.Start();
-    }
     public virtual bool DefendCommandCondition()
     {
         if (minionType != MinionType.Commander) return false;

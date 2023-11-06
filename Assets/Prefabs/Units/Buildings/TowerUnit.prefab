@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 7565678099744452477}
   - component: {fileID: 6599174429684171856}
   - component: {fileID: 1245353497770894523}
+  - component: {fileID: 309119948029116741}
   m_Layer: 0
   m_Name: default
   m_TagString: Untagged
@@ -147,6 +148,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &309119948029116741
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4956038245277830144}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.85200006, y: 1.2880001, z: 0.85200006}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.2930001, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &5897228174691731997
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,8 +183,6 @@ GameObject:
   - component: {fileID: 8572392696976709192}
   - component: {fileID: 3170923405309019573}
   - component: {fileID: 8900049609058426603}
-  - component: {fileID: 1331339329506011159}
-  - component: {fileID: 6123815797971010092}
   - component: {fileID: 2272968842811932216}
   - component: {fileID: 8153774780244134079}
   - component: {fileID: 446494124656438392}
@@ -358,7 +373,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5897228174691731997}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 825ee44755f2e4846a6229365ed8d44c, type: 3}
   m_Name: 
@@ -369,39 +384,6 @@ MonoBehaviour:
   AngularSpeed: 120
   StoppingDistance: 0
   AutoBreaking: 1
---- !u!114 &1331339329506011159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5897228174691731997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fed5c6dd07c7d6e4f857b420fa8f559a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Radius: 1.68
-  Height: 5.03
---- !u!114 &6123815797971010092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5897228174691731997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00fe6fc1ebf8ff240ad5b12ad70ce1c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AgentTypeId: 0
-  AreaMask: -1
-  AutoRepath: 1
-  MappingExtent:
-    x: 10
-    y: 10
-    z: 10
 --- !u!114 &2272968842811932216
 MonoBehaviour:
   m_ObjectHideFlags: 0

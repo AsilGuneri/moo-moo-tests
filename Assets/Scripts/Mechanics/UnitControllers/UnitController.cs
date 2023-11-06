@@ -46,10 +46,6 @@ public abstract class UnitController : NetworkBehaviour
         CacheReferences();
     }
     
-    protected virtual void Start()
-    {
-        health.OnDeath += () => { targetController.SetTarget(null); };
-    }
     protected bool IsEnemy(RaycastHit hitInfo)
     {
         if (hitInfo.transform.TryGetComponent(out UnitController unit))
@@ -72,7 +68,7 @@ public abstract class UnitController : NetworkBehaviour
         health = GetComponent<Health>();
         statController = GetComponent<StatController>();
     }
-    protected void SubscribeAnimEvents()
+    protected void SubscribeEvents()
     {
         attackController.OnStartAttack += (() => { animationController.SetAttackStatus(true); animationController.TriggerAttack(); });
         attackController.OnEndAttack += (() => { animationController.SetAttackStatus(false); });
@@ -83,11 +79,12 @@ public abstract class UnitController : NetworkBehaviour
         });
         movement.OnMoveStart += (() => { animationController.SetMoveStatus(true); });
         movement.OnMoveStop += (() => { animationController.SetMoveStatus(false); });
+
+        health.OnDeath += OnDeath;
     }
 
     [ClientRpc]
-    public virtual void RpcOnRegister()
-    {
+    public virtual void RpcOnRegister() { }
 
-    }
+    public virtual void OnDeath(Transform killer) { }
 }

@@ -34,7 +34,11 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S)) ClientStop();
         if (!isMoving) return;
-
+        if(controller.Health.IsDead)
+        {
+            ClientStop();
+            return;
+        }
         if (ReachedDestination(0.1f) && controller.TargetController.Target == null)
         {
             ClientStop();
