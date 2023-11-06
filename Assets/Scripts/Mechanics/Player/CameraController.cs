@@ -84,6 +84,10 @@ public class CameraController : Singleton<CameraController>
         initialOffset = transform.position - target.position;
         isActive = true;
     }
+    public void Center()
+    {
+        FollowTarget();
+    }
     private void FollowTarget()
     {
         transform.position = target.position + initialOffset;

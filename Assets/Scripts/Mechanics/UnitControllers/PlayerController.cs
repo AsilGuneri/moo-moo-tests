@@ -306,5 +306,15 @@ public class PlayerController : UnitController
         UnitManager.Instance.RemoveUnit(this);
         gameObject.SetActive(false);
         //GetComponent<AgentAuthoring>().enabled = false
+        Invoke(nameof(RespawnPlayer), GameFlowManager.Instance.RespawnTime);
+    }
+    public void RespawnPlayer()
+    {
+        transform.position = Vector3.zero;
+        gameObject.SetActive(true);
+        statController.InitializeStats();
+        AnimationController.SetAttackSpeed(attackSpeed);
+        CameraController.Instance.Center();
+
     }
 }

@@ -8,6 +8,8 @@ using Utilities;
 
 public class GameFlowManager : NetworkSingleton<GameFlowManager>
 {
+    public int RespawnTime = 5;
+
     [SerializeField] int firstWaveCountdown;
     [SerializeField] int waveCountdown;
     [SerializeField] Button readyButton;
