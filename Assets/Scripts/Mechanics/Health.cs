@@ -9,7 +9,8 @@ using UnityEngine.UI;
 
 public class Health : NetworkBehaviour
 {
-    public Action<Transform> OnDeath;
+    public Action<Transform> OnDeathClient;
+    public Action<Transform> OnDeathServer;
     public bool IsDead { get; private set; }
     public int CurrentMana { get => currentMana; }
     public int CurrentHealth { get => currentHealth; }
@@ -134,7 +135,15 @@ public class Health : NetworkBehaviour
     {
         if (IsDead) return;
         IsDead = true;
-        OnDeath?.Invoke(damageDealerTransform);
+        OnDeathServer?.Invoke(damageDealerTransform);
+        controller.OnDeath(damageDealerTransform);
+        RpcDie(damageDealerTransform);
+    }
+
+    [ClientRpc] void RpcDie(Transform damageDealerTransform)
+    {
+        OnDeathClient?.Invoke(damageDealerTransform);
+
     }
 
 

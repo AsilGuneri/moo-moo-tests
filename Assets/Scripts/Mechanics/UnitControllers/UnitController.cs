@@ -79,12 +79,14 @@ public abstract class UnitController : NetworkBehaviour
         });
         movement.OnMoveStart += (() => { animationController.SetMoveStatus(true); });
         movement.OnMoveStop += (() => { animationController.SetMoveStatus(false); });
-
-        health.OnDeath += OnDeath;
     }
 
     [ClientRpc]
     public virtual void RpcOnRegister() { }
 
-    public virtual void OnDeath(Transform killer) { }
+    [Server]
+    public virtual void OnDeath(Transform killer) 
+    {
+    }
+    
 }

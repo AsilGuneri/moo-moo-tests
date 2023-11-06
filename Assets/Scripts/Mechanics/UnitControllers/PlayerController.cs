@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 
 public class PlayerController : UnitController
 {
@@ -42,13 +43,13 @@ public class PlayerController : UnitController
     void Update()
     {
         if (!isOwned) return;
-        //if (Input.GetKeyDown(KeyCode.T))
-        //    WaveManager.Instance.SpawnTestWave();
+        if (Input.GetKeyDown(KeyCode.T))
+            WaveManager.Instance.Spawn(0);
     }
     private void Activate()
     {
         if (!isOwned) return;
-        
+
         if (isServer) //server
         {
             //ContributionPanel.Instance.AddPlayerContributionField(this);
@@ -57,22 +58,59 @@ public class PlayerController : UnitController
         {
             GoldController.CmdAddGold(100);
             UnitManager.Instance.RegisterUnit(this);
-            StartCharacter(); // everyone
             GetComponent<PlayerInput>().enabled = true;
             LocalPlayerUI.Instance.SkillBarUI.AssignSkills(this);
-
+            mainCamera = Camera.main;
+            CameraController.Instance.Setup(transform);
+            statController.InitializeStats();
+            SubscribeEvents();
             //show skills on UI here
         }
-        
+
     }
 
-    private void StartCharacter()
+    #region Death/Respawn
+
+    [Server]
+    private void RespawnPlayer()
     {
-        mainCamera = Camera.main;
-        CameraController.Instance.Setup(transform);
-        statController.InitializeStats();
-        SubscribeEvents();
+        Debug.Log("asilxx RespawnPlayer " + isServer);
+        RpcOnRespawn();
+        OnOwnerRespawn();
     }
+    //
+    public override void OnDeath(Transform killer) //server
+    {
+        Debug.Log("asilxx OnDeathServer " + isServer);
+        UnitManager.Instance.RemoveUnit(this);
+        Invoke(nameof(RespawnPlayer), GameFlowManager.Instance.RespawnTime);
+        RpcOnDeath(killer);
+    }
+
+    [ClientRpc]
+    void RpcOnDeath(Transform killer)
+    {
+        Debug.Log("asilxx RpcOnDeath " + isServer);
+        gameObject.SetActive(false);
+    }
+    [ClientRpc]
+    void RpcOnRespawn()
+    {
+        Debug.Log("asilxx RpcOnRespawn " + isServer);
+        transform.position = Vector3.zero;
+        gameObject.SetActive(true);
+    }
+    [TargetRpc]
+    void OnOwnerRespawn()
+    {
+        Debug.Log("asilxx OnOwnerRespawn " + isServer);
+
+        AnimationController.SetAttackSpeed(attackSpeed);
+        statController.InitializeStats();
+        CameraController.Instance.Center();
+    }
+
+    #endregion
 
     public void GetMousePositionRaycastInfo(out Ray ray, out RaycastHit[] hits)
     {
@@ -92,7 +130,7 @@ public class PlayerController : UnitController
             {
                 clickedEnemy = obj;
             }
-            if (obj.layer ==  6) // ground
+            if (obj.layer == 6) // ground
             {
                 groundHitPos = hitInfo.point;
             }
@@ -105,7 +143,7 @@ public class PlayerController : UnitController
                 OnClickEnemy(clickedEnemy.transform);
             }
         }
-        else if(groundHitPos != default)
+        else if (groundHitPos != default)
         {
             MoveToPoint(groundHitPos);
         }
@@ -189,12 +227,12 @@ public class PlayerController : UnitController
     #region Input Events
     private void OnLeftClick() //used by input component
     {
-         if (!CanUseInputs()) return;
+        if (!CanUseInputs()) return;
         if (!CanClick()) return;
         Ray ray;
         RaycastHit[] hits;
         GetMousePositionRaycastInfo(out ray, out hits);
-        RaycastHit ? groundHit = hits.FirstOrDefault(hit => hit.collider.gameObject.layer == 6);
+        RaycastHit? groundHit = hits.FirstOrDefault(hit => hit.collider.gameObject.layer == 6);
 
         if (isAttackClickMode) //will handle that part later
         {
@@ -292,29 +330,9 @@ public class PlayerController : UnitController
     }
     private bool CanUseInputs()
     {
-        if(!isOwned) return false;
-        if(health.IsDead) return false;
+        if (!isOwned) return false;
+        if (health.IsDead) return false;
         return true;
     }
 
-    public override void RpcOnRegister()
-    {
-       // throw new NotImplementedException();
-    }
-    public override void OnDeath(Transform killer)
-    {
-        UnitManager.Instance.RemoveUnit(this);
-        gameObject.SetActive(false);
-        //GetComponent<AgentAuthoring>().enabled = false
-        Invoke(nameof(RespawnPlayer), GameFlowManager.Instance.RespawnTime);
-    }
-    public void RespawnPlayer()
-    {
-        transform.position = Vector3.zero;
-        gameObject.SetActive(true);
-        statController.InitializeStats();
-        AnimationController.SetAttackSpeed(attackSpeed);
-        CameraController.Instance.Center();
-
-    }
 }

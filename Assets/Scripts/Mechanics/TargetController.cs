@@ -4,7 +4,6 @@ using UnityEngine;
 using Mirror;
 using System;
 using MyBox;
-using UnityEditorInternal;
 
 public class TargetController : NetworkBehaviour
 {
@@ -18,44 +17,40 @@ public class TargetController : NetworkBehaviour
         controller = GetComponent<UnitController>();
     }
 
-    //private void Update()
-    //{
-    //    if(Target && !IsTargetValid())
-    //    {
+    private void Update()
+    {
+        ValidateTarget();
+    }
+    private void ValidateTarget()
+    {
+        if (!isClient) return;
+        if (!Target) return;
+        if (Target.gameObject.activeInHierarchy) return;
 
-    //    }
-    //}
-    //private bool IsTargetValid()
-    //{
-    //    if(Target.TryGetComponent(out UnitController unit))
-    //    {
-    //        return !unit.Health.IsDead;
-    //    }
-    //    return false;
-    //}
+        SetTarget(null);
+    }
 
     [Client]
     public void SetTarget(NetworkIdentity target)
     {
-        if (Target) //old target
-        {
-            Target.GetComponent<Health>().OnDeath -= SetToNull;
-        }
         Target = target;
-        if (target)
+        if (target == null && controller.unitType is UnitType.WaveEnemy)
         {
-            target.GetComponent<Health>().OnDeath += SetToNull;
-        }
-    }
-    private void SetToNull(Transform damageDealer)
-    {
-        if (Target == null) return;
-        if (Target.TryGetComponent(out Health health)) health.OnDeath -= SetToNull;
-        if(controller.unitType == UnitType.WaveEnemy)
-        {
-            var enemyController = (EnemyController)controller;
+            var enemyController = controller as EnemyController;
             enemyController.StateMachine.ResetMachine();
         }
-        Target = null;
     }
+
+   // [Command]
+    //private void SetToNull(Transform damageDealer)
+    //{
+    //    if (Target == null) return;
+    //    if (Target.TryGetComponent(out Health health)) health.OnDeathClient -= SetToNull;
+    //    if(controller.unitType == UnitType.WaveEnemy)
+    //    {
+    //        var enemyController = (EnemyController)controller;
+    //        enemyController.StateMachine.ResetMachine();
+    //    }
+    //    Target = null;
+    //}
 }

@@ -22,6 +22,7 @@ public class EnemyController : UnitController
 
     void Start()
     {
+        if (!isServer) return;
         SubscribeEvents();
     }
 
