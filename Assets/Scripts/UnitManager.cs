@@ -41,7 +41,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
         unit.RpcOnRegister();
     }
     [ServerCallback]
-    public void UnregisterUnits(UnitController unit)
+    public void RemoveUnit(UnitController unit)
     {
         var unitObj = unit.gameObject;
         switch (unit.unitType)

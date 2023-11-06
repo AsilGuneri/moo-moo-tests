@@ -112,14 +112,4 @@ public class Movement : MonoBehaviour
         return !controller.AttackController.IsSetToStopAfterAttack;
 
     }
-    private void MoveOnFollowEnd(Vector3 pos, bool cancelTarget)
-    {
-        ClientMove(pos, cancelTarget);
-        OnFollowStop -= (() => MoveOnFollowEnd(pos,cancelTarget));
-    }
-    private void MoveOnAttackEnd(Vector3 pos, bool cancelTarget)
-    {
-        ClientMove(pos, cancelTarget);
-        controller.AttackController.AfterLastAttack -= (() => MoveOnAttackEnd(pos, cancelTarget));
-    }
 }

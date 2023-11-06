@@ -1,3 +1,4 @@
+using Demo.FSM.Graph;
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,9 +7,18 @@ using UnityEngine.InputSystem.XR;
 
 public class EnemyController : UnitController
 {
+    public BaseStateMachineGraph StateMachine { get => stateMachine; }
     public MinionType MinionType { get => minionType; }
 
     [SerializeField] protected MinionType minionType;
+
+    BaseStateMachineGraph stateMachine;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        stateMachine = GetComponent<BaseStateMachineGraph>();
+    }
 
     void Start()
     {
@@ -17,7 +27,7 @@ public class EnemyController : UnitController
 
     public override void OnDeath(Transform k)
     {
-        UnitManager.Instance.UnregisterUnits(this);
+        UnitManager.Instance.RemoveUnit(this);
         if (k.TryGetComponent(out PlayerLevelController levelController))
         {
             var unit = k.GetComponent<UnitController>();
@@ -27,4 +37,5 @@ public class EnemyController : UnitController
         PrefabPoolManager.Instance.PutBackInPool(gameObject);
         //throw new System.NotImplementedException();
     }
+    
 }

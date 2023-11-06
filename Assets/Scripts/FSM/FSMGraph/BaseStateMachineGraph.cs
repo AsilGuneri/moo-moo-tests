@@ -13,5 +13,15 @@ namespace Demo.FSM.Graph
         {
             ((StateNode)CurrentState).Execute(this);
         }
+
+        public void ResetMachine()
+        {
+            if (CurrentState != null && CurrentState is StateNodeExtra)
+            {
+                var state = (StateNodeExtra)CurrentState;
+                if (state.EnterExitActions) state.OnExit(this);
+            }
+            Init();
+        }
     }
 }

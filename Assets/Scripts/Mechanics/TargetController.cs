@@ -4,23 +4,58 @@ using UnityEngine;
 using Mirror;
 using System;
 using MyBox;
+using UnityEditorInternal;
 
 public class TargetController : NetworkBehaviour
 {
     [SyncVar]
     public NetworkIdentity Target;
 
+    UnitController controller;
+
+    private void Awake()
+    {
+        controller = GetComponent<UnitController>();
+    }
+
+    //private void Update()
+    //{
+    //    if(Target && !IsTargetValid())
+    //    {
+
+    //    }
+    //}
+    //private bool IsTargetValid()
+    //{
+    //    if(Target.TryGetComponent(out UnitController unit))
+    //    {
+    //        return !unit.Health.IsDead;
+    //    }
+    //    return false;
+    //}
+
     [Client]
     public void SetTarget(NetworkIdentity target)
     {
-        Target = target;
-    }
-
-    private void Update()
-    {
-        if (Target)
+        if (Target) //old target
         {
-
+            Target.GetComponent<Health>().OnDeath -= SetToNull;
         }
+        Target = target;
+        if (target)
+        {
+            target.GetComponent<Health>().OnDeath += SetToNull;
+        }
+    }
+    private void SetToNull(Transform damageDealer)
+    {
+        if (Target == null) return;
+        if (Target.TryGetComponent(out Health health)) health.OnDeath -= SetToNull;
+        if(controller.unitType == UnitType.WaveEnemy)
+        {
+            var enemyController = (EnemyController)controller;
+            enemyController.StateMachine.ResetMachine();
+        }
+        Target = null;
     }
 }

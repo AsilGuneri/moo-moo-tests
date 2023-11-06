@@ -1,5 +1,6 @@
 using Mirror;
 using ProjectDawn.Navigation;
+using ProjectDawn.Navigation.Hybrid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +24,6 @@ public class PlayerController : UnitController
     private bool isAttackClickMode;
     private bool isSkillIndicatorActive;
     private SkillController indicatorActiveSkill;
-
-    public AgentBody agent;
 
     // Start is called before the first frame update
 
@@ -301,5 +300,11 @@ public class PlayerController : UnitController
     public override void RpcOnRegister()
     {
        // throw new NotImplementedException();
+    }
+    public override void OnDeath(Transform killer)
+    {
+        UnitManager.Instance.RemoveUnit(this);
+        gameObject.SetActive(false);
+        //GetComponent<AgentAuthoring>().enabled = false
     }
 }

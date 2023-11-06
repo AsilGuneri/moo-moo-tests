@@ -51,13 +51,7 @@ public class Health : NetworkBehaviour
         if (IsDead) return;
         currentHealth -= dmg;
         AddDamageStats(dmg, dealerTransform);
-        if (currentHealth <= 0)
-        {
-            if (GetComponent<UnitController>().unitType != UnitType.Player)
-            {
-                Die(dealerTransform);
-            }
-        }
+        if (currentHealth <= 0) Die(dealerTransform);
     }
     [Command]
     public void CmdUseMana(int mana)
