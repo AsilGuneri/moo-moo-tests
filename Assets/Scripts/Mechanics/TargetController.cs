@@ -4,7 +4,6 @@ using UnityEngine;
 using Mirror;
 using System;
 using MyBox;
-using UnityEditorInternal;
 
 public class TargetController : NetworkBehaviour
 {
