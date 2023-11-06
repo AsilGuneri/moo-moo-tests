@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 using System;
 using MyBox;
+using UnityEditorInternal;
 
 public class TargetController : NetworkBehaviour
 {
@@ -17,40 +18,44 @@ public class TargetController : NetworkBehaviour
         controller = GetComponent<UnitController>();
     }
 
-    private void Update()
-    {
-        ValidateTarget();
-    }
-    private void ValidateTarget()
-    {
-        if (!isClient) return;
-        if (!Target) return;
-        if (Target.gameObject.activeInHierarchy) return;
+    //private void Update()
+    //{
+    //    if(Target && !IsTargetValid())
+    //    {
 
-        SetTarget(null);
-    }
+    //    }
+    //}
+    //private bool IsTargetValid()
+    //{
+    //    if(Target.TryGetComponent(out UnitController unit))
+    //    {
+    //        return !unit.Health.IsDead;
+    //    }
+    //    return false;
+    //}
 
     [Client]
     public void SetTarget(NetworkIdentity target)
     {
-        Target = target;
-        if (target == null && controller.unitType is UnitType.WaveEnemy)
+        if (Target) //old target
         {
-            var enemyController = controller as EnemyController;
-            enemyController.StateMachine.ResetMachine();
+            Target.GetComponent<Health>().OnDeathServer -= SetToNull;
+        }
+        Target = target;
+        if (target)
+        {
+            target.GetComponent<Health>().OnDeathServer += SetToNull;
         }
     }
-
-   // [Command]
-    //private void SetToNull(Transform damageDealer)
-    //{
-    //    if (Target == null) return;
-    //    if (Target.TryGetComponent(out Health health)) health.OnDeathClient -= SetToNull;
-    //    if(controller.unitType == UnitType.WaveEnemy)
-    //    {
-    //        var enemyController = (EnemyController)controller;
-    //        enemyController.StateMachine.ResetMachine();
-    //    }
-    //    Target = null;
-    //}
+    private void SetToNull(Transform damageDealer)
+    {
+        if (Target == null) return;
+        if (Target.TryGetComponent(out Health health)) health.OnDeathServer -= SetToNull;
+        if(controller.unitType == UnitType.WaveEnemy)
+        {
+            var enemyController = (EnemyController)controller;
+            enemyController.StateMachine.ResetMachine();
+        }
+        Target = null;
+    }
 }
