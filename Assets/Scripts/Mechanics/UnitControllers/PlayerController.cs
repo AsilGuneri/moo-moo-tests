@@ -62,7 +62,7 @@ public class PlayerController : UnitController
             LocalPlayerUI.Instance.SkillBarUI.AssignSkills(this);
             mainCamera = Camera.main;
             CameraController.Instance.Setup(transform);
-            statController.InitializeStats();
+            StartUnit();
             SubscribeEvents();
             //show skills on UI here
         }
@@ -74,14 +74,11 @@ public class PlayerController : UnitController
     [Server]
     private void RespawnPlayer()
     {
-        Debug.Log("asilxx RespawnPlayer " + isServer);
         RpcOnRespawn();
         OnOwnerRespawn();
     }
-    //
     public override void OnDeath(Transform killer) //server
     {
-        Debug.Log("asilxx OnDeathServer " + isServer);
         UnitManager.Instance.RemoveUnit(this);
         Invoke(nameof(RespawnPlayer), GameFlowManager.Instance.RespawnTime);
         RpcOnDeath(killer);
@@ -90,23 +87,18 @@ public class PlayerController : UnitController
     [ClientRpc]
     void RpcOnDeath(Transform killer)
     {
-        Debug.Log("asilxx RpcOnDeath " + isServer);
         gameObject.SetActive(false);
     }
     [ClientRpc]
     void RpcOnRespawn()
     {
-        Debug.Log("asilxx RpcOnRespawn " + isServer);
         transform.position = Vector3.zero;
         gameObject.SetActive(true);
     }
     [TargetRpc]
     void OnOwnerRespawn()
     {
-        Debug.Log("asilxx OnOwnerRespawn " + isServer);
-
-        AnimationController.SetAttackSpeed(attackSpeed);
-        statController.InitializeStats();
+        StartUnit();
         CameraController.Instance.Center();
     }
 

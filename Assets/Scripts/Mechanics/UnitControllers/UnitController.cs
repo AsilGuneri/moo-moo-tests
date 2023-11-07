@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.XR;
 
 [RequireComponent(typeof(StatController))]
 public abstract class UnitController : NetworkBehaviour
@@ -88,5 +89,13 @@ public abstract class UnitController : NetworkBehaviour
     public virtual void OnDeath(Transform killer) 
     {
     }
-    
+
+    public void StartUnit()
+    {
+        UnitManager.Instance.RegisterUnit(this);
+        statController.InitializeStats();
+        AnimationController.SetAttackSpeed(attackSpeed);
+
+    }
+
 }

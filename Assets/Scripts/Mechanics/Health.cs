@@ -95,7 +95,6 @@ public class Health : NetworkBehaviour
     [Server]
     public void InitializeHealth(int maxHealth, int maxMana)
     {
-        UnitManager.Instance.RegisterUnit(controller);
         IsDead = false;
         this.maxHealth = maxHealth;
         this.maxMana = maxMana;

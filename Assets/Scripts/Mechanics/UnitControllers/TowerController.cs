@@ -23,7 +23,7 @@ public class TowerController : UnitController
     }
     void Start()
     {
-        statController.InitializeStats();
+        StartUnit();
     }
 
     public void StartTower()

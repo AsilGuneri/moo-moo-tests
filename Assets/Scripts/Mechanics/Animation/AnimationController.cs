@@ -18,10 +18,10 @@ public class AnimationController : NetworkBehaviour
     {//
         controller = GetComponent<UnitController>();
         animator = GetComponent<Animator>();
+        CacheAnimationDurations();
     }
     protected void Start()
     {
-        CacheAnimationDurations();
     }
     public void SetAttackStatus(bool isAttacking)
     {
@@ -68,11 +68,6 @@ public class AnimationController : NetworkBehaviour
             if (animClip.name == attackAnimName)
             {
                 AttackAnimTime = animClip.length;
-                float multiplier = controller.attackSpeed * AttackAnimTime;
-                SetAttackSpeed(multiplier);
-                //float multiplier = controller.attackSpeed * AttackAnimTime;
-                SetAttackSpeed(controller.attackSpeed);
-
             }
         }
     }
