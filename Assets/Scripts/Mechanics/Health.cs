@@ -137,6 +137,7 @@ public class Health : NetworkBehaviour
         OnDeathServer?.Invoke(damageDealerTransform);
         controller.OnDeath(damageDealerTransform);
         RpcDie(damageDealerTransform);
+        if (controller.unitType == UnitType.Player) Debug.Log("u died");
     }
 
     [ClientRpc] void RpcDie(Transform damageDealerTransform)

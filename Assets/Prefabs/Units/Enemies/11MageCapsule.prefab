@@ -1468,6 +1468,7 @@ MonoBehaviour:
   syncInterval: 0
   _initialState: {fileID: 0}
   _graph: {fileID: 11400000, guid: 8b930c9ee61131e49ac0be62f18e6088, type: 2}
+  CurrentState: {fileID: 0}
 --- !u!114 &6465701654805695193
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -110,10 +110,7 @@ public abstract class BasicAttackController : NetworkBehaviour
     {
         if (attackBlockCount > 0) return false;
         if (isAttackStopped) return false;
-        if (controller.TargetController.Target == null)
-        {
-            return false;
-        }
+        if (!controller.TargetController.HasTarget()) return false;
         if (controller.Health.IsDead) return false;
         //if (Extensions.CheckRangeBetweenUnits(transform, controller.TargetController.Target.transform, controller.attackRange))
         //{

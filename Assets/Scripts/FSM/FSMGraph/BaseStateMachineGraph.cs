@@ -4,7 +4,7 @@ namespace Demo.FSM.Graph
     public class BaseStateMachineGraph : BaseStateMachine
     {
         [SerializeField] private FSMGraph _graph;
-        public new BaseStateNode CurrentState { get; set; }
+        public new BaseStateNode CurrentState;
         public override void Init()
         {
             CurrentState = _graph.InitialState;

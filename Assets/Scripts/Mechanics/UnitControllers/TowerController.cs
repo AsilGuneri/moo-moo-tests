@@ -65,7 +65,7 @@ public class TowerController : UnitController
             yield return Extensions.GetWait(tickInterval);
             counter += tickInterval;
 
-            if (targetController.Target && !attackController.IsAttacking)
+            if (targetController.HasTarget() && !attackController.IsAttacking)
             {
                 attackController.StartAutoAttack();
             }

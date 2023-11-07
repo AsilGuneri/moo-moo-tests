@@ -39,7 +39,7 @@ public class Movement : MonoBehaviour
             ClientStop();
             return;
         }
-        if (ReachedDestination(0.1f) && controller.TargetController.Target == null)
+        if (ReachedDestination(0.1f) && !controller.TargetController.HasTarget())
         {
             ClientStop();
         }
@@ -87,6 +87,7 @@ public class Movement : MonoBehaviour
     }
     private IEnumerator StartFollowRoutine(Transform target, float followDistance)
     {
+        Debug.Log("start follow " + name + " target " + target.name);
         currentTargetPos = target.position;
         isFollowing = true;
 

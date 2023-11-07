@@ -10,7 +10,7 @@ public class HasTargetDecision : Decision
 
     public override bool Decide(BaseStateMachine state)
     {
-        bool hasTarget = state.GetComponent<UnitController>().TargetController.Target != null;
+        bool hasTarget = state.GetComponent<UnitController>().TargetController.HasTarget();
         return hasTarget;
     }
 
