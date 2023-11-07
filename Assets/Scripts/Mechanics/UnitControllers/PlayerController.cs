@@ -45,6 +45,8 @@ public class PlayerController : UnitController
         if (!isOwned) return;
         if (Input.GetKeyDown(KeyCode.T))
             WaveManager.Instance.Spawn(0);
+        if (Input.GetKeyDown(KeyCode.D))
+            Health.Die(transform);
     }
     private void Activate()
     {
@@ -79,7 +81,7 @@ public class PlayerController : UnitController
     }
     public override void OnDeath(Transform killer) //server
     {
-        UnitManager.Instance.RemoveUnit(this);
+        base.OnDeath(killer);
         Invoke(nameof(RespawnPlayer), GameFlowManager.Instance.RespawnTime);
         RpcOnDeath(killer);
     }

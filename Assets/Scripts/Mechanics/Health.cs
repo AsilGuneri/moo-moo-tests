@@ -129,7 +129,7 @@ public class Health : NetworkBehaviour
     }
 
     [Server]
-    private void Die(Transform damageDealerTransform)
+    public void Die(Transform damageDealerTransform)
     {
         if (IsDead) return;
         IsDead = true;

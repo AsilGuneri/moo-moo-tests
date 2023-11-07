@@ -28,7 +28,7 @@ public class EnemyController : UnitController
 
     public override void OnDeath(Transform k)
     {
-        UnitManager.Instance.RemoveUnit(this);
+        base.OnDeath(k);
         if (k.TryGetComponent(out PlayerLevelController levelController))
         {
             var unit = k.GetComponent<UnitController>();

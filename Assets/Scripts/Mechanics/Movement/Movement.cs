@@ -20,6 +20,7 @@ public class Movement : MonoBehaviour
     private int movementBlockCount = 0;
     private bool isFollowing = false;
     AgentAuthoring agent;
+    private Coroutine followCoroutine;
 
 
 
@@ -83,11 +84,15 @@ public class Movement : MonoBehaviour
     }
     public void StartFollow(Transform target, float followDistance)
     {
-        StartCoroutine(StartFollowRoutine(target, followDistance));
+        // Stop previous follow coroutine if it exists
+        if (followCoroutine != null)
+        {
+            StopCoroutine(followCoroutine);
+        }
+        followCoroutine = StartCoroutine(StartFollowRoutine(target, followDistance));
     }
     private IEnumerator StartFollowRoutine(Transform target, float followDistance)
     {
-        Debug.Log("start follow " + name + " target " + target.name);
         currentTargetPos = target.position;
         isFollowing = true;
 
@@ -101,6 +106,11 @@ public class Movement : MonoBehaviour
     }
     public void StopFollow()
     {
+        if (followCoroutine != null)
+        {
+            StopCoroutine(followCoroutine);
+            followCoroutine = null;
+        }
         isFollowing = false;
         ClientStop();
         OnFollowStop?.Invoke();

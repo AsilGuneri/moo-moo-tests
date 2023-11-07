@@ -88,6 +88,7 @@ public abstract class UnitController : NetworkBehaviour
     [Server]
     public virtual void OnDeath(Transform killer) 
     {
+        UnitManager.Instance.RemoveUnit(this);
     }
 
     public void StartUnit()

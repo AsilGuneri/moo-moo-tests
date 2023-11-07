@@ -42,6 +42,15 @@ public class TowerController : UnitController
         attackController.OnActualAttackMoment -= OnProjectileSpawn;
         attackController.OnEndAttack -= OnAttackEnd;
     }
+    public override void RpcOnRegister()
+    {
+        StartTower();
+    }
+    public override void OnDeath(Transform killer)
+    {
+        base.OnDeath(killer);
+        StopTower();
+    }
 
     private void OnEachAttackStart()
     {
@@ -109,8 +118,5 @@ public class TowerController : UnitController
         }
     }
 
-    public override void RpcOnRegister()
-    {
-        StartTower();
-    }
+
 }

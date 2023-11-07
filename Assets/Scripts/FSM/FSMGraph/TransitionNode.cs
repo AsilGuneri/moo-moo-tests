@@ -1,3 +1,6 @@
+//using System.Diagnostics;
+using UnityEngine;
+
 namespace Demo.FSM.Graph
 {
     [CreateNodeMenu("Transition")]
@@ -15,6 +18,7 @@ namespace Demo.FSM.Graph
             {
                 OnStateChange(trueState, stateMachine.CurrentState, stateMachine);
                 stateMachine.CurrentState = trueState;
+                Debug.Log("asilxx " + name + " " + trueState);
             }
             else if (!decision && !(falseState is RemainInStateNode))
             {

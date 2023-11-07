@@ -12,7 +12,8 @@ namespace Demo.MyFSM
         
         public override void Execute(BaseStateMachine stateMachine)
         {
-            
+            var controller = stateMachine.GetComponent<UnitController>();
+            //if (controller.Movement.IsFollowing) { }
         }
     }
 }

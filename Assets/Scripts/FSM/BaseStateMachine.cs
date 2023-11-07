@@ -10,12 +10,9 @@ namespace Demo.FSM
         [SerializeField] private BaseState _initialState;
         private Dictionary<Type, Component> _cachedComponents = new Dictionary<Type, Component>();
 
-        protected bool isActive = false;
-
         private void Awake()
         {
             Init();
-            isActive = true;
         }
 
         public BaseState CurrentState { get; set; }
