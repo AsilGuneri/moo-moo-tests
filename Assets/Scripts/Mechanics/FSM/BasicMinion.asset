@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Transition
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -248, y: 200}
+  position: {x: -264, y: 200}
   ports:
     keys:
     - TrueState
@@ -60,6 +60,100 @@ MonoBehaviour:
   Decision: {fileID: 11400000, guid: 1c38c41ffc60f8541a569a02adfad962, type: 2}
   TrueState: {fileID: 0}
   FalseState: {fileID: 0}
+--- !u!114 &-8295432393758422510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc514d4fdcde8a4a956071ba9a6f818, type: 3}
+  m_Name: Remain In State
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -689.2235, y: -341.2302}
+  ports:
+    keys:
+    - Entry
+    values:
+    - _fieldName: Entry
+      _node: {fileID: -8295432393758422510}
+      _typeQualifiedName: Demo.FSM.Graph.FSMNodeBase, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: TrueState
+        node: {fileID: -6226502249196081113}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Entry: {fileID: 0}
+--- !u!114 &-6226502249196081113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8746c8e0d1eb6640aa0d0ad626915f9, type: 3}
+  m_Name: Transition
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -680, y: -200}
+  ports:
+    keys:
+    - TrueState
+    - FalseState
+    - Entry
+    values:
+    - _fieldName: TrueState
+      _node: {fileID: -6226502249196081113}
+      _typeQualifiedName: Demo.FSM.Graph.BaseStateNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Entry
+        node: {fileID: -8295432393758422510}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: FalseState
+      _node: {fileID: -6226502249196081113}
+      _typeQualifiedName: Demo.FSM.Graph.BaseStateNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Entry
+        node: {fileID: 4747970872848353029}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Entry
+      _node: {fileID: -6226502249196081113}
+      _typeQualifiedName: Demo.FSM.Graph.FSMNodeBase, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: Transitions
+        node: {fileID: -6175123234779417654}
+        reroutePoints: []
+      - fieldName: Transitions
+        node: {fileID: 5660919552846999422}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  Entry: {fileID: 0}
+  Decision: {fileID: 11400000, guid: e2daf03e4ac01bc4d9a89ffabe24b732, type: 2}
+  TrueState: {fileID: 0}
+  FalseState: {fileID: 0}
 --- !u!114 &-6175123234779417654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,6 +181,9 @@ MonoBehaviour:
       connections:
       - fieldName: Entry
         node: {fileID: 8113924264383305543}
+        reroutePoints: []
+      - fieldName: Entry
+        node: {fileID: -6226502249196081113}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -133,6 +230,8 @@ MonoBehaviour:
   - {fileID: 8113924264383305543}
   - {fileID: -8476616353022800696}
   - {fileID: 6534509400784193065}
+  - {fileID: -6226502249196081113}
+  - {fileID: -8295432393758422510}
 --- !u!114 &83729428583046987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,6 +363,9 @@ MonoBehaviour:
       - fieldName: InitialNode
         node: {fileID: 83729428583046987}
         reroutePoints: []
+      - fieldName: FalseState
+        node: {fileID: -6226502249196081113}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -300,6 +402,9 @@ MonoBehaviour:
       connections:
       - fieldName: Entry
         node: {fileID: -8476616353022800696}
+        reroutePoints: []
+      - fieldName: Entry
+        node: {fileID: -6226502249196081113}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
