@@ -33,7 +33,16 @@ public class GameFlowManager : NetworkSingleton<GameFlowManager>
             case GameState.WaveStarted:
                 OnWaveStart();
                 break;
+            case GameState.GameEnd:
+                OnGameEnd();
+                break;
         }
+    }
+
+    [Server]
+    public void OnGameEnd()
+    {
+       Time.timeScale = 0;
     }
 
     /// <summary>
@@ -99,5 +108,6 @@ public enum GameState
     None,
     Free,
     WaveCountdown,
-    WaveStarted
+    WaveStarted,
+    GameEnd
 }

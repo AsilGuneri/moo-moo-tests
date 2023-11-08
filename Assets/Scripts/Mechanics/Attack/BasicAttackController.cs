@@ -100,7 +100,7 @@ public abstract class BasicAttackController : NetworkBehaviour
     {
         Transform targetTransform = target.transform;
         Vector3 lookPos = new Vector3(targetTransform.position.x, transform.position.y, targetTransform.position.z);
-        if (controller.unitType != UnitType.Building)
+        if (controller.unitType != UnitType.Base && controller.unitType != UnitType.Tower)
         {
             transform.LookAt(lookPos);
         }

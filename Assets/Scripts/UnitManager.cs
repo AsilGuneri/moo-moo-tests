@@ -9,11 +9,8 @@ public class UnitManager : NetworkSingleton<UnitManager>
 {
     public readonly SyncList<GameObject> Players = new SyncList<GameObject>();
     public readonly SyncList<GameObject> WaveEnemies = new SyncList<GameObject>();
-
-    public readonly SyncList<GameObject> Buildings = new SyncList<GameObject>();
     public readonly SyncList<GameObject> Towers = new SyncList<GameObject>();
-
-
+    public readonly SyncList<GameObject> Bases = new SyncList<GameObject>();
 
     [Command(requiresAuthority = false)]
     public void RegisterUnit(UnitController unit)
@@ -29,12 +26,12 @@ public class UnitManager : NetworkSingleton<UnitManager>
                 if (WaveEnemies.Contains(unitObj)) return;
                 WaveEnemies.Add(unitObj);
                 break;
-            case UnitType.Building:
-                if (Buildings.Contains(unitObj)) return;
-                Buildings.Add(unitObj);
+            case UnitType.Base:
+                if (Bases.Contains(unitObj)) return;
+                Bases.Add(unitObj);
                 break;
             case UnitType.Tower:
-                if (Buildings.Contains(unitObj)) return;
+                if (Towers.Contains(unitObj)) return;
                 Towers.Add(unitObj);
                 break;
         }
@@ -53,28 +50,14 @@ public class UnitManager : NetworkSingleton<UnitManager>
                 WaveEnemies.Remove(unitObj);
                 if (WaveEnemies.Count <= 0) WaveManager.Instance.OnWaveEnd();
                 break;
-            case UnitType.Building:
-                Buildings.Remove(unitObj);
+            case UnitType.Base:
+                Bases.Remove(unitObj);
+                if (Bases.Count <= 0) GameFlowManager.Instance.SetGameState(GameState.GameEnd);
                 break;
             case UnitType.Tower:
                 Towers.Remove(unitObj);
                 break;
         }
-    }
-    public GameObject GetClosestBuilding(Vector3 myPos)
-    {
-        float minDistance = float.MaxValue;
-        GameObject closestBuilding = null;
-        foreach (var building in Buildings)
-        {
-            var distance = Extensions.GetDistance(building.transform.position, myPos);
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                closestBuilding = building;
-            }
-        }
-        return closestBuilding;
     }
     public GameObject GetClosestEnemy(Vector3 myPosition, UnitController myUnitController)
     {
@@ -112,37 +95,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
         }
         return closestUnit;
     }
-    public List<GameObject> GetEnemiesInRadius(UnitController controller, float radius)
-    {
-        List<GameObject> units = new List<GameObject>();
-        foreach (var enemyType in controller.enemyList)
-        {
-            foreach (var unit in GetUnitList(enemyType))
-            {
-                if (!unit) continue;
 
-                bool inRange = Extensions.CheckRange(controller.transform.position, unit.transform.position, radius);
-                if (inRange && !units.Contains(unit.gameObject))
-                {
-                    units.Add(unit.gameObject);
-                }
-            }
-        }
-        return units;
-    }
-    public bool IsInRange(Transform firstUnit, Transform secondUnit, float range)
-    {
-        if (Vector3.Distance(firstUnit.position, secondUnit.position) > range) return false;
-        else return true;
-    }
-    public UnitController GetPlayerController()
-    {
-        foreach (var player in Players)
-        {
-            if (player.GetComponent<UnitController>().isOwned) return player.GetComponent<UnitController>();
-        }
-        return null;
-    }
     private SyncList<GameObject> GetUnitList(UnitType type)
     {
         switch (type)
@@ -151,8 +104,10 @@ public class UnitManager : NetworkSingleton<UnitManager>
                 return Players;
             case UnitType.WaveEnemy:
                 return WaveEnemies;
-            case UnitType.Building:
-                return Buildings;
+            case UnitType.Base:
+                return Bases;
+            case UnitType.Tower:
+                return Towers;
         }
         Debug.LogError($"Unit list null");
         return null;
@@ -162,6 +117,6 @@ public enum UnitType
 {
     Player,
     WaveEnemy,
-    Building,
+    Base,
     Tower
 }
