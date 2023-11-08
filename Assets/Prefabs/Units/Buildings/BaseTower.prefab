@@ -347,7 +347,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00e39d3135bd9d4d94d40a8b485e3b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AgentRadius: 7.7
+  AgentRadius: 3.8
+  Target: {fileID: 0}
 --- !u!114 &8900049609058426603
 MonoBehaviour:
   m_ObjectHideFlags: 0
