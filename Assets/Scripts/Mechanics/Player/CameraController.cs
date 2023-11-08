@@ -90,6 +90,7 @@ public class CameraController : Singleton<CameraController>
     }
     private void FollowTarget()
     {
+        if (!target) return;
         transform.position = target.position + initialOffset;
     }
     
