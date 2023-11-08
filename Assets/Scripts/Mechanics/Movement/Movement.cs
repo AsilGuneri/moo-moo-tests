@@ -8,7 +8,6 @@ public class Movement : MonoBehaviour
 {
     public Action OnMoveStart;
     public Action OnMoveStop;
-    public Action OnFollowStop;
 
     public float AgentRadius;
     public bool IsFollowing { get => isFollowing; }
@@ -21,6 +20,8 @@ public class Movement : MonoBehaviour
     private bool isFollowing = false;
     AgentAuthoring agent;
     private Coroutine followCoroutine;
+
+    public Transform Target;
 
 
 
@@ -85,9 +86,9 @@ public class Movement : MonoBehaviour
     public void StartFollow(Transform target, float followDistance)
     {
         // Stop previous follow coroutine if it exists
-        if (followCoroutine != null)
+        if (isFollowing || followCoroutine != null)
         {
-            StopCoroutine(followCoroutine);
+            StopFollow();
         }
         followCoroutine = StartCoroutine(StartFollowRoutine(target, followDistance));
     }
@@ -95,12 +96,12 @@ public class Movement : MonoBehaviour
     {
         currentTargetPos = target.position;
         isFollowing = true;
+        Target = target;
 
         while (!Extensions.CheckRangeBetweenUnits(transform, target, followDistance))
         {
             ClientMove(target.position);
             yield return Extensions.GetWait(0.1f);
-            if (!target || !isFollowing) yield break;
         }
         StopFollow();
     }
@@ -113,14 +114,13 @@ public class Movement : MonoBehaviour
         }
         isFollowing = false;
         ClientStop();
-        OnFollowStop?.Invoke();
     }
 
 
     private bool CanMove()
     {
         if (movementBlockCount > 0) return false;
-        return !controller.AttackController.IsSetToStopAfterAttack;
+        return true;//!controller.AttackController.IsSetToStopAfterAttack;
 
     }
 }

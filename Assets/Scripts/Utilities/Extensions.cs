@@ -24,7 +24,7 @@ public class Extensions : MonoBehaviour
         Vector2 finalVector = new Vector2(initialVector.x, initialVector.z);
         return finalVector;
     }
-    public static Vector3 Vector3WithoutY(Vector3 vector)
+    public static Vector3 Vector3NoY(Vector3 vector)
     {
         Vector3 newVector = new Vector3(vector.x, 0, vector.z);
         return newVector;

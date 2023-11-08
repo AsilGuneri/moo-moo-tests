@@ -1299,6 +1299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AgentRadius: 0.25
+  Target: {fileID: 0}
 --- !u!114 &8676513769523963651
 MonoBehaviour:
   m_ObjectHideFlags: 0
