@@ -120,7 +120,8 @@ public class Movement : MonoBehaviour
     private bool CanMove()
     {
         if (movementBlockCount > 0) return false;
-        return true;//!controller.AttackController.IsSetToStopAfterAttack;
+        if (controller.AttackController.IsAttacking) return false;
+        return true;
 
     }
 }
