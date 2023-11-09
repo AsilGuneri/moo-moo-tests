@@ -36,7 +36,7 @@ public class ArcherFlashController : SkillController
         }
         else
         {
-            var playerPos = Extensions.Vector3WithoutY(transform.position);
+            var playerPos = Extensions.Vector3NoY(transform.position);
             var targetDir = (hitPos - playerPos).normalized;
             targetPos = playerPos + (targetDir * arrowsData.Range);
         }

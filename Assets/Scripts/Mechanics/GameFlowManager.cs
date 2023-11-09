@@ -40,9 +40,11 @@ public class GameFlowManager : NetworkSingleton<GameFlowManager>
     }
 
     [Server]
-    public void OnGameEnd()
+    private void OnGameEnd()
     {
-       Time.timeScale = 0;
+        var manager = (CustomNetworkRoomManager)NetworkRoomManager.singleton;
+        EndGameManager.Instance.DisplayStats();
+        manager.StopHost();
     }
 
     /// <summary>

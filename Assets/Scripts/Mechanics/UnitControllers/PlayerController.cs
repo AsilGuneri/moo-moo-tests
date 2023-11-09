@@ -18,7 +18,7 @@ public class PlayerController : UnitController
     [SerializeField] private LayerMask clickableLayerMask;
     [SerializeField] private GameObject moveIndicator;
     [SerializeField] private GameObject attackModeIndicator;
-    public string PlayerName { get; set; }
+    public string PlayerName;
     public PlayerStats Stats { get; private set; } = new();
 
     private Camera mainCamera;

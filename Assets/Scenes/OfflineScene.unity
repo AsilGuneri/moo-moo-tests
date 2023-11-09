@@ -1128,6 +1128,7 @@ MonoBehaviour:
     deliveryTimeEmaDuration: 2
   connectionQualityInterval: 3
   timeInterpolationGui: 0
+  StayInSceneOnServerStop: 0
   showRoomGUI: 1
   minPlayers: 1
   roomPlayerPrefab: {fileID: 6223884984302570534, guid: 06b8331bf05c9fa408481d217ce8c941, type: 3}
@@ -1931,6 +1932,7 @@ MonoBehaviour:
     deliveryTimeEmaDuration: 2
   connectionQualityInterval: 3
   timeInterpolationGui: 0
+  StayInSceneOnServerStop: 1
   showRoomGUI: 1
   minPlayers: 1
   roomPlayerPrefab: {fileID: 6223884984302570534, guid: 06b8331bf05c9fa408481d217ce8c941, type: 3}

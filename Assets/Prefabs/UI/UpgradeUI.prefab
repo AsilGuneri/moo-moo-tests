@@ -743,7 +743,7 @@ GameObject:
   - component: {fileID: 5118124999552107206}
   - component: {fileID: 42611091801163333}
   m_Layer: 5
-  m_Name: Faction (2)
+  m_Name: UpgradeUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

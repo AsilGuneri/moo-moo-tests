@@ -98,6 +98,7 @@ public class CustomNetworkRoomManager : NetworkRoomManager
 
         var playerController = gamePlayer.GetComponent<PlayerController>();
         //playerController.PlayerName = conn.connectionId.ToString(); // temp
+        playerController.PlayerName = conn.connectionId.ToString();
         GamePlayers.Add(playerController);
         if (GamePlayers.Count == CustomNetworkRoomManager.singleton.numPlayers) GameFlowManager.Instance.OnGameStart();
         return gamePlayer;
