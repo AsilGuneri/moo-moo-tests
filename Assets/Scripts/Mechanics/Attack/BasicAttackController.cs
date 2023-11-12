@@ -112,6 +112,7 @@ public abstract class BasicAttackController : NetworkBehaviour
         if (isAttackStopped) return false;
         if (!controller.TargetController.HasTarget()) return false;
         if (controller.Health.IsDead) return false;
+        if (GameFlowManager.Instance.CurrentState is GameState.GameEnd) return false;
         //if (Extensions.CheckRangeBetweenUnits(transform, controller.TargetController.Target.transform, controller.attackRange))
         //{
         //    return false;

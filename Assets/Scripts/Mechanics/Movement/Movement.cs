@@ -121,6 +121,7 @@ public class Movement : MonoBehaviour
     {
         if (movementBlockCount > 0) return false;
         if (controller.AttackController.IsAttacking) return false;
+        if (GameFlowManager.Instance.CurrentState is GameState.GameEnd) return false;
         return true;
 
     }

@@ -21,8 +21,18 @@ public class EndGameManager : NetworkSingleton<EndGameManager>
             GameFlowManager.Instance.SetGameState(GameState.GameEnd);
         }
     }
+    [Server]
+    public void OnGameEnd()
+    {
+        RpcGameEnd();
+    }
+    [ClientRpc]
+    private void RpcGameEnd()
+    {
+        DisplayStats();
+    }
 
-    public void DisplayStats()
+    private void DisplayStats()
     {
         returnButton.onClick.AddListener(ReturnToOfflineScene);
         statsPanelParent.SetActive(true);
@@ -39,7 +49,8 @@ public class EndGameManager : NetworkSingleton<EndGameManager>
     }
     private void ReturnToOfflineScene()
     {
-        var manager = (CustomNetworkRoomManager) NetworkRoomManager.singleton;
-        SceneManager.LoadScene(0);
+        var manager = (CustomNetworkRoomManager)CustomNetworkRoomManager.singleton;
+        if (isServer) manager.StopHost();
+        else manager.StopClient();
     }
 }

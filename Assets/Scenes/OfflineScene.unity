@@ -1056,7 +1056,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &702153652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1128,7 +1128,6 @@ MonoBehaviour:
     deliveryTimeEmaDuration: 2
   connectionQualityInterval: 3
   timeInterpolationGui: 0
-  StayInSceneOnServerStop: 0
   showRoomGUI: 1
   minPlayers: 1
   roomPlayerPrefab: {fileID: 6223884984302570534, guid: 06b8331bf05c9fa408481d217ce8c941, type: 3}
@@ -1876,7 +1875,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1394593058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1932,7 +1931,6 @@ MonoBehaviour:
     deliveryTimeEmaDuration: 2
   connectionQualityInterval: 3
   timeInterpolationGui: 0
-  StayInSceneOnServerStop: 1
   showRoomGUI: 1
   minPlayers: 1
   roomPlayerPrefab: {fileID: 6223884984302570534, guid: 06b8331bf05c9fa408481d217ce8c941, type: 3}
@@ -4440,7 +4438,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1394593061}
+      - m_Target: {fileID: 702153653}
         m_TargetAssemblyTypeName: CustomNetworkRoomManager, Assembly-CSharp
         m_MethodName: HostLobby
         m_Mode: 1

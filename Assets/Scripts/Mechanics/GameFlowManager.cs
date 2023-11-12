@@ -8,6 +8,7 @@ using Utilities;
 
 public class GameFlowManager : NetworkSingleton<GameFlowManager>
 {
+    public GameState CurrentState { get => currentState; }
     public int RespawnTime = 5;
 
     [SerializeField] int firstWaveCountdown;
@@ -43,8 +44,8 @@ public class GameFlowManager : NetworkSingleton<GameFlowManager>
     private void OnGameEnd()
     {
         var manager = (CustomNetworkRoomManager)NetworkRoomManager.singleton;
-        EndGameManager.Instance.DisplayStats();
-        manager.StopHost();
+        EndGameManager.Instance.OnGameEnd();
+      //  manager.StopHost();
     }
 
     /// <summary>
