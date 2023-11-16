@@ -152,7 +152,7 @@ public class PlayerController : UnitController
     {
         targetController.SetTarget(enemyTransform.GetComponent<NetworkIdentity>());
         //Check if the enemy is in range
-        bool isInRange = Extensions.CheckRange(enemyTransform.position, transform.position, attackRange);
+        bool isInRange = Extensions.CheckRange(enemyTransform.position, transform.position, statController.BaseStats.AttackRange);
         if (isInRange) //if yes, attack the enemy
         {
             movement.ClientStop();
@@ -161,6 +161,7 @@ public class PlayerController : UnitController
         }
         else //if not, follow the enemy
         {
+            Movement.StartFollow(targetController.Target.transform, statController.BaseStats.AttackRange);
         }
     }
     private void OnAttackModeClick(Vector3 clickPos)

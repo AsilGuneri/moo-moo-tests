@@ -2,12 +2,10 @@ using Mirror;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public abstract class BasicAttackController : NetworkBehaviour
 {
-    [Range(0f, 1f)]
-    [SerializeField] protected float animAttackPoint;
-
     public Action OnEachAttackStart;
     public Action OnActualAttackMoment;
     public Action AfterLastAttack;
@@ -15,21 +13,39 @@ public abstract class BasicAttackController : NetworkBehaviour
     public Action OnEndAttack;
     public Action OnAttackCancelled;
 
+    public float AnimAttackPoint { get => animAttackPoint; }
+    public bool IsSetToStopAfterAttack => isSetToStopAfterAttack;
+    public bool IsAttacking => isCurrentlyAttacking;
+   
+
+    [Range(0f, 1f)]
+    [SerializeField] protected float animAttackPoint;
+
+
     protected UnitController controller;
     private bool isCurrentlyAttacking = false;
     private bool isSetToStopAfterAttack = false;
     private bool isAttackStopped = false;
     private int attackBlockCount = 0;
+    HeroBaseStatsData baseStats;
 
     // Public properties
-    public float AnimAttackPoint { get => animAttackPoint; }
-    public bool IsSetToStopAfterAttack => isSetToStopAfterAttack;
-    public bool IsAttacking => isCurrentlyAttacking;
-    public int Damage;
 
+    public int GetActualDamage()
+    {
+        int baseDmg = baseStats.Damage;
+        int maxDmg = Mathf.CeilToInt(baseDmg * (1 + baseStats.AdditionalDamageRatio));
+        int dmg = UnityEngine.Random.Range(baseDmg, maxDmg);
+        if(controller.unitType == UnitType.Player) Debug.Log($"{name}'s base dmg : {baseDmg} , actual dmg : {dmg}");
+        return dmg;
+    }
     protected virtual void Awake()
     {
         controller = GetComponent<UnitController>();
+    }
+    private void Start()
+    {
+        baseStats = controller.StatController.BaseStats;
     }
 
     public void StartAutoAttack()
@@ -63,7 +79,7 @@ public abstract class BasicAttackController : NetworkBehaviour
         //yield return new WaitUntil(() => controller.TargetController.Target != null);
         while (IsAutoAttackingAvailable())
         {
-            Extensions.GetAttackTimes(controller.attackSpeed, animAttackPoint,out float secondsBeforeAttack, out float secondsAfterAttack);
+            Extensions.GetAttackTimes(controller.AttackSpeed, animAttackPoint, out float secondsBeforeAttack, out float secondsAfterAttack);
 
             RotateToTarget(controller.TargetController.Target.gameObject);
 

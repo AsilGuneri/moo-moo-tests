@@ -619,14 +619,12 @@ GameObject:
   - component: {fileID: 5843045748780198311}
   - component: {fileID: 2854127058393607441}
   - component: {fileID: 1929066000756038323}
-  - component: {fileID: 7101451635099497366}
   - component: {fileID: 1127350715254039117}
   - component: {fileID: 3004930868394129945}
   - component: {fileID: 2093334184839592437}
   - component: {fileID: 901659194503043128}
   - component: {fileID: 8559049715645283541}
   - component: {fileID: 2163373812530429147}
-  - component: {fileID: 8124328148698341545}
   - component: {fileID: 3030894593718517605}
   - component: {fileID: 211520756723830630}
   - component: {fileID: 3030335984463891531}
@@ -637,6 +635,7 @@ GameObject:
   - component: {fileID: 4493909082151338282}
   - component: {fileID: 1306364402251745579}
   - component: {fileID: 4501161636558167215}
+  - component: {fileID: 8232794297787707007}
   m_Layer: 9
   m_Name: 11MeleeCommander
   m_TagString: Untagged
@@ -698,25 +697,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7101451635099497366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2462893064303745991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a473c251a25634a88e45cec322a3fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Packs:
-  - PackName: Default
-    Behaviours:
-    - {fileID: 11400000, guid: f418aefa471cf2044a1dd3e28e7d7337, type: 2}
-    - {fileID: 11400000, guid: 708b4a86f2d84194ba46db84934e3b02, type: 2}
-    - {fileID: 11400000, guid: cfc7d6e222bb2fa42965457e919339b4, type: 2}
-    - {fileID: 11400000, guid: a2f05e797ef7d5443a5a91fec270fef8, type: 2}
 --- !u!114 &1127350715254039117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,8 +712,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  attackRange: 1
-  attackSpeed: 1
   unitType: 1
   enemyList: 0000000002000000
   hitPointOffset: {x: 0, y: 0, z: 0}
@@ -755,8 +733,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  attackRange: 1
-  attackSpeed: 1
   unitType: 1
   enemyList: 0000000002000000
   hitPointOffset: {x: 0, y: 0, z: 0}
@@ -847,20 +823,6 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 1
   animator: {fileID: 1929066000756038323}
---- !u!114 &8124328148698341545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2462893064303745991}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7bf3d757e4a6fd44b6ad85074eced37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keysData: {fileID: 0}
-  heroStatsData: {fileID: 11400000, guid: 4b4b3affc107cff428d6783b91d7298f, type: 2}
 --- !u!114 &3030894593718517605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -894,7 +856,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   animAttackPoint: 0
-  Damage: 10
 --- !u!114 &3030335984463891531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -908,6 +869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AgentRadius: 0.25
+  Target: {fileID: 0}
 --- !u!114 &705145128339727515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1032,14 +994,25 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  attackRange: 1
-  attackSpeed: 1
   unitType: 1
   enemyList: 0000000002000000
   hitPointOffset: {x: 0, y: 0, z: 0}
   projectileSpawnPoint: {fileID: 0}
   skills: []
   minionType: 3
+--- !u!114 &8232794297787707007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2462893064303745991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57688d2558b91404596856d4055b7a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroBaseStats: {fileID: 0}
 --- !u!1 &2821640562202802715
 GameObject:
   m_ObjectHideFlags: 0

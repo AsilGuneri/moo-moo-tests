@@ -446,7 +446,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   animAttackPoint: 0.5
-  Damage: 80
+  damage: 0
   projectilePrefab: {fileID: 8081231170285242933, guid: 3924b199210ef564a91a10c040c8d6b9, type: 3}
 --- !u!95 &8572392696976709192
 Animator:
@@ -482,6 +482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AgentRadius: 1.68
+  Target: {fileID: 0}
 --- !u!114 &8900049609058426603
 MonoBehaviour:
   m_ObjectHideFlags: 0

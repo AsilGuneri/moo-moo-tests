@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: MeleeCapsuleStats
   m_EditorClassIdentifier: 
   AttackSpeed: 1.25
-  Range: 1
-  Health: 260
+  AttackRange: 3
+  Health: 425
   Mana: 0
-  Damage: 12
+  Damage: 0
+  AdditionalDamageRatio: 0

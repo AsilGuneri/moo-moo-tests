@@ -6,6 +6,7 @@ public class StatController : MonoBehaviour
 {
     public int MaxHealth { get => maxHealth; }
 
+    public HeroBaseStatsData BaseStats { get => heroBaseStats; }
     [SerializeField] private HeroBaseStatsData heroBaseStats;
 
     UnitController controller;
@@ -46,7 +47,7 @@ public class StatController : MonoBehaviour
     {
         attackSpeedBoost += attackSpeedFactor;
         var newAttackSpeed = baseAttackSpeed * attackSpeedBoost;
-        controller.attackSpeed = newAttackSpeed;
+        controller.ChangeAttackSpeed(newAttackSpeed);
         controller.AnimationController.SetAttackSpeed(newAttackSpeed);
 
     }

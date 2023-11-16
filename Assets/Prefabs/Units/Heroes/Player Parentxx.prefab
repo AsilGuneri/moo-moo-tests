@@ -70188,7 +70188,6 @@ GameObject:
   - component: {fileID: 5196469712631140113}
   - component: {fileID: 7516589810736755903}
   - component: {fileID: 4334566937998049036}
-  - component: {fileID: 2649569834535136002}
   - component: {fileID: 8111409415972401907}
   - component: {fileID: 7291038196165993128}
   - component: {fileID: 9067681001629958667}
@@ -70323,20 +70322,6 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 1
   animator: {fileID: 2814538736174975143}
---- !u!114 &2649569834535136002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8938534602783702256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7bf3d757e4a6fd44b6ad85074eced37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keysData: {fileID: 11400000, guid: 4064b8705b06cde43a1fa1c5d790afae, type: 2}
-  heroStatsData: {fileID: 11400000, guid: a6bf7a8ecff814b48a8120fc7dfae65d, type: 2}
 --- !u!114 &8111409415972401907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70368,8 +70353,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  attackRange: 50
-  attackSpeed: 2
   unitType: 0
   enemyList: 01000000
   hitPointOffset: {x: 0, y: 0, z: 0}
@@ -70382,6 +70365,7 @@ MonoBehaviour:
     m_Bits: 576
   moveIndicator: {fileID: 811260699408436622, guid: 299615328751d224781d31e0fe65de66, type: 3}
   attackModeIndicator: {fileID: 5432209458267137536, guid: 93bf18897f48e4140b9a368c27bd919b, type: 3}
+  PlayerName: 
 --- !u!114 &9067681001629958667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70398,7 +70382,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   animAttackPoint: 0.5
-  Damage: 50
   projectilePrefab: {fileID: 8081231170285242933, guid: 7ae88954524b6744ba86919208d68d56, type: 3}
 --- !u!114 &2710746016826199023
 MonoBehaviour:

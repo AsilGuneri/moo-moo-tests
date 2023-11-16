@@ -10,6 +10,7 @@ public abstract class UnitController : NetworkBehaviour
 {
     
     //others
+    public float AttackSpeed { get => attackSpeed; }
     public StatController StatController { get => statController; }
     public List<SkillController> Skills { get => skills; }
     public Vector3 HitPoint { get => transform.position + hitPointOffset; }
@@ -22,8 +23,7 @@ public abstract class UnitController : NetworkBehaviour
 
     //temp variables
     public TargetController TargetController { get => targetController; }
-    public float attackRange;
-    public float attackSpeed;
+
     public UnitType unitType;
     public List<UnitType> enemyList;
 
@@ -40,13 +40,18 @@ public abstract class UnitController : NetworkBehaviour
     protected Movement movement;
     protected Health health;
     protected StatController statController;
-
+    protected float attackSpeed;
 
     protected virtual void Awake()
     {
         CacheReferences();
+        attackSpeed = statController.BaseStats.AttackSpeed;
     }
-    
+    public void ChangeAttackSpeed(float atkSpeed)
+    {
+        attackSpeed = atkSpeed;
+    }
+
     protected bool IsEnemy(RaycastHit hitInfo)
     {
         if (hitInfo.transform.TryGetComponent(out UnitController unit))
@@ -95,7 +100,7 @@ public abstract class UnitController : NetworkBehaviour
     {
         UnitManager.Instance.RegisterUnit(this);
         statController.InitializeStats();
-        AnimationController.SetAttackSpeed(attackSpeed);
+        AnimationController.SetAttackSpeed(statController.BaseStats.AttackSpeed);
 
     }
 

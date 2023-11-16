@@ -14,7 +14,7 @@ public class ChaseEnterExit : StateEnterExitActions
     {
         var controller = stateMachine.GetComponent<UnitController>();
         var target = controller.TargetController.Target.transform;
-        var followRange = FollowByAttackRange ? controller.attackRange : FollowDistance;
+        var followRange = FollowByAttackRange ? controller.StatController.BaseStats.AttackRange : FollowDistance;
         controller.Movement.StartFollow(target, followRange);
     }
 

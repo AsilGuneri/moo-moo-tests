@@ -23,6 +23,6 @@ public class MeleeAttackController : BasicAttackController
     [Command(requiresAuthority = false)]
     private void DealDamageToCurrentTarget()
     {
-        controller.TargetController.Target.GetComponent<Health>().TakeDamage(Damage, transform);
+        controller.TargetController.Target.GetComponent<Health>().TakeDamage(GetActualDamage(), transform);
     }
 }

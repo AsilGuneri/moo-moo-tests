@@ -47,7 +47,6 @@ GameObject:
   - component: {fileID: 6159798623457959203}
   - component: {fileID: 7369551021977051911}
   - component: {fileID: 3044261714814654148}
-  - component: {fileID: 8914127728349452553}
   - component: {fileID: 4043598670813213507}
   - component: {fileID: 5641228094203042053}
   - component: {fileID: 6593111187376994979}
@@ -139,8 +138,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  attackRange: 1
-  attackSpeed: 1.25
   unitType: 1
   enemyList: 000000000200000003000000
   hitPointOffset: {x: 0, y: 1.7, z: 0}
@@ -232,20 +229,6 @@ MonoBehaviour:
   syncInterval: 0.1
   clientAuthority: 1
   animator: {fileID: 5731631979561634012}
---- !u!114 &8914127728349452553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4162034819610443299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7bf3d757e4a6fd44b6ad85074eced37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keysData: {fileID: 0}
-  heroStatsData: {fileID: 11400000, guid: 4b4b3affc107cff428d6783b91d7298f, type: 2}
 --- !u!114 &4043598670813213507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,7 +262,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   animAttackPoint: 0.52
-  Damage: 12
 --- !u!114 &6593111187376994979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,7 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MotionType: 2
-  Speed: 3.5
+  Speed: 4.9
   Acceleration: 8
   AngularSpeed: 120
   StoppingDistance: 0

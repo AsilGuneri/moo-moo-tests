@@ -120,7 +120,7 @@ public class Movement : MonoBehaviour
     private bool CanMove()
     {
         if (movementBlockCount > 0) return false;
-        if (controller.AttackController.IsAttacking) return false;
+        if (controller.AttackController.IsAttacking && controller.unitType == UnitType.WaveEnemy) return false;
         if (GameFlowManager.Instance.CurrentState is GameState.GameEnd) return false;
         return true;
 

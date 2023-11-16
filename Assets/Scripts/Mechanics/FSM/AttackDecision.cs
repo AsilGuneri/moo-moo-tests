@@ -11,7 +11,8 @@ public class AttackDecision : Decision
     {
         var controller = state.GetComponent<UnitController>();
         bool hasTarget = controller.TargetController.HasTarget();
-        bool isInRange = Extensions.CheckRangeBetweenUnits(controller.transform, controller.TargetController.Target.transform, controller.attackRange);
+        bool isInRange = Extensions.CheckRangeBetweenUnits(controller.transform, 
+            controller.TargetController.Target.transform, controller.StatController.BaseStats.AttackRange);
         return hasTarget && isInRange;
 
     }
