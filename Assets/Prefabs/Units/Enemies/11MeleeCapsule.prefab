@@ -58,7 +58,6 @@ GameObject:
   - component: {fileID: 6332283567703443384}
   - component: {fileID: 4047693140017633607}
   - component: {fileID: 7275352532936005611}
-  - component: {fileID: 6329739408046780343}
   - component: {fileID: 6306328089689109996}
   m_Layer: 9
   m_Name: 11MeleeCapsule
@@ -416,24 +415,6 @@ MonoBehaviour:
   syncInterval: 0
   healthFill: {fileID: 8047889517623824594}
   manaFill: {fileID: 0}
---- !u!114 &6329739408046780343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4162034819610443299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4777dcff4dbc4447a5b52a5477f17db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  _initialState: {fileID: 0}
-  _graph: {fileID: 11400000, guid: 8b930c9ee61131e49ac0be62f18e6088, type: 2}
-  CurrentState: {fileID: 0}
 --- !u!114 &6306328089689109996
 MonoBehaviour:
   m_ObjectHideFlags: 0

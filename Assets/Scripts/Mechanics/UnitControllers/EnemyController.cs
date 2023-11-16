@@ -21,7 +21,23 @@ public class EnemyController : UnitController
         if (!isServer) return;
         SubscribeEvents();
     }
-
+    private void Update()
+    {
+        if (!isServer) return;
+        if (!targetController.HasTarget()) SelectTarget();
+        else if (!Extensions.CheckRangeBetweenUnits(transform, targetController.Target.transform
+            , statController.BaseStats.AttackRange))
+        {
+            attackController.StopAutoAttack();
+            Movement.ClientMove(targetController.Target.transform.position); 
+        }
+        else
+        {
+            Movement.ClientStop();
+            attackController.StartAutoAttack();
+        }
+        
+    }
     public override void OnDeath(Transform k)
     {
         base.OnDeath(k);
@@ -34,5 +50,21 @@ public class EnemyController : UnitController
         PrefabPoolManager.Instance.PutBackInPool(gameObject);
         //throw new System.NotImplementedException();
     }
-    
+
+    #region Behaviour
+
+    void SelectTarget()
+    {
+        GameObject priorEnemy = null;
+
+        for (int i = 0; i < enemyList.Count; i++)
+        {
+            priorEnemy = UnitManager.Instance.GetClosestUnit(transform.position, enemyList[i]);
+            if (priorEnemy != null) break;
+        }
+        targetController.SetTarget(priorEnemy.GetComponent<NetworkIdentity>());
+    }
+
+    #endregion
+
 }

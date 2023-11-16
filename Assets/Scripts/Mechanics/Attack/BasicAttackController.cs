@@ -8,14 +8,12 @@ public abstract class BasicAttackController : NetworkBehaviour
 {
     public Action OnEachAttackStart;
     public Action OnActualAttackMoment;
-    public Action AfterLastAttack;
     public Action OnStartAttack;
     public Action OnEndAttack;
     public Action OnAttackCancelled;
 
     public float AnimAttackPoint { get => animAttackPoint; }
-    public bool IsSetToStopAfterAttack => isSetToStopAfterAttack;
-    public bool IsAttacking => isCurrentlyAttacking;
+    public bool IsAttacking => isAttacking;
    
 
     [Range(0f, 1f)]
@@ -23,11 +21,12 @@ public abstract class BasicAttackController : NetworkBehaviour
 
 
     protected UnitController controller;
-    private bool isCurrentlyAttacking = false;
-    private bool isSetToStopAfterAttack = false;
-    private bool isAttackStopped = false;
-    private int attackBlockCount = 0;
+    bool isAttacking = false;
+    bool isAttackStopped = false;
+    int attackBlockCount = 0;
     HeroBaseStatsData baseStats;
+    Coroutine autoAttackCoroutine; 
+
 
     // Public properties
 
@@ -50,33 +49,24 @@ public abstract class BasicAttackController : NetworkBehaviour
 
     public void StartAutoAttack()
     {
-        if (isCurrentlyAttacking) return;
-        StartCoroutine(AutoAttackRoutine());
+        if (isAttacking) return;
+        autoAttackCoroutine = StartCoroutine(AutoAttackRoutine());
     }
-    public void StopAfterCurrentAttack()
+    public void StopAutoAttack()
     {
-        isSetToStopAfterAttack = true;
-    }
-    public void StopAttackInstantly()
-    {
-        isAttackStopped = true;
-    }
-
-    public void BlockAttacking()
-    {
-        attackBlockCount++;
-    }
-
-    public void RemoveAttackingBlock()
-    {
-        attackBlockCount--;
+        if (!isAttacking) return;
+        if (autoAttackCoroutine != null)
+        {
+            StopCoroutine(autoAttackCoroutine);
+            autoAttackCoroutine = null;
+            OnAttackEnd();
+        }
     }
 
     private IEnumerator AutoAttackRoutine()
     {
-        isCurrentlyAttacking = true;
+        isAttacking = true;
         OnStartAttack?.Invoke();
-        //yield return new WaitUntil(() => controller.TargetController.Target != null);
         while (IsAutoAttackingAvailable())
         {
             Extensions.GetAttackTimes(controller.AttackSpeed, animAttackPoint, out float secondsBeforeAttack, out float secondsAfterAttack);
@@ -87,27 +77,17 @@ public abstract class BasicAttackController : NetworkBehaviour
             OnAttackStart();
             yield return Extensions.GetWait(secondsBeforeAttack);
 
-            if (!IsAutoAttackingAvailable())
-            {
-                OnAttackCancelled?.Invoke();
-                continue; // Move to the next iteration without executing the rest of the loop body
-            }
-
             RotateToTarget(controller.TargetController.Target.gameObject);
             OnAttackImpact();
 
             yield return Extensions.GetWait(secondsAfterAttack);
-            OnAttackEnd();
-
-            if (isSetToStopAfterAttack)
-            {
-                StopAttackInstantly();
-                AfterLastAttack?.Invoke();
-                isSetToStopAfterAttack = false;
-            }
+            OnEachAttackEnd();
         }
-
-        isCurrentlyAttacking = false;
+        OnAttackEnd();
+    }
+    void OnAttackEnd()
+    {
+        isAttacking = false;
         isAttackStopped = false;
         OnEndAttack?.Invoke();
     }
@@ -125,7 +105,6 @@ public abstract class BasicAttackController : NetworkBehaviour
     protected virtual bool IsAutoAttackingAvailable()
     {
         if (attackBlockCount > 0) return false;
-        if (isAttackStopped) return false;
         if (!controller.TargetController.HasTarget()) return false;
         if (controller.Health.IsDead) return false;
         if (GameFlowManager.Instance.CurrentState is GameState.GameEnd) return false;
@@ -143,13 +122,20 @@ public abstract class BasicAttackController : NetworkBehaviour
         OnActualAttackMoment?.Invoke();
 
     }
-    protected abstract void OnAttackEnd();
+    protected abstract void OnEachAttackEnd();
 
 
     public void ResetAttackController()
     {
-        isSetToStopAfterAttack = false;
-        isCurrentlyAttacking = false;
+        isAttacking = false;
+    }
+    public void BlockAttacking()
+    {
+        attackBlockCount++;
+    }
 
+    public void RemoveAttackingBlock()
+    {
+        attackBlockCount--;
     }
 }

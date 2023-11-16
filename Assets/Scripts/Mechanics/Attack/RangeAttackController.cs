@@ -16,7 +16,7 @@ public class RangeAttackController : BasicAttackController
         base.OnAttackImpact();
         CmdSpawnProjectile(controller.TargetController.Target.GetComponent<Health>(), connectionToClient);
     }
-    protected override void OnAttackEnd()
+    protected override void OnEachAttackEnd()
     {
 
     }

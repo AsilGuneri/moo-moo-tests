@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MeleeAttackController : BasicAttackController
 {
-    protected override void OnAttackEnd()
+    protected override void OnEachAttackEnd()
     {
 
     }
