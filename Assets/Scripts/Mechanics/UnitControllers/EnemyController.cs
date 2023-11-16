@@ -1,4 +1,3 @@
-using Demo.FSM.Graph;
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,17 +6,14 @@ using UnityEngine.InputSystem.XR;
 
 public class EnemyController : UnitController
 {
-    public BaseStateMachineGraph StateMachine { get => stateMachine; }
     public MinionType MinionType { get => minionType; }
 
     [SerializeField] protected MinionType minionType;
 
-    BaseStateMachineGraph stateMachine;
 
     protected override void Awake()
     {
         base.Awake();
-        stateMachine = GetComponent<BaseStateMachineGraph>();
     }
 
     void Start()
