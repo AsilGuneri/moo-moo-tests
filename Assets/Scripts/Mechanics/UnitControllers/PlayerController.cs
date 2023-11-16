@@ -145,11 +145,6 @@ public class PlayerController : UnitController
 
     private void OnClickEnemy(Transform enemyTransform)
     {
-        StartAttack(enemyTransform);
-
-    }
-    private void StartAttack(Transform enemyTransform)
-    {
         targetController.SetTarget(enemyTransform.GetComponent<NetworkIdentity>());
         //Check if the enemy is in range
         bool isInRange = Extensions.CheckRange(enemyTransform.position, transform.position, statController.BaseStats.AttackRange);
@@ -161,9 +156,11 @@ public class PlayerController : UnitController
         }
         else //if not, follow the enemy
         {
+            attackController.StopAutoAttack();
             Movement.StartFollow(targetController.Target.transform, statController.BaseStats.AttackRange);
         }
     }
+
     private void OnAttackModeClick(Vector3 clickPos)
     {
         PrefabPoolManager.Instance.GetFromPool(attackModeIndicator.gameObject, Extensions.Vector3NoY(clickPos), attackModeIndicator.transform.rotation);
@@ -179,13 +176,14 @@ public class PlayerController : UnitController
             isAttackClickMode = false;
             return;
         }
-        StartAttack(closestEnemy.transform);
+        OnClickEnemy(closestEnemy.transform);
         isAttackClickMode = false;
         return;
     }
     private void MoveToPoint(Vector3 point)
     {
         Vector3 newPoint = Extensions.CheckNavMesh(point);
+        attackController.StopAutoAttack();
         Movement.ClientMove(newPoint, true);
         PrefabPoolManager.Instance.GetFromPool(moveIndicator.gameObject, Extensions.Vector3NoY(newPoint), moveIndicator.transform.rotation);
     }
