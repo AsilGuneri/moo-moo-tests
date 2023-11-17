@@ -157,7 +157,7 @@ public class PlayerController : UnitController
         else //if not, follow the enemy
         {
             attackController.StopAutoAttack();
-            Movement.StartFollow(targetController.Target.transform, statController.BaseStats.AttackRange);
+            Movement.StartFollow(targetController.Target.transform, statController.BaseStats.AttackRange, attackController.StartAutoAttack);
         }
     }
 

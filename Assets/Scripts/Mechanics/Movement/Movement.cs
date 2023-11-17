@@ -83,16 +83,16 @@ public class Movement : MonoBehaviour
         }
         return false;
     }
-    public void StartFollow(Transform target, float followDistance)
+    public void StartFollow(Transform target, float followDistance, Action onCatch = null)
     {
         // Stop previous follow coroutine if it exists
         if (isFollowing || followCoroutine != null)
         {
             StopFollow();
         }
-        followCoroutine = StartCoroutine(StartFollowRoutine(target, followDistance));
+        followCoroutine = StartCoroutine(StartFollowRoutine(target, followDistance, onCatch));
     }
-    private IEnumerator StartFollowRoutine(Transform target, float followDistance)
+    private IEnumerator StartFollowRoutine(Transform target, float followDistance, Action onCatch = null)
     {
         currentTargetPos = target.position;
         isFollowing = true;
@@ -104,6 +104,7 @@ public class Movement : MonoBehaviour
             yield return Extensions.GetWait(0.1f);
         }
         StopFollow();
+        onCatch?.Invoke();
     }
     public void StopFollow()
     {
