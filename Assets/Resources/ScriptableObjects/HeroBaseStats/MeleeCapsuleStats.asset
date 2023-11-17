@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ebbdafe1142af49aaf908ef701887b, type: 3}
   m_Name: MeleeCapsuleStats
   m_EditorClassIdentifier: 
-  AttackSpeed: 1.25
-  AttackRange: 3
+  AttackSpeed: 0.7
+  AttackRange: 1
   Health: 425
   Mana: 0
-  Damage: 0
-  AdditionalDamageRatio: 0
+  Damage: 17
+  AdditionalDamageRatio: 0.1

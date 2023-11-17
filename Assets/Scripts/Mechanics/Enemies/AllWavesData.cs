@@ -19,7 +19,7 @@ public class WaveData
 public class SubWave
 {
     public GameObject Prefab;
-    public int Count;
+    public int CountPerPlayer;
     public float SpacingX = 1f;
     public float SpacingZ = 1.5f;
 }

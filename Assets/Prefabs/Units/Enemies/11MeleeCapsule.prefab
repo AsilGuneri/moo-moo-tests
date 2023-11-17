@@ -305,7 +305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fed5c6dd07c7d6e4f857b420fa8f559a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Radius: 0.38
+  Radius: 0.28
   Height: 1.78
 --- !u!114 &3487178340053612327
 MonoBehaviour:
@@ -687,15 +687,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6860048846328066428, guid: 6ce9683ad666e9648b3a44eca765add0, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.8
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6860048846328066428, guid: 6ce9683ad666e9648b3a44eca765add0, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.8
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6860048846328066428, guid: 6ce9683ad666e9648b3a44eca765add0, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.8
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6860048846328066428, guid: 6ce9683ad666e9648b3a44eca765add0, type: 3}
       propertyPath: m_LocalPosition.x

@@ -76,7 +76,7 @@ public class WaveManager : NetworkSingleton<WaveManager>
         {
             var subWave = waveData.SubWaves[i];
 
-            for (int j = 0; j < subWave.Count; j++)
+            for (int j = 0; j < subWave.CountPerPlayer; j++)
             {
                 var obj = PrefabPoolManager.Instance.GetFromPool(subWave.Prefab, currentPosition, Quaternion.identity);
                 NetworkServer.Spawn(obj);
