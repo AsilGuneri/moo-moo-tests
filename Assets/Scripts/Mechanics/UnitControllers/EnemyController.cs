@@ -6,9 +6,6 @@ using UnityEngine.InputSystem.XR;
 
 public class EnemyController : UnitController
 {
-    public MinionType MinionType { get => minionType; }
-
-    [SerializeField] protected MinionType minionType;
 
 
     protected override void Awake()

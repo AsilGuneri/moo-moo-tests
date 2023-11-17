@@ -2302,6 +2302,14 @@ MonoBehaviour:
     maxSize: 50
     prefab: {fileID: 6332283567703443384, guid: c6c76c0beebbc0d4884ac29b5cef72dd, type: 3}
     currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 4617300863217949146, guid: 84b6fa0323bba694e9361202be3ea532, type: 3}
+    currentCount: 0
+  - startSize: 20
+    maxSize: 50
+    prefab: {fileID: 3750345282122126642, guid: 1a154de1801e335438205de6f2def880, type: 3}
+    currentCount: 0
 --- !u!114 &68926458
 MonoBehaviour:
   m_ObjectHideFlags: 0

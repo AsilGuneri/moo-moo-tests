@@ -143,7 +143,6 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 6995289466757588324}
   skills:
   - {fileID: 0}
-  minionType: 1
 --- !u!114 &6710437633401050889
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -67,3 +67,7 @@ MonoBehaviour:
       CountPerPlayer: 10
       SpacingX: 1.5
       SpacingZ: 2
+    - Prefab: {fileID: 5214732024776045391, guid: 84b6fa0323bba694e9361202be3ea532, type: 3}
+      CountPerPlayer: 1
+      SpacingX: 1.5
+      SpacingZ: 2

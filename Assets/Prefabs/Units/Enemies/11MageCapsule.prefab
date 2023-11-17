@@ -1110,7 +1110,6 @@ MonoBehaviour:
   hitPointOffset: {x: 0, y: 1.7, z: 0}
   projectileSpawnPoint: {fileID: 2983539139040883252}
   skills: []
-  minionType: 2
 --- !u!114 &97641648159745730
 MonoBehaviour:
   m_ObjectHideFlags: 0
