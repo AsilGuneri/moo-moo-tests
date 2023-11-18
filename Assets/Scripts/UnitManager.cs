@@ -59,6 +59,38 @@ public class UnitManager : NetworkSingleton<UnitManager>
                 break;
         }
     }
+    public List<GameObject> GetClosestEnemiesToEnemy(GameObject requestingEnemy, UnitController myUnit, int maxCount = 5, float maxDistance = Mathf.Infinity)
+    {
+        if (requestingEnemy == null) return new List<GameObject>();
+
+        List<GameObject> closestEnemies = new List<GameObject>();
+        Dictionary<GameObject, float> enemyDistances = new Dictionary<GameObject, float>();
+
+        Vector3 myPosition = requestingEnemy.transform.position;
+
+        foreach (var enemyType in myUnit.enemyList)
+        {
+            foreach (var unit in GetUnitList(enemyType))
+            {
+                if (!unit || unit == requestingEnemy) continue; // Skip self
+                float distance = Extensions.Distance(myPosition, unit.transform.position);
+                if (distance < maxDistance)
+                {
+                    enemyDistances[unit] = distance;
+                }
+            }
+        }
+
+        foreach (var item in enemyDistances.OrderBy(kvp => kvp.Value))
+        {
+            closestEnemies.Add(item.Key);
+            if (closestEnemies.Count == maxCount) break;
+        }
+
+        return closestEnemies;
+    }
+
+
     public GameObject GetClosestEnemy(Vector3 myPosition, UnitController myUnitController)
     {
         float closestDistance = Mathf.Infinity;

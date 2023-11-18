@@ -46,6 +46,9 @@ public class Upgrade
             case UpgradeType.AttackRange:
                 if(Amount != 0) statController.ChangeAttackRange(Amount);
                 break;
+            case UpgradeType.ProjectileCount:
+                if(Amount != 0) statController.ChangeProjectileCount(Amount);
+                break;
             
         }
     }

@@ -15,10 +15,11 @@ public class StatController : MonoBehaviour
 
     public float AttackSpeed { get; private set; }
     public float AttackRange { get; private set; }
+    public int ProjectileCount { get; private set; } = 1;
+
 
     float attackSpeedBoost = 1;
     float attackRangeBoost = 0;
-
 
 
     private void Awake()
@@ -53,13 +54,9 @@ public class StatController : MonoBehaviour
         attackRangeBoost += bonusRange;
         AttackRange = BaseStats.AttackRange + attackRangeBoost;
     }
-
-
-    public void Update()
+    public void ChangeProjectileCount(int bonusCount)
     {
-        if (controller.unitType != UnitType.Player)
-        {
-            return;
-        }
+        ProjectileCount += bonusCount;
     }
+
 }

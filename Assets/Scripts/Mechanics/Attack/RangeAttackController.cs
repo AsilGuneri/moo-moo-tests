@@ -15,6 +15,19 @@ public class RangeAttackController : BasicAttackController
     {
         base.OnAttackImpact();
         CmdSpawnProjectile(controller.TargetController.Target.GetComponent<Health>(), connectionToClient);
+
+        int projectileCount = controller.StatController.ProjectileCount;
+        if (projectileCount > 1)
+        {
+
+            var extraTargets = UnitManager.Instance.GetClosestEnemiesToEnemy(controller.TargetController.Target.gameObject,
+                 controller, projectileCount - 1, controller.StatController.AttackRange);
+            foreach( var target in extraTargets )
+            {
+                CmdSpawnProjectile(target.GetComponent<Health>(), connectionToClient);
+            }
+            
+        }
     }
     protected override void OnEachAttackEnd()
     {
