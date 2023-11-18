@@ -91,7 +91,7 @@ public class TowerController : UnitController
 
     private void AnimateTowerHit()
     {
-        Extensions.GetAttackTimes(attackSpeed, attackController.AnimAttackPoint, out float timeBeforeAttack, out float timeAfterAttack);
+        Extensions.GetAttackTimes(StatController.AttackSpeed, attackController.AnimAttackPoint, out float timeBeforeAttack, out float timeAfterAttack);
         float fadeOutTime = 0.1f;
 
         if (visualEffectMaterial)

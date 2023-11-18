@@ -23,7 +23,7 @@ public class EnemyController : UnitController
         if (!isServer) return;
         if (!targetController.HasTarget()) SelectTarget();
         else if (!Extensions.CheckRangeBetweenUnits(transform, targetController.Target.transform
-            , statController.BaseStats.AttackRange))
+            , statController.AttackRange))
         {
             attackController.StopAutoAttack();
             Movement.ClientMove(targetController.Target.transform.position); 

@@ -11,7 +11,6 @@ public class Health : NetworkBehaviour
     public Action<Transform> OnDeathClient;
     public Action<Transform> OnDeathServer;
     public bool IsDead { get; private set; }
-    public int CurrentMana { get => currentMana; }
     public int CurrentHealth { get => currentHealth; }
     public int CurrentHealthPercentage { get { return (currentHealth / maxHealth) * 100; } }
 
@@ -20,23 +19,18 @@ public class Health : NetworkBehaviour
 
     [SyncVar]
     private int maxHealth;
-    [SyncVar]
-    private int maxMana;
+
     private UnitController controller;
 
     [SyncVar(hook = nameof(OnHealthChanged))]
     protected int currentHealth;
-    [SyncVar(hook = nameof(OnManaChanged))]
-    protected int currentMana;
+
 
     private void OnHealthChanged(int oldHealth, int newHealth)
     {
         healthBar.UpdateHealthBar(maxHealth, newHealth);
     }
-    private void OnManaChanged(int oldMana, int newMana)
-    {
-        healthBar.UpdateMana(maxMana, newMana);
-    }
+
 
 
     private void Awake()
@@ -53,12 +47,6 @@ public class Health : NetworkBehaviour
         AddDamageStats(dmg, dealerTransform);
         if (currentHealth <= 0) Die(dealerTransform);
     }
-    [Command]
-    public void CmdUseMana(int mana)
-    {
-        if (IsDead) return;
-        currentMana -= mana;
-    }
 
 
     [Server]
@@ -71,12 +59,12 @@ public class Health : NetworkBehaviour
         }
     }
     [Command(requiresAuthority = false)] //no authority because we dont own enemies
-    public void CmdInitializeHealth(int maxHealth, int maxMana)
+    public void CmdInitializeHealth(int maxHealth)
     {
-        InitializeHealth(maxHealth, maxMana);
+        InitializeHealth(maxHealth);
     }
     [Command(requiresAuthority = false)]
-    public void CmdUpdateMaxStats(int additionalHealth, int additionalMana)
+    public void CmdUpdateMaxStats(int additionalHealth)
     {
         if (additionalHealth != 0)
         {
@@ -84,35 +72,23 @@ public class Health : NetworkBehaviour
             currentHealth += additionalHealth;
             RpcUpdateHealthBar();
         }
-        if (additionalMana != 0) 
-        {
-            maxMana += additionalMana;
-            currentMana += additionalMana;
-            RpcUpdateMana();
-        }
+        
     }
 
     [Server]
-    public void InitializeHealth(int maxHealth, int maxMana)
+    public void InitializeHealth(int maxHealth)
     {
         IsDead = false;
         this.maxHealth = maxHealth;
-        this.maxMana = maxMana;
         currentHealth = maxHealth;
-        currentMana = maxMana;
         RpcUpdateHealthBar();
-        if (maxMana > 0) RpcUpdateMana();
     }
     [ClientRpc]
     private void RpcUpdateHealthBar()
     {
         healthBar.UpdateHealthBar(maxHealth, currentHealth);
     }
-    [ClientRpc]
-    private void RpcUpdateMana()
-    {
-        healthBar.UpdateMana(maxMana, currentMana);
-    }
+
 
     private void AddDamageStats(int dmg, Transform dealerTransform)
     {
@@ -136,7 +112,6 @@ public class Health : NetworkBehaviour
         OnDeathServer?.Invoke(damageDealerTransform);
         controller.OnDeath(damageDealerTransform);
         RpcDie(damageDealerTransform);
-        if (controller.unitType == UnitType.Player) Debug.Log("u died");
     }
 
     [ClientRpc] void RpcDie(Transform damageDealerTransform)

@@ -34,7 +34,7 @@ public class UpgradeManager : NetworkSingleton<UpgradeManager>
     private void InitializeUpgrades()
     {
         Extensions.DestroyAllChildren(upgradesContentParent);
-        var upgrades = AllItemsData.Instance.AllItems;
+        var upgrades = AllUpgradesData.Instance.GetUpgrades(ClassType.Archer);
         foreach (var upgrade in upgrades)
         {
             var slot = Instantiate(upgradeSlotPrefab, upgradesContentParent).GetComponent<UpgradeSlot>();

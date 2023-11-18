@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "HuntersHood", menuName = "Scriptable Objects/Items/HuntersHood")]
+[CreateAssetMenu(fileName = "HuntersHood", menuName = "Scriptable Objects/Upgrades/HuntersHood")]
 public class HuntersHood : UpgradeData
 {
     

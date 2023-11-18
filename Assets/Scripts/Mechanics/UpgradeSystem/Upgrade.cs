@@ -41,7 +41,10 @@ public class Upgrade
                 statController.ChangeMaxStats(value, 0);
                 break;
             case UpgradeType.AttackSpeed:
-
+                if (Percentage != 0) statController.ChangeAttackSpeed(Percentage);
+                break;
+            case UpgradeType.AttackRange:
+                if(Amount != 0) statController.ChangeAttackRange(Amount);
                 break;
             
         }
@@ -51,5 +54,7 @@ public enum UpgradeType
 {
     None,
     Health,
-    AttackSpeed
+    AttackSpeed,
+    AttackRange,
+    ProjectileCount//not implemented
 }

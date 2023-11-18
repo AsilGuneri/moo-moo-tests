@@ -44,7 +44,7 @@ public class PlayerController : UnitController
     {
         if (!isOwned) return;
         if (Input.GetKeyDown(KeyCode.T))
-            WaveManager.Instance.Spawn(0);
+            WaveManager.Instance.SpawnTestWave();
         if (Input.GetKeyDown(KeyCode.D))
             Health.Die(transform);
     }
@@ -147,7 +147,7 @@ public class PlayerController : UnitController
     {
         targetController.SetTarget(enemyTransform.GetComponent<NetworkIdentity>());
         //Check if the enemy is in range
-        bool isInRange = Extensions.CheckRange(enemyTransform.position, transform.position, statController.BaseStats.AttackRange);
+        bool isInRange = Extensions.CheckRange(enemyTransform.position, transform.position, statController.AttackRange);
         if (isInRange) //if yes, attack the enemy
         {
             movement.ClientStop();
@@ -157,7 +157,7 @@ public class PlayerController : UnitController
         else //if not, follow the enemy
         {
             attackController.StopAutoAttack();
-            Movement.StartFollow(targetController.Target.transform, statController.BaseStats.AttackRange, attackController.StartAutoAttack);
+            Movement.StartFollow(targetController.Target.transform, statController.AttackRange, attackController.StartAutoAttack);
         }
     }
 
@@ -316,7 +316,6 @@ public class PlayerController : UnitController
     private bool CanCastSkill(SkillController skill)
     {
         if (skill.OnCooldown) return false;
-        if (skill.SkillData.ManaCost > health.CurrentMana) return false;
         return true;
     }
     private bool CanUseInputs()

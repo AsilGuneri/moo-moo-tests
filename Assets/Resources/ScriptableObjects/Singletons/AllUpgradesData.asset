@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0022a1d9017f2034c915751756e9075a, type: 3}
-  m_Name: AllItemsData
+  m_Script: {fileID: 11500000, guid: df31c4045d43c5442973c419c93ad26c, type: 3}
+  m_Name: AllUpgradesData
   m_EditorClassIdentifier: 
-  AllItems:
+  ArcherUpgrades:
+  - {fileID: 11400000, guid: 19933d1e89f798d4d9dc044989beb31f, type: 2}
   - {fileID: 11400000, guid: 3281501db080c4744b2fda30fa301125, type: 2}

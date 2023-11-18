@@ -12,69 +12,54 @@ public class StatController : MonoBehaviour
     UnitController controller;
 
     int maxHealth;
-    int maxMana;
 
-    int baseHealth;
-    int baseMana;
-    float baseAttackSpeed;
+    public float AttackSpeed { get; private set; }
+    public float AttackRange { get; private set; }
+
     float attackSpeedBoost = 1;
+    float attackRangeBoost = 0;
+
 
 
     private void Awake()
     {
         controller = GetComponent<UnitController>();
-        baseHealth = heroBaseStats.Health;
-        baseMana = heroBaseStats.Mana;
-        baseAttackSpeed = heroBaseStats.AttackSpeed;
-
-        maxHealth = baseHealth;
-        maxMana = baseMana;
-
+        
     }
     public void InitializeStats()
     {
-        controller.Health.CmdInitializeHealth(maxHealth, maxMana);
+        maxHealth = heroBaseStats.Health;
+        controller.Health.CmdInitializeHealth(maxHealth);
+        AttackSpeed = heroBaseStats.AttackSpeed;
+        AttackRange = heroBaseStats.AttackRange;
     }
 
     public void ChangeMaxStats(int additionalHealth, int additionalMana)
     {
 
         maxHealth += additionalHealth;
-        maxMana += additionalMana;
-        controller.Health.CmdUpdateMaxStats(additionalHealth, additionalMana);
+        controller.Health.CmdUpdateMaxStats(additionalHealth);
     }
-    public void ChangeAttackSpeed(float attackSpeedFactor)
+    public void ChangeAttackSpeed(float boostRatio)
     {
-        attackSpeedBoost += attackSpeedFactor;
-        var newAttackSpeed = baseAttackSpeed * attackSpeedBoost;
-        controller.ChangeAttackSpeed(newAttackSpeed);
-        controller.AnimationController.SetAttackSpeed(newAttackSpeed);
+        attackSpeedBoost += boostRatio;
+        var newAttackSpeed = BaseStats.AttackSpeed * attackSpeedBoost;
+        AttackSpeed = newAttackSpeed;
+        controller.AnimationController.SetAttackSpeed(AttackSpeed);
 
     }
-
-
-    IEnumerator AttackSpeedChangerCount(float attackSpeedFactorTemp, int effectTime)
+    public void ChangeAttackRange(float bonusRange)
     {
-
-        ChangeAttackSpeed(attackSpeedFactorTemp);
-        yield return Extensions.GetWait(effectTime);
-        ChangeAttackSpeed(-attackSpeedFactorTemp);
-
+        attackRangeBoost += bonusRange;
+        AttackRange = BaseStats.AttackRange + attackRangeBoost;
     }
+
 
     public void Update()
     {
         if (controller.unitType != UnitType.Player)
         {
             return;
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            ChangeAttackSpeed(-0.5f);
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            StartCoroutine(AttackSpeedChangerCount(1.5f, 10)); ;
         }
     }
 }

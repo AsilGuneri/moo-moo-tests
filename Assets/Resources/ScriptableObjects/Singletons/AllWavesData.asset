@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7484dfd02de17284c9066a03c5b845e0, type: 3}
   m_Name: AllWavesData
   m_EditorClassIdentifier: 
+  TestWave:
+    WaveGoldReward: 0
+    SubWaves:
+    - Prefab: {fileID: 4162034819610443299, guid: 736be56d32648c548a0becfa8a517805, type: 3}
+      CountPerPlayer: 1
+      SpacingX: 0
+      SpacingZ: 0
   WavesData:
   - WaveGoldReward: 100
     SubWaves:

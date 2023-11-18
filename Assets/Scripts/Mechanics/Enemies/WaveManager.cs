@@ -32,6 +32,11 @@ public class WaveManager : NetworkSingleton<WaveManager>
         else
             SpawnNextWave();
     }
+    public void SpawnTestWave()
+    {
+        SpawnWave(AllWavesData.Instance.TestWave);
+        GameFlowManager.Instance.SetGameState(GameState.WaveStarted);
+    }
     [ServerCallback]
     public void OnWaveEnd()
     {

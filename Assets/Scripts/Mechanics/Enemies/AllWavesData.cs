@@ -7,6 +7,7 @@ using System;
 
 public class AllWavesData : ScriptableSingleton<AllWavesData>
 {
+    public WaveData TestWave;
     public List<WaveData> WavesData = new List<WaveData>();
 }
 [Serializable]

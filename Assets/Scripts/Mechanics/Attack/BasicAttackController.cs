@@ -69,7 +69,7 @@ public abstract class BasicAttackController : NetworkBehaviour
         OnStartAttack?.Invoke();
         while (IsAutoAttackingAvailable())
         {
-            Extensions.GetAttackTimes(controller.AttackSpeed, animAttackPoint, out float secondsBeforeAttack, out float secondsAfterAttack);
+            Extensions.GetAttackTimes(controller.StatController.AttackSpeed, animAttackPoint, out float secondsBeforeAttack, out float secondsAfterAttack);
 
             RotateToTarget(controller.TargetController.Target.gameObject);
 

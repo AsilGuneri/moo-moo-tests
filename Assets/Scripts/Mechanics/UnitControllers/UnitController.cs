@@ -8,9 +8,6 @@ using UnityEngine.InputSystem.XR;
 [RequireComponent(typeof(StatController))]
 public abstract class UnitController : NetworkBehaviour
 {
-    
-    //others
-    public float AttackSpeed { get => attackSpeed; }
     public StatController StatController { get => statController; }
     public List<SkillController> Skills { get => skills; }
     public Vector3 HitPoint { get => transform.position + hitPointOffset; }
@@ -40,16 +37,11 @@ public abstract class UnitController : NetworkBehaviour
     protected Movement movement;
     protected Health health;
     protected StatController statController;
-    protected float attackSpeed;
+
 
     protected virtual void Awake()
     {
         CacheReferences();
-        attackSpeed = statController.BaseStats.AttackSpeed;
-    }
-    public void ChangeAttackSpeed(float atkSpeed)
-    {
-        attackSpeed = atkSpeed;
     }
 
     protected bool IsEnemy(RaycastHit hitInfo)
