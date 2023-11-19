@@ -64,7 +64,7 @@ public class Health : NetworkBehaviour
         InitializeHealth(maxHealth);
     }
     [Command(requiresAuthority = false)]
-    public void CmdUpdateMaxStats(int additionalHealth)
+    public void CmdUpdateMaxHealth(int additionalHealth)
     {
         if (additionalHealth != 0)
         {

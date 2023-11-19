@@ -22,9 +22,7 @@ public abstract class BasicAttackController : NetworkBehaviour
 
     protected UnitController controller;
     bool isAttacking = false;
-    bool isAttackStopped = false;
     int attackBlockCount = 0;
-    HeroBaseStatsData baseStats;
     Coroutine autoAttackCoroutine; 
 
 
@@ -32,19 +30,15 @@ public abstract class BasicAttackController : NetworkBehaviour
 
     public int GetActualDamage()
     {
-        int baseDmg = baseStats.Damage;
-        int maxDmg = Mathf.CeilToInt(baseDmg * (1 + baseStats.AdditionalDamageRatio));
-        int dmg = UnityEngine.Random.Range(baseDmg, maxDmg);
-        if(controller.unitType == UnitType.Player) Debug.Log($"{name}'s base dmg : {baseDmg} , actual dmg : {dmg}");
-        return dmg;
+        var statController = controller.StatController;
+        int currentDamage = statController.AttackDamage;
+        int maxDmg = Mathf.CeilToInt(currentDamage * (1 + statController.AdditionalDamageRatio));
+        int actualDamage = UnityEngine.Random.Range(currentDamage, maxDmg);
+        return actualDamage;
     }
     protected virtual void Awake()
     {
         controller = GetComponent<UnitController>();
-    }
-    private void Start()
-    {
-        baseStats = controller.StatController.BaseStats;
     }
 
     public void StartAutoAttack()
@@ -88,7 +82,6 @@ public abstract class BasicAttackController : NetworkBehaviour
     void OnAttackEnd()
     {
         isAttacking = false;
-        isAttackStopped = false;
         OnEndAttack?.Invoke();
     }
 

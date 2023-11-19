@@ -27,37 +27,48 @@ public class Upgrade
 {
     public UpgradeType Type;
     public int Amount;
-    [Range(0f, 1f)]
+    [Range(-1f, 1f)]
     public float Percentage;
 
     public void OnAcquire(StatController statController)
     {
+        float value = 0;
         switch(Type)
         {
             case UpgradeType.Health:
-                int value = 0;
-                if (Amount != 0) value += Amount;
-                if (Percentage != 0) value += Mathf.CeilToInt(value * Percentage);
-                statController.ChangeMaxStats(value, 0);
+                value = GetValue(statController.MaxHealth);
+                statController.ChangeMaxHealth(Mathf.CeilToInt(value));
+                break;
+            case UpgradeType.AttackDamage:
+                value = GetValue(statController.AttackDamage);
+                statController.ChangeAttackDamage(Mathf.CeilToInt(value));
                 break;
             case UpgradeType.AttackSpeed:
                 if (Percentage != 0) statController.ChangeAttackSpeed(Percentage);
                 break;
             case UpgradeType.AttackRange:
-                if(Amount != 0) statController.ChangeAttackRange(Amount);
+                value = GetValue(statController.AttackRange);
+                statController.ChangeAttackRange(value);
                 break;
             case UpgradeType.ProjectileCount:
-                if(Amount != 0) statController.ChangeProjectileCount(Amount);
+                statController.ChangeProjectileCount(Amount);
                 break;
-            
         }
+    }
+    float GetValue(float currentValue)
+    {
+        float value = 0;
+        if (Amount != 0) value += Amount;
+        if (Percentage != 0) value += currentValue * Percentage;
+        return value;
     }
 }
 public enum UpgradeType
 {
     None,
     Health,
+    AttackDamage,
     AttackSpeed,
     AttackRange,
-    ProjectileCount//not implemented
+    ProjectileCount
 }

@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d01d7cba538864488c3304846b67aa, type: 3}
   m_Name: RapidBow
   m_EditorClassIdentifier: 
-  DisplayName: rapid bow
-  Description: "o\xE7 ogi xd"
+  DisplayName: Rapid Bow
+  Description: Agile
   Icon: {fileID: 21300000, guid: 6a03275f4cd243f4d92671d833c141f4, type: 3}
   Upgrades:
   - Type: 2
     Amount: 0
-    Percentage: 1
+    Percentage: -0.5
   - Type: 3
-    Amount: 5
-    Percentage: 0
+    Amount: 0
+    Percentage: 1
   - Type: 4
-    Amount: 5
-    Percentage: 0
+    Amount: 0
+    Percentage: -0.3

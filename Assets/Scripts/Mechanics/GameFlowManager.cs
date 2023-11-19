@@ -60,7 +60,7 @@ public class GameFlowManager : NetworkSingleton<GameFlowManager>
     IEnumerator StartGameRoutine()
     {
         yield return Extensions.GetWait(1);
-        SetGameState(GameState.WaveCountdown);//comment it to test waves manually
+        //SetGameState(GameState.WaveCountdown);//comment it to test waves manually
 
     }
     private void OnFree()
