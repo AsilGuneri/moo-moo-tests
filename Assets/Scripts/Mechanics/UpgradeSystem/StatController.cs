@@ -1,8 +1,9 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatController : MonoBehaviour
+public class StatController : NetworkBehaviour
 {
     public int MaxHealth { get => maxHealth; }
 
@@ -13,11 +14,12 @@ public class StatController : MonoBehaviour
 
     int maxHealth;
 
-    public int AttackDamage;
-    public float AdditionalDamageRatio;
-    public float AttackSpeed;
-    public float AttackRange;
-    public int ProjectileCount = 1;
+
+    [SyncVar] public int AttackDamage;
+    [SyncVar] public float AdditionalDamageRatio;
+    [SyncVar] public float AttackSpeed;
+    [SyncVar] public float AttackRange;
+    [SyncVar] public int ProjectileCount = 1;
 
 
     float attackSpeedBoost = 1;
@@ -30,26 +32,29 @@ public class StatController : MonoBehaviour
         controller = GetComponent<UnitController>();
         
     }
+    [Server]
     public void InitializeStats()
     {
         maxHealth = heroBaseStats.Health;
-        controller.Health.CmdInitializeHealth(maxHealth);
+        controller.Health.InitializeHealth(maxHealth);
         AttackSpeed = heroBaseStats.AttackSpeed;
         AttackRange = heroBaseStats.AttackRange;
         AttackDamage = heroBaseStats.Damage;
         AdditionalDamageRatio = heroBaseStats.AdditionalDamageRatio;
     }
-
+    [Server]
     public void ChangeMaxHealth(int additionalHealth)
     {
         maxHealth += additionalHealth;
         controller.Health.CmdUpdateMaxHealth(additionalHealth);
     }
+    [Server]
     public void ChangeAttackDamage(int bonusDamage) 
     {
         attackDamageBoost += bonusDamage;
         AttackDamage = BaseStats.Damage + attackDamageBoost;
     }
+    [Server]
     public void ChangeAttackSpeed(float boostRatio)
     {
         attackSpeedBoost += boostRatio;
@@ -58,11 +63,13 @@ public class StatController : MonoBehaviour
         controller.AnimationController.SetAttackSpeed(AttackSpeed);
 
     }
+    [Server]
     public void ChangeAttackRange(float bonusRange)
     {
         attackRangeBoost += bonusRange;
         AttackRange = BaseStats.AttackRange + attackRangeBoost;
     }
+    [Server]
     public void ChangeProjectileCount(int bonusCount)
     {
         ProjectileCount += bonusCount;

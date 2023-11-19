@@ -64,7 +64,6 @@ public class PlayerController : UnitController
             LocalPlayerUI.Instance.SkillBarUI.AssignSkills(this);
             mainCamera = Camera.main;
             CameraController.Instance.Setup(transform);
-            StartUnit();
             SubscribeEvents();
             //show skills on UI here
         }
@@ -78,6 +77,7 @@ public class PlayerController : UnitController
     {
         RpcOnRespawn();
         OnOwnerRespawn();
+        //RpcResetHealth();
     }
     public override void OnDeath(Transform killer) //server
     {
@@ -100,12 +100,11 @@ public class PlayerController : UnitController
     [TargetRpc]
     void OnOwnerRespawn()
     {
-        StartUnit();
         CameraController.Instance.Center();
     }
 
     #endregion
-
+    #region Move/Attack
     public void GetMousePositionRaycastInfo(out Ray ray, out RaycastHit[] hits)
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
@@ -195,6 +194,8 @@ public class PlayerController : UnitController
         if (!mainCamera) return false;
         return true;
     }
+
+    #endregion
 
     #region Stats
     public void AddDamageDealt(int damage)
@@ -314,6 +315,7 @@ public class PlayerController : UnitController
 
     }
     #endregion
+
     private bool CanCastSkill(SkillController skill)
     {
         if (skill.OnCooldown) return false;

@@ -38,6 +38,8 @@ public abstract class UnitController : NetworkBehaviour
     protected Health health;
     protected StatController statController;
 
+    protected bool isInitialized = false;
+
 
     protected virtual void Awake()
     {
@@ -88,12 +90,27 @@ public abstract class UnitController : NetworkBehaviour
         UnitManager.Instance.RemoveUnit(this);
     }
 
-    public void StartUnit()
+    
+
+    public override void OnStartServer()
+    {
+        InitializeUnit();
+    }
+    [Server]
+    public void InitializeUnit()
+    {
+        if (isInitialized) return;
+        isInitialized = true;
+        statController.InitializeStats();
+    }
+    
+
+    [Client]
+    protected void ResetUnit()
     {
         UnitManager.Instance.RegisterUnit(this);
-        statController.InitializeStats();
-        AnimationController.SetAttackSpeed(statController.BaseStats.AttackSpeed);
-
+        AnimationController.SetAttackSpeed(statController.AttackSpeed);
+        health.CmdResetHealth(statController.MaxHealth);
     }
 
 }

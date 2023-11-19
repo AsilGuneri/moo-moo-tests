@@ -21,11 +21,6 @@ public class TowerController : UnitController
         if (visualEffectObject)
             visualEffectMaterial = visualEffectObject.GetComponent<Renderer>().material;
     }
-    void Start()
-    {
-        StartUnit();
-    }
-
     public void StartTower()
     {
         isActive = true;

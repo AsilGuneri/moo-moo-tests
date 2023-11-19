@@ -62,11 +62,7 @@ public class PoolObject : NetworkBehaviour
     }
     protected virtual void OnSpawn()
     {
-        if (TryGetComponent(out UnitController controller))
-        {
-            if (controller.unitType != UnitType.Player)
-                controller.StartUnit();
-        }
+        
     }
 
     public override void OnStartServer()

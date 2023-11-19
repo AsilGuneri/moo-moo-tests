@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class BaseController : UnitController
 {
-    void Start()
-    {
-        StartUnit();
-    }
     public override void OnDeath(Transform killer) //server
     {
         base.OnDeath(killer);
