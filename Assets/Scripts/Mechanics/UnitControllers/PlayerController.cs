@@ -182,8 +182,9 @@ public class PlayerController : UnitController
     }
     private void MoveToPoint(Vector3 point)
     {
-        Vector3 newPoint = Extensions.CheckNavMesh(point);
+        movement.StopFollow();
         attackController.StopAutoAttack();
+        Vector3 newPoint = Extensions.CheckNavMesh(point);
         Movement.ClientMove(newPoint, true);
         PrefabPoolManager.Instance.GetFromPool(moveIndicator.gameObject, Extensions.Vector3NoY(newPoint), moveIndicator.transform.rotation);
     }
