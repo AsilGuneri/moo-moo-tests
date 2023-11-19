@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df31c4045d43c5442973c419c93ad26c, type: 3}
   m_Name: AllUpgradesData
   m_EditorClassIdentifier: 
-  ArcherUpgrades:
-  - {fileID: 11400000, guid: 5e16e711a70596348a3daca559eadc87, type: 2}
-  - {fileID: 11400000, guid: fcf866fb598d16f4cb2b81761f9e4180, type: 2}
-  - {fileID: 11400000, guid: 5b5710aaa6c91d24986c75162f5a2687, type: 2}
+  ClassUpgradeLists:
+  - type: 1
+    Tier1:
+    - {fileID: 11400000, guid: 5e16e711a70596348a3daca559eadc87, type: 2}
+    - {fileID: 11400000, guid: fcf866fb598d16f4cb2b81761f9e4180, type: 2}
+    - {fileID: 11400000, guid: 5b5710aaa6c91d24986c75162f5a2687, type: 2}
+    Tier2: []
+    Tier3: []
+    Tier4: []
