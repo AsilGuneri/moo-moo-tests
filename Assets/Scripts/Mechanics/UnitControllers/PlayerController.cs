@@ -76,6 +76,7 @@ public class PlayerController : UnitController
     {
         RpcOnRespawn();
         OnOwnerRespawn();
+        health.ResetHealth(statController.MaxHealth);
         //RpcResetHealth();
     }
     public override void OnDeath(Transform killer) //server
@@ -95,6 +96,7 @@ public class PlayerController : UnitController
     {
         transform.position = Vector3.zero;
         gameObject.SetActive(true);
+        animationController.SetAttackSpeed(statController.AttackSpeed);
     }
     [TargetRpc]
     void OnOwnerRespawn()

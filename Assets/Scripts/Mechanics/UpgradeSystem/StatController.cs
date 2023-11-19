@@ -41,7 +41,6 @@ public class StatController : NetworkBehaviour
     public void InitializeStats()
     {
         maxHealth = heroBaseStats.Health;
-        controller.Health.InitializeHealth(maxHealth);
         AttackSpeed = heroBaseStats.AttackSpeed;
         AttackRange = heroBaseStats.AttackRange;
         AttackDamage = heroBaseStats.Damage;

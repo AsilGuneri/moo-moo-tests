@@ -56,7 +56,7 @@ public class Health : NetworkBehaviour
     }
 
     [Server]
-    public void InitializeHealth(int maxHealth)
+    public void ResetHealth(int maxHealth)
     {
         IsDead = false;
         this.maxHealth = maxHealth;
