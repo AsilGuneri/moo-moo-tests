@@ -31,44 +31,28 @@ public class Health : NetworkBehaviour
         healthBar.UpdateHealthBar(maxHealth, newHealth);
     }
 
-
-
     private void Awake()
     {
         controller = GetComponent<UnitController>();
         healthBar = GetComponent<HealthBar>();
-        //baseHp = 10000000;
     }
     [Server]
     public void TakeDamage(int dmg, Transform dealerTransform)
     {
         if (IsDead) return;
         currentHealth -= dmg;
-        AddDamageStats(dmg, dealerTransform);
         if (currentHealth <= 0) Die(dealerTransform);
     }
-
-
-    [Server]
-    public void Heal(int amount)
-    {
-        currentHealth += amount;
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-    }
  
-    [Command(requiresAuthority = false)]
-    public void CmdUpdateMaxHealth(int additionalHealth)
+    [Server]
+    public void UpdateMaxHealth(int additionalHealth)
     {
         if (additionalHealth != 0)
         {
             maxHealth += additionalHealth;
             currentHealth += additionalHealth;
             RpcUpdateHealthBar();
-        }
-        
+        }   
     }
 
     [Server]
@@ -83,21 +67,6 @@ public class Health : NetworkBehaviour
     private void RpcUpdateHealthBar()
     {
         healthBar.UpdateHealthBar(maxHealth, currentHealth);
-    }
-
-
-    private void AddDamageStats(int dmg, Transform dealerTransform)
-    {
-        if (dealerTransform.TryGetComponent(out PlayerController playerController))
-        {
-            playerController.AddDamageDealt(dmg);
-        }
-        if (TryGetComponent(out PlayerController myPlayerController))
-        {
-            {
-                myPlayerController.AddDamageTanked(dmg);
-            }
-        }
     }
 
     [Server]

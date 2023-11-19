@@ -51,7 +51,7 @@ public class StatController : NetworkBehaviour
     public void ChangeMaxHealth(int additionalHealth)
     {
         maxHealth += additionalHealth;
-        controller.Health.CmdUpdateMaxHealth(additionalHealth);
+        controller.Health.UpdateMaxHealth(additionalHealth);
     }
     [Server]
     public void ChangeAttackDamage(int bonusDamage) 
