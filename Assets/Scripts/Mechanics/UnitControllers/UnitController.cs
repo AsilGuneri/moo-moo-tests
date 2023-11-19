@@ -101,16 +101,21 @@ public abstract class UnitController : NetworkBehaviour
     {
         if (isInitialized) return;
         isInitialized = true;
+        UnitManager.Instance.RegisterUnit(this);
         statController.InitializeStats();
+        health.InitializeHealth(statController.MaxHealth);
+        RpcResetUnit();
     }
-    
+
+    [ClientRpc]
+    void RpcResetUnit()
+    {
+        ResetUnit();
+    }
 
     [Client]
     protected void ResetUnit()
     {
-        UnitManager.Instance.RegisterUnit(this);
-        AnimationController.SetAttackSpeed(statController.AttackSpeed);
-        health.CmdResetHealth(statController.MaxHealth);
     }
 
 }

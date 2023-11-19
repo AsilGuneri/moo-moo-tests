@@ -17,10 +17,15 @@ public class StatController : NetworkBehaviour
 
     [SyncVar] public int AttackDamage;
     [SyncVar] public float AdditionalDamageRatio;
-    [SyncVar] public float AttackSpeed;
+    [SyncVar(hook = nameof(OnAttackSpeedChange))] public float AttackSpeed;
     [SyncVar] public float AttackRange;
     [SyncVar] public int ProjectileCount = 1;
 
+
+    void OnAttackSpeedChange(float oldValue, float newValue)
+    {
+        controller.AnimationController.SetAttackSpeed(newValue);
+    }
 
     float attackSpeedBoost = 1;
     float attackRangeBoost = 0;

@@ -59,7 +59,6 @@ public class PlayerController : UnitController
         if (isClient) // client (host is also a client)
         {
             GoldController.CmdAddGold(100);
-            UnitManager.Instance.RegisterUnit(this);
             GetComponent<PlayerInput>().enabled = true;
             LocalPlayerUI.Instance.SkillBarUI.AssignSkills(this);
             mainCamera = Camera.main;

@@ -58,11 +58,7 @@ public class Health : NetworkBehaviour
             currentHealth = maxHealth;
         }
     }
-    [Command(requiresAuthority = false)] //no authority because we dont own enemies
-    public void CmdResetHealth(int maxHealth)
-    {
-        InitializeHealth(maxHealth);
-    }
+ 
     [Command(requiresAuthority = false)]
     public void CmdUpdateMaxHealth(int additionalHealth)
     {

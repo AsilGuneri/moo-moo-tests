@@ -12,7 +12,7 @@ public class UnitManager : NetworkSingleton<UnitManager>
     public readonly SyncList<GameObject> Towers = new SyncList<GameObject>();
     public readonly SyncList<GameObject> Bases = new SyncList<GameObject>();
 
-    [Command(requiresAuthority = false)]
+    [Server]
     public void RegisterUnit(UnitController unit)
     {
         GameObject unitObj = unit.gameObject;
