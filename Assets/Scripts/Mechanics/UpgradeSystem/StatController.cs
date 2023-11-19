@@ -13,11 +13,11 @@ public class StatController : MonoBehaviour
 
     int maxHealth;
 
-    public int AttackDamage { get; private set; }
-    public float AdditionalDamageRatio { get; private set; }
-    public float AttackSpeed { get; private set; }
-    public float AttackRange { get; private set; }
-    public int ProjectileCount { get; private set; } = 1;
+    public int AttackDamage;
+    public float AdditionalDamageRatio;
+    public float AttackSpeed;
+    public float AttackRange;
+    public int ProjectileCount = 1;
 
 
     float attackSpeedBoost = 1;

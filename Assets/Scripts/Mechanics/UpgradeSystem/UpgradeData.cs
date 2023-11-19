@@ -5,8 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public abstract class UpgradeData : ScriptableObject
+[CreateAssetMenu(fileName = "BasicUpgrade", menuName = "Scriptable Objects/Upgrades/BasicUpgrade")]
+public class UpgradeData : ScriptableObject
 {
     public string DisplayName;
     public string Description;
@@ -27,7 +27,7 @@ public class Upgrade
 {
     public UpgradeType Type;
     public int Amount;
-    [Range(-1f, 1f)]
+    [Range(-1f, 5f)]
     public float Percentage;
 
     public void OnAcquire(StatController statController)

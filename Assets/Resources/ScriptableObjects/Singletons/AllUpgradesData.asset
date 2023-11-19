@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: AllUpgradesData
   m_EditorClassIdentifier: 
   ArcherUpgrades:
-  - {fileID: 11400000, guid: 19933d1e89f798d4d9dc044989beb31f, type: 2}
-  - {fileID: 11400000, guid: 3281501db080c4744b2fda30fa301125, type: 2}
+  - {fileID: 11400000, guid: 5e16e711a70596348a3daca559eadc87, type: 2}
+  - {fileID: 11400000, guid: fcf866fb598d16f4cb2b81761f9e4180, type: 2}
+  - {fileID: 11400000, guid: 5b5710aaa6c91d24986c75162f5a2687, type: 2}

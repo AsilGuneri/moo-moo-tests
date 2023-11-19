@@ -70578,11 +70578,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroBaseStats: {fileID: 11400000, guid: a6bf7a8ecff814b48a8120fc7dfae65d, type: 2}
-  AttackDamage: 0
-  AdditionalDamageRatio: 0
-  AttackSpeed: 0
-  AttackRange: 0
-  ProjectileCount: 1
 --- !u!1 &8946106163135306598
 GameObject:
   m_ObjectHideFlags: 0

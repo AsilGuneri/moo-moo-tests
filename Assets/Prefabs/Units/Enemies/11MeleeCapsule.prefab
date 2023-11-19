@@ -427,11 +427,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroBaseStats: {fileID: 11400000, guid: 4b4b3affc107cff428d6783b91d7298f, type: 2}
-  AttackDamage: 0
-  AdditionalDamageRatio: 0
-  AttackSpeed: 0
-  AttackRange: 0
-  ProjectileCount: 1
 --- !u!1 &6322785318481407606
 GameObject:
   m_ObjectHideFlags: 0
