@@ -1444,6 +1444,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57688d2558b91404596856d4055b7a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   heroBaseStats: {fileID: 11400000, guid: 8836df1bab8dd034bbafbbde66117d08, type: 2}
   AttackDamage: 0
   AdditionalDamageRatio: 0
