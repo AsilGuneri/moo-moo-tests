@@ -1,5 +1,6 @@
 using DuloGames.UI;
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,15 +14,14 @@ public class UpgradeSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private Image upgradeIcon;
+    [SerializeField] private Button selectButton;
 
     private UpgradeData data;
-    private Toggle toggle;
 
     private void Awake()
     {
-        toggle = GetComponent<Toggle>();
-        toggle.onValueChanged.AddListener(OnSlotClicked);
-        
+        // toggle = GetComponent<Toggle>();
+        selectButton.onClick.AddListener(OnUpgradeAcquired);
     }
     public void Setup(UpgradeData data)
     {
@@ -30,9 +30,12 @@ public class UpgradeSlot : MonoBehaviour
         descriptionText.text = data.Description;
         upgradeIcon.sprite = data.Icon;
     }
-    private void OnSlotClicked(bool isOn)
+    void OnUpgradeAcquired()
     {
-        UpgradeManager.Instance.OnSlotClicked(this, isOn);
+        var manager = (CustomNetworkRoomManager)NetworkRoomManager.singleton;
+        var statController = manager.GetLocalPlayer().StatController;
+        data.OnAcquire(statController);
+        UpgradeManager.Instance.OnUpgradeAcquired();
     }
 
 
