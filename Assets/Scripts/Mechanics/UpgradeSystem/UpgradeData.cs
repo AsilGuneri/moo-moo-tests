@@ -32,6 +32,7 @@ public class Upgrade
 
     public void OnAcquire(StatController statController)
     {
+        Debug.Log("basic upgrade acquired");
         float value = 0;
         switch(Type)
         {

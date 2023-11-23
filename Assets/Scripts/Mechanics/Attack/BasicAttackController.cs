@@ -1,6 +1,7 @@
 using Mirror;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 
@@ -11,6 +12,8 @@ public abstract class BasicAttackController : NetworkBehaviour
     public Action OnStartAttack;
     public Action OnEndAttack;
     public Action OnAttackCancelled;
+    
+    //public Action OnHit;
 
     public float AnimAttackPoint { get => animAttackPoint; }
     public bool IsAttacking => isAttacking;
@@ -24,10 +27,13 @@ public abstract class BasicAttackController : NetworkBehaviour
     bool isAttacking = false;
     int attackBlockCount = 0;
     Coroutine autoAttackCoroutine; 
+    List<OnHitUpgrade> onHitUpgrades = new List<OnHitUpgrade>();
 
-
-    // Public properties
-
+    public void AddOnHitEffect(OnHitUpgrade upgrade)
+    {
+        if (onHitUpgrades.Contains(upgrade)) return;
+        onHitUpgrades.Add(upgrade);
+    }
     public int GetActualDamage()
     {
         var statController = controller.StatController;
@@ -39,8 +45,15 @@ public abstract class BasicAttackController : NetworkBehaviour
     protected virtual void Awake()
     {
         controller = GetComponent<UnitController>();
+       // if (controller.unitType == UnitType.Player) OnHit += () => { Debug.Log("on hit trigger"); };
     }
-
+    public void OnHit()
+    {
+        foreach(var upgrade in onHitUpgrades)
+        {
+            upgrade.OnHit();
+        }
+    }
     public void StartAutoAttack()
     {
         if (isAttacking) return;
@@ -113,7 +126,6 @@ public abstract class BasicAttackController : NetworkBehaviour
     {
         if (!IsAutoAttackingAvailable()) return;
         OnActualAttackMoment?.Invoke();
-
     }
     protected abstract void OnEachAttackEnd();
 

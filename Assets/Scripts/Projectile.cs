@@ -6,7 +6,7 @@ using System;
 
 public interface IProjectile
 {
-    void SetupProjectile(Health target, int damage, Transform spawnerTransform);
+    void SetupProjectile(Health target, int damage, Transform spawnerTransform, Action onHit);
     void UpdateProjectile();
     void DestroySelf();
 }
@@ -23,7 +23,7 @@ public class Projectile : NetworkBehaviour, IProjectile
     [SyncVar] private int _damage;
     [SyncVar] private Transform spawnerTransform;
     [SyncVar] private Health targetHealth;
-
+    Action onHit;
   //  private Health targetHealth;
 
     public bool BelongsToEnemy(UnitType enemyTo)
@@ -31,12 +31,13 @@ public class Projectile : NetworkBehaviour, IProjectile
         return spawnerTransform.GetComponent<UnitController>().IsEnemyTo(enemyTo);
     }
     [Server]
-    public void SetupProjectile(Health target, int damage, Transform spawnerTransform)
+    public void SetupProjectile(Health target, int damage, Transform spawnerTransform, Action onHit)
     {
         _isMoving = true;
         targetHealth = target;
         _damage = damage;
         this.spawnerTransform = spawnerTransform;
+        this.onHit = onHit;
     }
 
 
@@ -88,7 +89,7 @@ public class Projectile : NetworkBehaviour, IProjectile
             var obj = PrefabPoolManager.Instance.GetFromPool(onHitParticlePrefab, transform.position, transform.rotation);
             NetworkServer.Spawn(obj);
         }
-
+        onHit?.Invoke();
         target.GetComponent<Health>().TakeDamage(_damage, spawnerTransform);
         DestroySelf();
     }
