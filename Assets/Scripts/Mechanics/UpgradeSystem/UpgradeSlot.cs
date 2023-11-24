@@ -32,9 +32,10 @@ public class UpgradeSlot : MonoBehaviour
     }
     void OnUpgradeAcquired()
     {
-        var manager = (CustomNetworkRoomManager)NetworkRoomManager.singleton;
-        var statController = manager.GetLocalPlayer().StatController;
-        data.OnAcquire(statController);
+        //var manager = (CustomNetworkRoomManager)NetworkRoomManager.singleton;
+        var x = NetworkClient.localPlayer.GetComponent<StatController>();
+       // var statController = manager.GetLocalPlayer().StatController;
+        data.OnAcquire(x);
         UpgradeManager.Instance.OnUpgradeAcquired();
     }
 

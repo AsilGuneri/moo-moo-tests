@@ -109,15 +109,4 @@ public class CustomNetworkRoomManager : NetworkRoomManager
         roomPlayer.SetPlayerData(conn.connectionId);
         return roomPlayer.gameObject;
     }
-    public PlayerController GetLocalPlayer()
-    {
-        foreach(var player in GamePlayers)
-        {
-            if(player.connectionToClient.connectionId == NetworkConnection.LocalConnectionId)
-            {
-                return player;
-            }
-        }
-        return null;
-    }
 }

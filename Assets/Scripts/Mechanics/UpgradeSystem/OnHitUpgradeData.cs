@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [CreateAssetMenu(fileName = "OnHitUpgrade", menuName = "Scriptable Objects/Upgrades/OnHitUpgrade")]
 public class OnHitUpgradeData : UpgradeData
@@ -28,7 +29,6 @@ public class OnHitUpgrade
 
     public void OnAcquire(StatController statController)
     {
-        Debug.Log("onhit upgrade acquired");
         statController.GetComponent<BasicAttackController>().AddOnHitEffect(this);
     }
     public void OnHit()
@@ -54,7 +54,8 @@ public class OnHitUpgrade
     }
     void ElectricityEffect()
     {
-        Debug.Log("on hit ElectricityEffect");
+        float random = Random.Range(0f, 1f);
+        if (random <= Percentage) Debug.Log("enemy stun");
     }
     void FireEffect()
     {

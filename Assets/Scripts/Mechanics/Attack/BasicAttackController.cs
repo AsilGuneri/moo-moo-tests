@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 public abstract class BasicAttackController : NetworkBehaviour
 {
@@ -13,8 +12,6 @@ public abstract class BasicAttackController : NetworkBehaviour
     public Action OnEndAttack;
     public Action OnAttackCancelled;
     
-    //public Action OnHit;
-
     public float AnimAttackPoint { get => animAttackPoint; }
     public bool IsAttacking => isAttacking;
    
@@ -128,7 +125,6 @@ public abstract class BasicAttackController : NetworkBehaviour
         OnActualAttackMoment?.Invoke();
     }
     protected abstract void OnEachAttackEnd();
-
 
     public void ResetAttackController()
     {
