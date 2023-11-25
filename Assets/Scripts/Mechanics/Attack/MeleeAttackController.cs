@@ -23,7 +23,8 @@ public class MeleeAttackController : BasicAttackController
     [Command(requiresAuthority = false)]
     private void DealDamageToCurrentTarget()
     {
-        controller.TargetController.Target.GetComponent<Health>().TakeDamage(GetActualDamage(), transform);
-        OnHit();
+        UnitController targetUnit = controller.TargetController.Target.GetComponent<UnitController>();
+        targetUnit.Health.TakeDamage(GetActualDamage(), transform);
+        OnHit(targetUnit);
     }
 }

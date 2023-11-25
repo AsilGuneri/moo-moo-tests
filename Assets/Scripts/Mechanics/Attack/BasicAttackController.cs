@@ -26,6 +26,7 @@ public abstract class BasicAttackController : NetworkBehaviour
     Coroutine autoAttackCoroutine; 
     List<OnHitUpgrade> onHitUpgrades = new List<OnHitUpgrade>();
 
+    [Command]
     public void AddOnHitEffect(OnHitUpgrade upgrade)
     {
         if (onHitUpgrades.Contains(upgrade)) return;
@@ -44,11 +45,12 @@ public abstract class BasicAttackController : NetworkBehaviour
         controller = GetComponent<UnitController>();
        // if (controller.unitType == UnitType.Player) OnHit += () => { Debug.Log("on hit trigger"); };
     }
-    public void OnHit()
+    public void OnHit(UnitController targetUnit)
     {
+        Debug.Log("asilxx on hit");
         foreach(var upgrade in onHitUpgrades)
         {
-            upgrade.OnHit();
+            upgrade.OnHit(targetUnit);
         }
     }
     public void StartAutoAttack()

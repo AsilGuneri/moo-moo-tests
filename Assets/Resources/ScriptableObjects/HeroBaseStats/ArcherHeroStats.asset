@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ebbdafe1142af49aaf908ef701887b, type: 3}
   m_Name: ArcherHeroStats
   m_EditorClassIdentifier: 
-  AttackSpeed: 1
-  AttackRange: 5
+  AttackSpeed: 2
+  AttackRange: 10
   Health: 500
   Mana: 100
   Damage: 100

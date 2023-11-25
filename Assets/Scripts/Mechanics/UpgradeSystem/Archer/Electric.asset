@@ -20,8 +20,8 @@ MonoBehaviour:
   - Type: 1
     Damage: 0
     DamageOverTime: 0
-    Time: 0
-    Percentage: 0
+    Time: 2
+    Percentage: 1
   - Type: 0
     Damage: 0
     DamageOverTime: 0

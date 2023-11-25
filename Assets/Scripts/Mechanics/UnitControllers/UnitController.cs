@@ -1,6 +1,7 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.XR;
@@ -89,9 +90,6 @@ public abstract class UnitController : NetworkBehaviour
     {
         UnitManager.Instance.RemoveUnit(this);
     }
-
-    
-
     public override void OnStartServer()
     {
         InitializeUnit();
@@ -104,5 +102,19 @@ public abstract class UnitController : NetworkBehaviour
         UnitManager.Instance.RegisterUnit(this);
         statController.InitializeStats();
         health.ResetHealth(statController.MaxHealth);
+    }
+
+    public void ApplyStun(float time)
+    {
+        StartCoroutine(StunRoutine(time));
+    }
+    IEnumerator StunRoutine(float time)
+    {
+        Debug.Log(name + " stunned for " + time);
+        movement.BlockMovement();
+        attackController.BlockAttacking();
+        yield return Extensions.GetWait(time);
+        movement.RemoveMovementBlock();
+        attackController.RemoveAttackingBlock();
     }
 }

@@ -30,12 +30,12 @@ public class OnHitUpgrade
     {
         statController.GetComponent<BasicAttackController>().AddOnHitEffect(this);
     }
-    public void OnHit()
+    public void OnHit(UnitController target)
     {
         switch(Type)
         {
             case OnHitUpgradeType.Electricity:
-                ElectricityEffect();
+                ElectricityEffect(target);
                 break;
             case OnHitUpgradeType.Fire:
                 FireEffect();
@@ -51,10 +51,10 @@ public class OnHitUpgrade
                 break;
         }
     }
-    void ElectricityEffect()
+    void ElectricityEffect(UnitController target)
     {
         float random = Random.Range(0f, 1f);
-        if (random <= Percentage) Debug.Log("enemy stun");
+        if (random <= Percentage) target.ApplyStun(Time);
     }
     void FireEffect()
     {

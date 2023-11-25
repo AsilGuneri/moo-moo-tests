@@ -10,6 +10,7 @@ public class Health : NetworkBehaviour
 {
     public Action<Transform> OnDeathClient;
     public Action<Transform> OnDeathServer;
+    public UnitController Controller { get => controller; }
     public bool IsDead { get; private set; }
     public int CurrentHealth { get => currentHealth; }
     public int CurrentHealthPercentage { get { return (currentHealth / maxHealth) * 100; } }
