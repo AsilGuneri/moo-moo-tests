@@ -54,18 +54,16 @@ public class StatusUIController : MonoBehaviour
         if (!activeEffects.ContainsKey(status.effectName))
         {
             //controller.Health.OpenHealthBar();
-            float duration = time == 0 ? status.duration : time;
-
             ActiveStatus activeStatus = new ActiveStatus
             {
                 Effect = status,
                 IconObj = InstantiateIcon(status),
-                Timer = InstantiateTimer(duration, status)
+                Timer = InstantiateTimer(time, status)
             };
 
             activeEffects.Add(status.effectName, activeStatus);
 
-            yield return Extensions.GetWait(duration);
+            yield return Extensions.GetWait(time);
 
             EndStatus(status.effectName);
         }

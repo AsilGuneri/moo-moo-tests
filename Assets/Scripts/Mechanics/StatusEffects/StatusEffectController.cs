@@ -25,7 +25,7 @@ public class StatusEffectController : NetworkBehaviour
         StartCoroutine(StunRoutine(time));
     }
     [Server]
-    public void ApplyDamagePerSecond(float time, int dps, Transform dmgDealer)
+    public void ApplyDamagePerSecond(float time, int dps, Transform dmgDealer, string statusName)
     {
         if (controller.Health.IsDead) return;
         if (currentFireEffectCoroutine != null)
@@ -33,6 +33,8 @@ public class StatusEffectController : NetworkBehaviour
             StopCoroutine(currentFireEffectCoroutine);
         }
         currentFireEffectCoroutine = StartCoroutine(BurnRoutine(time, dps, dmgDealer));
+        statusUIController.StartStatus(statusName, time);
+
     }
     [Server]
     public void ApplySlow(float time, float ratio)

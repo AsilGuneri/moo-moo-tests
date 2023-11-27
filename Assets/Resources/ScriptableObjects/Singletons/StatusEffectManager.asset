@@ -16,6 +16,11 @@ MonoBehaviour:
   TimerPrefab: {fileID: 9094131879143481458, guid: d605c055cb8f0cd4ea8bbf5da05d32a4, type: 3}
   effects:
   - effectName: Slow
-    iconSprite: {fileID: 21300000, guid: 9818612482d43004ebfac0da93699c9b, type: 3}
-    duration: 0
-    timerColor: {r: 0.21568628, g: 0.5294118, b: 0.9137255, a: 1}
+    iconSprite: {fileID: 21300000, guid: ec098dacfc2134d46873e8f65bf293fa, type: 3}
+    timerColor: {r: 0.23529412, g: 0.5803922, b: 1, a: 1}
+  - effectName: Fire
+    iconSprite: {fileID: 21300000, guid: b42c064c406b121469e0c9e85e61c67d, type: 3}
+    timerColor: {r: 1, g: 0.6156863, b: 0, a: 1}
+  - effectName: Poison
+    iconSprite: {fileID: 21300000, guid: daf737e5f4075764c8b9e7deec2b5628, type: 3}
+    timerColor: {r: 0.07058824, g: 0.8, b: 0.27450982, a: 1}

@@ -58,11 +58,11 @@ public class OnHitUpgrade
     }
     void FireEffect(UnitController target, Transform dmgDealer)
     {
-        target.StatusEffect.ApplyDamagePerSecond(Time,DamageOverTime, dmgDealer);
+        target.StatusEffect.ApplyDamagePerSecond(Time, DamageOverTime, dmgDealer, "Fire");
     }
     void PoisonEffect(UnitController target, Transform dmgDealer)
     {
-        target.StatusEffect.ApplyDamagePerSecond(Time, DamageOverTime, dmgDealer);
+        target.StatusEffect.ApplyDamagePerSecond(Time, DamageOverTime, dmgDealer, "Poison");
     }
     void IceEffect(UnitController target)
     {
