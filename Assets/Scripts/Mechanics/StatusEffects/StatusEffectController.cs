@@ -9,7 +9,7 @@ public class StatusEffectController : NetworkBehaviour
     StatusUIController statusUIController;
 
     Coroutine currentFireEffectCoroutine;
-    Coroutine currentIceEffectCoroutine;
+    //Coroutine currentIceEffectCoroutine;
 
 
     private void Awake()
@@ -38,8 +38,8 @@ public class StatusEffectController : NetworkBehaviour
     public void ApplySlow(float time, float ratio)
     {
         if (controller.Health.IsDead) return;
-        if (currentIceEffectCoroutine != null) StopCoroutine(currentIceEffectCoroutine);
-        currentIceEffectCoroutine = StartCoroutine(SlowRoutine(time, ratio));
+       // if (currentIceEffectCoroutine != null) StopCoroutine(currentIceEffectCoroutine);
+        /*currentIceEffectCoroutine = */StartCoroutine(SlowRoutine(time, ratio));
         statusUIController.StartStatus("Slow", time);
     }
 
