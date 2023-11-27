@@ -29,6 +29,7 @@ public class StatusEffect
 {
     public string effectName;
     public Sprite iconSprite;
+    public float duration;
     public Color timerColor;
 
 }
