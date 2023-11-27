@@ -70676,6 +70676,7 @@ MonoBehaviour:
   AttackSpeed: 0
   AttackRange: 0
   ProjectileCount: 1
+  MoveSpeed: 0
 --- !u!1 &8946106163135306598
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,4 +13,5 @@ public class HeroBaseStatsData : ScriptableObject
     public int Damage;
     [Range(0f, 1f)]
     public float AdditionalDamageRatio;
+    public float MoveSpeed;
 }

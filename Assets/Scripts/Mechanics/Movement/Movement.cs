@@ -116,6 +116,12 @@ public class Movement : MonoBehaviour
         isFollowing = false;
         ClientStop();
     }
+    public void ChangeMoveSpeed(float maxSpeed)
+    {
+        var steering = agent.EntitySteering;
+        steering.Speed = maxSpeed;
+        agent.EntitySteering = steering;
+    }
 
 
     private bool CanMove()

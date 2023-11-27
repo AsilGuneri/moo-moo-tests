@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1b41b930e234f342a59bcab80dc79c4, type: 3}
-  m_Name: Electric
+  m_Name: Poison
   m_EditorClassIdentifier: 
-  DisplayName: Electricity
+  DisplayName: Poison
   Description: 
   Icon: {fileID: 21300000, guid: d279f10bc00ef28438fe970e09fc41ff, type: 3}
   Upgrades: []
   OnHitUpgrades:
-  - Type: 1
+  - Type: 3
     Damage: 0
-    DamageOverTime: 0
-    Time: 2
-    Percentage: 1
+    DamageOverTime: 10
+    Time: 10
+    Percentage: 0

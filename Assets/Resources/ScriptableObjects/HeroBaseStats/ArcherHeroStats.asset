@@ -18,3 +18,4 @@ MonoBehaviour:
   Mana: 100
   Damage: 100
   AdditionalDamageRatio: 0.1
+  MoveSpeed: 7

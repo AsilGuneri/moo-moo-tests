@@ -44,7 +44,14 @@ public class Health : NetworkBehaviour
         currentHealth -= dmg;
         if (currentHealth <= 0) Die(dealerTransform);
     }
- 
+    [Server]
+    public void Heal(int heal, Transform healerTransform)
+    {
+        if (IsDead) return;
+        currentHealth += heal;
+        if (currentHealth >= maxHealth) currentHealth = maxHealth;
+    }
+
     [Server]
     public void UpdateMaxHealth(int additionalHealth)
     {

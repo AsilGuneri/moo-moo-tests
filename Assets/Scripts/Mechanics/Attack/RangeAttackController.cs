@@ -41,7 +41,7 @@ public class RangeAttackController : BasicAttackController
             (projectilePrefab, controller.ProjectileSpawnPoint.position, Quaternion.identity);
 
         projectile.GetComponent<Projectile>().SetupProjectile
-            (target, GetActualDamage(), transform, () => OnHit(target.Controller));
+            (target, GetActualDamage(), transform, OnHit);
 
         NetworkServer.Spawn(projectile, connectionToClient);
     }

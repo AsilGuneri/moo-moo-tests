@@ -18,6 +18,7 @@ public abstract class UnitController : NetworkBehaviour
     public AnimationController AnimationController { get => animationController; }
     public NetworkAnimator NetworkAnimator { get => networkAnimator; }
     public Movement Movement { get => movement; }
+    public StatusEffectController StatusEffect { get; protected set; }
 
     //temp variables
     public TargetController TargetController { get => targetController; }
@@ -68,6 +69,7 @@ public abstract class UnitController : NetworkBehaviour
         networkAnimator = GetComponent<NetworkAnimator>();
         health = GetComponent<Health>();
         statController = GetComponent<StatController>();
+        StatusEffect = GetComponent<StatusEffectController>();
     }
     protected void SubscribeEvents()
     {
@@ -103,18 +105,5 @@ public abstract class UnitController : NetworkBehaviour
         statController.InitializeStats();
         health.ResetHealth(statController.MaxHealth);
     }
-
-    public void ApplyStun(float time)
-    {
-        StartCoroutine(StunRoutine(time));
-    }
-    IEnumerator StunRoutine(float time)
-    {
-        Debug.Log(name + " stunned for " + time);
-        movement.BlockMovement();
-        attackController.BlockAttacking();
-        yield return Extensions.GetWait(time);
-        movement.RemoveMovementBlock();
-        attackController.RemoveAttackingBlock();
-    }
+    
 }

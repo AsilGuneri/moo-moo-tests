@@ -45,12 +45,13 @@ public abstract class BasicAttackController : NetworkBehaviour
         controller = GetComponent<UnitController>();
        // if (controller.unitType == UnitType.Player) OnHit += () => { Debug.Log("on hit trigger"); };
     }
-    public void OnHit(UnitController targetUnit)
+    [Server]
+    public void OnHit(UnitController targetUnit,int dmgDealt)
     {
         Debug.Log("asilxx on hit");
         foreach(var upgrade in onHitUpgrades)
         {
-            upgrade.OnHit(targetUnit);
+            upgrade.OnHit(targetUnit, transform, dmgDealt);
         }
     }
     public void StartAutoAttack()

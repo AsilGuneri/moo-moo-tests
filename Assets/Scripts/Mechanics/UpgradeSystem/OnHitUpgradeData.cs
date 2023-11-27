@@ -30,7 +30,7 @@ public class OnHitUpgrade
     {
         statController.GetComponent<BasicAttackController>().AddOnHitEffect(this);
     }
-    public void OnHit(UnitController target)
+    public void OnHit(UnitController target, Transform dmgDealer, int damageDealt)
     {
         switch(Type)
         {
@@ -38,38 +38,41 @@ public class OnHitUpgrade
                 ElectricityEffect(target);
                 break;
             case OnHitUpgradeType.Fire:
-                FireEffect();
+                FireEffect(target, dmgDealer);
                 break;
             case OnHitUpgradeType.Poison:
-                PoisonEffect();
+                PoisonEffect(target, dmgDealer);
                 break;
             case OnHitUpgradeType.Ice:
-                IceEffect();
+                IceEffect(target);
                 break;
             case OnHitUpgradeType.Vampire:
-                VampireEffect();
+                VampireEffect(damageDealt, dmgDealer);
                 break;
         }
     }
     void ElectricityEffect(UnitController target)
     {
         float random = Random.Range(0f, 1f);
-        if (random <= Percentage) target.ApplyStun(Time);
+        if (random <= Percentage) target.StatusEffect.ApplyStun(Time);
     }
-    void FireEffect()
+    void FireEffect(UnitController target, Transform dmgDealer)
     {
-        Debug.Log("on hit FireEffect");
+        target.StatusEffect.ApplyDamagePerSecond(Time,DamageOverTime, dmgDealer);
     }
-    void PoisonEffect()
+    void PoisonEffect(UnitController target, Transform dmgDealer)
     {
-        Debug.Log("on hit PoisonEffect");
+        target.StatusEffect.ApplyDamagePerSecond(Time, DamageOverTime, dmgDealer);
     }
-    void IceEffect()
+    void IceEffect(UnitController target)
     {
-        Debug.Log("on hit IceEffect");
+        target.StatusEffect.ApplySlow(Time, Percentage);
     }
-    void VampireEffect()
+    void VampireEffect(int dmg, Transform dmgDealer)
     {
+        int lifeSteal = Mathf.CeilToInt(Percentage * dmg);
+        var dealerUnit = dmgDealer.GetComponent<UnitController>();
+        dealerUnit.Health.Heal(lifeSteal, dmgDealer);
         Debug.Log("on hit VampireEffect");
     }
 }
