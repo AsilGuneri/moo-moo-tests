@@ -37,54 +37,52 @@ public class StatusUIController : MonoBehaviour
         {
             var activeEffect = activeEffects[name];
             Destroy(activeEffect.IconObj.gameObject);
-            Destroy(activeEffect.Timer.gameObject);
+            //Destroy(activeEffect.Timer.gameObject);
             activeEffects.Remove(name);
         }
         else if (debug) Debug.Log("Disactive status tried to end : " + name + " userName : " + name);
     }
 
-    public void StartStatus(string name, float time = 0)
+    public void StartStatus(string name, float time)
     {
         var status = StatusEffectManager.Instance.GetStatusEffect(name);
         StartCoroutine(StartStatus(status, time));
     }
 
-    private IEnumerator StartStatus(StatusEffect status, float time = 0)
+    private IEnumerator StartStatus(StatusEffect status, float time)
     {
         if (!activeEffects.ContainsKey(status.effectName))
         {
             //controller.Health.OpenHealthBar();
-            float duration = time == 0 ? status.duration : time;
-
             ActiveStatus activeStatus = new ActiveStatus
             {
                 Effect = status,
-                IconObj = InstantiateIcon(status),
-                Timer = InstantiateTimer(duration, status)
+                IconObj = InstantiateIcon(status, time).gameObject,
+                //Timer = InstantiateTimer(duration, status)
             };
 
             activeEffects.Add(status.effectName, activeStatus);
 
-            yield return Extensions.GetWait(duration);
+            yield return Extensions.GetWait(time);
 
             EndStatus(status.effectName);
         }
         else if (debug) Debug.Log("Active status tried to start : " + status.effectName + " userName : " + name);
     }
 
-    private GameObject InstantiateIcon(StatusEffect status)
+    private StatusIcon InstantiateIcon(StatusEffect status, float time)
     {
         var icon = Instantiate(StatusEffectManager.Instance.IconPrefab, IconParent).GetComponent<StatusIcon>();
-        icon.ChangeIconSprite(status.iconSprite);
-        return icon.gameObject;
+        icon.Setup(status.iconSprite, time);
+        return icon;
     }
 
-    private StatusTimer InstantiateTimer(float duration, StatusEffect status)
-    {
-        var timer = Instantiate(StatusEffectManager.Instance.TimerPrefab, TimerParent).GetComponent<StatusTimer>();
-        timer.StartTimer(duration, status.timerColor);
-        return timer;
-    }
+    //private StatusTimer InstantiateTimer(float duration, StatusEffect status)
+    //{
+    //    //var timer = Instantiate(StatusEffectManager.Instance.TimerPrefab, TimerParent).GetComponent<StatusTimer>();
+    //    //timer.StartTimer(duration, status.timerColor);
+    //    //return timer;
+    //}
 
     public void SetCanvasHeight(float height)
     {
