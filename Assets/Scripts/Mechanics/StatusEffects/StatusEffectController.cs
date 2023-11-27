@@ -6,6 +6,8 @@ using UnityEngine;
 public class StatusEffectController : NetworkBehaviour
 {
     UnitController controller;
+    StatusUIController statusUIController;
+
     Coroutine currentFireEffectCoroutine;
     Coroutine currentIceEffectCoroutine;
 
@@ -13,6 +15,7 @@ public class StatusEffectController : NetworkBehaviour
     private void Awake()
     {
         controller = GetComponent<UnitController>();
+        statusUIController = GetComponent<StatusUIController>();
     }
 
     [Server]
@@ -35,8 +38,9 @@ public class StatusEffectController : NetworkBehaviour
     public void ApplySlow(float time, float ratio)
     {
         if (controller.Health.IsDead) return;
-        if (currentFireEffectCoroutine != null) StopCoroutine(currentFireEffectCoroutine);
+        if (currentIceEffectCoroutine != null) StopCoroutine(currentIceEffectCoroutine);
         currentIceEffectCoroutine = StartCoroutine(SlowRoutine(time, ratio));
+        statusUIController.StartStatus("Slow", time);
     }
 
     IEnumerator StunRoutine(float time)

@@ -20,5 +20,5 @@ MonoBehaviour:
   - Type: 4
     Damage: 0
     DamageOverTime: 0
-    Time: 3
-    Percentage: 0.5
+    Time: 5
+    Percentage: 1

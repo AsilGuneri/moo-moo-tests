@@ -1,18 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine.UI;
 
-public class StatusEffectManager : MonoBehaviour
+[CreateAssetMenu(fileName = "StatusEffectManager", menuName = "Scriptable Objects/Managers/StatusEffectManager")]
+public class StatusEffectManager : ScriptableSingleton<StatusEffectManager>
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject IconPrefab;
+    public GameObject TimerPrefab;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private List<StatusEffect> effects = new List<StatusEffect>();
+
+    public StatusEffect GetStatusEffect(string name)
     {
-        
+        foreach (var effect in effects)
+        {
+            if (effect.effectName == name)
+            {
+                return effect;
+            }
+        }
+        return null;
     }
+}
+[Serializable]
+public class StatusEffect
+{
+    public string effectName;
+    public Sprite iconSprite;
+    public float duration;
+    public Color timerColor;
+
+}
+public class ActiveStatus
+{
+    public StatusEffect Effect { get; set; }
+    public GameObject IconObj { get; set; }
+    public StatusTimer Timer { get; set; }
+    public Coroutine Coroutine { get; set; }
 }

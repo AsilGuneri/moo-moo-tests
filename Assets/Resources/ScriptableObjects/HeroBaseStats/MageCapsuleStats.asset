@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: MageCapsuleStats
   m_EditorClassIdentifier: 
   AttackSpeed: 0.66
-  AttackRange: 0
-  Health: 140
+  AttackRange: 5
+  Health: 500
   Mana: 0
-  Damage: 24
+  Damage: 0
   AdditionalDamageRatio: 0
   MoveSpeed: 3.5

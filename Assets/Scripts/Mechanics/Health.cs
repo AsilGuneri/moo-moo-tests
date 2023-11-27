@@ -8,8 +8,8 @@ using UnityEngine.UI;
 
 public class Health : NetworkBehaviour
 {
-    public Action<Transform> OnDeathClient;
-    public Action<Transform> OnDeathServer;
+    public Action OnDeathClient;
+    public Action OnDeathServer;
     public UnitController Controller { get => controller; }
     public bool IsDead { get; private set; }
     public int CurrentHealth { get => currentHealth; }
@@ -82,14 +82,14 @@ public class Health : NetworkBehaviour
     {
         if (IsDead) return;
         IsDead = true;
-        OnDeathServer?.Invoke(damageDealerTransform);
+        OnDeathServer?.Invoke();
         controller.OnDeath(damageDealerTransform);
         RpcDie(damageDealerTransform);
     }
 
     [ClientRpc] void RpcDie(Transform damageDealerTransform)
     {
-        OnDeathClient?.Invoke(damageDealerTransform);
+        OnDeathClient?.Invoke();
 
     }
 
