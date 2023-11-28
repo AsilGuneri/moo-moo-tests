@@ -12,6 +12,15 @@ public class StatusUIController : MonoBehaviour
 
     Dictionary<Status,StatusUI> statusUIPairs = new Dictionary<Status,StatusUI>();
 
+    private void Update()
+    {
+        foreach (KeyValuePair<Status, StatusUI> pair in statusUIPairs)
+        {
+            StatusUI statusUI = pair.Value;
+            statusUI.OnUpdate(pair.Key.Time);
+        }
+    }
+
     public void OnStatusStart(Status status)
     {
         StatusUI statusUI = Instantiate(StatusManager.Instance.StatusUIPrefab, iconParent).GetComponent<StatusUI>();
@@ -21,11 +30,8 @@ public class StatusUIController : MonoBehaviour
     public void OnStatusEnd(Status status)
     {
         var statusUI = statusUIPairs[status];
+        statusUIPairs.Remove(status);
         statusUI.DestroyUI();
-    }
-    public void OnStatusUpdate()
-    {
-
     }
 
     //private GameObject InstantiateIcon(StatusData status)

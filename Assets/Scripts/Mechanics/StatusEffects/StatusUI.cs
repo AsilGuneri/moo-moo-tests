@@ -14,9 +14,10 @@ public class StatusUI : MonoBehaviour
     float remainingTime;
     float totalTime;
 
-    private void Update()
+    public void OnUpdate(float remainingTime)
     {
-        
+        this.remainingTime = remainingTime;
+        bar.fillAmount = remainingTime / totalTime;
     }
 
     public void DestroyUI()
