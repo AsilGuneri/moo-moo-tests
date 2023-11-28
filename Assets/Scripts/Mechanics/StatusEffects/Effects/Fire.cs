@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fire : MonoBehaviour
+[CreateAssetMenu(fileName = "Fire", menuName = "Scriptable Objects/Status Effects/Fire")]
+
+public class Fire : StatusAction
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Apply(UnitController target, Status status)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnInterval(UnitController target, Status status)
     {
-        
+        Debug.Log("asilxx " + target.name + " " + status.DamagePerSec);
+        target.Health.TakeDamage(status.DamagePerSec, status.Caster);
+    }
+
+    public override void Remove(UnitController target, Status status)
+    {
     }
 }

@@ -34,38 +34,27 @@ public class OnHitUpgrade
         switch(Type)
         {
             case OnHitUpgradeType.Electricity:
-                ElectricityEffect(target);
+                float random = Random.Range(0f, 1f);
+                if (random <= Ratio) ApplyStatus(StatusType.Stun, target, dmgDealer);
                 break;
             case OnHitUpgradeType.Fire:
-                FireEffect(target, dmgDealer);
+                ApplyStatus(StatusType.Fire, target, dmgDealer);
                 break;
             case OnHitUpgradeType.Poison:
-                PoisonEffect(target, dmgDealer);
+                ApplyStatus(StatusType.Poison, target, dmgDealer);
                 break;
             case OnHitUpgradeType.Ice:
-                IceEffect(target);
+                ApplyStatus(StatusType.Slow, target, dmgDealer);
                 break;
             case OnHitUpgradeType.Vampire:
                 VampireEffect(damageDealt, dmgDealer);
                 break;
         }
     }
-    void ElectricityEffect(UnitController target)
+    void ApplyStatus(StatusType statusType, UnitController target, Transform dmgDealer)
     {
-        float random = Random.Range(0f, 1f);
-        if (random <= Ratio) target.StatusEffect.ApplyStun(Time);
-    }
-    void FireEffect(UnitController target, Transform dmgDealer)
-    {
-        target.StatusEffect.ApplyDamagePerSecond(Time, DamagerPerSec, dmgDealer, "Fire");
-    }
-    void PoisonEffect(UnitController target, Transform dmgDealer)
-    {
-        target.StatusEffect.ApplyDamagePerSecond(Time, DamagerPerSec, dmgDealer, "Poison");
-    }
-    void IceEffect(UnitController target)
-    {
-        target.GetComponent<StatusController>().ApplyStatus(StatusType.Slow, Time, Ratio, DamagerPerSec);
+        target.StatusController.ApplyStatus(statusType, Time, Ratio, DamagerPerSec, dmgDealer);
+
     }
     void VampireEffect(int dmg, Transform dmgDealer)
     {

@@ -48,7 +48,6 @@ public abstract class BasicAttackController : NetworkBehaviour
     [Server]
     public void OnHit(UnitController targetUnit,int dmgDealt)
     {
-        Debug.Log("asilxx on hit");
         foreach(var upgrade in onHitUpgrades)
         {
             upgrade.OnHit(targetUnit, transform, dmgDealt);

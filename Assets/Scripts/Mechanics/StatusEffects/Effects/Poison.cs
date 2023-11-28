@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
-public class Poison : MonoBehaviour
+[CreateAssetMenu(fileName = "Poison", menuName = "Scriptable Objects/Status Effects/Poison")]
+
+public class Poison : StatusAction
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Apply(UnitController target, Status status)
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnInterval(UnitController target, Status status)
     {
-        
+        target.Health.TakeDamage(status.DamagePerSec, status.Caster);
+    }
+
+    public override void Remove(UnitController target, Status status)
+    {
+
     }
 }

@@ -18,7 +18,6 @@ MonoBehaviour:
   Upgrades: []
   OnHitUpgrades:
   - Type: 3
-    Damage: 0
-    DamageOverTime: 10
+    DamagerPerSec: 10
     Time: 10
-    Percentage: 0
+    Ratio: 0

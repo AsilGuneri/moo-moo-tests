@@ -83,7 +83,6 @@ public class StatController : NetworkBehaviour
         float multiplier = moveSpeedBoost <= 0.5f ? 0.5f : moveSpeedBoost;
         MoveSpeed = BaseStats.MoveSpeed * multiplier;
         controller.Movement.ChangeMoveSpeed(MoveSpeed);
-        Debug.Log("new movespeed : " + MoveSpeed + " new boost " + moveSpeedBoost);
     }
     [Server]
     public void ChangeProjectileCount(int bonusCount)

@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stun : MonoBehaviour
+[CreateAssetMenu(fileName = "Stun", menuName = "Scriptable Objects/Status Effects/Stun")]
+
+public class Stun : StatusAction
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Apply(UnitController target, Status status)
     {
-        
+        target.Movement.BlockMovement();
+        target.AttackController.BlockAttacking();        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnInterval(UnitController target, Status status)
     {
-        
+
+    }
+
+    public override void Remove(UnitController target, Status status)
+    {
+        target.Movement.RemoveMovementBlock();
+        target.AttackController.RemoveAttackingBlock();
     }
 }

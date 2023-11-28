@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Slow", menuName = "Scriptable Objects/Status Effects/Slow")]
-public class Slow : StatusData
+public class Slow : StatusAction
 {
-    public override void Apply(UnitController controller, Status status)
+    public override void Apply(UnitController target, Status status)
     {
-        controller.StatController.ChangeMoveSpeed(-status.Ratio);
+        target.StatController.ChangeMoveSpeed(-status.Ratio);
     }
 
-    public override void OnUpdate(UnitController controller, Status status)
+    public override void OnInterval(UnitController target, Status status)
     {
         //throw new System.NotImplementedException();
     }
 
-    public override void Remove(UnitController controller, Status status)
+    public override void Remove(UnitController target, Status status)
     {
-        controller.StatController.ChangeMoveSpeed(status.Ratio);
+        target.StatController.ChangeMoveSpeed(status.Ratio);
     }
 }

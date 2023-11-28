@@ -18,7 +18,7 @@ public abstract class UnitController : NetworkBehaviour
     public AnimationController AnimationController { get => animationController; }
     public NetworkAnimator NetworkAnimator { get => networkAnimator; }
     public Movement Movement { get => movement; }
-    public StatusEffectController StatusEffect { get; protected set; }
+    public StatusController StatusController { get; protected set; }
 
     //temp variables
     public TargetController TargetController { get => targetController; }
@@ -69,7 +69,7 @@ public abstract class UnitController : NetworkBehaviour
         networkAnimator = GetComponent<NetworkAnimator>();
         health = GetComponent<Health>();
         statController = GetComponent<StatController>();
-        StatusEffect = GetComponent<StatusEffectController>();
+        StatusController = GetComponent<StatusController>();
     }
     protected void SubscribeEvents()
     {

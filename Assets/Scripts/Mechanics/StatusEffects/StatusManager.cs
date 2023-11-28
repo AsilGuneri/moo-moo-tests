@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,15 +19,18 @@ public class StatusManager : ScriptableSingleton<StatusManager>
     }
    
 }
-
-public abstract class StatusData : ScriptableObject
+[Serializable]
+public class StatusData 
 {
     public StatusType Type;
     public Sprite IconSprite;
     public Color TimerColor;
-
-    public abstract void Apply(UnitController controller, Status status);
-    public abstract void Remove(UnitController controller, Status status);
-    public abstract void OnUpdate(UnitController controller, Status status);
+    public StatusAction Action;
 }
 
+public abstract class StatusAction : ScriptableObject
+{
+    public abstract void Apply(UnitController target, Status status);
+    public abstract void Remove(UnitController target, Status status);
+    public abstract void OnInterval(UnitController target, Status status);
+}

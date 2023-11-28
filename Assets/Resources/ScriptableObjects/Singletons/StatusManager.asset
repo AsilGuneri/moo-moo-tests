@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -14,4 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StatusUIPrefab: {fileID: 5494871031472507493, guid: 3cd29c81a98cfc74fbd77e39a31531e3, type: 3}
   allEffects:
-  - {fileID: 11400000, guid: 233a059656ce20947a4fabab2ca32334, type: 2}
+  - Type: 1
+    IconSprite: {fileID: 21300000, guid: ec098dacfc2134d46873e8f65bf293fa, type: 3}
+    TimerColor: {r: 0.40784314, g: 1, b: 1, a: 1}
+    Action: {fileID: 11400000, guid: 233a059656ce20947a4fabab2ca32334, type: 2}
+  - Type: 2
+    IconSprite: {fileID: 21300000, guid: 2f2b493ef0dc1ac468c14c3230d1ca4e, type: 3}
+    TimerColor: {r: 0.92941177, g: 0.6901961, b: 0.10980392, a: 1}
+    Action: {fileID: 11400000, guid: 8f20e4466d2bade44b735e9d1c5dcd37, type: 2}
+  - Type: 3
+    IconSprite: {fileID: 21300000, guid: b42c064c406b121469e0c9e85e61c67d, type: 3}
+    TimerColor: {r: 0.77254903, g: 0.23137255, b: 0, a: 1}
+    Action: {fileID: 11400000, guid: 79073b6db69e9f64584e93be83a3f45f, type: 2}
+  - Type: 4
+    IconSprite: {fileID: 21300000, guid: daf737e5f4075764c8b9e7deec2b5628, type: 3}
+    TimerColor: {r: 0, g: 0.69411767, b: 0, a: 1}
+    Action: {fileID: 11400000, guid: 7e956e7fe59408a41af17ad78e4f449b, type: 2}
