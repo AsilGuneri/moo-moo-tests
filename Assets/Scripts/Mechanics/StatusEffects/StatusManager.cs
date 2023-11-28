@@ -25,7 +25,14 @@ public class StatusData
     public StatusType Type;
     public Sprite IconSprite;
     public Color TimerColor;
+    public int StackAmount = 1;
     public StatusAction Action;
+}
+public enum StackType
+{
+    NonStackable,
+    Stackable,
+
 }
 
 public abstract class StatusAction : ScriptableObject

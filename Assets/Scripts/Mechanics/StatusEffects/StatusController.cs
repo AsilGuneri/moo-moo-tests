@@ -39,22 +39,49 @@ public class StatusController : MonoBehaviour
 
     public void ApplyStatus(StatusType type, float time, float ratio = 0, int dps = 0, Transform caster = null)
     {
-        var status = new Status(type, time, ratio, dps, caster);
-        status.Data.Action.Apply(controller, status);
-        activeStatusEffects.Add(status);
-        statusUI.OnStatusStart(status);
+        Status status = GetActiveStatus(type,out int activeOfType);
+        if (status == null)
+        {
+            AddStatus(type, time, ratio, dps, caster);
+            return;
+        }
+        if(status.Data.StackAmount > activeOfType)
+        {
+            AddStatus(type, time, ratio, dps, caster);
+        }
+        //else
+        //{
+        //    switch(status.Data.StackAmount)
+        //}
+
+        //&& status.Data.StackAmount <= activeOfType)
+        //    return;
     }
+
+    private void AddStatus(StatusType type, float time, float ratio, int dps, Transform caster)
+    {
+        Status newStatus = new Status(type, time, ratio, dps, caster);
+        newStatus.Data.Action.Apply(controller, newStatus);
+        activeStatusEffects.Add(newStatus);
+        statusUI.OnStatusStart(newStatus);
+    }
+
     void RemoveStatus(Status activeStatus)
     {
         activeStatus.Data.Action.Remove(controller, activeStatus);
         activeStatusEffects.Remove(activeStatus);
         statusUI.OnStatusEnd(activeStatus);
     }
-    Status GetActiveStatus(StatusType type)
+    Status GetActiveStatus(StatusType type, out int count)
     {
+        count = 0;
         Status activeStatus = null;
         foreach (var status in activeStatusEffects)
-            if (status.Type == type) activeStatus = status;
+            if (status.Type == type) 
+            {
+                count++;
+                activeStatus = status; 
+            }
         return activeStatus;
     }
 
