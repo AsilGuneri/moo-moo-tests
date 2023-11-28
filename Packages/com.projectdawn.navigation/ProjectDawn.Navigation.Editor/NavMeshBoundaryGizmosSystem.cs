@@ -13,27 +13,27 @@ namespace ProjectDawn.Navigation.Editor
 {
     [BurstCompile]
     [RequireMatchingQueriesForUpdate]
-    [UpdateInGroup(typeof(AgentGizmosSystemGroup))]
+    [UpdateInGroup(typeof(AgentSystemGroup))]
+    [UpdateAfter(typeof(AgentSteeringSystemGroup))]
+    [UpdateAfter(typeof(NavMeshSteeringSystem))]
+    [UpdateBefore(typeof(AgentForceSystemGroup))]
+    [UpdateBefore(typeof(NavMeshBoundarySystem))]
     public partial struct NavMeshBoundaryGizmosSystem : ISystem
     {
-        public void OnCreate(ref SystemState state) { }
-
-        public void OnDestroy(ref SystemState state) { }
-
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var gizmos = GetSingletonRW<GizmosSystem.Singleton>();
             new Job
             {
-                Gizmos = gizmos.ValueRW.CreateCommandBuffer().AsParallelWriter(),
-            }.ScheduleParallel();
+                Gizmos = gizmos.ValueRW.CreateCommandBuffer(),
+            }.Schedule();
         }
 
         [BurstCompile]
         partial struct Job : IJobEntity
         {
-            public GizmosCommandBuffer.ParallelWriter Gizmos;
+            public GizmosCommandBuffer Gizmos;
 
             public void Execute(in AgentShape shape, in DynamicBuffer<NavMeshWall> walls, in LocalTransform transform, in DrawGizmos drawGizmos)
             {

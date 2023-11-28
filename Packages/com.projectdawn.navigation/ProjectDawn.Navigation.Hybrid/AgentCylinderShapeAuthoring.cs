@@ -9,7 +9,7 @@ namespace ProjectDawn.Navigation.Hybrid
     [RequireComponent(typeof(AgentAuthoring))]
     [AddComponentMenu("Agents Navigation/Agent Cylinder Shape")]
     [DisallowMultipleComponent]
-    [HelpURL("https://lukaschod.github.io/agents-navigation-docs/manual/authoring.html")]
+    [HelpURL("https://lukaschod.github.io/agents-navigation-docs/manual/game-objects/shape.html")]
     public class AgentCylinderShapeAuthoring : MonoBehaviour
     {
         [SerializeField]
@@ -61,11 +61,7 @@ namespace ProjectDawn.Navigation.Hybrid
 
     internal class AgentCapsuleShapeBaker : Baker<AgentCylinderShapeAuthoring>
     {
-#if UNITY_ENTITIES_VERSION_65
 
         public override void Bake(AgentCylinderShapeAuthoring authoring) => AddComponent(GetEntity(TransformUsageFlags.Dynamic), authoring.DefaultShape);
-#else
-        public override void Bake(AgentCylinderShapeAuthoring authoring) => AddComponent(authoring.DefaultShape);
-#endif
     }
 }

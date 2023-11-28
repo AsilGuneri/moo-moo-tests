@@ -85,8 +85,7 @@ namespace ProjectDawn.LocalAvoidance
         /// <param name="up">Up direction</param>
         /// <param name="innerRadius">Minimum radius from which sonar will tracks obstacles and also used for path size</param>
         /// <param name="outerRadius">Maximum radius from which sonar will tracks obstacles</param>
-        /// <param name="speed">Speed of sonar</param>
-        /// <param name="allocator">Allocator type</param>
+        /// <param name="angle">The total angle in radians of sonar volume. One way to think it as range from -angle/2 to angle/2 the desired direction and avoidance direction will be.</param>
         public void Set(float3 position, float3 velocity, float3 direction, float3 up, float innerRadius, float outerRadius, float angle)
         {
             Set(position, velocity, DirectionToRotation(direction, up), innerRadius, outerRadius, angle);
@@ -99,7 +98,7 @@ namespace ProjectDawn.LocalAvoidance
         /// <param name="rotation">Rotation of sonar</param>
         /// <param name="innerRadius">Minimum radius from which sonar will tracks obstacles and also used for path size</param>
         /// <param name="outerRadius">Maximum radius from which sonar will tracks obstacles</param>
-        /// <param name="speed">Speed of sonar</param>
+        /// <param name="angle">The total angle in radians of sonar volume. One way to think it as range from -angle/2 to angle/2 the desired direction and avoidance direction will be.</param
         public void Set(float3 position, float3 velocity, quaternion rotation, float innerRadius, float outerRadius, float angle)
         {
             CheckIsCreated();
@@ -413,6 +412,7 @@ namespace ProjectDawn.LocalAvoidance
             m_InnerRadius = other.m_InnerRadius;
             m_OuterRadius = other.m_OuterRadius;
             m_Speed = other.m_Speed;
+            m_Angle = other.m_Angle;
 
             // Make a copy of nodes
             // Uses unsafe context for faster copy API

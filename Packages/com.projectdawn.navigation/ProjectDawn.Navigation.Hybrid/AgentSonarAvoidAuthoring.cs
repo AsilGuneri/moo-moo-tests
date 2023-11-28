@@ -10,7 +10,7 @@ namespace ProjectDawn.Navigation.Hybrid
     [RequireComponent(typeof(AgentAuthoring))]
     [AddComponentMenu("Agents Navigation/Agent Sonar Avoid")]
     [DisallowMultipleComponent]
-    [HelpURL("https://lukaschod.github.io/agents-navigation-docs/manual/authoring.html")]
+    [HelpURL("https://lukaschod.github.io/agents-navigation-docs/manual/game-objects/avoidance/sonar-avoidance.html")]
     public class AgentAvoidAuthoring : MonoBehaviour
     {
         [SerializeField]
@@ -33,6 +33,9 @@ namespace ProjectDawn.Navigation.Hybrid
         [SerializeField]
         protected bool UseWalls = false;
 
+        [SerializeField]
+        protected NavigationLayers m_Layers = NavigationLayers.Everything;
+
         Entity m_Entity;
 
         /// <summary>
@@ -45,6 +48,7 @@ namespace ProjectDawn.Navigation.Hybrid
             MaxAngle = math.radians(MaxAngle),
             Mode = Mode,
             BlockedStop = BlockedStop,
+            Layers = m_Layers,
         };
 
         /// <summary>
@@ -67,6 +71,10 @@ namespace ProjectDawn.Navigation.Hybrid
             var world = World.DefaultGameObjectInjectionWorld;
             m_Entity = GetComponent<AgentAuthoring>().GetOrCreateEntity();
             world.EntityManager.AddComponentData(m_Entity, DefaultAvoid);
+
+            // Sync in case it was created as disabled
+            if (!enabled)
+                world.EntityManager.SetComponentEnabled<AgentSonarAvoid>(m_Entity, false);
 
             if (UseWalls)
             {
@@ -111,10 +119,6 @@ namespace ProjectDawn.Navigation.Hybrid
 
     internal class AgentSonarAvoidBaker : Baker<AgentAvoidAuthoring>
     {
-#if UNITY_ENTITIES_VERSION_65
         public override void Bake(AgentAvoidAuthoring authoring) => AddComponent(GetEntity(TransformUsageFlags.Dynamic), authoring.DefaultAvoid);
-#else
-        public override void Bake(AgentAvoidAuthoring authoring) => AddComponent(authoring.DefaultAvoid);
-#endif
     }
 }

@@ -25,8 +25,6 @@ namespace ProjectDawn.Navigation
             m_TransformLookup = state.GetComponentLookup<LocalTransform>(true);
         }
 
-        public void OnDestroy(ref SystemState state) { }
-
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {

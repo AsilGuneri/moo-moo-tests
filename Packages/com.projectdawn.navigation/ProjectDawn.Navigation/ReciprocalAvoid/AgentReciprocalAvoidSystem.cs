@@ -13,10 +13,6 @@ namespace ProjectDawn.Navigation
     [UpdateInGroup(typeof(AgentForceSystemGroup))]
     public partial struct AgentReciprocalAvoidSystem : ISystem
     {
-        public void OnCreate(ref SystemState state) { }
-
-        public void OnDestroy(ref SystemState state) { }
-
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
@@ -53,7 +49,7 @@ namespace ProjectDawn.Navigation
                     Entity = entity,
                     Reciprocal = reciprocal,
                 };
-                Spatial.QueryCylinder(transform.Position, shape.Radius, shape.Height, ref action);
+                Spatial.QueryCylinder(transform.Position, shape.Radius, shape.Height, ref action, avoid.Layers);
 
                 reciprocal.GetDesiredVelocity(DeltaTime, out float2 velocity);
 

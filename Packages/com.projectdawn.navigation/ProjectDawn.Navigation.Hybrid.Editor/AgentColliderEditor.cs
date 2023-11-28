@@ -11,14 +11,22 @@ namespace ProjectDawn.Navigation.Hybrid.Editor
     {
         static class Styles
         {
+            public static readonly GUIContent Layers = EditorGUIUtility.TrTextContent("Layers", "");
         }
+
+        SerializedProperty m_Layers;
+
 
         public override void OnInspectorGUI()
         {
+            serializedObject.Update();
+            EditorGUILayout.PropertyField(m_Layers, Styles.Layers);
+            serializedObject.ApplyModifiedProperties();
         }
-        
+
         void OnEnable()
         {
+            m_Layers = serializedObject.FindProperty("m_Layers");
         }
     }
 }

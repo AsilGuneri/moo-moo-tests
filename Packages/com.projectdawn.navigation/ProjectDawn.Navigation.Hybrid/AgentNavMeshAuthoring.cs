@@ -8,9 +8,9 @@ namespace ProjectDawn.Navigation.Hybrid
     /// Agent uses NavMesh for pathfinding.
     /// </summary>
     [RequireComponent(typeof(AgentAuthoring))]
-    [AddComponentMenu("Agents Navigation/Agent Nav Mesh")]
+    [AddComponentMenu("Agents Navigation/Agent NavMesh Pathing")]
     [DisallowMultipleComponent]
-    [HelpURL("https://lukaschod.github.io/agents-navigation-docs/manual/authoring.html")]
+    [HelpURL("https://lukaschod.github.io/agents-navigation-docs/manual/game-objects/pathing/nav-mesh.html")]
     public class AgentNavMeshAuthoring : MonoBehaviour
     {
         [SerializeField]
@@ -21,6 +21,9 @@ namespace ProjectDawn.Navigation.Hybrid
 
         [SerializeField]
         protected bool AutoRepath = true;
+
+        [SerializeField]
+        protected bool m_Constrained = true;
 
         [SerializeField]
         protected float3 MappingExtent = 10;
@@ -36,6 +39,7 @@ namespace ProjectDawn.Navigation.Hybrid
             AgentTypeId = AgentTypeId,
             AreaMask = AreaMask,
             AutoRepath = AutoRepath,
+            Constrained = m_Constrained,
             MappingExtent = MappingExtent,
         };
 
@@ -69,6 +73,10 @@ namespace ProjectDawn.Navigation.Hybrid
             m_Entity = GetComponent<AgentAuthoring>().GetOrCreateEntity();
             world.EntityManager.AddComponentData(m_Entity, DefaulPath);
             world.EntityManager.AddBuffer<NavMeshNode>(m_Entity);
+
+            // Sync in case it was created as disabled
+            if (!enabled)
+                world.EntityManager.SetComponentEnabled<NavMeshPath>(m_Entity, false);
         }
 
         void OnDestroy()
@@ -102,14 +110,9 @@ namespace ProjectDawn.Navigation.Hybrid
     {
         public override void Bake(AgentNavMeshAuthoring authoring)
         {
-#if UNITY_ENTITIES_VERSION_65
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, authoring.DefaulPath);
             AddBuffer<NavMeshNode>(entity);
-#else
-            AddComponent(authoring.DefaulPath);
-            AddBuffer<NavMeshNode>();
-#endif
         }
     }
 }

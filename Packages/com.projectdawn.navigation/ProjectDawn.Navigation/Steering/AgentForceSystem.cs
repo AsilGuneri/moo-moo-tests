@@ -33,6 +33,7 @@ namespace ProjectDawn.Navigation
                 if (body.IsStopped)
                     return;
 
+                // Check, if we reached the destination
                 float remainingDistance = body.RemainingDistance;
                 if (remainingDistance <= steering.StoppingDistance + 1e-3f)
                 {

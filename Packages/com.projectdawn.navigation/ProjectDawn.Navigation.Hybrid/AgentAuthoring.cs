@@ -29,7 +29,7 @@ namespace ProjectDawn.Navigation.Hybrid
     /// </summary>
     [AddComponentMenu("Agents Navigation/Agent")]
     [DisallowMultipleComponent]
-    [HelpURL("https://lukaschod.github.io/agents-navigation-docs/manual/authoring.html")]
+    [HelpURL("https://lukaschod.github.io/agents-navigation-docs/manual/game-objects/agent.html")]
     public class AgentAuthoring : EntityBehaviour
     {
         [SerializeField]
@@ -49,6 +49,17 @@ namespace ProjectDawn.Navigation.Hybrid
 
         [SerializeField]
         protected bool AutoBreaking = true;
+
+        [SerializeField]
+        protected NavigationLayers m_Layers = NavigationLayers.Default;
+
+        /// <summary>
+        /// Returns default component of <see cref="Agent"/>.
+        /// </summary>
+        public Agent DefaultAgent => new()
+        {
+            Layers = m_Layers,
+        };
 
         /// <summary>
         /// Returns default component of <see cref="AgentBody"/>.
@@ -70,6 +81,16 @@ namespace ProjectDawn.Navigation.Hybrid
             StoppingDistance = StoppingDistance,
             AutoBreaking = AutoBreaking,
         };
+
+        /// <summary>
+        /// <see cref="Agent"/> component of this <see cref="AgentAuthoring"/> Entity.
+        /// Accessing this property is potentially heavy operation as it will require wait for agent jobs to finish.
+        /// </summary>
+        public Agent EntityAgent
+        {
+            get => World.DefaultGameObjectInjectionWorld.EntityManager.GetComponentData<Agent>(m_Entity);
+            set => World.DefaultGameObjectInjectionWorld.EntityManager.SetComponentData(m_Entity, value);
+        }
 
         /// <summary>
         /// <see cref="AgentBody"/> component of this <see cref="AgentAuthoring"/> Entity.
@@ -158,7 +179,7 @@ namespace ProjectDawn.Navigation.Hybrid
             // Transform access requires this
             manager.AddComponentObject(m_Entity, transform);
 
-            manager.AddComponent<Agent>(m_Entity);
+            manager.AddComponentData(m_Entity, DefaultAgent);
             if (MotionType != AgentMotionType.Static)
                 manager.AddComponentData(m_Entity, DefaultBody);
             if (MotionType == AgentMotionType.Steering)
@@ -170,20 +191,12 @@ namespace ProjectDawn.Navigation.Hybrid
     {
         public override void Bake(AgentAuthoring authoring)
         {
-#if UNITY_ENTITIES_VERSION_65
             var entity = GetEntity(TransformUsageFlags.Dynamic);
-            AddComponent<Agent>(entity);
+            AddComponent(entity, authoring.DefaultAgent);
             if (authoring.MotionType != AgentMotionType.Static)
                 AddComponent(entity, authoring.DefaultBody);
             if (authoring.MotionType == AgentMotionType.Steering)
                 AddComponent(entity, authoring.DefaultSteering);
-#else
-            AddComponent<Agent>();
-            if (authoring.MotionType != AgentMotionType.Static)
-                AddComponent(authoring.DefaultBody);
-            if (authoring.MotionType == AgentMotionType.Steering)
-                AddComponent(authoring.DefaultSteering);
-#endif
         }
     }
 }

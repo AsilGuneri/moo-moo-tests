@@ -70510,6 +70510,7 @@ MonoBehaviour:
   AngularSpeed: 750
   StoppingDistance: 0.1
   AutoBreaking: 1
+  m_Layers: 1
 --- !u!114 &8064767531322124681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70539,6 +70540,7 @@ MonoBehaviour:
   AgentTypeId: 0
   AreaMask: -1
   AutoRepath: 1
+  m_Constrained: 1
   MappingExtent:
     x: 10
     y: 10
@@ -70561,6 +70563,7 @@ MonoBehaviour:
   Mode: 3
   BlockedStop: 0
   UseWalls: 0
+  m_Layers: -1
 --- !u!114 &9161982347859305274
 MonoBehaviour:
   m_ObjectHideFlags: 0

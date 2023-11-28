@@ -13,13 +13,11 @@ namespace ProjectDawn.Navigation.Editor
     [DisableAutoCreation]
     [BurstCompile]
     [RequireMatchingQueriesForUpdate]
-    [UpdateInGroup(typeof(AgentGizmosSystemGroup))]
+    [UpdateInGroup(typeof(AgentSystemGroup))]
+    [UpdateAfter(typeof(AgentTransformSystemGroup))]
+    [UpdateBefore(typeof(AgentColliderSystem))]
     public partial struct AgentColliderGizmosSystem : ISystem
     {
-        public void OnCreate(ref SystemState state) { }
-
-        public void OnDestroy(ref SystemState state) { }
-
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
@@ -27,15 +25,15 @@ namespace ProjectDawn.Navigation.Editor
             var spatial = GetSingleton<AgentSpatialPartitioningSystem.Singleton>();
             new Job
             {
-                Gizmos = gizmos.ValueRW.CreateCommandBuffer().AsParallelWriter(),
+                Gizmos = gizmos.ValueRW.CreateCommandBuffer(),
                 Spatial = spatial,
-            }.ScheduleParallel();
+            }.Schedule();
         }
 
         [BurstCompile]
         unsafe partial struct Job : IJobEntity
         {
-            public GizmosCommandBuffer.ParallelWriter Gizmos;
+            public GizmosCommandBuffer Gizmos;
             [ReadOnly]
             public AgentSpatialPartitioningSystem.Singleton Spatial;
 
@@ -43,13 +41,13 @@ namespace ProjectDawn.Navigation.Editor
             {
                 var action = new DrawSpatialEntities { Gizmos = Gizmos, Position = transform.Position };
                 Spatial.QueryCylinder(transform.Position, shape.Radius, shape.Height, ref action);
-                Spatial.QueryCylindreBoxes(transform.Position, shape.Radius, shape.Height, new DrawSpatialBoxes { Gizmos = Gizmos });
+                Spatial.QueryCylinderCells(transform.Position, shape.Radius, shape.Height, new DrawSpatialBoxes { Gizmos = Gizmos });
             }
         }
 
         struct DrawSpatialBoxes : ISpatialQueryVolume
         {
-            public GizmosCommandBuffer.ParallelWriter Gizmos;
+            public GizmosCommandBuffer Gizmos;
             public void Execute(float3 position, float3 size)
             {
                 Gizmos.DrawWireBox(position, size, new UnityEngine.Color(0, 0, 1, 0.4f));
@@ -58,7 +56,7 @@ namespace ProjectDawn.Navigation.Editor
 
         struct DrawSpatialEntities : ISpatialQueryEntity
         {
-            public GizmosCommandBuffer.ParallelWriter Gizmos;
+            public GizmosCommandBuffer Gizmos;
             public float3 Position;
             public void Execute(Entity entity, AgentBody body, AgentShape shape, LocalTransform transform)
             {

@@ -20,11 +20,6 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [
-        {
-            "name": "com.unity.entities",
-            "expression": "1.0.0-pre.65",
-            "define": "UNITY_ENTITIES_VERSION_65"
-        }
     ],
     "noEngineReferences": false
 }

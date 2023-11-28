@@ -15,10 +15,6 @@ namespace ProjectDawn.Navigation
     [UpdateBefore(typeof(AgentSteeringSystemGroup))]
     public partial struct NavMeshPathSystem : ISystem
     {
-        public void OnCreate(ref SystemState state) { }
-
-        public void OnDestroy(ref SystemState state) { }
-
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
@@ -57,7 +53,8 @@ namespace ProjectDawn.Navigation
                             case NavMeshQueryStatus.InProgress:
                                 break;
 
-                            case NavMeshQueryStatus.Finished:
+                            case NavMeshQueryStatus.FinishedFullPath:
+                            case NavMeshQueryStatus.FinishedPartialPath:
                                 path.State = NavMeshPathState.Finished;
 
                                 // Copy path polygons into nodes

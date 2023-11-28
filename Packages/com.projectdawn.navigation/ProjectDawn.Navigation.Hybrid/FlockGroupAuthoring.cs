@@ -78,7 +78,6 @@ namespace ProjectDawn.Navigation.Hybrid
     {
         public override void Bake(FlockGroupAuthoring authoring)
         {
-#if UNITY_ENTITIES_VERSION_65
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, authoring.DefaulFlockGroup);
 
@@ -88,15 +87,6 @@ namespace ProjectDawn.Navigation.Hybrid
             {
                 agents.Add(new FlockEntity { Value = GetEntity(agent, TransformUsageFlags.Dynamic) });
             }
-#else
-            AddComponent(authoring.DefaulFlockGroup);
-            var agents = AddBuffer<FlockEntity>();
-            agents.Capacity = authoring.Agents.Count;
-            foreach (var agent in authoring.Agents)
-            {
-                agents.Add(new FlockEntity { Value = GetEntity(agent) });
-            }
-#endif
         }
     }
 }

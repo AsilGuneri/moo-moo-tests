@@ -21,10 +21,6 @@ namespace ProjectDawn.Navigation
     [UpdateBefore(typeof(AgentForceSystemGroup))]
     public partial struct NavMeshSteeringSystem : ISystem
     {
-        public void OnCreate(ref SystemState state) { }
-
-        public void OnDestroy(ref SystemState state) { }
-
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
@@ -45,7 +41,7 @@ namespace ProjectDawn.Navigation
             [NativeDisableContainerSafetyRestriction]
             NavMeshFunnel Funnel;
 
-            public void Execute(ref AgentBody body, ref NavMeshPath path, in LocalTransform transform, in DynamicBuffer<NavMeshNode> nodes)
+            public void Execute(ref AgentBody body, ref NavMeshPath path, ref DynamicBuffer<NavMeshNode> nodes, in LocalTransform transform)
             {
                 // Update current location if changed
                 if (!NavMesh.IsValid(path.Location.polygon) || math.distancesq(transform.Position, (float3) path.Location.position) > 0.01f)
@@ -58,6 +54,10 @@ namespace ProjectDawn.Navigation
                         UnityEngine.Debug.LogWarning("Failed to map agent position to nav mesh location. This can happen either if nav mesh is not present or property MappingExtent value is too low.");
                         return;
                     }
+
+                    // In case location polygon changed, we need to progress path so funnel would work correctly
+                    if (location.polygon != path.Location.polygon)
+                        NavMesh.ProgressPath(ref nodes, path.Location.polygon, location.polygon);
 
                     path.Location = location;
                 }
@@ -122,7 +122,7 @@ namespace ProjectDawn.Navigation
                     if (locations.Length > 1)
                     {
                         body.Force = math.normalizesafe((float3) locations[1].position - transform.Position);
-                        body.RemainingDistance = Funnel.GetCornersDistance();
+                        body.RemainingDistance = Funnel.IsEndReachable ? Funnel.GetCornersDistance() : float.MaxValue;
                     }
                 }
                 else
@@ -144,6 +144,51 @@ namespace ProjectDawn.Navigation
             public void OnChunkEnd(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask, bool chunkWasExecuted)
             {
                 Funnel.Dispose();
+            }
+
+            static void ProgressPath(ref DynamicBuffer<NavMeshNode> nodes, PolygonId previousPolygon, PolygonId newPolygon)
+            {
+                if (FindIndex(ref nodes, newPolygon, out int index))
+                {
+                    if (nodes.Length > 1)
+                    {
+                        for (int i = 0; i < index; ++i)
+                        {
+                            nodes.RemoveAt(0);
+                        }
+                    }
+                }
+                else
+                {
+                    if (FindIndex(ref nodes, previousPolygon, out int index2))
+                    {
+                        if (nodes.Length > 1)
+                        {
+                            for (int i = 0; i < index2 + 1; ++i)
+                            {
+                                nodes.RemoveAt(0);
+                            }
+                        }
+                    }
+                    if (previousPolygon != newPolygon)
+                    {
+                        nodes.Insert(0, new NavMeshNode { Value = newPolygon });
+                    }
+                }
+            }
+
+            static bool FindIndex(ref DynamicBuffer<NavMeshNode> nodes, PolygonId newPolygon, out int index)
+            {
+                for (int i = 0; i < nodes.Length; ++i)
+                {
+                    if (nodes[i].Value == newPolygon)
+                    {
+                        index = i;
+                        return true;
+                    }
+                }
+                index = -1;
+                return false;
             }
         }
     }

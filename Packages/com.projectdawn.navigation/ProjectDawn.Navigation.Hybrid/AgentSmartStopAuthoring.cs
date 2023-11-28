@@ -9,6 +9,7 @@ namespace ProjectDawn.Navigation.Hybrid
     [RequireComponent(typeof(AgentAuthoring))]
     [AddComponentMenu("Agents Navigation/Agent Smart Stop")]
     [DisallowMultipleComponent]
+    [HelpURL("https://lukaschod.github.io/agents-navigation-docs/manual/game-objects/smart-stop.html")]
     public class AgentSmartStopAuthoring : MonoBehaviour
     {
         /// <summary>
@@ -18,6 +19,9 @@ namespace ProjectDawn.Navigation.Hybrid
         [SerializeField]
         protected HiveMindStop m_HiveMindStop = HiveMindStop.Default;
 
+        [SerializeField]
+        protected GiveUpStop m_GiveUpStop = GiveUpStop.Default;
+
         Entity m_Entity;
 
         /// <summary>
@@ -26,6 +30,7 @@ namespace ProjectDawn.Navigation.Hybrid
         public AgentSmartStop DefaulSmartStop => new AgentSmartStop
         {
             HiveMindStop = m_HiveMindStop,
+            GiveUpStop = m_GiveUpStop,
         };
 
         /// <summary>
@@ -48,13 +53,16 @@ namespace ProjectDawn.Navigation.Hybrid
             var world = World.DefaultGameObjectInjectionWorld;
             m_Entity = GetComponent<AgentAuthoring>().GetOrCreateEntity();
             world.EntityManager.AddComponentData(m_Entity, DefaulSmartStop);
+            world.EntityManager.AddComponent<GiveUpStopTimer>(m_Entity);
         }
 
         void OnDestroy()
         {
             var world = World.DefaultGameObjectInjectionWorld;
-            if (world != null)
-                world.EntityManager.RemoveComponent<AgentSmartStop>(m_Entity);
+            if (world == null)
+                return;
+            world.EntityManager.RemoveComponent<AgentSmartStop>(m_Entity);
+            world.EntityManager.RemoveComponent<GiveUpStopTimer>(m_Entity);
         }
 
         void OnEnable()
@@ -78,11 +86,7 @@ namespace ProjectDawn.Navigation.Hybrid
     {
         public override void Bake(AgentSmartStopAuthoring authoring)
         {
-#if UNITY_ENTITIES_VERSION_65
             AddComponent(GetEntity(TransformUsageFlags.Dynamic), authoring.DefaulSmartStop);
-#else
-            AddComponent(authoring.DefaulSmartStop);
-#endif
         }
     }
 }

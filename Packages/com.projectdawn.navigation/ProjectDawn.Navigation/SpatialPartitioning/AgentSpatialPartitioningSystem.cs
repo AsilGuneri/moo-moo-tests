@@ -1,15 +1,60 @@
-using Unity.Entities;
-using Unity.Transforms;
-using Unity.Mathematics;
-using Unity.Collections;
-using Unity.Jobs;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.Burst;
+using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
+using Unity.Entities;
+using Unity.Jobs;
+using Unity.Mathematics;
+using Unity.Transforms;
+using UnityEngine;
 using static Unity.Entities.SystemAPI;
 using static Unity.Mathematics.math;
-using System.Diagnostics;
 
 namespace ProjectDawn.Navigation
 {
+    [System.Serializable]
+    public class SpatialPartitioningSubSettings : ISubSettings
+    {
+        [SerializeField]
+        [Tooltip("The size of single cell.")]
+        float3 m_CellSize = 3;
+
+        [SerializeField]
+        [Tooltip("The maximum number of nearby neighbors will be checked to find closest.")]
+        QueryCheckMode m_QueryCheck = QueryCheckMode._32;
+
+        [SerializeField]
+        [Range(0, 16), Tooltip("The maximum number of nearby neighbors to be included in the avoidance/collision systems will be determined.")]
+        int m_QueryCapacity = 0;
+
+        [SerializeField]
+        NavigationLayerNames m_Layers = new();
+
+        /// <summary>
+        /// The size of single cell.
+        /// </summary>
+        public float3 CellSize => m_CellSize;
+        /// <summary>
+        /// The maximum number of nearby neighbors to be included in the avoidance/collision systems will be determined.
+        /// </summary>
+        public int QueryCapacity => m_QueryCapacity;
+        /// <summary>
+        /// The maximum number of nearby neighbors will be checked to find closest.
+        /// </summary>
+        public int QueryChecks => (int)m_QueryCheck;
+
+        public string[] LayerNames => m_Layers.Names;
+
+        public enum QueryCheckMode : int
+        {
+            _16 = 16,
+            _32 = 32,
+        }
+    }
+
     /// <summary>
     /// Partitions agents into arbitary size cells. This allows to query nearby agents more efficiently.
     /// Space is partitioned using multi hash map.
@@ -20,16 +65,21 @@ namespace ProjectDawn.Navigation
     [UpdateInGroup(typeof(AgentSystemGroup))]
     public partial struct AgentSpatialPartitioningSystem : ISystem
     {
-        const int InitialCapacity = 256;
+        internal const int InitialCapacity = 256;
+        internal const int MaxCellsPerUnit = 16;
 
-        NativeParallelMultiHashMap<int, int> m_Map;
+        NativeParallelMultiHashMap<int3, int> m_Map;
+        NativeList<Agent> m_Agents;
         NativeList<Entity> m_Entities;
         NativeList<AgentBody> m_Bodies;
         NativeList<AgentShape> m_Shapes;
         NativeList<LocalTransform> m_Transforms;
         int m_Capacity;
         float3 m_CellSize;
+        int m_QueryCapacity;
         EntityQuery m_Query;
+
+        bool UseLimitedQuery => m_QueryCapacity > 0;
 
         internal JobHandle ScheduleUpdate(ref SystemState state, JobHandle dependency)
         {
@@ -46,9 +96,11 @@ namespace ProjectDawn.Navigation
                 {
                     Map = m_Map,
                     Entities = m_Entities,
+                    Agents = m_Agents,
                     Bodies = m_Bodies,
                     Shapes = m_Shapes,
                     Transforms = m_Transforms,
+                    MapCapacity = UseLimitedQuery ? m_Capacity * MaxCellsPerUnit : m_Capacity,
                     Capacity = m_Capacity,
                 }.Schedule(dependency);
             }
@@ -56,6 +108,7 @@ namespace ProjectDawn.Navigation
             dependency = new ClearJob
             {
                 Entities = m_Entities,
+                Agents = m_Agents,
                 Bodies = m_Bodies,
                 Shapes = m_Shapes,
                 Transforms = m_Transforms,
@@ -65,16 +118,29 @@ namespace ProjectDawn.Navigation
             var copyHandle = new CopyJob
             {
                 Entities = m_Entities,
+                Agents = m_Agents,
                 Bodies = m_Bodies,
                 Shapes = m_Shapes,
                 Transforms = m_Transforms,
             }.Schedule(dependency);
 
-            var hashHandle = new HashJob
+            JobHandle hashHandle;
+            if (m_QueryCapacity == 0)
             {
-                Map = m_Map.AsParallelWriter(),
-                CellSize = m_CellSize,
-            }.Schedule(dependency);
+                hashHandle = new HashJob
+                {
+                    Map = m_Map.AsParallelWriter(),
+                    CellSize = m_CellSize,
+                }.ScheduleParallel(dependency);
+            }
+            else
+            {
+                hashHandle = new HashShapeJob
+                {
+                    Map = m_Map.AsParallelWriter(),
+                    CellSize = m_CellSize,
+                }.ScheduleParallel(dependency);
+            }
 
             return JobHandle.CombineDependencies(copyHandle, hashHandle);
         }
@@ -86,32 +152,22 @@ namespace ProjectDawn.Navigation
             state.Dependency = ScheduleUpdate(ref state, state.Dependency);
         }
 
-        [BurstCompile]
+       // [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
-            m_Map = new NativeParallelMultiHashMap<int, int>(InitialCapacity, Allocator.Persistent);
+            m_Capacity = InitialCapacity;
+            m_CellSize = AgentsNavigationSettings.Get<SpatialPartitioningSubSettings>().CellSize;
+            m_QueryCapacity = AgentsNavigationSettings.Get<SpatialPartitioningSubSettings>().QueryCapacity;
+
+            m_Map = new NativeParallelMultiHashMap<int3, int>(UseLimitedQuery ? InitialCapacity * MaxCellsPerUnit : InitialCapacity, Allocator.Persistent);
             m_Entities = new NativeList<Entity>(InitialCapacity, Allocator.Persistent);
+            m_Agents = new NativeList<Agent>(InitialCapacity, Allocator.Persistent);
             m_Bodies = new NativeList<AgentBody>(InitialCapacity, Allocator.Persistent);
             m_Shapes = new NativeList<AgentShape>(InitialCapacity, Allocator.Persistent);
             m_Transforms = new NativeList<LocalTransform>(InitialCapacity, Allocator.Persistent);
 
-            int queryCapacity;
-            if (TryGetSingleton(out Settings settings))
-            {
-                m_CellSize = settings.CellSize;
-                queryCapacity = settings.QueryCapacity;
-            }
-            else
-            {
-                m_CellSize = 3;
-                queryCapacity = 0;
-            }
-
-            //UnityEngine.Debug.Log(queryCapacity);
-
-            m_Capacity = InitialCapacity;
-
             m_Query = QueryBuilder()
+                .WithAll<Agent>()
                 .WithAll<AgentBody>()
                 .WithAll<AgentShape>()
                 .WithAll<LocalTransform>()
@@ -121,12 +177,14 @@ namespace ProjectDawn.Navigation
             {
                 m_Map = m_Map,
                 m_Entities = m_Entities,
+                m_Agents = m_Agents,
                 m_Bodies = m_Bodies,
                 m_Shapes = m_Shapes,
                 m_Transforms = m_Transforms,
                 m_Capacity = m_Capacity,
                 m_CellSize = m_CellSize,
-                m_QueryCapacity = queryCapacity,
+                m_QueryCapacity = m_QueryCapacity,
+                m_QueryChecks = AgentsNavigationSettings.Get<SpatialPartitioningSubSettings>().QueryChecks,
             });
         }
 
@@ -135,11 +193,13 @@ namespace ProjectDawn.Navigation
         {
             m_Map.Dispose();
             m_Entities.Dispose();
+            m_Agents.Dispose();
             m_Bodies.Dispose();
             m_Shapes.Dispose();
             m_Transforms.Dispose();
         }
 
+        [System.Obsolete("This class is obsolete, please use new settings workflow https://lukaschod.github.io/agents-navigation-docs/manual/settings.html.")]
         public struct Settings : IComponentData
         {
             public float3 CellSize;
@@ -148,21 +208,23 @@ namespace ProjectDawn.Navigation
 
         public struct Singleton : IComponentData
         {
-            internal NativeParallelMultiHashMap<int, int> m_Map;
+            internal NativeParallelMultiHashMap<int3, int> m_Map;
             internal NativeList<Entity> m_Entities;
+            internal NativeList<Agent> m_Agents;
             internal NativeList<AgentBody> m_Bodies;
             internal NativeList<AgentShape> m_Shapes;
             internal NativeList<LocalTransform> m_Transforms;
             internal int m_Capacity;
             internal float3 m_CellSize;
             internal int m_QueryCapacity;
+            internal int m_QueryChecks;
 
             public int QueryCapacity => m_QueryCapacity;
 
             /// <summary>
             /// Query agents that intersect with the line.
             /// </summary>
-            public int QueryLine<T>(float3 from, float3 to, ref T action) where T : unmanaged, ISpatialQueryEntity
+            public int QueryLine<T>(float3 from, float3 to, ref T action, NavigationLayers layers = NavigationLayers.Everything) where T : unmanaged, ISpatialQueryEntity
             {
                 int count = 0;
 
@@ -200,13 +262,13 @@ namespace ProjectDawn.Navigation
                 // Loop through each voxel
                 for (int i = 0; i < 100; ++i)
                 {
-                    int hash = GetCellHash(point.x, point.y, point.z);
-
                     // Find all entities in the bucket
-                    if (m_Map.TryGetFirstValue(hash, out int index, out var iterator))
+                    if (m_Map.TryGetFirstValue(point, out int index, out var iterator))
                     {
                         do
                         {
+                            if (!layers.Any(m_Agents[index].Layers))
+                                continue;
                             action.Execute(m_Entities[index], m_Bodies[index], m_Shapes[index], m_Transforms[index]);
                             count++;
                         }
@@ -252,7 +314,7 @@ namespace ProjectDawn.Navigation
             /// <summary>
             /// Query agents that intersect with the sphere.
             /// </summary>
-            public int QuerySphere<T>(float3 center, float radius, ref T action) where T : unmanaged, ISpatialQueryEntity
+            public int QuerySphere<T>(float3 center, float radius, ref T action, NavigationLayers layers = NavigationLayers.Everything) where T : unmanaged, ISpatialQueryEntity
             {
                 int count = 0;
 
@@ -266,13 +328,13 @@ namespace ProjectDawn.Navigation
                     {
                         for (int k = min.z; k < max.z; ++k)
                         {
-                            int hash = GetCellHash(i, j, k);
-
                             // Find all entities in the bucket
-                            if (m_Map.TryGetFirstValue(hash, out int index, out var iterator))
+                            if (m_Map.TryGetFirstValue(new int3(i, j, k), out int index, out var iterator))
                             {
                                 do
                                 {
+                                    if (!layers.Any(m_Agents[index].Layers))
+                                        continue;
                                     action.Execute(m_Entities[index], m_Bodies[index], m_Shapes[index], m_Transforms[index]);
                                     count++;
                                 }
@@ -286,15 +348,122 @@ namespace ProjectDawn.Navigation
             }
 
             /// <summary>
+            /// Query agents that intersect with the sphere.
+            /// </summary>
+            public int QueryCircle<T>(float3 center, float radius, ref T action, NavigationLayers layers = NavigationLayers.Everything) where T : unmanaged, ISpatialQueryEntity
+            {
+                int count = 0;
+
+                // Find min and max point in radius
+                int2 min = (int2) round((center.xy - radius) / m_CellSize.xy);
+                int2 max = (int2) round((center.xy + radius) / m_CellSize.xy) + 1;
+                int k = (int) round(center.z / m_CellSize.z);
+
+                for (int i = min.x; i < max.x; ++i)
+                {
+                    for (int j = min.y; j < max.y; ++j)
+                    {
+                        // Find all entities in the bucket
+                        if (m_Map.TryGetFirstValue(new int3(i, j, k), out int index, out var iterator))
+                        {
+                            do
+                            {
+                                if (!layers.Any(m_Agents[index].Layers))
+                                    continue;
+                                action.Execute(m_Entities[index], m_Bodies[index], m_Shapes[index], m_Transforms[index]);
+                                count++;
+                            }
+                            while (m_Map.TryGetNextValue(out index, ref iterator));
+                        }
+                    }
+                }
+
+                return count;
+            }
+
+            /// <summary>
+            /// Query agents that intersect with the circle.
+            /// </summary>
+            public int QueryCircle<T>(float3 center, float radius, int maxCount, ref T action, NavigationLayers layers = NavigationLayers.Everything) where T : unmanaged, ISpatialQueryEntity
+            {
+                if (maxCount == 0)
+                    return QueryCircle(center, radius, ref action, layers);
+
+                var entries = new FixedEntries(center.xy, -1, float.MaxValue, maxCount);
+
+                var map = m_Map;
+
+                float2 cellSize = m_CellSize.xy;
+                int2 min = (int2) round((center.xy - radius) / cellSize);
+                int2 max = (int2) round((center.xy + radius) / cellSize);
+                int z = (int) round(center.z / m_CellSize.z);
+
+                int2 size = max - min + 1;
+                int2 halfSize = size / 2;
+                int maxSide = math.max(size.x, size.y);
+                int maxIterations = maxSide * maxSide;
+
+                int2 point = 0;
+                int2 offset = min + (maxSide - 1) / 2;
+                int2 step = new int2(0, -1);
+
+                int count = 0;
+
+                for (int i = 0; i < maxIterations; i++)
+                {
+                    // Check if current nodes is within the rectangle we want
+                    if (math.all(-halfSize <= point) && math.all(point <= halfSize))
+                    {
+                        // Find all entities in the bucket
+                        if (map.TryGetFirstValue(new int3(point + offset, z), out int index, out var iterator))
+                        {
+                            do
+                            {
+                                if (!layers.Any(m_Agents[index].Layers))
+                                    continue;
+                                if (entries.Add(index, m_Transforms[index].Position.xy))
+                                {
+                                    count++;
+                                    if (count == m_QueryChecks)
+                                        goto FULL;
+                                }
+                            }
+                            while (map.TryGetNextValue(out index, ref iterator));
+                        }
+                    }
+                    // Check if we need to change spiral direction
+                    if ((point.x == point.y) || ((point.x < 0) && (point.x == -point.y)) || ((point.x > 0) && (point.x == 1 - point.y)))
+                    {
+                        // Swap and negate x
+                        int temp = step.x;
+                        step.x = -step.y;
+                        step.y = temp;
+                    }
+                    // Step
+                    point += step;
+                }
+
+                FULL:
+
+                int entry = 0;
+                while (true)
+                {
+                    var index = entries[entry++];
+
+                    if (index == -1)
+                        break;
+
+                    action.Execute(m_Entities[index], m_Bodies[index], m_Shapes[index], m_Transforms[index]);
+                }
+
+                return entry;
+            }
+
+            /// <summary>
             /// Query agents that intersect with the cylinder.
             /// </summary>
-            public int QueryCylinder<T>(float3 center, float radius, float height, ref T action) where T : unmanaged, ISpatialQueryEntity
+            public int QueryCylinder<T>(float3 center, float radius, float height, ref T action, NavigationLayers layers = NavigationLayers.Everything) where T : unmanaged, ISpatialQueryEntity
             {
-                /*if (m_QueryCapacity != 0)
-                {
-                    return QueryProximityCylinder(center, radius, height, m_QueryCapacity, ref action);
-                }*/
-
                 int count = 0;
 
                 // Find min and max point in radius
@@ -307,13 +476,13 @@ namespace ProjectDawn.Navigation
                     {
                         for (int k = min.z; k < max.z; ++k)
                         {
-                            int hash = GetCellHash(i, j, k);
-
                             // Find all entities in the bucket
-                            if (m_Map.TryGetFirstValue(hash, out int index, out var iterator))
+                            if (m_Map.TryGetFirstValue(new int3(i, j, k), out int index, out var iterator))
                             {
                                 do
                                 {
+                                    if (!layers.Any(m_Agents[index].Layers))
+                                        continue;
                                     action.Execute(m_Entities[index], m_Bodies[index], m_Shapes[index], m_Transforms[index]);
                                     count++;
                                 }
@@ -327,68 +496,89 @@ namespace ProjectDawn.Navigation
             }
 
             /// <summary>
-            /// Query agents that intersect with the cylinder.
+            /// Query agents that intersect with the sphere.
             /// </summary>
-            internal int QueryProximityCylinder<T>(float3 center, float radius, float height, int maxCount, ref T action) where T : unmanaged, ISpatialQueryEntity
+            public int QueryCylinder<T>(float3 center, float radius, float height, int maxCount, ref T action, NavigationLayers layers = NavigationLayers.Everything) where T : unmanaged, ISpatialQueryEntity
             {
+                if (maxCount == 0)
+                    return QueryCylinder(center, radius, height, ref action, layers);
+
+                var entries = new FixedEntries(center.xz, -1, float.MaxValue, maxCount);
+
+                var map = m_Map;
+
+                float3 cellSize = m_CellSize;
+                int3 min = (int3) round((center - new float3(radius, 0, radius)) / cellSize);
+                int3 max = (int3) round((center + new float3(radius, height, radius)) / cellSize);
+
+                int2 size = max.xz - min.xz + 1;
+                int2 halfSize = size / 2;
+                int maxSide = math.max(size.x, size.y);
+                int maxIterations = maxSide * maxSide;
+
+                int2 point = 0;
+                int2 offset = min.xz + (maxSide - 1) / 2;
+                int2 step = new int2(0, -1);
+
                 int count = 0;
-
-                // Find min and max point in radius
-                int3 min = (int3) math.round((center - new float3(radius, 0, radius)) / m_CellSize);
-                int3 max = (int3) math.round((center + new float3(radius, height, radius)) / m_CellSize) + 1;
-
-                int X = max.x - min.x + 1;
-                int Y = max.z - min.z + 1;
-
-                int2 offset = (max.xz + min.xz) / 2;
-
-                for (int j = min.y; j < max.y; ++j)
+                for (int i = 0; i < maxIterations; i++)
                 {
-                    int x, y, dx, dy;
-                    x = y = dx = 0;
-                    dy = -1;
-                    int t = math.max(X, Y);
-                    int maxI = t * t;
-                    for (int i = 0; i < maxI; i++)
+                    // Check if current nodes is within the rectangle we want
+                    if (math.all(-halfSize <= point) && math.all(point <= halfSize))
                     {
-                        if ((-X / 2 <= x) && (x <= X / 2) && (-Y / 2 <= y) && (y <= Y / 2))
+                        int2 offsetedPoint = point + offset;
+                        for (int y = min.y; y < max.y + 1; y++)
                         {
-                            int2 point = new int2(x, y) + offset;
-
-                            int hash = GetCellHash(point.x, j, point.y);
-
                             // Find all entities in the bucket
-                            if (m_Map.TryGetFirstValue(hash, out int index, out var iterator))
+                            if (map.TryGetFirstValue(new int3(offsetedPoint.x, y, offsetedPoint.y), out int index, out var iterator))
                             {
                                 do
                                 {
-                                    action.Execute(m_Entities[index], m_Bodies[index], m_Shapes[index], m_Transforms[index]);
-                                    count++;
-
-                                    if (count == maxCount)
-                                        return count;
+                                    if (!layers.Any(m_Agents[index].Layers))
+                                        continue;
+                                    if (entries.Add(index, m_Transforms[index].Position.xz))
+                                    {
+                                        count++;
+                                        if (count == m_QueryChecks)
+                                            goto FULL;
+                                    }
                                 }
-                                while (m_Map.TryGetNextValue(out index, ref iterator));
+                                while (map.TryGetNextValue(out index, ref iterator));
                             }
                         }
-                        if ((x == y) || ((x < 0) && (x == -y)) || ((x > 0) && (x == 1 - y)))
-                        {
-                            t = dx;
-                            dx = -dy;
-                            dy = t;
-                        }
-                        x += dx;
-                        y += dy;
                     }
+                    // Check if we need to change spiral direction
+                    if ((point.x == point.y) || ((point.x < 0) && (point.x == -point.y)) || ((point.x > 0) && (point.x == 1 - point.y)))
+                    {
+                        // Swap and negate x
+                        int temp = step.x;
+                        step.x = -step.y;
+                        step.y = temp;
+                    }
+                    // Step
+                    point += step;
                 }
 
-                return count;
+                FULL:
+
+                int entry = 0;
+                while (true)
+                {
+                    var index = entries[entry++];
+
+                    if (index == -1)
+                        break;
+
+                    action.Execute(m_Entities[index], m_Bodies[index], m_Shapes[index], m_Transforms[index]);
+                }
+
+                return entry;
             }
 
             /// <summary>
             /// Query partitions that intersect with the sphere.
             /// </summary>
-            public int QuerySphereBoxes<T>(float3 center, float radius, T action) where T : unmanaged, ISpatialQueryVolume
+            public int QuerySphereCells<T>(float3 center, float radius, T action) where T : unmanaged, ISpatialQueryVolume
             {
                 int count = 0;
 
@@ -414,7 +604,7 @@ namespace ProjectDawn.Navigation
             /// <summary>
             /// Query partitions that intersect with the cylinder.
             /// </summary>
-            public int QueryCylindreBoxes<T>(float3 center, float radius, float height, T action) where T : unmanaged, ISpatialQueryVolume
+            public int QueryCylinderCells<T>(float3 center, float radius, float height, T action) where T : unmanaged, ISpatialQueryVolume
             {
                 int count = 0;
 
@@ -437,64 +627,66 @@ namespace ProjectDawn.Navigation
                 return count;
             }
 
-            /// <summary>
-            /// Query agents that intersect with the cylinder.
-            /// </summary>
-            public int QueryProximityCylinderBoxes<T>(float3 center, float radius, float height, int maxCount, T action) where T : unmanaged, ISpatialQueryVolume
+            unsafe struct FixedEntries
             {
-                if (maxCount == 0)
-                    return QueryCylindreBoxes(center, radius, height, action);
+                public const int Capacity = 16;
 
-                int count = 0;
+                float2 m_Center;
+                fixed int m_Indices[Capacity];
+                fixed float m_Distances[Capacity];
+                int m_Length;
 
-                // Find min and max point in radius
-                int3 min = (int3) math.round((center - new float3(radius, 0, radius)) / m_CellSize);
-                int3 max = (int3) math.round((center + new float3(radius, height, radius)) / m_CellSize) + 1;
+                public int this[int index] => m_Indices[index];
 
-                int X = max.x - min.x + 1;
-                int Y = max.z - min.z + 1;
-
-                int2 offset = (max.xz + min.xz) / 2;
-
-                for (int j = min.y; j < max.y; ++j)
+                public FixedEntries(float2 center, int defaultIndex, float defaultDistance, int length)
                 {
-                    int x, y, dx, dy;
-                    x = y = dx = 0;
-                    dy = -1;
-                    int t = math.max(X, Y);
-                    int maxI = t * t;
-                    for (int i = 0; i < maxI; i++)
-                    {
-                        if ((-X / 2 <= x) && (x <= X / 2) && (-Y / 2 <= y) && (y <= Y / 2))
-                        {
-                            int2 point = new int2(x, y) + offset;
+                    // TODO: check that length is less than capacity
 
-                            action.Execute(new float3(point.x, j, point.y) * m_CellSize, m_CellSize);
-                        }
-                        if ((x == y) || ((x < 0) && (x == -y)) || ((x > 0) && (x == 1 - y)))
-                        {
-                            t = dx;
-                            dx = -dy;
-                            dy = t;
-                        }
-                        x += dx;
-                        y += dy;
+                    m_Center = center;
+                    m_Length = length;
+
+                    // Additional entry will act as null terminator
+                    length++;
+
+                    for (int entryIndex = 0; entryIndex < length; entryIndex++)
+                    {
+                        m_Indices[entryIndex] = defaultIndex;
+                        m_Distances[entryIndex] = defaultDistance;
                     }
                 }
 
-                return count;
-            }
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                public bool Add(int index, float2 point)
+                {
+                    float distance = distancesq(m_Center, point);
 
-            static int GetCellHash(int x, int y, int z)
-            {
-                var hash = (int) math.hash(new int3(x, y, z));
-                return hash;
-            }
+                    int minEntryIndex = -1;
+                    float minDistance = distance;
 
-            static int GetCellHash(int3 value)
-            {
-                var hash = (int) math.hash(value);
-                return hash;
+                    // Find min distance entry that is smaller than requested distance
+                    for (int entryIndex = m_Length; entryIndex-- > 0;)
+                    {
+                        // All indices must be unique
+                        if (index == m_Indices[entryIndex])
+                            return false;
+
+                        if (minDistance <= m_Distances[entryIndex])
+                        {
+                            minEntryIndex = entryIndex;
+                            minDistance = m_Distances[entryIndex];
+                        }
+                    }
+
+                    // Failed to find min entry index
+                    if (minEntryIndex == -1)
+                        return true;
+
+                    // Update entry with new one
+                    m_Indices[minEntryIndex] = index;
+                    m_Distances[minEntryIndex] = distance;
+
+                    return true;
+                }
             }
         }
     }
@@ -513,13 +705,15 @@ namespace ProjectDawn.Navigation
     partial struct CopyJob : IJobEntity
     {
         public NativeList<Entity> Entities;
+        public NativeList<Agent> Agents;
         public NativeList<AgentBody> Bodies;
         public NativeList<AgentShape> Shapes;
         public NativeList<LocalTransform> Transforms;
 
-        void Execute(Entity entity, in AgentBody body, in AgentShape shape, in LocalTransform transform)
+        void Execute(Entity entity, in Agent agent, in AgentBody body, in AgentShape shape, in LocalTransform transform)
         {
             Entities.Add(entity);
+            Agents.Add(agent);
             Bodies.Add(body);
             Shapes.Add(shape);
             Transforms.Add(transform);
@@ -529,26 +723,79 @@ namespace ProjectDawn.Navigation
     [BurstCompile]
     partial struct HashJob : IJobEntity
     {
-        public NativeParallelMultiHashMap<int, int>.ParallelWriter Map;
+        public NativeParallelMultiHashMap<int3, int>.ParallelWriter Map;
         public float3 CellSize;
-        void Execute([EntityIndexInQuery] int entityInQueryIndex, in AgentBody body, in AgentShape shape, in LocalTransform transform)
+        void Execute([EntityIndexInQuery] int entityInQueryIndex, in Agent agent, in AgentBody body, in AgentShape shape, in LocalTransform transform)
         {
-            var hash = GetCellHash(transform.Position);
-            Map.Add(hash, entityInQueryIndex);
+            int3 cell = (int3) math.round((transform.Position) / CellSize);
+            Map.Add(cell, entityInQueryIndex);
         }
+    }
 
-        int GetCellHash(float3 value)
+    [BurstCompile]
+    partial struct HashShapeJob : IJobEntity
+    {
+        public NativeParallelMultiHashMap<int3, int>.ParallelWriter Map;
+        public float3 CellSize;
+        void Execute([EntityIndexInQuery] int entityInQueryIndex, in Agent agent, in AgentBody body, in AgentShape shape, in LocalTransform transform)
         {
-            var hash = (int) math.hash(new int3(math.round(value.xyz / CellSize)));
-            return hash;
+            if (shape.Type == ShapeType.Cylinder)
+            {
+                float3 center = transform.Position;
+                float radius = shape.Radius;
+                float height = shape.Height;
+
+                // Find min and max point in radius
+                int3 min = (int3) math.round((center - new float3(radius, 0, radius)) / CellSize);
+                int3 max = (int3) math.round((center + new float3(radius, height, radius)) / CellSize) + 1;
+
+                int count = 0;
+                for (int i = min.x; i < max.x; ++i)
+                {
+                    for (int j = min.y; j < max.y; ++j)
+                    {
+                        for (int k = min.z; k < max.z; ++k)
+                        {
+                            Map.Add(new int3(i, j, k), entityInQueryIndex);
+
+                            if (count == AgentSpatialPartitioningSystem.MaxCellsPerUnit)
+                                break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                float3 center = transform.Position;
+                float radius = shape.Radius;
+
+                // Find min and max point in radius
+                int2 min = (int2) round((center.xy - radius) / CellSize.xy);
+                int2 max = (int2) round((center.xy + radius) / CellSize.xy) + 1;
+                int k = (int) round(center.z / CellSize.z);
+
+                int count = 0;
+
+                for (int i = min.x; i < max.x; ++i)
+                {
+                    for (int j = min.y; j < max.y; ++j)
+                    {
+                        Map.Add(new int3(i, j, k), entityInQueryIndex);
+
+                        if (count == AgentSpatialPartitioningSystem.MaxCellsPerUnit)
+                            break;
+                    }
+                }
+            }
         }
     }
 
     [BurstCompile]
     struct ClearJob : IJob
     {
-        public NativeParallelMultiHashMap<int, int> Map;
+        public NativeParallelMultiHashMap<int3, int> Map;
         public NativeList<Entity> Entities;
+        public NativeList<Agent> Agents;
         public NativeList<AgentBody> Bodies;
         public NativeList<AgentShape> Shapes;
         public NativeList<LocalTransform> Transforms;
@@ -557,6 +804,7 @@ namespace ProjectDawn.Navigation
         {
             Map.Clear();
             Entities.Clear();
+            Agents.Clear();
             Bodies.Clear();
             Shapes.Clear();
             Transforms.Clear();
@@ -566,17 +814,20 @@ namespace ProjectDawn.Navigation
     [BurstCompile]
     struct ChangeCapacityJob : IJob
     {
-        public NativeParallelMultiHashMap<int, int> Map;
+        public NativeParallelMultiHashMap<int3, int> Map;
         public NativeList<Entity> Entities;
+        public NativeList<Agent> Agents;
         public NativeList<AgentBody> Bodies;
         public NativeList<AgentShape> Shapes;
         public NativeList<LocalTransform> Transforms;
+        public int MapCapacity;
         public int Capacity;
 
         public void Execute()
         {
-            Map.Capacity = Capacity;
+            Map.Capacity = MapCapacity;
             Entities.Capacity = Capacity;
+            Agents.Capacity = Capacity;
             Bodies.Capacity = Capacity;
             Shapes.Capacity = Capacity;
             Transforms.Capacity = Capacity;
