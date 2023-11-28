@@ -25,7 +25,8 @@ public abstract class StatusData : ScriptableObject
     public Sprite IconSprite;
     public Color TimerColor;
 
-    public abstract void Apply(StatusController controller);
-    public abstract void Remove(StatusController controller);
+    public abstract void Apply(UnitController controller, Status status);
+    public abstract void Remove(UnitController controller, Status status);
+    public abstract void OnUpdate(UnitController controller, Status status);
 }
 

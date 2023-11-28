@@ -20,11 +20,10 @@ public class OnHitUpgradeData : UpgradeData
 public class OnHitUpgrade
 {
     public OnHitUpgradeType Type;
-    public int Damage;
-    public int DamageOverTime;
+    public int DamagerPerSec;
     public float Time;
     [Range(0f, 1f)]
-    public float Percentage;
+    public float Ratio;
 
     public void OnAcquire(StatController statController)
     {
@@ -54,23 +53,23 @@ public class OnHitUpgrade
     void ElectricityEffect(UnitController target)
     {
         float random = Random.Range(0f, 1f);
-        if (random <= Percentage) target.StatusEffect.ApplyStun(Time);
+        if (random <= Ratio) target.StatusEffect.ApplyStun(Time);
     }
     void FireEffect(UnitController target, Transform dmgDealer)
     {
-        target.StatusEffect.ApplyDamagePerSecond(Time, DamageOverTime, dmgDealer, "Fire");
+        target.StatusEffect.ApplyDamagePerSecond(Time, DamagerPerSec, dmgDealer, "Fire");
     }
     void PoisonEffect(UnitController target, Transform dmgDealer)
     {
-        target.StatusEffect.ApplyDamagePerSecond(Time, DamageOverTime, dmgDealer, "Poison");
+        target.StatusEffect.ApplyDamagePerSecond(Time, DamagerPerSec, dmgDealer, "Poison");
     }
     void IceEffect(UnitController target)
     {
-        target.GetComponent<StatusController>().ApplyStatus(StatusType.Slow, Time);
+        target.GetComponent<StatusController>().ApplyStatus(StatusType.Slow, Time, Ratio, DamagerPerSec);
     }
     void VampireEffect(int dmg, Transform dmgDealer)
     {
-        int lifeSteal = Mathf.CeilToInt(Percentage * dmg);
+        int lifeSteal = Mathf.CeilToInt(Ratio * dmg);
         var dealerUnit = dmgDealer.GetComponent<UnitController>();
         dealerUnit.Health.Heal(lifeSteal, dmgDealer);
         Debug.Log("on hit VampireEffect");

@@ -7,10 +7,12 @@ public class StatusController : MonoBehaviour
 {
     StatusUIController statusUI;
     List<Status> activeStatusEffects = new List<Status>();
+    UnitController controller;
 
     private void Awake()
     {
         statusUI = GetComponent<StatusUIController>();
+        controller = GetComponent<UnitController>();
     }
 
     private void Update()
@@ -26,16 +28,16 @@ public class StatusController : MonoBehaviour
         }
     }
 
-    public void ApplyStatus(StatusType type, float time)
+    public void ApplyStatus(StatusType type, float time, float ratio, int dps)
     {
-        var status = new Status(type, time);
-        status.Apply(this);
+        var status = new Status(type, time, ratio, dps);
+        status.Data.Apply(controller, status);
         activeStatusEffects.Add(status);
         statusUI.OnStatusStart(status);
     }
     void RemoveStatus(Status activeStatus)
     {
-        activeStatus.Remove(this);
+        activeStatus.Data.Remove(controller, activeStatus);
         activeStatusEffects.Remove(activeStatus);
         statusUI.OnStatusEnd(activeStatus);
     }
@@ -55,21 +57,16 @@ public class Status
     public StatusType Type;
 
     public float Time;
+    public float Ratio;
+    public int DamagePerSec;
     public StatusData Data { get => StatusManager.Instance.GetStatusData(Type); }
-    public Status (StatusType type, float time)
+    public Status (StatusType type, float time, float ratio, int damagePerSec)
     {
         Type = type;
         Time = time;
+        Ratio = ratio;
+        DamagePerSec = damagePerSec;
     }
-    public void Apply(StatusController c)
-    {
-        Data.Apply(c);
-    }
-    public void Remove(StatusController c)
-    {
-        Data.Remove(c);
-    }
-
 
 }
 public enum StatusType
