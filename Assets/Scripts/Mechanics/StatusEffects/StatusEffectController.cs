@@ -33,7 +33,7 @@ public class StatusEffectController : NetworkBehaviour
             StopCoroutine(currentFireEffectCoroutine);
         }
         currentFireEffectCoroutine = StartCoroutine(BurnRoutine(time, dps, dmgDealer));
-        statusUIController.StartStatus(statusName, time);
+       // statusUIController.StartStatus(statusName, time);
 
     }
     [Server]
@@ -42,7 +42,7 @@ public class StatusEffectController : NetworkBehaviour
         if (controller.Health.IsDead) return;
        // if (currentIceEffectCoroutine != null) StopCoroutine(currentIceEffectCoroutine);
         /*currentIceEffectCoroutine = */StartCoroutine(SlowRoutine(time, ratio));
-        statusUIController.StartStatus("Slow", time);
+        //statusUIController.StartStatus("Slow", time);
     }
 
     IEnumerator StunRoutine(float time)

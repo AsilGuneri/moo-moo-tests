@@ -5,8 +5,13 @@ using UnityEngine;
 
 public class StatusController : MonoBehaviour
 {
+    StatusUIController statusUI;
     List<Status> activeStatusEffects = new List<Status>();
 
+    private void Awake()
+    {
+        statusUI = GetComponent<StatusUIController>();
+    }
 
     private void Update()
     {
@@ -26,11 +31,13 @@ public class StatusController : MonoBehaviour
         var status = new Status(type, time);
         status.Apply(this);
         activeStatusEffects.Add(status);
+        statusUI.OnStatusStart(status);
     }
     void RemoveStatus(Status activeStatus)
     {
         activeStatus.Remove(this);
         activeStatusEffects.Remove(activeStatus);
+        statusUI.OnStatusEnd(activeStatus);
     }
     Status GetActiveStatus(StatusType type)
     {

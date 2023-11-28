@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,31 +6,65 @@ using UnityEngine.UI;
 
 public class StatusUIController : MonoBehaviour
 {
-    [SerializeField] private bool debug = false;
-    [SerializeField] private Transform IconParent;
-    [SerializeField] private Transform TimerParent;
+    [SerializeField] private Transform iconParent;
+    [SerializeField] private Transform barParent;
     [SerializeField] private Transform Canvas;
 
-   // private Dictionary<string, ActiveStatus> activeEffects = new();
-    private UnitController controller;
+    Dictionary<Status,StatusUI> statusUIPairs = new Dictionary<Status,StatusUI>();
 
-    private void Awake()
+    public void OnStatusStart(Status status)
     {
-        controller = GetComponent<UnitController>();
+        StatusUI statusUI = Instantiate(StatusManager.Instance.StatusUIPrefab, iconParent).GetComponent<StatusUI>();
+        statusUI.Setup(status.Data, status.Time, iconParent, barParent);
+        statusUIPairs.Add(status, statusUI);
+    }
+    public void OnStatusEnd(Status status)
+    {
+        var statusUI = statusUIPairs[status];
+        statusUI.DestroyUI();
+    }
+    public void OnStatusUpdate()
+    {
+
     }
 
-    private void Start()
-    {
-        controller.Health.OnDeathServer += EndAll;
-    }
+    //private GameObject InstantiateIcon(StatusData status)
+    //{
+    //    var icon = Instantiate(StatusManager.Instance.IconPrefab, iconParent).GetComponent<StatusIcon>();
+    //    icon.ChangeIconSprite(status.IconSprite);
+    //    return icon.gameObject;
+    //}
 
-    public void EndAll()
-    {
-       // foreach (var activeEffect in new List<ActiveStatus>(activeEffects.Values))
-        {
-       //     EndStatus(activeEffect.Effect.effectName);
-        }
-    }
+    //private StatusUI InstantiateTimer(float duration, StatusData status)
+    //{
+    //    var timer = Instantiate(StatusManager.Instance.TimerPrefab, timerParent).GetComponent<StatusUI>();
+    //    timer.Setup(duration, status.TimerColor);
+    //    return timer;
+    //}
+}
+
+
+
+    // private Dictionary<string, ActiveStatus> activeEffects = new();
+    // private UnitController controller;
+
+    //private void Awake()
+    //{
+    //    controller = GetComponent<UnitController>();
+    //}
+
+    //private void Start()
+    //{
+    //    controller.Health.OnDeathServer += EndAll;
+    //}
+
+    //public void EndAll()
+    //{
+    //   // foreach (var activeEffect in new List<ActiveStatus>(activeEffects.Values))
+    //    {
+    //   //     EndStatus(activeEffect.Effect.effectName);
+    //    }
+    //}
 
     //public void EndStatus(string name)
     //{
@@ -43,11 +78,11 @@ public class StatusUIController : MonoBehaviour
     //    else if (debug) Debug.Log("Disactive status tried to end : " + name + " userName : " + name);
     //}
 
-    public void StartStatus(string name, float time = 0)
-    {
-       // var status = StatusEffectsData.Instance.GetStatusData(name);
-      //  StartCoroutine(StartStatus(status, time));
-    }
+    //public void StartStatus(string name, float time = 0)
+    //{
+    //   // var status = StatusEffectsData.Instance.GetStatusData(name);
+    //  //  StartCoroutine(StartStatus(status, time));
+    //}
 
     //private IEnumerator StartStatus(StatusData status, float time = 0)
     //{
@@ -70,22 +105,9 @@ public class StatusUIController : MonoBehaviour
     //    //else if (debug) Debug.Log("Active status tried to start : " + status.effectName + " userName : " + name);
     //}
 
-    //private GameObject InstantiateIcon(StatusData status)
-    //{
-    //    var icon = Instantiate(StatusEffectsData.Instance.IconPrefab, IconParent).GetComponent<StatusIcon>();
-    //    icon.ChangeIconSprite(status.IconSprite);
-    //    return icon.gameObject;
-    //}
-
-    //private StatusTimer InstantiateTimer(float duration, StatusData status)
-    //{
-    //    var timer = Instantiate(StatusEffectsData.Instance.TimerPrefab, TimerParent).GetComponent<StatusTimer>();
-    //    timer.StartTimer(duration, status.TimerColor);
-    //    return timer;
-    //}
 
     //public void SetCanvasHeight(float height)
     //{
     //    Canvas.transform.localPosition = new Vector3(0, height, 0);
     //}
-}
+//}

@@ -5,8 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "StatusManager", menuName = "Scriptable Objects/Managers/StatusManager")]
 public class StatusManager : ScriptableSingleton<StatusManager>
 {
-    public GameObject IconPrefab;
-    public GameObject TimerPrefab;
+    public GameObject StatusUIPrefab;
 
     [SerializeField] List<StatusData> allEffects = new List<StatusData>();
 

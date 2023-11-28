@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1456f50965cc1e4399b7cf8ac81a34b, type: 3}
   m_Name: StatusManager
   m_EditorClassIdentifier: 
-  IconPrefab: {fileID: 0}
-  TimerPrefab: {fileID: 0}
+  StatusUIPrefab: {fileID: 5494871031472507493, guid: 3cd29c81a98cfc74fbd77e39a31531e3, type: 3}
   allEffects:
   - {fileID: 11400000, guid: 233a059656ce20947a4fabab2ca32334, type: 2}
