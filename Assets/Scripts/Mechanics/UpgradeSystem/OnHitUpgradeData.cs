@@ -66,7 +66,7 @@ public class OnHitUpgrade
     }
     void IceEffect(UnitController target)
     {
-        target.StatusEffect.ApplySlow(Time, Percentage);
+        target.GetComponent<StatusController>().ApplyStatus(StatusType.Slow, Time);
     }
     void VampireEffect(int dmg, Transform dmgDealer)
     {

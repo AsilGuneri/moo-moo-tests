@@ -1383,6 +1383,7 @@ GameObject:
   - component: {fileID: 6465701654805695193}
   - component: {fileID: -4615224906379894066}
   - component: {fileID: 1104827619904647213}
+  - component: {fileID: 1213556412739501818}
   m_Layer: 9
   m_Name: 11MageCapsule
   m_TagString: Untagged
@@ -1822,6 +1823,18 @@ MonoBehaviour:
   IconParent: {fileID: 6724528377432914719}
   TimerParent: {fileID: 7885358801997452049}
   Canvas: {fileID: 2173815473222669890}
+--- !u!114 &1213556412739501818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5214732024776045391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa292bf2952abcc4998058bbee356882, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5595211513526516219
 GameObject:
   m_ObjectHideFlags: 0
