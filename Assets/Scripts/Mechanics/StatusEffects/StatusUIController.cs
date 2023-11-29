@@ -6,32 +6,46 @@ using UnityEngine.UI;
 
 public class StatusUIController : MonoBehaviour
 {
-    [SerializeField] private Transform iconParent;
-    [SerializeField] private Transform barParent;
-    [SerializeField] private Transform Canvas;
+    [SerializeField] private Transform statusHolder;
 
-    Dictionary<Status,StatusUI> statusUIPairs = new Dictionary<Status,StatusUI>();
+    Dictionary<StatusType,StatusUI> statusUIPairs = new();
 
     private void Update()
     {
-        foreach (KeyValuePair<Status, StatusUI> pair in statusUIPairs)
+        foreach (KeyValuePair<StatusType, StatusUI> pair in statusUIPairs)
         {
             StatusUI statusUI = pair.Value;
-            statusUI.OnUpdate(pair.Key.Time);
+            statusUI.OnUpdate();
         }
     }
 
     public void OnStatusStart(Status status)
     {
-        StatusUI statusUI = Instantiate(StatusManager.Instance.StatusUIPrefab, iconParent).GetComponent<StatusUI>();
-        statusUI.Setup(status.Data, status.Time, iconParent, barParent);
-        statusUIPairs.Add(status, statusUI);
+        StatusUI statusUI = Instantiate(StatusManager.Instance.StatusUIPrefab, statusHolder).GetComponent<StatusUI>();
+        statusUI.transform.SetParent(statusHolder);
+        statusUI.Setup(status, status.Time);
+        statusUIPairs.Add(status.Type, statusUI);
     }
-    public void OnStatusEnd(Status status)
+    public void UpdateStatusUI(Status newStatus, int activeCount)
     {
-        var statusUI = statusUIPairs[status];
-        statusUIPairs.Remove(status);
-        statusUI.DestroyUI();
+        var statusUI = statusUIPairs[newStatus.Type];
+        statusUI.UpdateStatusCount(newStatus, activeCount);
+    }
+    public void OnStatusEnd(Status status, Status newStatus, int activeCount)
+    {
+        if(activeCount == 0)
+        {
+            if (statusUIPairs.TryGetValue(status.Type, out StatusUI statusUI))
+            {
+                statusUIPairs.Remove(status.Type);
+                statusUI.DestroyUI();
+            }
+        }
+        else if (activeCount > 0) 
+        {
+            UpdateStatusUI(newStatus, activeCount);
+        }
+        
     }
 
    

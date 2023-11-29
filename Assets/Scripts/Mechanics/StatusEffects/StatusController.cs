@@ -6,7 +6,7 @@ using UnityEngine;
 public class StatusController : MonoBehaviour
 {
     StatusUIController statusUI;
-    List<Status> activeStatusEffects = new List<Status>();
+    List<Status> activeStatusEffects = new();
     UnitController controller;
     float timeSinceLastInterval;
 
@@ -39,49 +39,42 @@ public class StatusController : MonoBehaviour
 
     public void ApplyStatus(StatusType type, float time, float ratio = 0, int dps = 0, Transform caster = null)
     {
-        Status status = GetActiveStatus(type,out int activeOfType);
-        if (status == null)
+        var effects = GetActiveEffectsOfType(type);
+        if(effects != null && effects.Count <= 0)
         {
-            AddStatus(type, time, ratio, dps, caster);
+            var newStatus = AddStatus(type, time, ratio, dps, caster);
+            statusUI.OnStatusStart(newStatus);
             return;
         }
-        if(status.Data.StackAmount > activeOfType)
+        if (effects[0].Data.StackAmount > effects.Count)
         {
             AddStatus(type, time, ratio, dps, caster);
+            statusUI.UpdateStatusUI(effects[0], effects.Count + 1);
+            return;
         }
-        //else
-        //{
-        //    switch(status.Data.StackAmount)
-        //}
-
-        //&& status.Data.StackAmount <= activeOfType)
-        //    return;
     }
 
-    private void AddStatus(StatusType type, float time, float ratio, int dps, Transform caster)
+    Status AddStatus(StatusType type, float time, float ratio, int dps, Transform caster)
     {
-        Status newStatus = new Status(type, time, ratio, dps, caster);
+        Status newStatus = new(type, time, ratio, dps, caster);
         newStatus.Data.Action.Apply(controller, newStatus);
         activeStatusEffects.Add(newStatus);
-        statusUI.OnStatusStart(newStatus);
+        return newStatus;
     }
-
     void RemoveStatus(Status activeStatus)
     {
         activeStatus.Data.Action.Remove(controller, activeStatus);
         activeStatusEffects.Remove(activeStatus);
-        statusUI.OnStatusEnd(activeStatus);
+        var effects = GetActiveEffectsOfType(activeStatus.Type);
+        Status newStatus = null;
+        if (effects.Count > 0) newStatus = effects[0];
+        statusUI.OnStatusEnd(activeStatus, newStatus, effects.Count);
     }
-    Status GetActiveStatus(StatusType type, out int count)
+    List<Status> GetActiveEffectsOfType(StatusType type)
     {
-        count = 0;
-        Status activeStatus = null;
+        List<Status> activeStatus = new();
         foreach (var status in activeStatusEffects)
-            if (status.Type == type) 
-            {
-                count++;
-                activeStatus = status; 
-            }
+            if (status.Type == type) activeStatus.Add(status);
         return activeStatus;
     }
 
@@ -96,6 +89,7 @@ public class Status
     public float Ratio;
     public int DamagePerSec;
     public Transform Caster;
+    public int Stack = 0;
     public StatusData Data { get => StatusManager.Instance.GetStatusData(Type); }
     public Status (StatusType type, float time, float ratio, int damagePerSec, Transform caster)
     {

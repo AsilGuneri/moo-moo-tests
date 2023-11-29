@@ -1,39 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StatusUI : MonoBehaviour
 {
     [SerializeField] Image icon;
-    [SerializeField] private Image bar;
+    [SerializeField] Image bar;
+    [SerializeField] TextMeshProUGUI stackText;
 
-    [SerializeField] Transform iconRoot;
-    [SerializeField] private Transform barRoot;
-
-    float remainingTime;
     float totalTime;
+    Status currentStatus;
 
-    public void OnUpdate(float remainingTime)
+    public void OnUpdate()
     {
-        this.remainingTime = remainingTime;
-        bar.fillAmount = remainingTime / totalTime;
+        bar.fillAmount = currentStatus.Time / totalTime;
     }
 
     public void DestroyUI()
     {
-        Destroy(iconRoot.gameObject);
-        Destroy(barRoot.gameObject);
         Destroy(gameObject);
     }
 
-    public void Setup(StatusData data, float time, Transform iconParent, Transform barParent)
+    public void Setup(Status status, float time)
     {
-        icon.sprite = data.IconSprite;
-        bar.color = data.TimerColor;
-        remainingTime = time;
+        icon.sprite = status.Data.IconSprite;
+        bar.color = status.Data.TimerColor;
         totalTime = time;
-        iconRoot.SetParent(iconParent, false);
-        barRoot.SetParent(barParent, false);
+        currentStatus = status;
+    }
+    public void UpdateStatusCount(Status newStatus, int count)
+    {
+        stackText.text = count.ToString();
+        currentStatus = newStatus;
     }
 }

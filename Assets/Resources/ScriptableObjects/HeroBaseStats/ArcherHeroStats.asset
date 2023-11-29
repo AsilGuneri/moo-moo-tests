@@ -16,6 +16,6 @@ MonoBehaviour:
   AttackRange: 10
   Health: 500
   Mana: 100
-  Damage: 100
+  Damage: 1
   AdditionalDamageRatio: 0.1
   MoveSpeed: 7

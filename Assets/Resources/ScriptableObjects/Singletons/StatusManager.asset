@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1456f50965cc1e4399b7cf8ac81a34b, type: 3}
   m_Name: StatusManager
   m_EditorClassIdentifier: 
-  StatusUIPrefab: {fileID: 5494871031472507493, guid: 3cd29c81a98cfc74fbd77e39a31531e3, type: 3}
+  StatusUIPrefab: {fileID: 5900524969986592537, guid: 3cd29c81a98cfc74fbd77e39a31531e3, type: 3}
   allEffects:
   - Type: 1
     IconSprite: {fileID: 21300000, guid: ec098dacfc2134d46873e8f65bf293fa, type: 3}
