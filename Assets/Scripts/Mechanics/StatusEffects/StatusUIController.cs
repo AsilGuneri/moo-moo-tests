@@ -31,19 +31,19 @@ public class StatusUIController : MonoBehaviour
         var statusUI = statusUIPairs[newStatus.Type];
         statusUI.UpdateStatusCount(newStatus, activeCount);
     }
-    public void OnStatusEnd(Status status, Status newStatus, int activeCount)
+    public void OnStatusEnd(Status oldStatus, List<Status> effects)
     {
-        if(activeCount == 0)
+        if(effects.Count == 0)
         {
-            if (statusUIPairs.TryGetValue(status.Type, out StatusUI statusUI))
+            if (statusUIPairs.TryGetValue(oldStatus.Type, out StatusUI statusUI))
             {
-                statusUIPairs.Remove(status.Type);
+                statusUIPairs.Remove(oldStatus.Type);
                 statusUI.DestroyUI();
             }
         }
-        else if (activeCount > 0) 
+        else if (effects.Count > 0) 
         {
-            UpdateStatusUI(newStatus, activeCount);
+            UpdateStatusUI(effects[0], effects.Count);
         }
         
     }

@@ -66,9 +66,7 @@ public class StatusController : MonoBehaviour
         activeStatus.Data.Action.Remove(controller, activeStatus);
         activeStatusEffects.Remove(activeStatus);
         var effects = GetActiveEffectsOfType(activeStatus.Type);
-        Status newStatus = null;
-        if (effects.Count > 0) newStatus = effects[0];
-        statusUI.OnStatusEnd(activeStatus, newStatus, effects.Count);
+        statusUI.OnStatusEnd(activeStatus, effects);
     }
     List<Status> GetActiveEffectsOfType(StatusType type)
     {
