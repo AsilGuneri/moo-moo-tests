@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using Random = UnityEngine.Random;
 
 [CreateAssetMenu(fileName = "AllItemsData", menuName = "Scriptable Objects/Managers/AllItemsData")]
 public class AllUpgradesData : ScriptableSingleton<AllUpgradesData>
@@ -17,6 +17,14 @@ public class AllUpgradesData : ScriptableSingleton<AllUpgradesData>
         }
         return null;
     }
+    public UpgradeData GetRandomUpgrade(ClassType type)
+    {
+        int randomTier = Random.Range(0, 2); 
+        var upgrades = GetUpgrades(type, randomTier);
+        int randomUpgradeId = Random.Range(0, upgrades.Count);
+        var randomUpgrade = upgrades[randomUpgradeId];
+        return randomUpgrade;
+    }
 
 }
 
@@ -24,22 +32,22 @@ public class AllUpgradesData : ScriptableSingleton<AllUpgradesData>
 public class ClassUpgrades
 {
     public ClassType type;
+    public List<UpgradeData> Tier0;
     public List<UpgradeData> Tier1;
     public List<UpgradeData> Tier2;
     public List<UpgradeData> Tier3;
-    public List<UpgradeData> Tier4;
     public List<UpgradeData> GetUpgrades(int tier)
     {
         switch(tier)
         {
+            case 0:
+                return Tier0;
             case 1:
                 return Tier1;
             case 2:
                 return Tier2;
             case 3:
                 return Tier3;
-            case 4:
-                return Tier4;
         }
         return null;
     }
