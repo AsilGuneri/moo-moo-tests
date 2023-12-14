@@ -12,17 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df31c4045d43c5442973c419c93ad26c, type: 3}
   m_Name: AllUpgradesData
   m_EditorClassIdentifier: 
-  ClassUpgradeLists:
+  classUpgrades:
   - type: 1
-    Tier0:
-    - {fileID: 11400000, guid: 5e16e711a70596348a3daca559eadc87, type: 2}
-    - {fileID: 11400000, guid: 5b5710aaa6c91d24986c75162f5a2687, type: 2}
-    - {fileID: 11400000, guid: fcf866fb598d16f4cb2b81761f9e4180, type: 2}
-    Tier1:
-    - {fileID: 11400000, guid: 0d5e0bbc1b33f4d4f9fbf24399a57432, type: 2}
-    - {fileID: 11400000, guid: 060dd2c25e97ee24d9c163e846a46a94, type: 2}
-    - {fileID: 11400000, guid: bec8631ba5a448c45aa575bd79be59b0, type: 2}
-    - {fileID: 11400000, guid: 4ddca34cfb88e7247b6b9ec66432cc71, type: 2}
-    - {fileID: 11400000, guid: 8ae7d4e61502316409d41a357c0f8889, type: 2}
-    Tier2: []
-    Tier3: []
+    upgradeTiers:
+    - TierID: 0
+      OnlyOneAllowed: 1
+      upgradesInTier:
+      - {fileID: 11400000, guid: 5e16e711a70596348a3daca559eadc87, type: 2}
+      - {fileID: 11400000, guid: fcf866fb598d16f4cb2b81761f9e4180, type: 2}
+      - {fileID: 11400000, guid: 5b5710aaa6c91d24986c75162f5a2687, type: 2}

@@ -1,7 +1,7 @@
 using DuloGames.UI;
 using Mirror;
 using MyBox;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,8 +14,10 @@ public class UpgradeManager : NetworkSingleton<UpgradeManager>
     [SerializeField] private UpgradeSlot upgradeSlotPrefab;
     [SerializeField] private Transform upgradesContentParent;
 
+    public Dictionary<UpgradeData, int> acquiredUpgrades = new();
     private void Start()
     {
+
         InitializeUpgrades();
     }
 
@@ -31,24 +33,21 @@ public class UpgradeManager : NetworkSingleton<UpgradeManager>
     private void InitializeUpgrades()
     {
         Extensions.DestroyAllChildren(upgradesContentParent);
-        //var upgrades = AllUpgradesData.Instance.GetUpgrades(ClassType.Archer, 2);
-        //for (int i = 0; i < 4; i++)
-        //{
-        //    var upgrade = AllUpgradesData.Instance.GetRandomUpgrade(ClassType.Archer);
-        //    var slot = Instantiate(upgradeSlotPrefab, upgradesContentParent).GetComponent<UpgradeSlot>();
-        //    slot.Setup(upgrade);
-        //}
+        var randomUpgrades = AllUpgradesData.Instance.GetRandomUpgrades(ClassType.Archer);
 
+        foreach (var upgrade in randomUpgrades)
+        {
+            var slot = Instantiate(upgradeSlotPrefab, upgradesContentParent).GetComponent<UpgradeSlot>();
+            slot.Setup(upgrade);
+        }
     }
-  
-    public void OnUpgradeAcquired()
+    public void OnUpgradeAcquired(UpgradeData data)
     {
-       // if (selectedUpgrade == null) return;
+        // if (selectedUpgrade == null) return;
         //var manager = (CustomNetworkRoomManager) NetworkRoomManager.singleton;
         //var statController = manager.GetLocalPlayer().StatController;
-        
+        acquiredUpgrades.Add(data, 0);
         //selectedUpgrade.OnAcquire(statController);
         upgradeWindow.Hide();
     }
- 
 }

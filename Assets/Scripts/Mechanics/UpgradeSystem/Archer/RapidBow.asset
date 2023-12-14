@@ -15,13 +15,8 @@ MonoBehaviour:
   DisplayName: Rapid Bow
   Description: "h\u0131zl\u0131 d\xFC\u015F\xFCk range az hasar"
   Icon: {fileID: 21300000, guid: 6a03275f4cd243f4d92671d833c141f4, type: 3}
-  Upgrades:
-  - Type: 2
-    Amount: 0
-    Percentage: -0.5
-  - Type: 3
-    Amount: 0
-    Percentage: 1
-  - Type: 4
-    Amount: 0
-    Percentage: -0.3
+  upgradeLevels:
+  - Upgrades:
+    - Type: 0
+      Amount: 0
+      Percentage: 0

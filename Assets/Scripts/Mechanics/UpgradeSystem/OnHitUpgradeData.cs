@@ -8,7 +8,7 @@ public class OnHitUpgradeData : UpgradeData
 {
     public List<OnHitUpgrade> OnHitUpgrades = new List<OnHitUpgrade>();
 
-    public override void OnAcquire(StatController statController)
+    public override void OnAcquire(StatController statController, int level)
     {
         foreach(var onHitUpgrade in OnHitUpgrades)
         {

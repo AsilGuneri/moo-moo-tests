@@ -1,4 +1,5 @@
 using DuloGames.UI;
+using JetBrains.Annotations;
 using MyBox;
 using System;
 using System.Collections;
@@ -11,17 +12,26 @@ public class UpgradeData : ScriptableObject
     public string DisplayName;
     public string Description;
     public Sprite Icon;
-    public List<Upgrade> Upgrades = new List<Upgrade>();
+
+    public List<UpgradeLevels> upgradeLevels = new List<UpgradeLevels>();
+    
 
 
-    public virtual void OnAcquire(StatController statController)
-    {
-        foreach(Upgrade upgrade in Upgrades)
+    public virtual void OnAcquire(StatController statController, int level)
+    {    
+        foreach(Upgrade upgrade in upgradeLevels[level].Upgrades)
         {
             upgrade.OnAcquire(statController);
         }
     }
 }
+[Serializable]
+public class UpgradeLevels
+{
+    public List<Upgrade> Upgrades = new List<Upgrade>();
+}
+
+
 [Serializable]
 public class Upgrade
 {
