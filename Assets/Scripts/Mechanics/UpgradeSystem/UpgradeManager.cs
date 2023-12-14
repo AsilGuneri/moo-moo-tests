@@ -32,12 +32,12 @@ public class UpgradeManager : NetworkSingleton<UpgradeManager>
     {
         Extensions.DestroyAllChildren(upgradesContentParent);
         //var upgrades = AllUpgradesData.Instance.GetUpgrades(ClassType.Archer, 2);
-        for (int i = 0; i < 4; i++)
-        {
-            var upgrade = AllUpgradesData.Instance.GetRandomUpgrade(ClassType.Archer);
-            var slot = Instantiate(upgradeSlotPrefab, upgradesContentParent).GetComponent<UpgradeSlot>();
-            slot.Setup(upgrade);
-        }
+        //for (int i = 0; i < 4; i++)
+        //{
+        //    var upgrade = AllUpgradesData.Instance.GetRandomUpgrade(ClassType.Archer);
+        //    var slot = Instantiate(upgradeSlotPrefab, upgradesContentParent).GetComponent<UpgradeSlot>();
+        //    slot.Setup(upgrade);
+        //}
 
     }
   

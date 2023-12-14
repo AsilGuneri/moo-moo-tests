@@ -17,14 +17,14 @@ public class AllUpgradesData : ScriptableSingleton<AllUpgradesData>
         }
         return null;
     }
-    public UpgradeData GetRandomUpgrade(ClassType type)
-    {
-        int randomTier = Random.Range(0, 2); 
-        var upgrades = GetUpgrades(type, randomTier);
-        int randomUpgradeId = Random.Range(0, upgrades.Count);
-        var randomUpgrade = upgrades[randomUpgradeId];
-        return randomUpgrade;
-    }
+    //public UpgradeData GetRandomUpgrade(ClassType type)
+    //{
+    //    int randomTier = Random.Range(0, 2); 
+    //    var upgrades = GetUpgrades(type, randomTier);
+    //    int randomUpgradeId = Random.Range(0, upgrades.Count);
+    //    var randomUpgrade = upgrades[randomUpgradeId];
+    //    return randomUpgrade;
+    //}
 
 }
 
