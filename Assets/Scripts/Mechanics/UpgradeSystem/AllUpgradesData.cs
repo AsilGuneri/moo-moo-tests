@@ -16,24 +16,22 @@ public class AllUpgradesData : ScriptableSingleton<AllUpgradesData>
         List<UpgradeDataLevelPair> randomUpgrades = new List<UpgradeDataLevelPair>();
         ClassSpecificUpgrades classUpgrades = GetClassUpgrades(classType);
 
-        List<int> tierList = new List<int>();
-        foreach(var tier in classUpgrades.upgradeTiers)
-        {
-            tierList.Add(tier.TierID);
-        }
 
+        List<UpgradeTier> upgradeTiers = DeepCopyUpgradeTiers(classUpgrades.upgradeTiers);
 
         for (int i = 0; i < 4; i++)
         {
-            if (tierList.Count == 0) break;
-            int randomTier = Extensions.GetRandomElement(tierList);
+            if (upgradeTiers.Count == 0) break;
+            var randomTier = Extensions.GetRandomElement(upgradeTiers);
 
-            var upgradeTier = classUpgrades.upgradeTiers[randomTier];
-            var upgradesInTier = upgradeTier.upgradesInTier.ToList();
+            //var upgradeTier = upgradeTiers[randomTier];
 
-            UpgradeDataLevelPair ownedUpgradePairInTier = UpgradeManager.Instance.acquiredUpgrades.FirstOrDefault(u => upgradesInTier.Contains(u.data));
+            UpgradeDataLevelPair ownedUpgradePairInTier = UpgradeManager.Instance.acquiredUpgrades
+                .Where(u => randomTier.upgradesInTier.Contains(u.data))
+                .OrderByDescending(u => u.level)
+                .FirstOrDefault();
 
-            if (upgradeTier.OnlyOneAllowed)
+            if (randomTier.OnlyOneAllowed)
             {
 
                 if (ownedUpgradePairInTier != null)
@@ -41,20 +39,24 @@ public class AllUpgradesData : ScriptableSingleton<AllUpgradesData>
                     if (ownedUpgradePairInTier.level < ownedUpgradePairInTier.data.upgradeLevels.Count - 1)
                     {
                         randomUpgrades.Add(new UpgradeDataLevelPair(ownedUpgradePairInTier.data, ownedUpgradePairInTier.level + 1));  //bu tier onlyoneallowed ve bizde zaten bi upgrade var, onun levelı max değilse levelını arttırıp döndür.
-                        upgradesInTier.Remove(ownedUpgradePairInTier.data);
+                        randomTier.upgradesInTier.Remove(ownedUpgradePairInTier.data);
                     }
-                    else
-                    {
-                        tierList.Remove(randomTier); //bu tier onlyoneallowed ve bizde zaten bi upgrade var, onun levelı maxsa bu tier uygun değildir.
-                    }
+                    
+                        upgradeTiers.Remove(randomTier); //bu tier onlyoneallowed ve bizde zaten bi upgrade var, onun levelı maxsa bu tier uygun değildir.
+                    
                     continue;
                 }
                 else //bizde bu tierdan hiç upgrade yok random al 0 levelı döndür
                 {
-                    int random = Random.Range(0, upgradesInTier.Count);
-                    var randomUpgrade = upgradesInTier[random];
+                    //int random = Random.Range(0, upgradeTiers[randomTier].upgradesInTier.Count);
+                    //var randomUpgrade = upgradeTiers[randomTier].upgradesInTier[random];
+                    if(randomTier.upgradesInTier.Count == 0)
+                    {
+                        break;
+                    }
+                    var randomUpgrade = Extensions.GetRandomElement(randomTier.upgradesInTier);
                     randomUpgrades.Add(new UpgradeDataLevelPair(randomUpgrade, 0));
-                    upgradesInTier.Remove(randomUpgrade);
+                    randomTier.upgradesInTier.Remove(randomUpgrade);
                     continue;
                 }
             }
@@ -94,7 +96,24 @@ public class AllUpgradesData : ScriptableSingleton<AllUpgradesData>
         if (classUpgrade == null) Debug.Log("No upgrades found for class: " + classType);
         return classUpgrades.Find(c => c.type == classType);
     }
+    List<UpgradeTier> DeepCopyUpgradeTiers(List<UpgradeTier> original)
+    {
+        List<UpgradeTier> copy = new List<UpgradeTier>();
 
+        foreach (var tier in original)
+        {
+            UpgradeTier newTier = new UpgradeTier()
+            {
+                TierID = tier.TierID,
+                OnlyOneAllowed = tier.OnlyOneAllowed,
+                upgradesInTier = new List<UpgradeData>(tier.upgradesInTier) // Assuming UpgradeData is okay to shallow copy
+            };
+
+            copy.Add(newTier);
+        }
+
+        return copy;
+    }
 
 }
 
@@ -115,6 +134,7 @@ public class UpgradeTier
     public List<UpgradeData> upgradesInTier;
    
 }
+[Serializable]
 public class UpgradeDataLevelPair
 {
     public UpgradeData data;
