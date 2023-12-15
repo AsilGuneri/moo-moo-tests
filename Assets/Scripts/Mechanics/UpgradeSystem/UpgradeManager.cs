@@ -33,20 +33,21 @@ public class UpgradeManager : NetworkSingleton<UpgradeManager>
     private void InitializeUpgrades()
     {
         Extensions.DestroyAllChildren(upgradesContentParent);
-        var randomUpgrades = AllUpgradesData.Instance.GetRandomUpgrades(ClassType.Archer);
+        var randomUpgrade = AllUpgradesData.Instance.GetRandomUpgrades(ClassType.Archer);
 
-        foreach (var upgrade in randomUpgrades)
-        {
+        //foreach (var upgrade in randomUpgrades)
+        //{
             var slot = Instantiate(upgradeSlotPrefab, upgradesContentParent).GetComponent<UpgradeSlot>();
-            slot.Setup(upgrade);
-        }
+            slot.Setup(randomUpgrade.data , randomUpgrade.level);
+        //}
     }
-    public void OnUpgradeAcquired(UpgradeData data)
+    public void OnUpgradeAcquired(UpgradeData data, int level)
     {
         // if (selectedUpgrade == null) return;
         //var manager = (CustomNetworkRoomManager) NetworkRoomManager.singleton;
         //var statController = manager.GetLocalPlayer().StatController;
-        acquiredUpgrades.Add(data, 0);
+        if (acquiredUpgrades.ContainsKey(data)) acquiredUpgrades[data] = level;
+        else acquiredUpgrades.Add(data, level);
         //selectedUpgrade.OnAcquire(statController);
         upgradeWindow.Hide();
     }
