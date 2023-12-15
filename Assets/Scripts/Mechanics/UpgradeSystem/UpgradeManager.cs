@@ -33,13 +33,13 @@ public class UpgradeManager : NetworkSingleton<UpgradeManager>
     private void InitializeUpgrades()
     {
         Extensions.DestroyAllChildren(upgradesContentParent);
-        var randomUpgrade = AllUpgradesData.Instance.GetRandomUpgrades(ClassType.Archer);
+        var randomUpgrades = AllUpgradesData.Instance.GetRandomUpgrades(ClassType.Archer);
 
-        //foreach (var upgrade in randomUpgrades)
-        //{
+        foreach (var upgrade in randomUpgrades)
+        {
             var slot = Instantiate(upgradeSlotPrefab, upgradesContentParent).GetComponent<UpgradeSlot>();
-            slot.Setup(randomUpgrade.data , randomUpgrade.level);
-        //}
+            slot.Setup(upgrade.data, upgrade.level);
+        }
     }
     public void OnUpgradeAcquired(UpgradeData data, int level)
     {
