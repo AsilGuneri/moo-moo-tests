@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,73 +10,79 @@ public class AllUpgradesData : ScriptableSingleton<AllUpgradesData>
 {
     [SerializeField] List<ClassSpecificUpgrades> classUpgrades;
 
-    public List<UpgradeDataLevelPair> GetRandomUpgrades(ClassType classType)
-    {
-        var randomUpgrades = new List<UpgradeDataLevelPair>();
-        var classSpecificUpgrades = GetClassUpgrades(classType);
 
-        for (int i = 0; i < 4; i++)
+    public List<UpgradeDataLevelPair> GetRandomUpgrades(ClassType classType) //bunun içi şuanda, random tierdan random upgrade seçiyor. bunu istediğin upgrade sayısı kadar çalıştır
+    {
+        List<UpgradeDataLevelPair> randomUpgrades = new List<UpgradeDataLevelPair>();
+        ClassSpecificUpgrades classUpgrades = GetClassUpgrades(classType);
+
+
+
+
+        for (int i = 0; i < 5; i++)
         {
-            var upgradeTier = GetRandomUpgradeTier(classSpecificUpgrades);
-            AddRandomUpgradeFromTier(randomUpgrades, upgradeTier);
+            int randomTier = Random.Range(0, classUpgrades.upgradeTiers.Count);
+
+            var upgradeTier = classUpgrades.upgradeTiers[randomTier];
+            var upgradesInTier = upgradeTier.upgradesInTier.ToList();
+
+
+
+            if (upgradeTier.OnlyOneAllowed)
+            {
+                foreach (UpgradeData ownedUpgradeData in UpgradeManager.Instance.acquiredUpgrades.Keys)
+                {
+                    UpgradeManager.Instance.acquiredUpgrades.TryGetValue(ownedUpgradeData, out int ownedUpgradeLevel);
+                    bool hasUpgrade = upgradesInTier.Contains(ownedUpgradeData);
+                    if (hasUpgrade && ownedUpgradeLevel < ownedUpgradeData.upgradeLevels.Count - 1)
+                    {
+                        randomUpgrades.Add(new UpgradeDataLevelPair(ownedUpgradeData, ownedUpgradeLevel + 1));  //bu tier onlyoneallowed ve bizde zaten bi upgrade var, onun levelı max değilse levelını arttırıp döndür.
+                    }
+                    //else randomUpgrades.Add(new UpgradeDataLevelPair(null, -1)); //bu tier onlyoneallowed ve bizde zaten bi upgrade var, onun levelı maxsa bu tier uygun değildir.
+                }
+
+                if (upgradesInTier.Count > 0) //bizde bu tierdan hiç upgrade yok random al 0 levelı döndür
+                {
+                    int random = Random.Range(0, upgradesInTier.Count);
+                    randomUpgrades.Add(new UpgradeDataLevelPair(upgradesInTier[random], 0));
+                }
+            }
+            else
+            {
+                while (upgradesInTier.Count > 0) //random upgrade seçip var mı diye bakıyoruz
+                {
+                    int random = Random.Range(0, upgradesInTier.Count);
+                    UpgradeData randomUpgrade = upgradesInTier[random];
+                    if (!UpgradeManager.Instance.acquiredUpgrades.TryGetValue(randomUpgrade, out int ownedUpgradeLevel)) //yoksa aldığın randomu döndür
+                    {
+                        randomUpgrades.Add(new UpgradeDataLevelPair(randomUpgrade, 0));
+                    }
+                    else if (ownedUpgradeLevel < randomUpgrade.upgradeLevels.Count - 1) //varsa ve levelı max değilse bu upgrade i ekle, levelı +1
+                    {
+                        randomUpgrades.Add(new UpgradeDataLevelPair(randomUpgrade, ownedUpgradeLevel + 1));
+                    }
+                    else
+                    {
+                        upgradesInTier.Remove(randomUpgrade); //varsa ve levelı maxsa bu upgrade i listeden çıkar
+                    }
+
+                }
+            }
         }
+
+        
 
         return randomUpgrades;
     }
 
-    private UpgradeTier GetRandomUpgradeTier(ClassSpecificUpgrades classSpecificUpgrades)
+    ClassSpecificUpgrades GetClassUpgrades(ClassType classType)
     {
-        int randomTierIndex = Random.Range(0, classSpecificUpgrades.upgradeTiers.Count);
-        return classSpecificUpgrades.upgradeTiers[randomTierIndex];
+        ClassSpecificUpgrades classUpgrade = classUpgrades.Find(c => c.type == classType);
+        if (classUpgrade == null) Debug.Log("No upgrades found for class: " + classType);
+        return classUpgrades.Find(c => c.type == classType);
     }
 
-    private void AddRandomUpgradeFromTier(List<UpgradeDataLevelPair> randomUpgrades, UpgradeTier upgradeTier)
-    {
-        var upgradesInTier = upgradeTier.upgradesInTier.ToList();
 
-        if (upgradeTier.OnlyOneAllowed)
-        {
-            AddUpgradeWithLevelValidation(randomUpgrades, upgradesInTier);
-        }
-        else
-        {
-            AddRandomUpgrade(randomUpgrades, upgradesInTier);
-        }
-    }
-
-    private void AddUpgradeWithLevelValidation(List<UpgradeDataLevelPair> randomUpgrades, List<UpgradeData> upgradesInTier)
-    {
-        foreach (var upgrade in upgradesInTier)
-        {
-            if (UpgradeManager.Instance.acquiredUpgrades.TryGetValue(upgrade, out int ownedUpgradeLevel) && ownedUpgradeLevel < upgrade.upgradeLevels.Count - 1)
-            {
-                randomUpgrades.Add(new UpgradeDataLevelPair(upgrade, ownedUpgradeLevel + 1));
-                return;
-            }
-        }
-
-        AddRandomUpgrade(randomUpgrades, upgradesInTier);
-    }
-
-    private void AddRandomUpgrade(List<UpgradeDataLevelPair> randomUpgrades, List<UpgradeData> upgradesInTier)
-    {
-        if (upgradesInTier.Count > 0)
-        {
-            int randomIndex = Random.Range(0, upgradesInTier.Count);
-            randomUpgrades.Add(new UpgradeDataLevelPair(upgradesInTier[randomIndex], 0));
-        }
-    }
-
-    private ClassSpecificUpgrades GetClassUpgrades(ClassType classType)
-    {
-        var classUpgrade = classUpgrades.Find(c => c.type == classType);
-        if (classUpgrade == null)
-        {
-            Debug.Log("No upgrades found for class: " + classType);
-        }
-
-        return classUpgrade;
-    }
 }
 
 [Serializable]
