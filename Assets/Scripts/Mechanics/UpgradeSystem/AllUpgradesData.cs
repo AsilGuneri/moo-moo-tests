@@ -16,58 +16,71 @@ public class AllUpgradesData : ScriptableSingleton<AllUpgradesData>
         List<UpgradeDataLevelPair> randomUpgrades = new List<UpgradeDataLevelPair>();
         ClassSpecificUpgrades classUpgrades = GetClassUpgrades(classType);
 
-
-
-
-        for (int i = 0; i < 5; i++)
+        List<int> tierList = new List<int>();
+        foreach(var tier in classUpgrades.upgradeTiers)
         {
-            int randomTier = Random.Range(0, classUpgrades.upgradeTiers.Count);
+            tierList.Add(tier.TierID);
+        }
+
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (tierList.Count == 0) break;
+            int randomTier = Extensions.GetRandomElement(tierList);
 
             var upgradeTier = classUpgrades.upgradeTiers[randomTier];
             var upgradesInTier = upgradeTier.upgradesInTier.ToList();
 
-
+            UpgradeDataLevelPair ownedUpgradePairInTier = UpgradeManager.Instance.acquiredUpgrades.FirstOrDefault(u => upgradesInTier.Contains(u.data));
 
             if (upgradeTier.OnlyOneAllowed)
             {
-                foreach (UpgradeData ownedUpgradeData in UpgradeManager.Instance.acquiredUpgrades.Keys)
-                {
-                    UpgradeManager.Instance.acquiredUpgrades.TryGetValue(ownedUpgradeData, out int ownedUpgradeLevel);
-                    bool hasUpgrade = upgradesInTier.Contains(ownedUpgradeData);
-                    if (hasUpgrade && ownedUpgradeLevel < ownedUpgradeData.upgradeLevels.Count - 1)
-                    {
-                        randomUpgrades.Add(new UpgradeDataLevelPair(ownedUpgradeData, ownedUpgradeLevel + 1));  //bu tier onlyoneallowed ve bizde zaten bi upgrade var, onun levelı max değilse levelını arttırıp döndür.
-                    }
-                    //else randomUpgrades.Add(new UpgradeDataLevelPair(null, -1)); //bu tier onlyoneallowed ve bizde zaten bi upgrade var, onun levelı maxsa bu tier uygun değildir.
-                }
 
-                if (upgradesInTier.Count > 0) //bizde bu tierdan hiç upgrade yok random al 0 levelı döndür
+                if (ownedUpgradePairInTier != null)
                 {
-                    int random = Random.Range(0, upgradesInTier.Count);
-                    randomUpgrades.Add(new UpgradeDataLevelPair(upgradesInTier[random], 0));
-                }
-            }
-            else
-            {
-                while (upgradesInTier.Count > 0) //random upgrade seçip var mı diye bakıyoruz
-                {
-                    int random = Random.Range(0, upgradesInTier.Count);
-                    UpgradeData randomUpgrade = upgradesInTier[random];
-                    if (!UpgradeManager.Instance.acquiredUpgrades.TryGetValue(randomUpgrade, out int ownedUpgradeLevel)) //yoksa aldığın randomu döndür
+                    if (ownedUpgradePairInTier.level < ownedUpgradePairInTier.data.upgradeLevels.Count - 1)
                     {
-                        randomUpgrades.Add(new UpgradeDataLevelPair(randomUpgrade, 0));
-                    }
-                    else if (ownedUpgradeLevel < randomUpgrade.upgradeLevels.Count - 1) //varsa ve levelı max değilse bu upgrade i ekle, levelı +1
-                    {
-                        randomUpgrades.Add(new UpgradeDataLevelPair(randomUpgrade, ownedUpgradeLevel + 1));
+                        randomUpgrades.Add(new UpgradeDataLevelPair(ownedUpgradePairInTier.data, ownedUpgradePairInTier.level + 1));  //bu tier onlyoneallowed ve bizde zaten bi upgrade var, onun levelı max değilse levelını arttırıp döndür.
+                        upgradesInTier.Remove(ownedUpgradePairInTier.data);
                     }
                     else
                     {
-                        upgradesInTier.Remove(randomUpgrade); //varsa ve levelı maxsa bu upgrade i listeden çıkar
+                        tierList.Remove(randomTier); //bu tier onlyoneallowed ve bizde zaten bi upgrade var, onun levelı maxsa bu tier uygun değildir.
                     }
-
+                    continue;
+                }
+                else //bizde bu tierdan hiç upgrade yok random al 0 levelı döndür
+                {
+                    int random = Random.Range(0, upgradesInTier.Count);
+                    var randomUpgrade = upgradesInTier[random];
+                    randomUpgrades.Add(new UpgradeDataLevelPair(randomUpgrade, 0));
+                    upgradesInTier.Remove(randomUpgrade);
+                    continue;
                 }
             }
+            //else
+            //{
+            //    while (upgradesInTier.Count > 0) //random upgrade seçip var mı diye bakıyoruz
+            //    {
+            //        int random = Random.Range(0, upgradesInTier.Count);
+            //        UpgradeData randomUpgrade = upgradesInTier[random];
+            //        UpgradeDataLevelPair? ownedUpgrade = UpgradeManager.Instance.acquiredUpgrades.FirstOrDefault(u => u.data == randomUpgrade);
+
+            //        if (ownedUpgrade == null) //yoksa aldığın randomu döndür
+            //        {
+            //            randomUpgrades.Add(new UpgradeDataLevelPair(randomUpgrade, 0));
+            //        }
+            //        else if (ownedUpgrade.Value.level < randomUpgrade.upgradeLevels.Count - 1) //varsa ve levelı max değilse bu upgrade i ekle, levelı +1
+            //        {
+            //            randomUpgrades.Add(new UpgradeDataLevelPair(randomUpgrade, ownedUpgrade.Value.level + 1));
+            //        }
+            //        else
+            //        {
+            //            upgradesInTier.Remove(randomUpgrade); //varsa ve levelı maxsa bu upgrade i listeden çıkar
+            //        }
+
+            //    }
+            //}
         }
 
         
@@ -102,7 +115,7 @@ public class UpgradeTier
     public List<UpgradeData> upgradesInTier;
    
 }
-public struct UpgradeDataLevelPair
+public class UpgradeDataLevelPair
 {
     public UpgradeData data;
     public int level;

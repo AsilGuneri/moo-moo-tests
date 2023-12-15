@@ -7,10 +7,23 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public class Extensions : MonoBehaviour
 {
     private static readonly Dictionary<float, WaitForSeconds> WaitDictionary = new Dictionary<float, WaitForSeconds>();
+
+    public static T GetRandomElement<T>(List<T> list)
+    {
+        if (list == null || list.Count == 0)
+        {
+            Debug.Log("asilxx list is null or empty");
+        }
+
+        int index = UnityEngine.Random.Range(0, list.Count);
+        return list[index];
+    }
+
     public static WaitForSeconds GetWait(float time)
     {
         if (WaitDictionary.TryGetValue(time, out var wait)) return wait;
