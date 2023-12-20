@@ -25,7 +25,7 @@ public class EnemyController : UnitController
         else if (!Extensions.CheckRangeBetweenUnits(transform, targetController.Target.transform
             , statController.AttackRange))
         {
-            attackController.StopAutoAttack();
+            attackController.StopAfterCurrentAttack();
             Movement.ClientMove(targetController.Target.transform.position); 
         }
         else

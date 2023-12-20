@@ -23,6 +23,9 @@ public abstract class BasicAttackController : NetworkBehaviour
     protected UnitController controller;
     bool isAttacking = false;
     int attackBlockCount = 0;
+    bool isSetToStopAfterCurrentAttack = false;
+
+
     Coroutine autoAttackCoroutine; 
     List<OnHitUpgrade> onHitUpgrades = new List<OnHitUpgrade>();
 
@@ -68,6 +71,12 @@ public abstract class BasicAttackController : NetworkBehaviour
             OnAttackEnd();
         }
     }
+    public void StopAfterCurrentAttack()
+    {
+        if (!isAttacking) return;
+        isSetToStopAfterCurrentAttack = true;
+    }
+
 
     private IEnumerator AutoAttackRoutine()
     {
@@ -88,6 +97,7 @@ public abstract class BasicAttackController : NetworkBehaviour
 
             yield return Extensions.GetWait(secondsAfterAttack);
             OnEachAttackEnd();
+            CheckStopAfterCurrentAttack();
         }
         OnAttackEnd();
     }
@@ -127,6 +137,13 @@ public abstract class BasicAttackController : NetworkBehaviour
         OnActualAttackMoment?.Invoke();
     }
     protected abstract void OnEachAttackEnd();
+
+    void CheckStopAfterCurrentAttack()
+    {
+        if (!isSetToStopAfterCurrentAttack) return;
+        StopAutoAttack();
+        isSetToStopAfterCurrentAttack = false;
+    }
 
     public void ResetAttackController()
     {
