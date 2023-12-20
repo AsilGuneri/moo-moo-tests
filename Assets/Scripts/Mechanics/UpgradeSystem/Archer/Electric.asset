@@ -20,4 +20,4 @@ MonoBehaviour:
   - Type: 1
     DamagerPerSec: 0
     Time: 2
-    Ratio: 1
+    Ratio: 0.25
