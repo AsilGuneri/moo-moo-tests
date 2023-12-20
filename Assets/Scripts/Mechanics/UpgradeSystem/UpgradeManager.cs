@@ -33,7 +33,7 @@ public class UpgradeManager : NetworkSingleton<UpgradeManager>
     private void InitializeUpgrades()
     {
         Extensions.DestroyAllChildren(upgradesContentParent);
-        var randomUpgrades = AllUpgradesData.Instance.GetEligibleUpgrades(ClassType.Archer);
+        var randomUpgrades = AllUpgradesData.Instance.GetRandomUpgrades(ClassType.Archer);
 
         foreach (var upgrade in randomUpgrades)
         {

@@ -10,8 +10,22 @@ public class AllUpgradesData : ScriptableSingleton<AllUpgradesData>
 {
     [SerializeField] List<ClassSpecificUpgrades> classUpgrades;
 
+    public List<UpgradeDataLevelPair> GetRandomUpgrades(ClassType type)
+    {
+        List<UpgradeDataLevelPair> randomUpgrades = new List<UpgradeDataLevelPair>();
+        var eligibleUpgrades = GetEligibleUpgrades(ClassType.Archer);
+        int count = eligibleUpgrades.Count;
+        for (int i = 0; i < 4; i++)
+        {
+            if (i >= count - 1) break;
+            var randomUpgrade = Extensions.GetRandomElement(eligibleUpgrades);
+            randomUpgrades.Add(randomUpgrade);
+            eligibleUpgrades.Remove(randomUpgrade);
+        }
+        return randomUpgrades;
+    }
 
-    public List<UpgradeDataLevelPair> GetEligibleUpgrades(ClassType classType) //bunun içi şuanda, random tierdan random upgrade seçiyor. bunu istediğin upgrade sayısı kadar çalıştır
+    List<UpgradeDataLevelPair> GetEligibleUpgrades(ClassType classType) //bunun içi şuanda, random tierdan random upgrade seçiyor. bunu istediğin upgrade sayısı kadar çalıştır
     {
        // List<UpgradeDataLevelPair> randomUpgrades = new List<UpgradeDataLevelPair>();
         ClassSpecificUpgrades classUpgrades = GetClassUpgrades(classType);

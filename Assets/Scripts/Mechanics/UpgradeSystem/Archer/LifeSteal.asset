@@ -15,10 +15,9 @@ MonoBehaviour:
   DisplayName: Vampire
   Description: 
   Icon: {fileID: 21300000, guid: d279f10bc00ef28438fe970e09fc41ff, type: 3}
-  Upgrades: []
+  upgradeLevels: []
   OnHitUpgrades:
   - Type: 5
-    Damage: 0
-    DamageOverTime: 0
+    DamagerPerSec: 0
     Time: 0
-    Percentage: 0.5
+    Ratio: 0.25

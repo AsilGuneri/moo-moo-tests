@@ -17,6 +17,16 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: 6a03275f4cd243f4d92671d833c141f4, type: 3}
   upgradeLevels:
   - Upgrades:
-    - Type: 0
+    - Type: 3
       Amount: 0
-      Percentage: 0
+      Percentage: 0.25
+    - Type: 2
+      Amount: 0
+      Percentage: -0.25
+    - Type: 4
+      Amount: 0
+      Percentage: -0.25
+  - Upgrades:
+    - Type: 3
+      Amount: 0
+      Percentage: 0.25
