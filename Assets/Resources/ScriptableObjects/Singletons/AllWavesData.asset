@@ -13,68 +13,22 @@ MonoBehaviour:
   m_Name: AllWavesData
   m_EditorClassIdentifier: 
   TestWave:
-    WaveGoldReward: 0
-    SubWaves:
-    - Prefab: {fileID: 5214732024776045391, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
-      CountPerPlayer: 1
-      SpacingX: 0
-      SpacingZ: 0
+    WaveEnemies: []
   WavesData:
-  - WaveGoldReward: 100
-    SubWaves:
+  - WaveEnemies:
     - Prefab: {fileID: 4162034819610443299, guid: 736be56d32648c548a0becfa8a517805, type: 3}
-      CountPerPlayer: 25
-      SpacingX: 1.5
+      Count: 4
+      SpacingX: 2
       SpacingZ: 2
-  - WaveGoldReward: 100
-    SubWaves:
-    - Prefab: {fileID: 4162034819610443299, guid: 736be56d32648c548a0becfa8a517805, type: 3}
-      CountPerPlayer: 17
-      SpacingX: 1.5
-      SpacingZ: 2
-    - Prefab: {fileID: 5214732024776045391, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
-      CountPerPlayer: 8
-      SpacingX: 1.5
-      SpacingZ: 2
-  - WaveGoldReward: 100
-    SubWaves:
     - Prefab: {fileID: 4162034819610443299, guid: c6c76c0beebbc0d4884ac29b5cef72dd, type: 3}
-      CountPerPlayer: 7
-      SpacingX: 1.5
-      SpacingZ: 2
-    - Prefab: {fileID: 4162034819610443299, guid: 736be56d32648c548a0becfa8a517805, type: 3}
-      CountPerPlayer: 10
-      SpacingX: 1.5
+      Count: 3
+      SpacingX: 2
       SpacingZ: 2
     - Prefab: {fileID: 5214732024776045391, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
-      CountPerPlayer: 8
-      SpacingX: 1.5
+      Count: 2
+      SpacingX: 2
       SpacingZ: 2
-  - WaveGoldReward: 100
-    SubWaves:
-    - Prefab: {fileID: 4162034819610443299, guid: c6c76c0beebbc0d4884ac29b5cef72dd, type: 3}
-      CountPerPlayer: 10
-      SpacingX: 1.5
-      SpacingZ: 2
-    - Prefab: {fileID: 5214732024776045391, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
-      CountPerPlayer: 20
-      SpacingX: 1.5
-      SpacingZ: 2
-  - WaveGoldReward: 100
-    SubWaves:
-    - Prefab: {fileID: 4162034819610443299, guid: c6c76c0beebbc0d4884ac29b5cef72dd, type: 3}
-      CountPerPlayer: 10
-      SpacingX: 1.5
-      SpacingZ: 2
-    - Prefab: {fileID: 4162034819610443299, guid: 736be56d32648c548a0becfa8a517805, type: 3}
-      CountPerPlayer: 10
-      SpacingX: 1.5
-      SpacingZ: 2
-    - Prefab: {fileID: 5214732024776045391, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
-      CountPerPlayer: 10
-      SpacingX: 1.5
-      SpacingZ: 2
-    - Prefab: {fileID: 5214732024776045391, guid: 84b6fa0323bba694e9361202be3ea532, type: 3}
-      CountPerPlayer: 1
-      SpacingX: 1.5
-      SpacingZ: 2
+  - WaveEnemies: []
+  - WaveEnemies: []
+  - WaveEnemies: []
+  - WaveEnemies: []

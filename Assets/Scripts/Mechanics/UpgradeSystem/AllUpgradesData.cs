@@ -94,24 +94,6 @@ public class AllUpgradesData : ScriptableSingleton<AllUpgradesData>
         if (classUpgrade == null) Debug.Log("No upgrades found for class: " + classType);
         return classUpgrades.Find(c => c.type == classType);
     }
-    List<UpgradeTier> DeepCopyUpgradeTiers(List<UpgradeTier> original)
-    {
-        List<UpgradeTier> copy = new List<UpgradeTier>();
-
-        foreach (var tier in original)
-        {
-            UpgradeTier newTier = new UpgradeTier()
-            {
-                TierID = tier.TierID,
-                OnlyOneAllowed = tier.OnlyOneAllowed,
-                upgradesInTier = new List<UpgradeData>(tier.upgradesInTier) // Assuming UpgradeData is okay to shallow copy
-            };
-
-            copy.Add(newTier);
-        }
-
-        return copy;
-    }
 
 }
 

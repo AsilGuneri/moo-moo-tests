@@ -13,14 +13,13 @@ public class AllWavesData : ScriptableSingleton<AllWavesData>
 [Serializable]
 public class WaveData
 {
-    public int WaveGoldReward;
-    public List<SubWave> SubWaves = new List<SubWave>();
+    public List<WaveEnemyData> WaveEnemies = new List<WaveEnemyData>();
 }
 [Serializable]
-public class SubWave
+public class WaveEnemyData
 {
     public GameObject Prefab;
-    public int CountPerPlayer;
+    public int Count;
     public float SpacingX = 1f;
     public float SpacingZ = 1.5f;
 }

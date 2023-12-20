@@ -44,7 +44,7 @@ public class PlayerController : UnitController
     {
         if (!isOwned) return;
         if (Input.GetKeyDown(KeyCode.T))
-            WaveManager.Instance.SpawnTestWave();
+            WaveManager.Instance.Spawn();
         if (Input.GetKeyDown(KeyCode.D))
             Health.Die(transform);
     }

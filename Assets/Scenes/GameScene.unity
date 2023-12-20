@@ -4125,6 +4125,7 @@ MonoBehaviour:
   upgradeWindow: {fileID: 1277660206}
   upgradeSlotPrefab: {fileID: 42611091801163333, guid: 1b54e0022e31fdd498fdf0b036fdd01e, type: 3}
   upgradesContentParent: {fileID: 2073418608}
+  acquiredUpgrades: []
 --- !u!114 &497284219
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
@@ -75,26 +75,32 @@ public class WaveManager : NetworkSingleton<WaveManager>
     }
     private void SpawnWave(WaveData waveData)
     {
-        Vector3 currentPosition = initialSpawnPos; // Starting from the initial position.
+        Vector3 currentPosition = initialSpawnPos;
 
-        for (int i = 0; i < waveData.SubWaves.Count; i++)
+        for (int i = 0; i < waveData.WaveEnemies.Count; i++)
         {
-            var subWave = waveData.SubWaves[i];
+            var subWave = waveData.WaveEnemies[i];
 
-            for (int j = 0; j < subWave.CountPerPlayer; j++)
+            // SubWave için toplam genişliği hesapla
+            float totalWidth = (subWave.Count - 1) * subWave.SpacingX;
+
+            // İlk düşmanın başlangıç pozisyonunu hesapla
+            currentPosition.x = initialSpawnPos.x - totalWidth / 2;
+
+            for (int j = 0; j < subWave.Count; j++)
             {
                 var obj = PrefabPoolManager.Instance.GetFromPool(subWave.Prefab, currentPosition, Quaternion.identity);
                 NetworkServer.Spawn(obj);
 
-                // Move to the next spawn position in the row.
-                currentPosition.x += subWave.SpacingX;
+                currentPosition.x += subWave.SpacingX; // Her düşman için X koordinatını artır
             }
 
-            // Once the subwave is done, reset x position and move 'backwards' in preparation for the next subwave.
+            // Sıradaki subWave için Z koordinatını güncelle
             currentPosition.x = initialSpawnPos.x;
             currentPosition.z += subWave.SpacingZ;
         }
     }
+
 
 }
 
