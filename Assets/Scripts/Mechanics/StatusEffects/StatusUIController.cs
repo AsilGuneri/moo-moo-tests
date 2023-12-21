@@ -18,7 +18,14 @@ public class StatusUIController : MonoBehaviour
             statusUI.OnUpdate();
         }
     }
-
+    public void ResetStatusUI()
+    {
+        foreach(var pair in statusUIPairs)
+        {
+            pair.Value.DestroyUI();
+        }
+        statusUIPairs.Clear();
+    }
     public void OnStatusStart(Status status)
     {
         StatusUI statusUI = Instantiate(StatusManager.Instance.StatusUIPrefab, statusHolder).GetComponent<StatusUI>();

@@ -53,7 +53,11 @@ public class StatusController : MonoBehaviour
             return;
         }
     }
-
+    public void ResetStatusEffects()
+    {
+        activeStatusEffects.Clear();
+        statusUI.ResetStatusUI();
+    }
     Status AddStatus(StatusType type, float time, float ratio, int dps, Transform caster)
     {
         Status newStatus = new(type, time, ratio, dps, caster);

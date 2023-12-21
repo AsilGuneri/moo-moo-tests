@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: AllWavesData
   m_EditorClassIdentifier: 
   TestWave:
-    WaveEnemies: []
+    WaveEnemies:
+    - Prefab: {fileID: 5214732024776045391, guid: 290875eb45c82814faf68e9890e9fa83, type: 3}
+      Count: 1
+      SpacingX: 0
+      SpacingZ: 0
   WavesData:
   - WaveEnemies:
     - Prefab: {fileID: 4162034819610443299, guid: 736be56d32648c548a0becfa8a517805, type: 3}
-      Count: 1
+      Count: 5
       SpacingX: 2
       SpacingZ: 2
-  - WaveEnemies: []
-  - WaveEnemies: []
-  - WaveEnemies: []
-  - WaveEnemies: []

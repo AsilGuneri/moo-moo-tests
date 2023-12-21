@@ -91,6 +91,7 @@ public abstract class UnitController : NetworkBehaviour
     public virtual void OnDeath(Transform killer) 
     {
         UnitManager.Instance.RemoveUnit(this);
+        isInitialized = false;
     }
     public override void OnStartServer()
     {
@@ -104,6 +105,7 @@ public abstract class UnitController : NetworkBehaviour
         UnitManager.Instance.RegisterUnit(this);
         statController.InitializeStats();
         health.ResetHealth(statController.MaxHealth);
+        StatusController.ResetStatusEffects();
     }
     
 }

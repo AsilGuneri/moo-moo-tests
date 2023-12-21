@@ -2260,10 +2260,6 @@ MonoBehaviour:
     currentCount: 0
   - startSize: 20
     maxSize: 50
-    prefab: {fileID: 1035025884081351565, guid: bcc885a124bc01241838dcfe3abffeb3, type: 3}
-    currentCount: 0
-  - startSize: 20
-    maxSize: 50
     prefab: {fileID: 6332283567703443384, guid: 736be56d32648c548a0becfa8a517805, type: 3}
     currentCount: 0
   - startSize: 20

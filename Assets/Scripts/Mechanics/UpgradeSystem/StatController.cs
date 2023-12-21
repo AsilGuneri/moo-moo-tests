@@ -47,7 +47,6 @@ public class StatController : NetworkBehaviour
         AttackDamage = heroBaseStats.Damage;
         AdditionalDamageRatio = heroBaseStats.AdditionalDamageRatio;
         MoveSpeed = heroBaseStats.MoveSpeed;
-        ChangeMoveSpeed(0);
     }
     [Server]
     public void ChangeMaxHealth(int additionalHealth)
