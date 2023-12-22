@@ -5166,7 +5166,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh176050
+  m_Name: pb_Mesh120854
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -7915,14 +7915,14 @@ LightProbeGroup:
   m_GameObject: {fileID: 1272686510}
   m_Enabled: 1
   m_SourcePositions:
-  - {x: 1, y: 1, z: 1}
-  - {x: 1, y: 1, z: -1}
-  - {x: 1, y: -1, z: 1}
-  - {x: 2.0504742, y: -1, z: -1}
-  - {x: -1, y: 1, z: 1}
-  - {x: -1, y: 1, z: -1}
-  - {x: -1, y: -1, z: 1}
-  - {x: -2.0670414, y: -1, z: -2.1564674}
+  - {x: -3.5512295, y: 1, z: -6.579521}
+  - {x: 36.320374, y: 1, z: -26.215353}
+  - {x: 17.278858, y: -1, z: 12.627716}
+  - {x: 36.157593, y: -1, z: 3.2289753}
+  - {x: 17.135891, y: 5.4341426, z: -5.506155}
+  - {x: -4.603512, y: 1, z: -22.109568}
+  - {x: -2.0693455, y: -1, z: 9.809521}
+  - {x: -4.327137, y: -1, z: -35.233414}
   m_Dering: 1
 --- !u!4 &1272686512
 Transform:
